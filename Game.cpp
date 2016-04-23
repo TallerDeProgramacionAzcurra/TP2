@@ -70,7 +70,14 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
     //Provisorio
     m_player = new Player(true);
     m_player->load(m_gameWidth/2, m_gameHeight/2, 38, 64, "blackship", 1);
-    TextureManager::Instance()->load("Assets/Sprites/BlackShip.png", "blackship", m_pRenderer);
+
+    m_background = new Background();
+    m_background->load(0, 0, m_gameWidth, m_gameHeight, "water");
+
+    m_island = new Island();
+    m_island->load(0, m_gameHeight/2, 150, 150, "island", 1);
+    // en ms
+    m_island->setReappearanceTime(0);
 
     //tudo ben
     m_running = true;
@@ -82,6 +89,8 @@ void Game::render()
     SDL_RenderClear(m_pRenderer);
 
     //Dibujar lo que haya que dibujar
+    m_background->draw(); //Provisorio
+    m_island->draw(); //Provisorio
     m_player->draw();//Provisorio
 
     SDL_RenderPresent(m_pRenderer);
@@ -89,21 +98,27 @@ void Game::render()
 
 void Game::update()
 {
+	m_background->update(); //Provisorio
+	m_island->update(); //Provisorio
 	m_player->update(); // Provisorio
 }
 
 void Game::handleEvents()
 {
 	InputHandler::Instance()->update();
+
+	m_player->handleInput();
 }
 
 void Game::clean()
 {
     cout << "cleaning game\n";
 
+    delete m_background; //Provisorio
+    delete m_island; //Provisorio
     delete m_player; //Provisorio
-    InputHandler::Instance()->clean();
 
+    InputHandler::Instance()->clean();
     TextureManager::Instance()->clearTextureMap();
 
     SDL_DestroyWindow(m_pWindow);

@@ -9,11 +9,16 @@
 #define GAME_H_
 
 #include "Player.h"
+#include "Background/Island.h"
+#include "Background/Background.h"
 #include "Singletons/InputHandler.h"
 #include "Singletons/TextureManager.h"
 #include <SDL2/SDL.h>
 #include <iostream>
 using namespace std;
+class Island;
+class Background;
+
 
 class Player;
 
@@ -61,6 +66,8 @@ private:
 
     //Provisorio
     Player* m_player;
+    Background* m_background;
+    Island* m_island;
 
     bool m_running;
 

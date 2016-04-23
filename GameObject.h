@@ -38,8 +38,6 @@ public:
     // Libera memoria y los recursos que esté utilizando el GameObject
     virtual void clean()=0;
 
-    // El objeto ha colisionado, reaccionar. Por ejemplo, si debe morir, setear las variables para realizar la animación de muerte/explosion
-    virtual void collision() = 0;
 
     // Getters
     const std::string getTag() { return m_tag; }
@@ -50,13 +48,13 @@ public:
     int getHeight() { return m_height; }
 
     // En este ejemplo de scroll, scrollea to do menos los objetos con tag player
-    void scroll(float scrollSpeed)
+   /* void scroll(float scrollSpeed)
     {
         if(m_tag != std::string("Player")) // player is never scrolled
         {
             m_position.setX(m_position.getY() + scrollSpeed);
         }
-    }
+    }*/
 
 protected:
 

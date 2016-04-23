@@ -30,15 +30,18 @@ void Nave::load(int x, int y, int width, int height, std::string textureID, int 
 
 void Nave::draw()
 {
-    //TextureManager::Instance()->drawFrame(m_textureID, m_position.getX(), m_position.getY(), m_width, m_height,
-    			//							m_currentRow, m_currentFrame, Game::Instance()->getRenderer(), m_angle, m_alpha);
+   /* TextureManager::Instance()->drawFrame(m_textureID, m_position.getX(), m_position.getY(), m_width, m_height,
+    										m_currentRow, m_currentFrame, Game::Instance()->getRenderer(), m_angle, m_alpha);*/
 }
 
 void Nave::update()
 {
 	//se mueve en la dirección seteada
-    m_position.m_x += (m_direction.getX() * m_speed.getX());
-    m_position.m_y += (m_direction.getY() * m_speed.getY());
+	if (m_direction.getX() != 0)
+		m_position.m_x += (m_direction.getX() * m_speed.getX());
+
+	if (m_direction.getY() != 0)
+		m_position.m_y += (m_direction.getY() * m_speed.getY());
 }
 
 void Nave::clean()

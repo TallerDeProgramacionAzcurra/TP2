@@ -28,6 +28,7 @@ public:
 
     virtual void draw();
     virtual void update();
+    virtual void handleInput();
     virtual void clean();
 
     virtual void collision();
@@ -40,7 +41,6 @@ private:
     bool m_controllable;
 
     //Modifica el estado del juego de acuerdo al input del jugador
-    virtual void handleInput();
 };
 
 

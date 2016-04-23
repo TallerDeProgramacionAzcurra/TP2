@@ -31,6 +31,8 @@ void Player::load(int x, int y, int width, int height, std::string textureID, in
     // Load comun. Inicializa variables
     Nave::load(x, y, width, height, textureID, numFrames);
 
+    TextureManager::Instance()->load("Assets/Sprites/BlackShip.png", m_textureID, Game::Instance()->getRenderer());
+
     // Otras acciones de inicialización del Player más especificas
 
 }
@@ -44,7 +46,6 @@ void Player::draw()
 
 void Player::update()
 {
-    handleInput();
 	Nave::update();
 	//Probar valores para animacion
 	//m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
