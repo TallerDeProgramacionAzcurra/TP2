@@ -9,13 +9,17 @@
 
 using namespace std;
 
-Player::Player() :  Nave(),
-					m_controllable(true)
+Player::Player() :  MoveableObject(),
+					m_controllable(true),
+					m_dead(false),
+					m_dying(false)
 {
 	m_tag = "Player";
 }
 
-Player::Player(bool canControl) :  Nave()
+Player::Player(bool canControl) :  MoveableObject(),
+									m_dead(false),
+									m_dying(false)
 {
 	m_controllable = canControl;
 	m_tag = "Player";
@@ -29,7 +33,7 @@ void Player::collision()
 void Player::load(int x, int y, int width, int height, std::string textureID, int numFrames)
 {
     // Load comun. Inicializa variables
-    Nave::load(x, y, width, height, textureID, numFrames);
+    MoveableObject::load(x, y, width, height, textureID, numFrames);
 
     TextureManager::Instance()->load("Assets/Sprites/BlackShip.png", m_textureID, Game::Instance()->getRenderer());
 
@@ -46,7 +50,7 @@ void Player::draw()
 
 void Player::update()
 {
-	Nave::update();
+	MoveableObject::update();
 	//Probar valores para animacion
 	//m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
 }
@@ -54,7 +58,7 @@ void Player::update()
 
 void Player::clean()
 {
-    Nave::clean();
+    MoveableObject::clean();
 }
 
 void Player::handleInput()

@@ -26,14 +26,12 @@ public:
 
 	static int getRange (int base, int top)
 	{
-		int randomNumber = (rand() % (top + 1 + base)) + base;
-		return randomNumber;
+		return ((rand() % ( top + 1 - base )) + base);
 	}
 
 	static float getFloatRange (float base, float top)
 	{
-		float randomNumber = base + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(top-base)));
-		return randomNumber;
+		return (base + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(top-base))));
 	}
 
 };

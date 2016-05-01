@@ -15,7 +15,7 @@ Uint32 BackgroundObject_TimerCallback(Uint32 interval, void *backgroundObject) {
 
 BackgroundObject::BackgroundObject() :  GameObject(),
 				m_direction(0,1),
-				m_scrollSpeed(0,2),
+				m_scrollSpeed(0,5),
 				m_reappearanceTime(0),
 				m_waiting(false),
 				timerID(0)
@@ -67,13 +67,13 @@ void BackgroundObject::update()
 			{
 				//inicia Timer con el callback de reaparecer, luego del tiempo establecido
 				timerID = SDL_AddTimer( m_reappearanceTime, Island_TimerCallback, this);
+				m_waiting = true;
 			}
 			else
 			{
 				//reaparece inmediatamente sin espera
 				reappear();
 			}
-			m_waiting = true;
 		}
 	}*/
 }
@@ -85,7 +85,7 @@ void BackgroundObject::reappear()
 	m_position.setY(0 - m_height);
 
 	//setea X en una posicion aleatoria
-	int randomX = Random::getRange(0, 600);
+	int randomX = Random::getRange(0, 600 - m_width);
 	//int randomX = Random::getRange(0, Game::Instance()->getGameWidth() - m_width);
 	m_position.setX(randomX);
 }

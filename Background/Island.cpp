@@ -56,13 +56,13 @@ void Island::update()
 			{
 				//inicia Timer con el callback de reaparecer, luego del tiempo establecido
 				timerID = SDL_AddTimer( m_reappearanceTime, Island_TimerCallback, this);
+				m_waiting = true;
 			}
 			else
 			{
 				//reaparece inmediatamente sin espera
 				reappear();
 			}
-			m_waiting = true;
 		}
 	}
 }

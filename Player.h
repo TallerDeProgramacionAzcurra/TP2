@@ -9,12 +9,12 @@
 #define PLAYER_H_
 
 #include "Game.h"
-#include "Nave.h"
+#include "MoveableObject.h"
 #include "Singletons/InputHandler.h"
 #include "Singletons/TextureManager.h"
 
 
-class Player : public Nave
+class Player : public MoveableObject
 {
 public:
 
@@ -33,12 +33,20 @@ public:
 
     virtual void collision();
 
+    //Getters
+    bool isDead() { return m_dead; }
+    bool isDying() { return m_dying; }
+
 
 private:
 
     // Determina si el usuario puede controlar este player o no. Sirve por si hay varias instancias de Player en juego.
     // Si m_controllable es false, el Player no reaccionará a eventos de Input
     bool m_controllable;
+
+    // variables de control de estado
+    bool m_dead;
+    bool m_dying;
 
     //Modifica el estado del juego de acuerdo al input del jugador
 };
