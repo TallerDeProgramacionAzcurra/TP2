@@ -1,0 +1,1 @@
+mainDeCliente.d: ../mainDeCliente.cpp
