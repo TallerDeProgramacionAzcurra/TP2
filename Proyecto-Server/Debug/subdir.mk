@@ -4,31 +4,22 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../DrawObject.cpp \
 ../Game.cpp \
 ../MoveableObject.cpp \
-../Nave.cpp \
 ../Player.cpp \
-../main.cpp \
-../mainDeCliente.cpp 
+../main.cpp 
 
 OBJS += \
-./DrawObject.o \
 ./Game.o \
 ./MoveableObject.o \
-./Nave.o \
 ./Player.o \
-./main.o \
-./mainDeCliente.o 
+./main.o 
 
 CPP_DEPS += \
-./DrawObject.d \
 ./Game.d \
 ./MoveableObject.d \
-./Nave.d \
 ./Player.d \
-./main.d \
-./mainDeCliente.d 
+./main.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

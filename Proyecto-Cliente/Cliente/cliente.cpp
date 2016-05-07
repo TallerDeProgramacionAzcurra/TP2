@@ -21,7 +21,7 @@ bool cliente::conectar()
     	m_connecting = false;
     	return false;
     }
-    //setTimeOut();
+    setTimeOut();
     if (connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
     {
     	Logger::Instance()->LOG("Cliente: El cliente no se pudo conectar satisfactoriamente", WARN);
@@ -33,11 +33,11 @@ bool cliente::conectar()
 
 	if (m_connected)
 	{
-		/*serverTimeOut->Reset();
-		sendTimeOutTimer->Reset();
+		serverTimeOut->Reset();
+		//sendTimeOutTimer->Reset();
 		serverTimeOut->Start();
-		sendTimeOutTimer->Start();
-		createTimeoutThread();*/
+		//sendTimeOutTimer->Start();
+		//createTimeoutThread();
 	}
 	else
 	{
@@ -51,13 +51,15 @@ void cliente::desconectar()
 {
 	if (!m_connected)
 		return;
+	Game::Instance()->disconnect();
 	m_connected = false;
-	//serverTimeOut->Stop();
+	serverTimeOut->Stop();
 	cerrarSoket();
+	printf("Has sido desconectado del servidor \n");
 	Logger::Instance()->LOG("Cliente: El cliente se ha desconectado satisfactoriamente", DEBUG);
 }
 
-cliente::cliente(int argc, string ip, int port, std::vector<Mensaje> listaDeMensajesCargados){
+cliente::cliente(int argc, string ip, int port, std::string name){
 	m_connected = false;
 	m_connecting = false;
 	m_alanTuring = new AlanTuring();
@@ -82,9 +84,10 @@ cliente::cliente(int argc, string ip, int port, std::vector<Mensaje> listaDeMens
     serv_addr.sin_family = AF_INET;
     bcopy((char *)server->h_addr,(char *)&serv_addr.sin_addr.s_addr,server->h_length);
     serv_addr.sin_port = htons(portno);
-    listaDeMensajes = listaDeMensajesCargados;
 
-    //serverTimeOut = new Timer();
+    m_playerName = name;
+
+    serverTimeOut = new Timer();
     //sendTimeOutTimer = new Timer();
 
 
@@ -95,7 +98,7 @@ cliente::~cliente()
     pthread_mutex_destroy(&m_writingMutex);
     pthread_cond_destroy(&m_condv);
 	delete serverTimeOut;
-	delete sendTimeOutTimer;
+	//delete sendTimeOutTimer;
 
 	delete m_alanTuring;
 }
@@ -124,17 +127,6 @@ void cliente::sendMsg(Mensaje msg)
         msgLength -= bytesEnviados;
     }
 
-	/*int bytesEnviados = send(socketReceptor,bufferEscritura , msgLength, 0);
-    if (bytesEnviados <= 0)
-    	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
-    while (bytesEnviados < msgLength)
-    {
-    	bytesEnviados =  send(sockfd, bufferEscritura + bytesEnviados , msgLength, 0);
-        if (bytesEnviados <= 0)
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
-
-    }*/
-
 	pthread_mutex_unlock(&m_writingMutex);
     if (msg.tipo.compare("timeoutACK") != 0)
     {
@@ -144,6 +136,27 @@ void cliente::sendMsg(Mensaje msg)
     }
 }
 
+void cliente::sendNetworkMsg(NetworkMessage netMsg)
+{
+	char bufferEscritura[MESSAGE_BUFFER_SIZE];
+	bzero(bufferEscritura,MESSAGE_BUFFER_SIZE);
+
+	int msgLength = m_alanTuring->encodeNetworkMessage(netMsg, bufferEscritura);
+
+	char *ptr = (char*) bufferEscritura;
+
+    while (msgLength > 0)
+    {
+        int bytesEnviados = send(sockfd, ptr, msgLength, 0);
+        if (bytesEnviados < 1)
+        {
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	return;
+        }
+        ptr += bytesEnviados;
+        msgLength -= bytesEnviados;
+    }
+}
 
 
 void cliente::sendInputMsg(InputMessage msg)
@@ -165,17 +178,39 @@ void cliente::sendInputMsg(InputMessage msg)
         msgLength -= bytesEnviados;
     }
 	pthread_mutex_unlock(&m_writingMutex);
-    printf("Mensaje input enviado \n");
+    //printf("Mensaje input enviado \n");
+}
+
+void cliente::sendConnectionInfoMsg(ConnectionInfo msg)
+{
+	pthread_mutex_lock(&m_writingMutex);
+	char bufferEscritura[MESSAGE_BUFFER_SIZE];
+	int msgLength = m_alanTuring->encodeConnectionInfoMessage(msg, bufferEscritura);
+	char *ptr = (char*) bufferEscritura;
+
+    while (msgLength > 0)
+    {
+        int bytesEnviados = send(sockfd, ptr, msgLength, 0);
+        if (bytesEnviados < 1)
+        {
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	return;
+        }
+        ptr += bytesEnviados;
+        msgLength -= bytesEnviados;
+    }
+	pthread_mutex_unlock(&m_writingMutex);
+    //printf("Mensaje input enviado \n");
 }
 
 //Envia mensaje de timeOut cada x tiempo
 bool cliente::sendTimeOutMsg()
 {
-	pthread_mutex_lock(&m_writingMutex);
+	//pthread_mutex_lock(&m_writingMutex);
 	if (!checkServerConnection())
 		return false;
 
-	if ((float)sendTimeOutTimer->GetTicks()/CLOCKS_PER_SEC >= 1)
+	/*if ((float)sendTimeOutTimer->GetTicks()/CLOCKS_PER_SEC >= 2.5f)
 	{
 		Mensaje timeOutMsg = MessageFactory::Instance()->createMessage("", "",msgTimeOutACK);
 		sendMsg(timeOutMsg);
@@ -185,7 +220,7 @@ bool cliente::sendTimeOutMsg()
 		if (!leer())
 			return false;
 	}
-	pthread_mutex_unlock(&m_writingMutex);
+	pthread_mutex_unlock(&m_writingMutex);*/
 	return true;
 
 }
@@ -196,6 +231,8 @@ bool cliente::checkServerConnection()
 	if (((float)serverTimeOut->GetTicks()/CLOCKS_PER_SEC >= TIMEOUT_SECONDS) || (m_connected == false))
 	{
 		printf("Se perdio conexión con el servidor.\n");
+
+		Game::Instance()->disconnect();
 		desconectar();
 		printf("Presione 1 para reconectar.\n");
 		return false;
@@ -230,7 +267,6 @@ bool cliente::leer()
    }
 
    messageLength = m_alanTuring->decodeLength(buffer);
-   printf ("Leyo %d bytes \n", messageLength);
 
    p += n;
    messageLength -= acum;
@@ -249,7 +285,7 @@ bool cliente::leer()
    pthread_cond_signal(&m_condv);
    pthread_mutex_unlock(&m_readingMutex);
    //llego el mensaje bien
-   //serverTimeOut->Reset();
+   serverTimeOut->Reset();
 
    NetworkMessage netMsgRecibido = m_alanTuring->decode(buffer);
 
@@ -288,18 +324,47 @@ void cliente::setTimeOut()
 
 void cliente::procesarMensaje(NetworkMessage networkMessage)
 {
+	if ((networkMessage.msg_Code[0] == 't') && (networkMessage.msg_Code[1] == 'm') && (networkMessage.msg_Code[2] == 'o'))
+	{
+		//TimeOut ACK, lo dej opor si en el futuro queremos hacer algo extra
+		return;
+	}
+
 	if ((networkMessage.msg_Code[0] == 'c') && (networkMessage.msg_Code[1] == 'n') && (networkMessage.msg_Code[2] == 't'))
 	{
-		//El cliente se conecto con exito.
-		printf("Conección con el server exitosa. \n");
-		Logger::Instance()->LOG("Cliente: Conección al servidor exitosa.\n", DEBUG);
-
 		ConnectedMessage connectedMessage = m_alanTuring->decodeConnectedMessage(networkMessage);
-		printf("Conectado con id: %d \n", connectedMessage.objectID);
-		Game::Instance()->createPlayer(connectedMessage.objectID, connectedMessage.textureID);
-		//string valorMensaje(dataMsg.msg_value);
-		//char valorChar = valorMensaje.at(0);
-		//printf("Valor del Mensaje: %c \n", valorChar);
+		if (connectedMessage.requestData && !connectedMessage.connected)
+		{
+			//El SERVER ESTA SOLICITANDO INFORMACION DE CONECCION
+			//ENVIAR CONNECTION INFO
+			ConnectionInfo connectionInfo;
+			std::size_t length = m_playerName.copy(connectionInfo.name, MAX_NAME_LENGTH, 0);
+			connectionInfo.name[length]='\0';
+
+			sendConnectionInfoMsg(connectionInfo);
+			printf("Envio el nombre: %s \n", connectionInfo.name);
+			if (!leer())
+			{
+				printf("No se pudo terminar el proceso de conexion\n");
+				desconectar();
+				m_connected = false;
+			}
+		}
+		if (connectedMessage.connected && !connectedMessage.requestData)
+		{
+			printf("Conectado con id: %d \n", connectedMessage.objectID);
+			Game::Instance()->createPlayer(connectedMessage.objectID, connectedMessage.textureID);
+			//El cliente se conecto con exito.
+			printf("Conección con el server exitosa. \n");
+			Logger::Instance()->LOG("Cliente: Conección al servidor exitosa.\n", DEBUG);
+		}
+
+		if (!connectedMessage.connected && !connectedMessage.requestData)
+		{
+			printf("El nombre ya existe\n");
+			desconectar();
+			m_connected = false;
+		}
 		return;
 	}
 	if ((networkMessage.msg_Code[0] == 'e') && (networkMessage.msg_Code[1] == 'x') && (networkMessage.msg_Code[2] == 't'))
@@ -308,9 +373,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		desconectar();
 		printf("El cliente ha sido desconectado del server.\n");
 		Logger::Instance()->LOG("Cliente: El cliente ha sido desconectado del server.", DEBUG);
-		//string valorMensaje(dataMsg.msg_value);
-		//char valorChar = valorMensaje.at(0);
-		//printf("Valor del Mensaje: %c \n", valorChar);
+
 		return;
 	}
 	if ((networkMessage.msg_Code[0] == 'f') && (networkMessage.msg_Code[1] == 'u') && (networkMessage.msg_Code[2] == 'l'))
@@ -323,12 +386,6 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		Logger::Instance()->LOG("Cliente: No se pudo conectar al servidor. El servidor está lleno.", DEBUG);
 		return;
 	}
-	if ((networkMessage.msg_Code[0] == 't') && (networkMessage.msg_Code[1] == 'm') && (networkMessage.msg_Code[2] == 'o'))
-	{
-		//TimeOut ACK, lo dej opor si en el futuro queremos hacer algo extra
-		//printf("Llego un time Out ACK\n");
-		return;
-	}
 
 
 	if ((networkMessage.msg_Code[0] == 'd') && (networkMessage.msg_Code[1] == 'm') && (networkMessage.msg_Code[2] == 's'))
@@ -337,6 +394,18 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		Game::Instance()->interpretarDrawMsg(drwMsg);
 			//Logger::Instance()->LOG("Se envio drwMsg a interpretar\n", DEBUG);
 
+	}
+
+	if ((networkMessage.msg_Code[0] == 'p') && (networkMessage.msg_Code[1] == 'd') && (networkMessage.msg_Code[2] == 'c'))
+	{
+		PlayerDisconnection playerDiscMsg = m_alanTuring->decodePlayerDisconnectionMessage(networkMessage);
+		Game::Instance()->disconnectObject(playerDiscMsg.objectID, playerDiscMsg.layer);
+
+		printf ("El jugador %s se ha desconectado. \n", playerDiscMsg.name);
+		std::stringstream ss;
+		ss <<"Cliente: El jguador " << playerDiscMsg.name << " se ha desconectado.";
+		Logger::Instance()->LOG(ss.str(), DEBUG);
+		return;
 	}
 
 }

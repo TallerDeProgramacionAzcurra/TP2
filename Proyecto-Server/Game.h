@@ -8,18 +8,19 @@
 #include "Background/Background.h"
 #include "Singletons/InputHandler.h"
 #include "Singletons/TextureManager.h"
+#include "Weapons/BulletsHandler.h"
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <sstream>
-#include "Player.h";
-#include "DrawObject.h"
+#include "Player.h"
 #include <map>
+#include <string>
 using namespace std;
+
 class Island;
 class Background;
 class server;
 class Player;
-
 
 
 class Game
@@ -45,14 +46,15 @@ public:
     void handleEvents();
     void clean();
 
-    void createPlayer(int id);
-    void removePlayer(int id);
+    bool createPlayer(int playerId, const std::string& playerName);
+    bool validatePlayerName(const std::string& playerName);
+    void disconnectPlayer(int playerId);
     void setUpKorea();
     void conectToKorea();
     void sendToAllClients(DrawMessage mensaje);
    	void* koreaMethod(void);
    	void readFromKorea();
-   	void interpretarDrawMsg(DrawMessage drwMsg);
+
    	void actualizarEstado(int id,InputMessage dataMsg);
 
 
@@ -72,8 +74,10 @@ public:
 
 private:
 
-    std::map<int,Player*> listOfPlayer;
-    std::map<int,GameObject*> listOfGameObject;
+    std::map<int,Player*> m_listOfPlayer;
+    std::map<int,std::string> m_playerNames;
+
+    std::map<int,GameObject*> m_listOfGameObjects;
 
     SDL_Window* m_pWindow;
     SDL_Renderer* m_pRenderer;

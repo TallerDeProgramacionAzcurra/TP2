@@ -12,6 +12,7 @@
 #include "MoveableObject.h"
 #include "Singletons/InputHandler.h"
 #include "Singletons/TextureManager.h"
+#include "Utils/TiposDefinidos.h"
 
 
 class Player : public MoveableObject
@@ -33,6 +34,7 @@ public:
 
     virtual void collision();
 
+    void setControllable(bool controllable) { m_controllable = controllable; }
     //Getters
     bool isDead() { return m_dead; }
     bool isDying() { return m_dying; }

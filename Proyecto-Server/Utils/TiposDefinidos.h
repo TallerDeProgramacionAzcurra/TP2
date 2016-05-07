@@ -14,10 +14,17 @@
 #define MESSAGE_CODE_BYTES 3
 #define MESSAGE_DATA_SIZE (MESSAGE_BUFFER_SIZE - MESSAGE_LENGTH_BYTES - MESSAGE_CODE_BYTES)
 #define MESSAGE_VALUE_SIZE (MESSAGE_DATA_SIZE - MESSAGE_ID_BYTES_LIMIT - 1)
+#define MAX_NAME_LENGTH 24
 
-#define DRAW_MESSAGE_SIZE 16
+#define DRAW_MESSAGE_SIZE 24
 #define INPUT_MESSAGE_SIZE 24
-#define CONNECTED_MESSAGE_SIZE 8
+#define CONNECTED_MESSAGE_SIZE 12
+#define CONNECTIONINFO_MESSAGE_SIZE 24
+#define PLAYER_DISCONNECTION_MESSAGE_SIZE 32
+
+#define BACKGROUND 1
+#define MIDDLEGROUND 10
+#define FOREGROUND 20
 
 #include <string>
 
@@ -57,14 +64,34 @@ struct NetworkMessage
 
 struct ConnectedMessage
 {
+	bool requestData;
+	bool connected;
 	int objectID;
 	int textureID;
 };
 
-struct DrawMessage
+struct ConnectionInfo
+{
+	char name[24];
+};
+
+struct PlayerDisconnection
 {
 	int objectID;
+	int layer;
+	char name[24];
+};
+
+struct DrawMessage
+{
+	bool unused1;
+	bool connectionStatus;
+	bool alive;
+	bool hasSound;
+	int objectID;
 	int textureID;
+	short soundID;
+	short layer;
 	short posX;
 	short posY;
 	short row;
@@ -80,11 +107,12 @@ struct InputMessage
 	short buttonLeft;
 	short buttonShoot;
 	short buttonReserved;//2 bytes reserved for future
-	short buttonShootNigaPower;
+	short buttonShootPower;
 	short buttonXpecialCombo;
 	short buttonCompressionSistem;
 	short actionID;
 };
+
 
 struct DataMessage
 {

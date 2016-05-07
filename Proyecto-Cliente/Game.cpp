@@ -5,10 +5,11 @@ Game* Game::s_pInstance = 0;
 Game::Game():
 m_pWindow(0),
 m_pRenderer(0),
+ m_timeOutCounter(0),
 m_running(false),
 m_scrollSpeed(0.8)
 {
-
+	m_player = new Player();
 }
 
 Game::~Game()
@@ -21,6 +22,8 @@ Game::~Game()
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int SDL_WINDOW_flag)
 {
+	askForName();
+
     // Tamaño de la ventana
     m_gameWidth = width;
     m_gameHeight = height;
@@ -28,6 +31,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
     if(SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
         cout << "SDL init success\n";
+
 
         m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_flag);
 
@@ -59,24 +63,11 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
         return false;
     }
 
-
-    //Provisorio rompen porq blackship water island son string... pone ints (hacer mapas primero)
     TextureManager::Instance()-> init();
-    TextureManager::Instance()->load("Assets/Sprites/BlackShip.png", 1, Game::Instance()->getRenderer());
-   // m_player->load(m_gameWidth/2, m_gameHeight/2, 38, 64, "blackship", 1);
-
-    /*  m_background = new Background();
-    m_background->load(0, 0, m_gameWidth, m_gameHeight, "water");
-
-    m_island = new Island();
-    m_island->load(0, m_gameHeight/2, 150, 150, "island", 1);
-    // en ms
-    m_island->setReappearanceTime(0);
-*/
-    m_player = new Player(true);
 
     if (!setUpKorea())
     	return false;
+
 
     //tudo ben
     m_running = true;
@@ -87,43 +78,146 @@ void Game::render()
 {
     SDL_RenderClear(m_pRenderer);
 
-    for (std::map<int,DrawObject*>::iterator it=listObjects.begin(); it!=listObjects.end(); ++it)
+    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+    {
+         it->second->draw();
+    }
+    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+    {
+         it->second->draw();
+    }
+    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
     {
          it->second->draw();
     }
 
-    //Dibujar lo que haya que dibujar
- /*   m_background->draw(); //Provisorio
-    m_island->draw(); //Provisorio
-    m_player->draw();//Provisorio
-*/
     SDL_RenderPresent(m_pRenderer);
 }
 void Game::interpretarDrawMsg(DrawMessage drwMsg){
-	/*printf("interpretando draw message del objeto %d\n",drwMsg.objectID);
-	printf("texture ID: %d \n",drwMsg.textureID);
-	printf("Pos X: %d \n",drwMsg.posX);
-	printf("Pos Y: %d \n",drwMsg.posY);*/
 
-	if ( listObjects.find(drwMsg.objectID) == listObjects.end() )
+	if ( existDrawObject(drwMsg.objectID, static_cast<int>(drwMsg.layer)))
 	{
-		printf("Creando nuevo objeto con objectID: %d\n", drwMsg.objectID);
-		DrawObject* newObject = new DrawObject();
+		if (drwMsg.connectionStatus == false)
+		{
+			disconnectObject(drwMsg.objectID, static_cast<int>(drwMsg.layer));
+		}
 
+		//Si existe y esta vivo lo actualia y sino lo quita del map
+		if (drwMsg.alive)
+		{
+			updateGameObject(drwMsg);
+		}
+		else
+		{
+			//printf("Destruyendo objeto con id: %d \n", drwMsg.objectID);
+			removeDrawObject(drwMsg.objectID, drwMsg.layer);
+		}
+	}
+	else //Si no existe en el mapa
+	{
+		if (!drwMsg.alive)
+			return;
+
+		//printf("Creando nuevo objeto con objectID: %d\n", drwMsg.objectID);
+
+		DrawObject* newObject = new DrawObject();
 		newObject->setObjectID(drwMsg.objectID);
+		newObject->setLayer(static_cast<int>(drwMsg.layer));
 		newObject->load(static_cast<int>(drwMsg.posX),static_cast<int>(drwMsg.posY),drwMsg.textureID);
 		newObject->setCurrentRow(static_cast<int>(drwMsg.row));
 		newObject->setCurrentFrame(static_cast<int>(drwMsg.column));
-
-		listObjects[drwMsg.objectID] = newObject;
-		//PARA BORRAR listObjects.erase(id);
-	}else
-	{
-		listObjects[drwMsg.objectID]->setCurrentRow(static_cast<int>(drwMsg.row));
-		listObjects[drwMsg.objectID]->setCurrentFrame(static_cast<int>(drwMsg.column));
-		listObjects[drwMsg.objectID]->setPosition(Vector2D(drwMsg.posX,drwMsg.posY));
+		addDrawObject(drwMsg.objectID, static_cast<int>(drwMsg.layer), newObject);
 	}
+	//PARA BORRAR listObjects.erase(id);
+}
 
+void Game::addDrawObject(int objectID, int layer, DrawObject* newDrawObject)
+{
+	switch(layer)
+	{
+	case BACKGROUND: backgroundObjects[objectID] = newDrawObject;
+			break;
+	case MIDDLEGROUND: middlegroundObjects[objectID] = newDrawObject;
+			break;
+	case FOREGROUND: foregroundObjects[objectID] = newDrawObject;
+			break;
+
+	default: middlegroundObjects[objectID] = newDrawObject;
+	}
+}
+
+void Game::updateGameObject(const DrawMessage drawMessage)
+{
+	switch(drawMessage.layer)
+	{
+	case BACKGROUND: backgroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
+			backgroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
+			backgroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+			break;
+
+	case MIDDLEGROUND: middlegroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
+			middlegroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
+			middlegroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+			break;
+
+	case FOREGROUND: foregroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
+			foregroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
+			foregroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+			break;
+
+	default: middlegroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
+			middlegroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
+			middlegroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+	}
+}
+
+void Game::removeDrawObject(int objectID, int layer)
+{
+	switch(layer)
+	{
+	case BACKGROUND:
+			delete backgroundObjects[objectID];
+			backgroundObjects.erase(objectID);
+			break;
+
+	case MIDDLEGROUND:
+		delete middlegroundObjects[objectID];
+		middlegroundObjects.erase(objectID);
+		break;
+
+	case FOREGROUND:
+		delete foregroundObjects[objectID];
+		foregroundObjects.erase(objectID);
+		break;
+	}
+}
+
+bool Game::existDrawObject(int objectID, int layer)
+{
+	switch(layer)
+	{
+	case BACKGROUND:
+			if (backgroundObjects.find(objectID) == backgroundObjects.end())
+			{
+				return false;
+			}
+			break;
+	case MIDDLEGROUND:
+			if (middlegroundObjects.find(objectID) == middlegroundObjects.end())
+			{
+				return false;
+			}
+			break;
+	case FOREGROUND:
+			if (foregroundObjects.find(objectID) == foregroundObjects.end())
+			{
+				return false;
+			}
+			break;
+
+	default: return true;
+	}
+	return true;
 }
 
 void Game::update()
@@ -151,9 +245,9 @@ bool Game::setUpKorea()
 
 	    string ip = parsersito->getConexionInfo().ip;
 	    int porto = parsersito->getConexionInfo().puerto;
-	    std::vector<Mensaje> listaDeMensajes = parsersito->getListaMensajes() ;
 
-	    m_client = new cliente(3,ip,porto, listaDeMensajes);
+
+	    m_client = new cliente(3,ip,porto, m_playerName);
 
 	    if (!conectToKorea())
 	    	return false;
@@ -162,10 +256,63 @@ bool Game::setUpKorea()
 
 }
 
+void Game::askForName()
+{
+    pedirNombre:
+	printf("Ingrese el nombre con el que desea conectarse \n");
+    char name[24];
+    cin.getline(name, 24);
+    std::string playerName(name);
+    if (playerName.length() <= 0)
+    {
+    	printf("Nombre Invalido \n");
+    	goto pedirNombre;
+    }
+    m_playerName = playerName;
+}
+
 void Game::createPlayer(int objectID, int textureID)
 {
 	//m_player = new Player();
 	m_player->setObjectID(objectID);
+}
+
+void Game::disconnectObject(int objectID, int layer)
+{
+	//Armo color gris
+	Uint8 r = 0xCC;
+	Uint8 g = 0xCC;
+	Uint8 b = 0xCC;
+
+	switch(layer)
+	{
+	case BACKGROUND:
+		TextureManager::Instance()->changeTextureColor(backgroundObjects[objectID]->getTextureId(), r, g, b);
+		break;
+	case MIDDLEGROUND:
+		TextureManager::Instance()->changeTextureColor(middlegroundObjects[objectID]->getTextureId(), r, g, b);
+		break;
+	case FOREGROUND:
+		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
+		break;
+	default:
+		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
+	}
+}
+
+void Game::disconnect()
+{
+	m_player->setControllable(false);
+
+	//Armo color gris
+	Uint8 r = 0xCC;
+	Uint8 g = 0xCC;
+	Uint8 b = 0xCC;
+
+	//hardcodeado el layer del player
+	TextureManager::Instance()->changeTextureColor(m_player->getTextureId(), r, g, b);
+
+	m_running = false;
 }
 
 bool Game::conectToKorea()
@@ -205,23 +352,57 @@ void Game::readFromKorea()
 	pthread_create(&listenThread, NULL, &Game::thread_method, (void*)this);
 
 }
+
+bool Game::updateTimeOut()
+{
+	if (m_client->checkServerConnection() == false)
+		return false;
+
+	if (m_timeOutCounter >= TiMEOUT_MESSAGE_RATE)
+	{
+		NetworkMessage netMsg;
+		netMsg.msg_Code[0] = 't';
+		netMsg.msg_Code[1] = 'm';
+		netMsg.msg_Code[2] = 'o';
+		m_client->sendNetworkMsg(netMsg);
+		netMsg.msg_Length =  MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+		m_timeOutCounter = 0;
+	}
+	else
+	{
+		m_timeOutCounter += GameTimeHelper::Instance()->deltaTime();
+	}
+	return true;
+}
+
 void Game::clean()
 {
     cout << "cleaning game\n";
 
-    for (std::map<int,DrawObject*>::iterator it=listObjects.begin(); it!=listObjects.end(); ++it)
+    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
     	it->second->clean();
 		delete it->second;
     }
-   /* delete m_background; //Provisorio
-    delete m_island; //Provisorio
-    delete m_player; //Provisorio*/
+    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+    {
+    	it->second->clean();
+		delete it->second;
+    }
+    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+    {
+    	it->second->clean();
+		delete it->second;
+    }
 
+    //delete m_player; //Provisorio
 
     InputHandler::Instance()->clean();
     TextureManager::Instance()->clearTextureMap();
-    listObjects.clear();
+    backgroundObjects.clear();
+    middlegroundObjects.clear();
+    foregroundObjects.clear();
 
     SDL_DestroyWindow(m_pWindow);
     SDL_DestroyRenderer(m_pRenderer);

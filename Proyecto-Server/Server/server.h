@@ -36,12 +36,17 @@ class server
         void aceptar();
         void escribir(int id);
         bool leer(int id);
+        bool leerBloqueando(int id);
         void closeAllsockets();
         const int getMaxClientes();
         const int getNumClientes();
-        void sendToAll(DrawMessage msg);
+        void sendNetworkMsg(int socketReceptor, NetworkMessage netMsg);
+        void sendDrawMsgToAll(DrawMessage msg);
         void sendDrawMsg(int socketReceptor, DrawMessage msg);
         void sendConnectedMsg(int socketReceptor, ConnectedMessage msg);
+        void sendDisconnectionMsg(int socketReceptor, PlayerDisconnection msg);
+        void informPlayerDisconnection(PlayerDisconnection, int playerDiscID);
+
         bool isRunning();
 
         void encolarDrawMessage(DrawMessage);
@@ -57,7 +62,7 @@ class server
         const int MAX_CLIENTES;
         AlanTuring* m_alanTuring;
         multiqueue<ServerMessage> m_mensajesAProcesar;
-        std::vector<multiqueue<DrawMessage>> m_queuePost;
+        std::vector<multiqueue<NetworkMessage>> m_queuePost;
         bool m_svRunning;
         int m_clientNum;
         ListaInteligente<int> m_listaDeClientes;
@@ -67,6 +72,7 @@ class server
         std::vector<pthread_t> m_clientResponseThreads;
 
         int m_lastID;
+        bool m_successfulPlayerCreation;
         pthread_mutex_t  m_mutex;
         pthread_cond_t   m_condv;
 

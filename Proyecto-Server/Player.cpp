@@ -10,19 +10,14 @@
 using namespace std;
 
 Player::Player() :  MoveableObject(),
-					m_controllable(true),
+					m_connected(true),
 					m_dead(false),
 					m_dying(false)
 {
 	m_tag = "Player";
-}
-
-Player::Player(bool canControl) :  MoveableObject(),
-									m_dead(false),
-									m_dying(false)
-{
-	m_controllable = canControl;
-	m_tag = "Player";
+	m_layer = FOREGROUND;
+	m_currentWeapon = new BasicWeapon();
+	m_shootOffset = Vector2D(15, -5);
 }
 
 void Player::collision()
@@ -51,18 +46,12 @@ void Player::draw()
 void Player::update()
 {
 	MoveableObject::update();
+	m_currentWeapon->update();
+
 	//Probar valores para animacion
 	//m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
 
-	DrawMessage drawMsg;
-	drawMsg.objectID = m_objectId;
-	//printf("Enviando objectID %d\n", drawMsg.objectID);
-	drawMsg.column = m_currentFrame;
-	drawMsg.row = m_currentRow;
-	drawMsg.posX = m_position.getX();
-	drawMsg.posY = m_position.getY();
-	drawMsg.textureID = m_textureID;
-	Game::Instance()->sendToAllClients(drawMsg);
+	sendDrawMessage(true);
 
 	m_direction.setX(0);
 	m_direction.setY(0);
@@ -72,6 +61,8 @@ void Player::update()
 void Player::clean()
 {
     MoveableObject::clean();
+
+	delete m_currentWeapon;
 }
 
 void Player::handleInput(InputMessage inputMsg)
@@ -99,8 +90,31 @@ void Player::handleInput(InputMessage inputMsg)
         }
         //Se mueve a velocidades constantes. Evita que vaay a mayot velocidad en diagonal
         m_direction.normalize();
-        printf("Direcion = %f , %f \n", m_direction.m_x, m_direction.m_y);
+
+        if (inputMsg.buttonShoot)
+        	m_currentWeapon->shoot(Vector2D(m_position.getX() + m_shootOffset.getX(), m_position.getY() + m_shootOffset.getY()));
+
+        //printf("Direcion = %f , %f \n", m_direction.m_x, m_direction.m_y);
 
     }
-    update();
+    //update();
+}
+
+void Player::sendDrawMessage(bool isAlive)
+{
+	DrawMessage drawMsg;
+	drawMsg.connectionStatus = m_connected;
+	drawMsg.unused1 = false;
+	drawMsg.alive = isAlive;
+	drawMsg.hasSound = false;
+
+	drawMsg.objectID = m_objectId;
+	drawMsg.layer = m_layer;
+	drawMsg.soundID = 0;
+	drawMsg.column = m_currentFrame;
+	drawMsg.row = m_currentRow;
+	drawMsg.posX = m_position.getX();
+	drawMsg.posY = m_position.getY();
+	drawMsg.textureID = m_textureID;
+	Game::Instance()->sendToAllClients(drawMsg);
 }

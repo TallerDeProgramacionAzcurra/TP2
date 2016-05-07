@@ -3,8 +3,12 @@
 
 
 #include "MoveableObject.h"
-#include "Singletons/InputHandler.h";
-#include "Singletons/TextureManager.h";
+#include "Weapons/Weapon.h"
+#include "Vector2D.h"
+#include "Singletons/InputHandler.h"
+#include "Singletons/TextureManager.h"
+#include "Utils/TiposDefinidos.h"
+#include "Weapons/BasicWeapon.h"
 
 class Player : public MoveableObject
 {
@@ -23,18 +27,24 @@ public:
     virtual void handleInput(InputMessage dataMsg);
     virtual void clean();
 
+    void sendDrawMessage(bool isAlive);
+
     virtual void collision();
 
+    void setConnected(bool connected) { m_connected = connected; }
     //Getters
     bool isDead() { return m_dead; }
     bool isDying() { return m_dying; }
+    bool isConnected() { return m_connected; }
 
 
 private:
 
+    Weapon* m_currentWeapon;
+    Vector2D m_shootOffset;
     // Determina si el usuario puede controlar este player o no. Sirve por si hay varias instancias de Player en juego.
     // Si m_controllable es false, el Player no reaccionará a eventos de Input
-    bool m_controllable;
+    bool m_connected;
 
     // variables de control de estado
     bool m_dead;
