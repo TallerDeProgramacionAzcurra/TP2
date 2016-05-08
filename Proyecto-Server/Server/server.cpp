@@ -47,7 +47,7 @@ server::~server()
 {
 	closeAllsockets();
 	m_listaDeClientes.clear();
-	//m_listaTimeOuts.clear();
+	m_listaTimeOuts.clear();
 	m_queuePost.clear();
 
 	delete m_alanTuring;
@@ -126,7 +126,6 @@ bool server::crearCliente (int clientSocket)
 		return false;
 	}
 
-	agregarTimeOutTimer(m_lastID);
 
 	//Envia solicitud de datos de coneccion
 	ConnectedMessage connectedMsg;
@@ -143,7 +142,7 @@ bool server::crearCliente (int clientSocket)
 		m_listaDeClientes.removeAt(m_lastID);
 		close(clientSocket);
 
-		 return false;
+		return false;
 	}
 
 	//Informa resultado del procesamiento de la informacion de coneccion
@@ -156,13 +155,14 @@ bool server::crearCliente (int clientSocket)
 		removeTimeOutTimer(m_lastID);
 		m_listaDeClientes.removeAt(m_lastID);
 		close(clientSocket);
-		return false;;
+		return false;
 	}
 
 
 	//DEBE AVISAR EL RESULTADO. SI PUDO O NO CREAR EL JUGADOR
 
 	aumentarNumeroClientes();
+	agregarTimeOutTimer(m_lastID);
 
 	//printf("se agrego en la posicion %d \n", m_lastID);
 
@@ -180,6 +180,8 @@ bool server::crearCliente (int clientSocket)
 void server::agregarTimeOutTimer(int clientPosition)
 {
 	//comienza el timer
+	Timer timer;
+	m_listaTimeOuts.addAt(clientPosition, timer);
 	m_listaTimeOuts.getElemAt(clientPosition).Reset();
 	m_listaTimeOuts.getElemAt(clientPosition).Start();
 }
@@ -234,6 +236,25 @@ void server::informPlayerDisconnection(PlayerDisconnection playerDiscMsg, int pl
 	     }
 	 }
 }
+
+
+void server::informGameBeginning(){
+
+	NetworkMessage gameBeginningMsg;
+	gameBeginningMsg.msg_Code[0] = 'g';
+	gameBeginningMsg.msg_Code[1] = 'b';
+	gameBeginningMsg.msg_Code[2] = 'g';
+	gameBeginningMsg.msg_Length = MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	 for (int i = 0; i < m_listaDeClientes.size(); i++)
+	 {
+	     if ( m_listaDeClientes.isAvailable(i))
+	     {
+
+	    	 m_queuePost[i].add(gameBeginningMsg);
+	     }
+	 }
+}
+
 
 void server::sendDrawMsg(int socketReceptor, DrawMessage msg)
 {
@@ -358,10 +379,10 @@ bool server::leer(int id)
     	return false;
 
     int acum = n;
-    while (n < 4)
+    while (acum < MESSAGE_LENGTH_BYTES)
     {
  	   p += n;
- 	   n = recv(m_listaDeClientes.getElemAt(id), p, MESSAGE_LENGTH_BYTES, 0);
+ 	   n = recv(m_listaDeClientes.getElemAt(id), p, MESSAGE_LENGTH_BYTES - acum, 0);
        if (!lecturaExitosa(n, id))
        	return false;
  	   acum += n;
@@ -428,7 +449,9 @@ void server::checkTimeOuts()
 	for (int i = 0; i < m_listaTimeOuts.size(); ++i)
 	{
 		if ((!m_listaTimeOuts.isAvailable(i)) || (!m_listaDeClientes.isAvailable(i)))
+		{
 			continue;
+		}
 		//printf("Timer del server = %f\n", (float)m_listaTimeOuts.getElemAt(i).GetTicks()/CLOCKS_PER_SEC);
 		if ((long double)(m_listaTimeOuts.getElemAt(i).GetTicks()/CLOCKS_PER_SEC) >= TIMEOUT_SECONDS)
 		{
@@ -508,7 +531,6 @@ void server::closeSocket(int id)
 	removeTimeOutTimer(id);
 
 	Game::Instance()->disconnectPlayer(id);
-	PlayerDisconnection playerDiscMessage;
 
 	reducirNumeroClientes();
 	close(m_listaDeClientes.getElemAt(id));
@@ -598,8 +620,8 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 	{
 		NetworkMessage timeOutMsg;
 		timeOutMsg.msg_Code[0] = 't';
-		timeOutMsg.msg_Code[0] = 'm';
-		timeOutMsg.msg_Code[0] = 'o';
+		timeOutMsg.msg_Code[1] = 'm';
+		timeOutMsg.msg_Code[2] = 'o';
 		timeOutMsg.msg_Length = MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 		//agrega solo en el cliente del cual recibio el mensaje
