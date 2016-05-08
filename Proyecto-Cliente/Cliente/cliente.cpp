@@ -324,6 +324,7 @@ void cliente::setTimeOut()
 
 void cliente::procesarMensaje(NetworkMessage networkMessage)
 {
+	//Timeout
 	if ((networkMessage.msg_Code[0] == 't') && (networkMessage.msg_Code[1] == 'm') && (networkMessage.msg_Code[2] == 'o'))
 	{
 		//TimeOut ACK, lo dej opor si en el futuro queremos hacer algo extra
@@ -331,6 +332,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		return;
 	}
 
+	//Mensaje de coneccion con el servidor
 	if ((networkMessage.msg_Code[0] == 'c') && (networkMessage.msg_Code[1] == 'n') && (networkMessage.msg_Code[2] == 't'))
 	{
 		ConnectedMessage connectedMessage = m_alanTuring->decodeConnectedMessage(networkMessage);
@@ -377,6 +379,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 
 		return;
 	}
+	//Servidor Lleno
 	if ((networkMessage.msg_Code[0] == 'f') && (networkMessage.msg_Code[1] == 'u') && (networkMessage.msg_Code[2] == 'l'))
 	{
 		//El server esta lleno. Patear
@@ -389,6 +392,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 	}
 
 
+	//Draw Message
 	if ((networkMessage.msg_Code[0] == 'd') && (networkMessage.msg_Code[1] == 'm') && (networkMessage.msg_Code[2] == 's'))
 	{
 		DrawMessage drwMsg = m_alanTuring->decodeDrawMessage(networkMessage);
@@ -396,7 +400,16 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 			//Logger::Instance()->LOG("Se envio drwMsg a interpretar\n", DEBUG);
 		return;
 	}
+	//Draw Message Package
+	if ((networkMessage.msg_Code[0] == 'd') && (networkMessage.msg_Code[1] == 'm') && (networkMessage.msg_Code[2] == 'p'))
+	{
+		DrawMessagePack drwMsgPackage = m_alanTuring->decodeDrawMessagePackage(networkMessage);
+		procesarDrawPackage(drwMsgPackage);
+			//Logger::Instance()->LOG("Se envio drwMsg a interpretar\n", DEBUG);
+		return;
+	}
 
+	//Desconeccion de un jugador
 	if ((networkMessage.msg_Code[0] == 'p') && (networkMessage.msg_Code[1] == 'd') && (networkMessage.msg_Code[2] == 'c'))
 	{
 		PlayerDisconnection playerDiscMsg = m_alanTuring->decodePlayerDisconnectionMessage(networkMessage);
@@ -410,6 +423,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 	}
 
 
+	//Game Beginning
 	if ((networkMessage.msg_Code[0] == 'g') && (networkMessage.msg_Code[1] == 'b') && (networkMessage.msg_Code[2] == 'g'))
 	{
 		Game::Instance()->setGameStarted(true);
@@ -480,4 +494,14 @@ bool cliente::lecturaExitosa(int bytesLeidos)
 		return false;
     }
 	return true;
+}
+
+void cliente::procesarDrawPackage(DrawMessagePack drawMsgPackage)
+{
+	int drawMessagesAmount = (drawMsgPackage.totalSize - sizeof(int)) / sizeof(DrawMessage);
+	for (int i = 0; i < drawMessagesAmount; i++)
+	{
+		DrawMessage drawMessage = drawMsgPackage.drawMessages[i];
+		Game::Instance()->interpretarDrawMsg(drawMessage);
+	}
 }

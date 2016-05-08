@@ -1,13 +1,12 @@
-Server/server.d: ../Server/server.cpp ../Server/server.h \
- ../Server/ListaInteligente.h ../Server/AlanTuring.h \
+Server/DrawMessagesPacker.d: ../Server/DrawMessagesPacker.cpp \
+ ../Server/DrawMessagesPacker.h ../Server/../Utils/TiposDefinidos.h \
+ ../Server/server.h ../Server/ListaInteligente.h ../Server/AlanTuring.h \
  ../Server/../Utils/Logger.h ../Server/../Utils/Time.h \
- ../Server/../Utils/TiposDefinidos.h ../Server/multiqueue.h \
- ../Server/ServerMessage.h ../Server/../Utils/Timer.h \
- ../Server/MessageFactory.h ../Server/../Utils/StringHelper.h \
- ../Server/../Game.h ../Server/../Server/server.h \
- ../Server/../Server/DrawMessagesPacker.h \
- ../Server/../Server/../Utils/TiposDefinidos.h \
- ../Server/../Server/server.h ../Server/../Utils/Parser/ParserServidor.h \
+ ../Server/multiqueue.h ../Server/ServerMessage.h \
+ ../Server/../Utils/Timer.h ../Server/MessageFactory.h \
+ ../Server/../Utils/StringHelper.h ../Server/../Game.h \
+ ../Server/../Server/server.h ../Server/../Server/DrawMessagesPacker.h \
+ ../Server/../Utils/Parser/ParserServidor.h \
  ../Server/../Utils/Parser/Parser.h ../Server/../Utils/Parser/../Logger.h \
  ../Server/../Utils/Parser/../TiposDefinidos.h \
  ../Server/../Utils/Parser/../pugixml/pugixml.hpp \
@@ -38,6 +37,10 @@ Server/server.d: ../Server/server.cpp ../Server/server.h \
  ../Server/../Vector2D.h ../Server/../Utils/TiposDefinidos.h \
  ../Server/../Weapons/BasicWeapon.h ../Server/../Weapons/Weapon.h
 
+../Server/DrawMessagesPacker.h:
+
+../Server/../Utils/TiposDefinidos.h:
+
 ../Server/server.h:
 
 ../Server/ListaInteligente.h:
@@ -47,8 +50,6 @@ Server/server.d: ../Server/server.cpp ../Server/server.h \
 ../Server/../Utils/Logger.h:
 
 ../Server/../Utils/Time.h:
-
-../Server/../Utils/TiposDefinidos.h:
 
 ../Server/multiqueue.h:
 
@@ -65,10 +66,6 @@ Server/server.d: ../Server/server.cpp ../Server/server.h \
 ../Server/../Server/server.h:
 
 ../Server/../Server/DrawMessagesPacker.h:
-
-../Server/../Server/../Utils/TiposDefinidos.h:
-
-../Server/../Server/server.h:
 
 ../Server/../Utils/Parser/ParserServidor.h:
 

@@ -12,6 +12,8 @@ Singletons/InputHandler.d: ../Singletons/InputHandler.cpp \
  ../Singletons/../Server/MessageFactory.h \
  ../Singletons/../Server/../Utils/StringHelper.h \
  ../Singletons/../Server/../Game.h \
+ ../Singletons/../Server/DrawMessagesPacker.h \
+ ../Singletons/../Server/server.h \
  ../Singletons/../Utils/Parser/ParserServidor.h \
  ../Singletons/../Utils/Parser/Parser.h \
  ../Singletons/../Utils/Parser/../Logger.h \
@@ -73,6 +75,10 @@ Singletons/InputHandler.d: ../Singletons/InputHandler.cpp \
 ../Singletons/../Server/../Utils/StringHelper.h:
 
 ../Singletons/../Server/../Game.h:
+
+../Singletons/../Server/DrawMessagesPacker.h:
+
+../Singletons/../Server/server.h:
 
 ../Singletons/../Utils/Parser/ParserServidor.h:
 

@@ -3,25 +3,28 @@
 
 
 #include "Server/server.h"
+#include "Server/DrawMessagesPacker.h"
 #include "Utils/Parser/ParserServidor.h"
 #include "Background/Island.h"
 #include "Background/Background.h"
 #include "Singletons/InputHandler.h"
 #include "Singletons/TextureManager.h"
 #include "Weapons/BulletsHandler.h"
+#include "Player.h"
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <sstream>
-#include "Player.h"
 #include <map>
 #include <string>
 using namespace std;
 
 class Island;
 class Background;
-class server;
 class Player;
+class server;
+class DrawMessagesPacker;
 
+#define USE_DRAWMESSAGE_PACKAGING 1
 
 class Game
 {
@@ -51,7 +54,10 @@ public:
     void disconnectPlayer(int playerId);
     void setUpKorea();
     void conectToKorea();
-    void sendToAllClients(DrawMessage mensaje);
+    void sendToAllClients(DrawMessage drawMsg);
+    void addToPackage(DrawMessage drawMsg);
+    void sendPackages();
+
    	void* koreaMethod(void);
    	void readFromKorea();
 
@@ -86,7 +92,11 @@ private:
     Player* m_player;
     Background* m_background;
     Island* m_island;
+
     server* m_server;
+    DrawMessagesPacker* m_drawMessagePacker;
+
+
     bool m_running;
 
     static Game* s_pInstance;

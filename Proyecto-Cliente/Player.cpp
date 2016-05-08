@@ -76,10 +76,10 @@ void Player::handleInput()
 	inputMsg.buttonRight=0;
 	inputMsg.buttonLeft=0;
 	inputMsg.buttonShoot=0;
-	inputMsg.buttonReserved=0;//2 bytes reserved for future
-	inputMsg.buttonShootPower=0;
-	inputMsg.buttonXpecialCombo=0;
-	inputMsg.buttonCompressionSistem=0;
+	//inputMsg.buttonReserved=0;//2 bytes reserved for future
+	//inputMsg.buttonShootPower=0;
+	//inputMsg.buttonXpecialCombo=0;
+	//inputMsg.buttonCompressionSistem=0;
 	inputMsg.actionID=0;
 	bool dirty = false;
 

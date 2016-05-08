@@ -11,11 +11,9 @@
 #include "Singletons/GameTimeHelper.h"
 #include <iostream>
 
-#include "Singletons/GameTimeHelper.h"
-
 using namespace std;
 
-const int FPS = 30;
+const int FPS = 60;
 const int DELAY_TIME = 1000.0f / FPS;
 
 int main(int argc, char **argv)
@@ -32,10 +30,16 @@ int main(int argc, char **argv)
 		std::cout << "game init success!\n";
 
 		//Bucle del juego
-		while (Game::Instance()->isRunning()) {
+		while (Game::Instance()->isRunning())
+		{
 			frameStartTime = SDL_GetTicks();
 			//Game::Instance()->handleEvents();
 			Game::Instance()->update();
+
+			if (USE_DRAWMESSAGE_PACKAGING)
+			{
+				Game::Instance()->sendPackages();
+			}
 
 			frameEndTime = SDL_GetTicks() - frameStartTime;
 
@@ -43,14 +47,16 @@ int main(int argc, char **argv)
 			if (frameEndTime < DELAY_TIME) {
 				SDL_Delay((int) ((DELAY_TIME - frameEndTime)));
 				GameTimeHelper::Instance()->updateDeltaTime(DELAY_TIME);
+				//printf("FPS: %d \n", (1000/ DELAY_TIME));
             }
 			else
 			{
 				GameTimeHelper::Instance()->updateDeltaTime(frameEndTime);
+				//printf("FPS: %d \n", (1000/ frameEndTime));
 			}
 
-
         }
+
     }
     else
     {

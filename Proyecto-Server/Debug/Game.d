@@ -4,9 +4,9 @@ Game.d: ../Game.cpp ../Game.h ../Server/server.h \
  ../Server/../Utils/TiposDefinidos.h ../Server/multiqueue.h \
  ../Server/ServerMessage.h ../Server/../Utils/Timer.h \
  ../Server/MessageFactory.h ../Server/../Utils/StringHelper.h \
- ../Server/../Game.h ../Utils/Parser/ParserServidor.h \
- ../Utils/Parser/Parser.h ../Utils/Parser/../Logger.h \
- ../Utils/Parser/../TiposDefinidos.h \
+ ../Server/../Game.h ../Server/DrawMessagesPacker.h ../Server/server.h \
+ ../Utils/Parser/ParserServidor.h ../Utils/Parser/Parser.h \
+ ../Utils/Parser/../Logger.h ../Utils/Parser/../TiposDefinidos.h \
  ../Utils/Parser/../pugixml/pugixml.hpp \
  ../Utils/Parser/../pugixml/pugiconfig.hpp ../Background/Island.h \
  ../Background/BackgroundObject.h ../Background/../GameObject.h \
@@ -51,6 +51,10 @@ Game.d: ../Game.cpp ../Game.h ../Server/server.h \
 ../Server/../Utils/StringHelper.h:
 
 ../Server/../Game.h:
+
+../Server/DrawMessagesPacker.h:
+
+../Server/server.h:
 
 ../Utils/Parser/ParserServidor.h:
 

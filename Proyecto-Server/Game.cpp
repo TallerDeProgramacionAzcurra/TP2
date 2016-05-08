@@ -149,6 +149,9 @@ void Game::setUpKorea()
 	printf("Cargo maxClientes: %d \n",maxClientes);
 	printf("Creando enlazamiento\n");
 	m_server = new server(porto, maxClientes);
+
+    m_drawMessagePacker = new DrawMessagesPacker(m_server);
+
 	printf("Se pone a escuchar\n");
 	m_server->escuchar();
 
@@ -169,6 +172,18 @@ void Game::sendToAllClients(DrawMessage mensaje)
 {
 	m_server->sendDrawMsgToAll(mensaje);
 }
+
+void Game::addToPackage(DrawMessage drawMsg)
+{
+	m_drawMessagePacker->addDrawMessage(drawMsg);
+}
+void Game::sendPackages()
+{
+	m_drawMessagePacker->sendPackedMessages();
+}
+
+
+
 void* Game::koreaMethod(void)
 {
 
@@ -220,6 +235,9 @@ void Game::clean()
     m_listOfPlayer.clear();
     m_listOfGameObjects.clear();
     m_playerNames.clear();
+
+    m_drawMessagePacker->clean();
+    delete m_drawMessagePacker;
 
     InputHandler::Instance()->clean();
     TextureManager::Instance()->clearTextureMap();

@@ -42,6 +42,7 @@ class server
         const int getNumClientes();
         void sendNetworkMsg(int socketReceptor, NetworkMessage netMsg);
         void sendDrawMsgToAll(DrawMessage msg);
+        void sendPackToAll(DrawMessagePack msg);
         void sendDrawMsg(int socketReceptor, DrawMessage msg);
         void sendConnectedMsg(int socketReceptor, ConnectedMessage msg);
         void sendDisconnectionMsg(int socketReceptor, PlayerDisconnection msg);

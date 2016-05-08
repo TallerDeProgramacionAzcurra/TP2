@@ -223,6 +223,18 @@ void server::sendDrawMsgToAll(DrawMessage drawMsg){
 	 }
 }
 
+void server::sendPackToAll(DrawMessagePack drawPackMsg){
+
+	 for (int i = 0; i < m_listaDeClientes.size(); i++)
+	 {
+	     if ( m_listaDeClientes.isAvailable(i))
+	     {
+	    	 NetworkMessage netMsg = m_alanTuring->drawMsgPackToNetwork(drawPackMsg);
+	    	 m_queuePost[i].add(netMsg);
+	     }
+	 }
+}
+
 void server::informPlayerDisconnection(PlayerDisconnection playerDiscMsg, int playerDiscID){
 
 	 for (int i = 0; i < m_listaDeClientes.size(); i++)

@@ -18,6 +18,8 @@ Background/Background.d: ../Background/Background.cpp \
  ../Background/../Server/MessageFactory.h \
  ../Background/../Server/../Utils/StringHelper.h \
  ../Background/../Server/../Game.h \
+ ../Background/../Server/DrawMessagesPacker.h \
+ ../Background/../Server/server.h \
  ../Background/../Utils/Parser/ParserServidor.h \
  ../Background/../Utils/Parser/Parser.h \
  ../Background/../Utils/Parser/../Logger.h \
@@ -91,6 +93,10 @@ Background/Background.d: ../Background/Background.cpp \
 ../Background/../Server/../Utils/StringHelper.h:
 
 ../Background/../Server/../Game.h:
+
+../Background/../Server/DrawMessagesPacker.h:
+
+../Background/../Server/server.h:
 
 ../Background/../Utils/Parser/ParserServidor.h:
 

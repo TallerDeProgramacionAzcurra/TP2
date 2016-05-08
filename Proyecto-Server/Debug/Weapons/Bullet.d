@@ -11,7 +11,8 @@ Weapons/Bullet.d: ../Weapons/Bullet.cpp ../Weapons/Bullet.h \
  ../Weapons/../Server/../Utils/Timer.h \
  ../Weapons/../Server/MessageFactory.h \
  ../Weapons/../Server/../Utils/StringHelper.h \
- ../Weapons/../Server/../Game.h \
+ ../Weapons/../Server/../Game.h ../Weapons/../Server/DrawMessagesPacker.h \
+ ../Weapons/../Server/server.h \
  ../Weapons/../Utils/Parser/ParserServidor.h \
  ../Weapons/../Utils/Parser/Parser.h \
  ../Weapons/../Utils/Parser/../Logger.h \
@@ -78,6 +79,10 @@ Weapons/Bullet.d: ../Weapons/Bullet.cpp ../Weapons/Bullet.h \
 ../Weapons/../Server/../Utils/StringHelper.h:
 
 ../Weapons/../Server/../Game.h:
+
+../Weapons/../Server/DrawMessagesPacker.h:
+
+../Weapons/../Server/server.h:
 
 ../Weapons/../Utils/Parser/ParserServidor.h:
 
