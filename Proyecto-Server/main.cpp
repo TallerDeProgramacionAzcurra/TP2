@@ -20,14 +20,12 @@ int main(int argc, char **argv)
 {
     int frameStartTime, frameEndTime;
 
-	std::cout << "Abriendo Server...\n";
-
 	Random::initialize();
 
 	if (Game::Instance()->init("1942 Ultraa Diesel", 400, 150, 800, 600)) //flag por ejemplo: SDL_WINDOW_FULLSCREEN_DESKTOP
 
 	{
-		std::cout << "game init success!\n";
+		Logger::Instance()->LOG("Server: El juego ha comenzado correctamente", DEBUG);
 
 		//Bucle del juego
 		while (Game::Instance()->isRunning())
@@ -56,15 +54,14 @@ int main(int argc, char **argv)
 			}
 
         }
-
+		Logger::Instance()->LOG("Server: El juego se esta cerrando", DEBUG);
     }
     else
     {
-        std::cout << "game init failure - " << SDL_GetError() << "\n";
+    	std::cout << "game init failure - " << SDL_GetError() << "\n";
         return -1;
     }
 
-    std::cout << "game closing...\n";
     Game::Instance()->clean();
 
     return 0;

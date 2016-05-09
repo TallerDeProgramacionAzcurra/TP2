@@ -29,11 +29,7 @@ int main(int argc, char **argv)
 
 	if (Game::Instance()->init("1942 Ultraa Diesel", 400, 150, 800, 600, SDL_WINDOWPOS_CENTERED)) //flag por ejemplo: SDL_WINDOW_FULLSCREEN_DESKTOP
 	{
-		std::cout << "game init success!\n";
-
-		std::cout << "Game Online!\n";
-
-
+		Logger::Instance()->LOG("Cliente: El juego ha comenzado correctamente", DEBUG);
 
 		//Bucle del juego
 		while (Game::Instance()->isRunning()) {
@@ -62,6 +58,7 @@ int main(int argc, char **argv)
 			//printf("FPS: %d \n", (1000/ frameEndTime));
 
         }
+		Logger::Instance()->LOG("Cliente: El juego se esta cerrando", DEBUG);
     }
     else
     {
@@ -70,7 +67,6 @@ int main(int argc, char **argv)
     }
 
 	//printf("FPS PROMEDIO: %d \n", (fpsCount/ framesCount));
-    std::cout << "game closing...\n";
     Game::Instance()->clean();
 
     return 0;

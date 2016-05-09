@@ -44,7 +44,6 @@ bool cliente::conectar()
 		cerrarSoket();
 	}
 	m_connecting = false;
-	printf("m_connected %d \n",m_connected);
     return m_connected;
 }
 void cliente::desconectar()
@@ -70,9 +69,7 @@ cliente::cliente(int argc, string ip, int port, std::string name){
     pthread_cond_init(&m_condv, NULL);
 
     portno = port;
-	printf("Cargo Puerto: %d \n",portno);
-	cout << ip;
-    /*sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	/*sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
     	error("Cliente: Error en la creación del socket");*/
     const char* ip1 = ip.c_str();
@@ -345,7 +342,6 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 			connectionInfo.name[length]='\0';
 
 			sendConnectionInfoMsg(connectionInfo);
-			printf("Envio el nombre: %s \n", connectionInfo.name);
 			if (!leer())
 			{
 				printf("No se pudo terminar el proceso de conexion\n");
@@ -355,11 +351,10 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		}
 		if (connectedMessage.connected && !connectedMessage.requestData)
 		{
-			printf("Conectado con id: %d \n", connectedMessage.objectID);
 			Game::Instance()->createPlayer(connectedMessage.objectID, connectedMessage.textureID);
 			//El cliente se conecto con exito.
 			printf("Conección con el server exitosa. \n");
-			Logger::Instance()->LOG("Cliente: Conección al servidor exitosa.\n", DEBUG);
+			Logger::Instance()->LOG("Cliente: Conección al servidor exitosa.", DEBUG);
 		}
 
 		if (!connectedMessage.connected && !connectedMessage.requestData)

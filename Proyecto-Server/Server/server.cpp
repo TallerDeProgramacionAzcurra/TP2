@@ -433,7 +433,7 @@ bool server::leer(int id)
 
 void* server::procesar(void)
 {
-	printf("Procesando informacion confidencial, hakeando la base de datos de la nasa\n");
+	//printf("Procesando informacion confidencial, hakeando la base de datos de la nasa\n");
 	while(this->isRunning())
 	{
 

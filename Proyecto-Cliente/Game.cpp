@@ -31,19 +31,14 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
     if(SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
-        cout << "SDL init success\n";
-
-
         m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_flag);
 
         if(m_pWindow != 0)
         {
-            cout << "window creation success\n";
             m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, SDL_RENDERER_SOFTWARE);
 
             if(m_pRenderer != 0)
             {
-                cout << "renderer creation success\n";
                 SDL_SetRenderDrawColor(m_pRenderer, 0,0,0,255);
             }
             else
@@ -339,7 +334,7 @@ void Game::sendToKorea(InputMessage mensaje)
 
 void* Game::koreaMethod(void)
 {
-	std::cout << "Empece a ciclar bitches!\n";
+	//std::cout << "Empece a ciclar bitches!\n";
 	while (Game::Instance()->isRunning()) {
 			m_client->leer();
 	}

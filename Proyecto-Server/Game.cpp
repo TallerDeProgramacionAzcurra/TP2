@@ -34,7 +34,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
    m_background = new Background();
    m_background->load(0, 0, m_gameWidth, m_gameHeight, 2);
    m_background->setLayer(BACKGROUND);
-	printf("Background inicializado con objectID: %d y textureID: %d y layer : %d\n", m_background->getObjectId(), 2, m_background->getLayer());
+	//printf("Background inicializado con objectID: %d y textureID: %d y layer : %d\n", m_background->getObjectId(), 2, m_background->getLayer());
 	m_listOfGameObjects[m_background->getObjectId()] = m_background;
 
 
@@ -42,7 +42,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
    m_island->load(0, m_gameHeight/2, 150, 150, 3, 1);
    m_island->setLayer(MIDDLEGROUND);
    m_island->setReappearanceTime(0);   // en ms
-   printf("Isla inicializada con objectID: %d y textureID: %d\n", m_island->getObjectId(), 3);
+   //printf("Isla inicializada con objectID: %d y textureID: %d\n", m_island->getObjectId(), 3);
    m_listOfGameObjects[m_island->getObjectId()] = m_island;
 
     setUpKorea();
@@ -66,7 +66,7 @@ bool Game::createPlayer(int playerID,  const std::string& playerName)
 	newPlayer->setConnected(true);
 
 	m_listOfPlayer[newPlayer->getObjectId()]= newPlayer;
-	printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[playerID].c_str(), newPlayer->getObjectId(), playerID);
+	//printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[playerID].c_str(), newPlayer->getObjectId(), playerID);
 
 	return true;
 }
@@ -135,7 +135,7 @@ void Game::setUpKorea()
 {
 
 	std::string fileName = "Utils/Default/servidor.xml";
-
+	std::stringstream ss;
 
 	ParserServidor* servidorParser = new ParserServidor();
 	servidorParser->parsearDocumento(fileName);
@@ -144,15 +144,15 @@ void Game::setUpKorea()
 	Logger::Instance()->setLoglevel(loggerInfo.debugAvailable, loggerInfo.warningAvailable, loggerInfo.errorAvailable);
 
 	int porto = servidorParser->getServidorInfo().puerto ;
-	printf("Cargo puerto: %d \n",porto);
 	int maxClientes = servidorParser->getServidorInfo().cantMaximaClientes;
-	printf("Cargo maxClientes: %d \n",maxClientes);
-	printf("Creando enlazamiento\n");
+
+
 	m_server = new server(porto, maxClientes);
+	ss << "Server: Se ha configurado el servidor en el puerto " << to_string(porto) << " con una capacidad maxima de " << to_string(maxClientes) << " clientes.";
+	Logger::Instance()->LOG(ss.str(), DEBUG);
 
     m_drawMessagePacker = new DrawMessagesPacker(m_server);
 
-	printf("Se pone a escuchar\n");
 	m_server->escuchar();
 
 	int auxi = 0;
@@ -187,7 +187,7 @@ void Game::sendPackages()
 void* Game::koreaMethod(void)
 {
 
-	std::cout << "Empece a ciclar bitches!\n";
+	//std::cout << "Empece a ciclar bitches!\n";
 	while (Game::Instance()->isRunning()) {
 
 			/*if (!m_server->leer())
@@ -241,7 +241,6 @@ void Game::clean()
 
     InputHandler::Instance()->clean();
     TextureManager::Instance()->clearTextureMap();
-
 
     SDL_DestroyWindow(m_pWindow);
     SDL_DestroyRenderer(m_pRenderer);
