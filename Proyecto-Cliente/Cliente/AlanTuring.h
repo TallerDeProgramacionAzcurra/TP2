@@ -52,10 +52,13 @@ public:
 	ConnectedMessage decodeConnectedMessage(NetworkMessage netMsg);
 	ConnectionInfo decodeConnectionInfoMessage(NetworkMessage netMsg);
 	PlayerDisconnection decodePlayerDisconnectionMessage(NetworkMessage netMsg);
+	ResetInfo decodeResetInfo(NetworkMessage netMsg);
 
 	NetworkMessage drawMessageToNetwork(DrawMessage drawMessage);
 	NetworkMessage playerDisconnectionToNetwork(PlayerDisconnection playerDiscMessage);
 	NetworkMessage drawMsgPackToNetwork(DrawMessagePack drawMsgPack);
+	NetworkMessage ResetMsgToNetwork(ResetInfo resetMessage);
+
 
 	//devuelve un buffer de 256 bytes con el mensaje codificado en binario en buffeSalida y un int con el tamaño Mensaje
 	int encodeXMLMessage(Mensaje mensaje, char* bufferSalida);

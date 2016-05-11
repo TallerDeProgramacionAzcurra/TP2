@@ -15,7 +15,7 @@ Bullet::Bullet(): MoveableObject(),
 	m_textureID = 10;
 
 	m_dyingTime = 3000;
-	m_speed = Vector2D(10,10);
+	m_speed = Vector2D(1,1);
 }
 
 Bullet::~Bullet() {}

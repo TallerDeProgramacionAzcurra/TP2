@@ -32,6 +32,7 @@ public:
     //Carga en el map la textura del archivo fileName
     //devuelve true si se cargo con éxito y false si no lo hizo
     bool load(std::string fileName, int id, SDL_Renderer* pRenderer);
+    void init(SDL_Renderer* pRenderer);
 
     TextureInfo getTextureInfo(int textureId);
 
@@ -41,7 +42,6 @@ public:
     void clearTextureMap();
     // Libera la memoria de la imagen con id pasado como parametro (la saca del map)
     void clearFromTextureMap(int id);
-    void init();
     //Funcion para dibujar el objeto en pantalla en forma simple
     void draw(int id, int x, int y, int width, int height, double angle, SDL_Renderer* renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
     //Funcion para dibujar el objeto en pantalla mas completa, tomando en cuenta las variables de animación y transparencia

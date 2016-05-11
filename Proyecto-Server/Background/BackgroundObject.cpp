@@ -15,7 +15,7 @@ Uint32 BackgroundObject_TimerCallback(Uint32 interval, void *backgroundObject) {
 
 BackgroundObject::BackgroundObject() :  GameObject(),
 				m_direction(0,1),
-				m_scrollSpeed(0,5),
+				m_scrollSpeed(0,2),
 				m_reappearanceTime(0),
 				m_waiting(false),
 				timerID(0)

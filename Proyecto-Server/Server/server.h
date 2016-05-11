@@ -8,7 +8,7 @@
 #include "MessageFactory.h"
 #include "../Utils/StringHelper.h"
 #include "../Utils/Logger.h"
-
+#include "../Game.h"
 
 #include <stdio.h>
 #include <queue>
@@ -25,7 +25,7 @@
 
 #define TIMEOUT_SECONDS 10
 #define TIMEOUT_MICROSECONDS 0
-#include "../Game.h"
+
 class server
 {
     public:

@@ -31,11 +31,11 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
    //m_player->load(m_gameWidth/2, m_gameHeight/2, 38, 64, 1, 1);
    //listOfPlayer[m_player->getObjectId()]= *m_player;
 
-   m_background = new Background();
-   m_background->load(0, 0, m_gameWidth, m_gameHeight, 2);
-   m_background->setLayer(BACKGROUND);
-	printf("Background inicializado con objectID: %d y textureID: %d y layer : %d\n", m_background->getObjectId(), 2, m_background->getLayer());
-	m_listOfGameObjects[m_background->getObjectId()] = m_background;
+   //m_background = new Background();
+  // m_background->load(0, 0, m_gameWidth, m_gameHeight, 2);
+  // m_background->setLayer(BACKGROUND);
+	//printf("Background inicializado con objectID: %d y textureID: %d y layer : %d\n", m_background->getObjectId(), 2, m_background->getLayer());
+//	m_listOfGameObjects[m_background->getObjectId()] = m_background;
 
 
    m_island = new Island();

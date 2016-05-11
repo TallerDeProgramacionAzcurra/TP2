@@ -33,8 +33,6 @@ int main(int argc, char **argv)
 
 		std::cout << "Game Online!\n";
 
-
-
 		//Bucle del juego
 		while (Game::Instance()->isRunning()) {
 
@@ -43,6 +41,8 @@ int main(int argc, char **argv)
 			Game::Instance()->updateTimeOut();
 
 			Game::Instance()->handleEvents();
+
+
 			Game::Instance()->render();
 
 			frameEndTime = SDL_GetTicks() - frameStartTime;
@@ -72,6 +72,7 @@ int main(int argc, char **argv)
 	//printf("FPS PROMEDIO: %d \n", (fpsCount/ framesCount));
     std::cout << "game closing...\n";
     Game::Instance()->clean();
+
 
     return 0;
 }

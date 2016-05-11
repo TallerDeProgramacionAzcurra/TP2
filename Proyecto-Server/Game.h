@@ -24,7 +24,7 @@ class Player;
 class server;
 class DrawMessagesPacker;
 
-#define USE_DRAWMESSAGE_PACKAGING 1
+#define USE_DRAWMESSAGE_PACKAGING 0
 
 class Game
 {

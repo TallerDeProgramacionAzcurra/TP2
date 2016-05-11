@@ -199,6 +199,13 @@ DrawMessagePack AlanTuring::decodeDrawMessagePackage(NetworkMessage netMsg)
 	return drawMsgPack;
 }
 
+ResetInfo AlanTuring::decodeResetInfo(NetworkMessage netMsg)
+{
+	ResetInfo resetInfoMsg;
+	memcpy(&resetInfoMsg, netMsg.msg_Data, sizeof(ResetInfo));
+	return resetInfoMsg;
+}
+
 NetworkMessage AlanTuring::drawMessageToNetwork(DrawMessage drawMessage)
 {
 	NetworkMessage networkMessage;
@@ -237,8 +244,25 @@ NetworkMessage AlanTuring::drawMsgPackToNetwork(DrawMessagePack drawMsgPack)
 	int drawMessagesAmount = (drawMsgPack.totalSize - sizeof(int)) / sizeof(DrawMessage);
 	int packSize = (drawMessagesAmount * sizeof(DrawMessage)) + sizeof(int);
 
+	//printf("Tamaño total = %d \n", drawMsgPack.totalSize);
+	//printf("%d x 24 + 4 = Tamaño paquete = %d",drawMessagesAmount, packSize);
+
 	memcpy(networkMessage.msg_Data, &drawMsgPack, packSize);
 	networkMessage.msg_Length =  packSize + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+
+NetworkMessage AlanTuring::ResetMsgToNetwork(ResetInfo resetMessage)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 'r';
+	networkMessage.msg_Code[1] = 's';
+	networkMessage.msg_Code[2] = 't';
+
+	memcpy(networkMessage.msg_Data, &resetMessage, sizeof(ResetInfo));
+	networkMessage.msg_Length = sizeof(ResetInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	return networkMessage;
 }

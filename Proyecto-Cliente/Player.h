@@ -46,6 +46,8 @@ private:
     // Si m_controllable es false, el Player no reaccionará a eventos de Input
     bool m_controllable;
 
+    bool m_doingFlip;
+
     // variables de control de estado
     bool m_dead;
     bool m_dying;

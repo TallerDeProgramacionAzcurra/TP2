@@ -29,39 +29,86 @@ bool TextureManager::load(std::string fileName, int id, SDL_Renderer* renderer)
 TextureInfo TextureManager::getTextureInfo(int textureId){
 	return m_textureMapInfo[textureId];
 }
-void TextureManager::init(){
+void TextureManager::init(SDL_Renderer* pRenderer){
 
 	TextureInfo hola;
 
-	hola.width =38;
+	//PLAYERS
+
+
+	hola.width =60;
+	hola.height = 66;
+	hola.numFrames = 14;
+	hola.path =	"Assets/Sprites/player4.png";
+	m_textureMapInfo[0]=hola;
+	load(hola.path, 0, pRenderer);
+
+	hola.width =60;
+	hola.height = 66;
+	hola.numFrames = 14;
+	hola.path =	"Assets/Sprites/player2v2.png";
+	m_textureMapInfo[1]=hola;
+	load(hola.path, 1, pRenderer);
+
+	hola.width =60;
+	hola.height = 66;
+	hola.numFrames = 14;
+	hola.path =	"Assets/Sprites/player3.png";
+	m_textureMapInfo[1]=hola;
+	load(hola.path, 1, pRenderer);
+
+	hola.width =60;
+	hola.height = 66;
+	hola.numFrames = 14;
+	hola.path =	"Assets/Sprites/player4.png";
+	m_textureMapInfo[1]=hola;
+	load(hola.path, 1, pRenderer);
+
+	//BACKGROUND
+	hola.width = 64;
 	hola.height = 64;
 	hola.numFrames = 1;
-	hola.path =	"Assets/Sprites/BlackShip.png";
-	m_textureMapInfo[1]=hola;
+	hola.path =	"Assets/Sprites/Water.jpg";
+	m_textureMapInfo[10]=hola;
+	load(hola.path, 10, pRenderer);
 
-	hola.width =61;
-	hola.height = 68;
-	hola.numFrames = 1;
-	hola.path =	"Assets/Sprites/redfighter.png";
-	m_textureMapInfo[0]=hola;
 
 	hola.height = 150;
 	hola.numFrames = 1;
 	hola.path =	"Assets/Sprites/island.jpg";
 	hola.width = 150;
-	m_textureMapInfo[3]=hola;
+	m_textureMapInfo[20]=hola;
+	load(hola.path, 20, pRenderer);
+	load(hola.path, 20, pRenderer);
 
-	hola.width = 800;
-	hola.height = 600;
+	//BALAS
+
+
+	hola.width = 9;
+	hola.height = 54;
 	hola.numFrames = 1;
-	hola.path =	"Assets/Sprites/water.jpg";
-	m_textureMapInfo[2]=hola;
+	hola.path =	"Assets/Sprites/laserBlue01.png";
+	m_textureMapInfo[11]=hola;
+	//load(hola.path, 11, Game::Instance()->getRenderer());
 
 	hola.width = 32;
 	hola.height = 32;
 	hola.numFrames = 1;
 	hola.path =	"Assets/Sprites/bullet.png";
-	m_textureMapInfo[10]=hola;
+	m_textureMapInfo[50]=hola;
+	load(hola.path, 50, pRenderer);
+
+
+	//DEFAULT
+	hola.width = 32;
+	hola.height = 32;
+	hola.numFrames = 1;
+	hola.path =	"Assets/Sprites/missing.jpg";
+	m_textureMapInfo[999]=hola;
+	load(hola.path, 999, pRenderer);
+
+
+
 }
 void TextureManager::draw(int id, int x, int y, int width, int height, double angle, SDL_Renderer* renderer, SDL_RendererFlip flip)
 {

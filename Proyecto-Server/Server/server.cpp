@@ -386,11 +386,14 @@ bool server::leer(int id)
     char *p = (char*)buffer;
     int messageLength = 0;
 
-    int n = recv(m_listaDeClientes.getElemAt(id), p, MESSAGE_LENGTH_BYTES, 0);
+    int readLimit = (DRAW_MESSAGE_PACK_SIZE * sizeof(DrawMessage)) + MESSAGE_CODE_BYTES + MESSAGE_LENGTH_BYTES + MESSAGE_LENGTH_BYTES;
+
+    int n = recv(m_listaDeClientes.getElemAt(id), buffer, MESSAGE_LENGTH_BYTES, 0);
     if (!lecturaExitosa(n, id))
     	return false;
 
     int acum = n;
+   // bool bug = false;
     while (acum < MESSAGE_LENGTH_BYTES)
     {
  	   p += n;
@@ -398,6 +401,7 @@ bool server::leer(int id)
        if (!lecturaExitosa(n, id))
        	return false;
  	   acum += n;
+
     }
     messageLength = m_alanTuring->decodeLength(buffer);
 
@@ -407,7 +411,14 @@ bool server::leer(int id)
     //loopea hasta haber leido la totalidad de los bytes necarios
     while (messageLength > 0)
     {
+    	//printf("Leyó %d. Faltan leer %d \n", acum, messageLength);
     	n = recv(m_listaDeClientes.getElemAt(id), p, messageLength, 0);
+
+    	 if(messageLength >readLimit)
+    	 {
+    		 return true;
+    	 }
+
         if (!lecturaExitosa(n, id))
         	return false;
         p += n;
@@ -669,8 +680,10 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 
 	if ((netMsg.msg_Code[0] == 'i') && (netMsg.msg_Code[1] == 'm') && (netMsg.msg_Code[2] == 's'))
 	{
+		printf("Decodificando Input Msg\n");
 		InputMessage inputMsg = m_alanTuring->decodeInputMessage(netMsg);
 		Game::Instance()->actualizarEstado(serverMsg->clientID,inputMsg);
+		printf(" Fin Decodificando Input Msg\n");
 	}
 
 	return true;

@@ -8,9 +8,11 @@ m_pRenderer(0),
  m_timeOutCounter(0),
 m_running(false),
 m_gameStarted(false),
+m_reseting(false),
+m_initializingSDL(false),
 m_scrollSpeed(0.8)
 {
-	m_player = new Player();
+	//m_player = new Player();
 }
 
 Game::~Game()
@@ -23,18 +25,21 @@ Game::~Game()
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int SDL_WINDOW_flag)
 {
+
 	askForName();
 
-    // Tamaño de la ventana
-    m_gameWidth = width;
-    m_gameHeight = height;
+    if (!initializeClient())
+    	return false;
+
+    m_initializingSDL = true;
 
     if(SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
         cout << "SDL init success\n";
 
+        printf("%d\n",m_gameWidth);
 
-        m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_flag);
+        m_pWindow = SDL_CreateWindow("1942 - Cliente", 400, 150, m_gameWidth, m_gameHeight, SDL_WINDOW_RESIZABLE);
 
         if(m_pWindow != 0)
         {
@@ -63,21 +68,27 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
         cout << "SDL init fail\n";
         return false;
     }
-
-    TextureManager::Instance()-> init();
-
-    if (!setUpKorea())
-    	return false;
-
+    TextureManager::Instance()->clearTextureMap();
+    TextureManager::Instance()->init(m_pRenderer);
 
     //tudo ben
+    m_initializingSDL = false;
     m_running = true;
+
     return true;
+}
+
+void Game::setWindowSize(int width, int height)
+{
+	m_gameWidth = width;
+	m_gameHeight = height;
 }
 
 void Game::render()
 {
     SDL_RenderClear(m_pRenderer);
+
+    paintbackground(10);
 
     for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
@@ -96,10 +107,15 @@ void Game::render()
 }
 void Game::interpretarDrawMsg(DrawMessage drwMsg){
 
+	/*printf("objectID: %d\n", drwMsg.objectID);
+	printf("layer: %d\n", drwMsg.layer);
+	printf("textureID: %d\n", drwMsg.textureID);
+	printf("alive: %d\n", drwMsg.alive);*/
 	if ( existDrawObject(drwMsg.objectID, static_cast<int>(drwMsg.layer)))
 	{
 		if (drwMsg.connectionStatus == false)
 		{
+			printf("DrawMessage de objeto desconectado\n");
 			disconnectObject(drwMsg.objectID, static_cast<int>(drwMsg.layer));
 		}
 
@@ -117,7 +133,9 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 	else //Si no existe en el mapa
 	{
 		if (!drwMsg.alive)
+		{
 			return;
+		}
 
 		//printf("Creando nuevo objeto con objectID: %d\n", drwMsg.objectID);
 
@@ -198,23 +216,23 @@ bool Game::existDrawObject(int objectID, int layer)
 	switch(layer)
 	{
 	case BACKGROUND:
-			if (backgroundObjects.find(objectID) == backgroundObjects.end())
-			{
-				return false;
-			}
-			break;
+	if (backgroundObjects.find(objectID) == backgroundObjects.end())
+	{
+		return false;
+	}
+	break;
 	case MIDDLEGROUND:
-			if (middlegroundObjects.find(objectID) == middlegroundObjects.end())
-			{
-				return false;
-			}
-			break;
+	if (middlegroundObjects.find(objectID) == middlegroundObjects.end())
+	{
+		return false;
+	}
+	break;
 	case FOREGROUND:
-			if (foregroundObjects.find(objectID) == foregroundObjects.end())
-			{
-				return false;
-			}
-			break;
+	if (foregroundObjects.find(objectID) == foregroundObjects.end())
+	{
+		return false;
+	}
+	break;
 
 	default: return true;
 	}
@@ -232,9 +250,10 @@ void Game::handleEvents()
 {
 	InputHandler::Instance()->update();
 	//Pseudo controler
-	m_player->handleInput();
+	if (m_player)
+		m_player->handleInput();
 }
-bool Game::setUpKorea()
+bool Game::initializeClient()
 {
 		std::string	fileName = "Utils/Default/cliente.xml";
 
@@ -247,8 +266,9 @@ bool Game::setUpKorea()
 	    string ip = parsersito->getConexionInfo().ip;
 	    int porto = parsersito->getConexionInfo().puerto;
 
-
 	    m_client = new cliente(3,ip,porto, m_playerName);
+
+	    delete parsersito;
 
 	    if (!conectToKorea())
 	    	return false;
@@ -259,23 +279,50 @@ bool Game::setUpKorea()
 
 void Game::askForName()
 {
-    pedirNombre:
-	printf("Ingrese el nombre con el que desea conectarse \n");
-    char name[24];
-    cin.getline(name, 24);
-    std::string playerName(name);
-    if (playerName.length() <= 0)
+    bool nombreValido = false;
+    while (!nombreValido)
     {
-    	printf("Nombre Invalido \n");
-    	goto pedirNombre;
+		printf("Ingrese el nombre con el que desea conectarse \n");
+		char name[24];
+		cin.getline(name, 24);
+		std::string playerName(name);
+		if (playerName.length() <= 0)
+		{
+			printf("Nombre Invalido \n");
+			nombreValido = false;
+		}
+		else
+		{
+		    m_playerName = playerName;
+			nombreValido = true;
+		}
     }
-    m_playerName = playerName;
+}
+
+void Game::paintbackground(int backgroundTextureID)
+{
+	int width = TextureManager::Instance()->getTextureInfo(backgroundTextureID).width;
+	int height = TextureManager::Instance()->getTextureInfo(backgroundTextureID).height;
+	int rowsAmount = ceil((float)m_gameWidth / (float) width);
+	int columnsAmount = ceil((float)m_gameHeight / (float) height);
+	for (int row = 0; row < rowsAmount; row++)
+	{
+		for (int column = 0; column < columnsAmount; column++)
+		{
+			int x = row * width;
+			int y = column * height;
+			TextureManager::Instance()->draw(backgroundTextureID, x, y, width, height, 0, m_pRenderer, SDL_FLIP_NONE);
+		}
+	}
 }
 
 void Game::createPlayer(int objectID, int textureID)
 {
-	//m_player = new Player();
+	m_player = new Player();
 	m_player->setObjectID(objectID);
+	m_player->setTextureID(textureID);
+
+
 }
 
 void Game::disconnectObject(int objectID, int layer)
@@ -332,15 +379,20 @@ bool Game::conectToKorea()
 }
 
 
-void Game::sendToKorea(InputMessage mensaje)
+void Game::sendInputMsg(InputMessage mensaje)
 {
 	m_client->sendInputMsg(mensaje);
+}
+
+void Game::sendNetworkMsg(NetworkMessage netMsg)
+{
+	m_client->sendNetworkMsg(netMsg);
 }
 
 void* Game::koreaMethod(void)
 {
 	std::cout << "Empece a ciclar bitches!\n";
-	while (Game::Instance()->isRunning()) {
+	while (m_client->isConnected()) {
 			m_client->leer();
 	}
 	 pthread_exit(NULL);
@@ -374,7 +426,6 @@ bool Game::updateTimeOut()
 		netMsg.msg_Code[2] = 'o';
 		netMsg.msg_Length =  MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
-
 		m_client->sendNetworkMsg(netMsg);
 		//printf("Se envío Timeout Msg\n");
 		m_timeOutCounter = 0;
@@ -389,6 +440,7 @@ bool Game::updateTimeOut()
 void Game::clean()
 {
     cout << "cleaning game\n";
+
 
     for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
@@ -406,7 +458,9 @@ void Game::clean()
 		delete it->second;
     }
 
-    //delete m_player; //Provisorio
+    m_client->desconectar();
+    delete m_client;
+    delete m_player;
 
     InputHandler::Instance()->clean();
     TextureManager::Instance()->clearTextureMap();
@@ -414,7 +468,49 @@ void Game::clean()
     middlegroundObjects.clear();
     foregroundObjects.clear();
 
-    SDL_DestroyWindow(m_pWindow);
     SDL_DestroyRenderer(m_pRenderer);
+    SDL_DestroyWindow(m_pWindow);
     SDL_Quit();
+}
+
+void Game::resetGame()
+{
+	m_reseting = true;
+	 cout << "reseting game\n";
+
+	 for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+	 {
+		 cout << "destroying background\n";
+		it->second->clean();
+		delete it->second;
+	 }
+	 for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+	 {
+		 cout << "destroying middleground\n";
+		it->second->clean();
+		delete it->second;
+	 }
+	 for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+	 {
+		 cout << "destroying foreground\n";
+		it->second->clean();
+		delete it->second;
+	 }
+	 printf("GameObjects Destroyed");
+	 InputHandler::Instance()->reset();
+	 TextureManager::Instance()->clearTextureMap();
+	 backgroundObjects.clear();
+	 middlegroundObjects.clear();
+	 foregroundObjects.clear();
+
+
+	 SDL_SetWindowSize(m_pWindow,m_gameWidth, m_gameHeight);
+
+	 printf("Se modificó el tamaño de la window\n");
+
+	 //TextureManager::Instance()->init(m_pRenderer);
+
+	 cout << "Finish reseting game\n";
+	 m_reseting = false;
+
 }
