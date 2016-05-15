@@ -75,8 +75,8 @@ cliente::cliente(int argc, string ip, int port, std::string name){
     /*sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
     	error("Cliente: Error en la creación del socket");*/
-    const char* ip1 = ip.c_str();
-    server = gethostbyname(ip1);
+    //const char* ip1 = ip.c_str();
+    server = gethostbyname(ip.c_str());
     if (server == NULL) {
     	error("Cliente: No se pudo encontrar el servidor ingresado");
     }
@@ -359,6 +359,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 				desconectar();
 				m_connected = false;
 			}
+			Game::Instance()->setWindowSize(static_cast<int>(connectedMessage.windowWidth), static_cast<int>(connectedMessage.windowHeight));
 		}
 
 		if (connectedMessage.connected && !connectedMessage.requestData)
@@ -381,8 +382,8 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 				}
 			}
 			delete initializingTimer;
+			//aca estaba setWindowSize tambien
 			Game::Instance()->createPlayer(connectedMessage.objectID, connectedMessage.textureID);
-			Game::Instance()->setWindowSize(static_cast<int>(connectedMessage.windowWidth), static_cast<int>(connectedMessage.windowHeight));
 			//El cliente se conecto con exito.
 			printf("Conección con el server exitosa. \n");
 			Logger::Instance()->LOG("Cliente: Conección al servidor exitosa.\n", DEBUG);
@@ -390,7 +391,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 
 		if (!connectedMessage.connected && !connectedMessage.requestData)
 		{
-			printf("El nombre ya existe\n");
+			printf("No se pudo conectar: El nombre ya existe o el juego ya ha comenzado con otros jugadores\n");
 			desconectar();
 			m_connected = false;
 		}
@@ -411,11 +412,12 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 	if ((networkMessage.msg_Code[0] == 'f') && (networkMessage.msg_Code[1] == 'u') && (networkMessage.msg_Code[2] == 'l'))
 	{
 		//El server esta lleno. Patear
-		desconectar();
-		m_connected = false;
 
 		printf("El servidor está lleno.\n");
 		Logger::Instance()->LOG("Cliente: No se pudo conectar al servidor. El servidor está lleno.", DEBUG);
+
+		desconectar();
+		m_connected = false;
 		return;
 	}
 
@@ -442,6 +444,16 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		//printf("Leyendo DrawMessagePackage\n");
 		DrawMessagePack drwMsgPackage = m_alanTuring->decodeDrawMessagePackage(networkMessage);
 		procesarDrawPackage(drwMsgPackage);
+			//Logger::Instance()->LOG("Se envio drwMsg a interpretar\n", DEBUG);
+		//printf("Fin Leyendo DrawMessagePackage\n");
+		return;
+	}
+
+	//Llego un TextureInfo
+	if ((networkMessage.msg_Code[0] == 't') && (networkMessage.msg_Code[1] == 'x') && (networkMessage.msg_Code[2] == 'i'))
+	{
+		TextureInfo textureInfo = m_alanTuring->decodeTextureInfo(networkMessage);
+		Game::Instance()->addTexture(textureInfo);
 			//Logger::Instance()->LOG("Se envio drwMsg a interpretar\n", DEBUG);
 		//printf("Fin Leyendo DrawMessagePackage\n");
 		return;

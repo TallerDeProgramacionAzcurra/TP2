@@ -5,5 +5,5 @@
 		<error>True</error>
 	</logger>
 	<CantidadMaximaClientes>1</CantidadMaximaClientes>
-	<puerto>13333</puerto>
+	<puerto>51757</puerto>
 </servidor>

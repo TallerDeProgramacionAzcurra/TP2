@@ -64,6 +64,7 @@ public:
 
     int getObjectId() { return m_objectId; }
     int getLayer() { return m_layer; }
+    int getTextureID() { return m_textureID; }
     void setObjectID(int objectId) {m_objectId = objectId;}
     void setTextureID(int textureID) {m_textureID = textureID;}
     void setLayer(int layer) {m_layer = layer;}

@@ -6,28 +6,28 @@
 	<sprite>
 		<id>player1</id>
 		<path>Assets/Sprites/player1.png</path>
-		<cantidad>1</cantidad>
+		<cantidad>14</cantidad>
 		<ancho>60</ancho>
 		<alto>67</alto>
 	</sprite>
 	<sprite>
 		<id>player2</id>
 		<path>Assets/Sprites/player2.png</path>
-		<cantidad>1</cantidad>
+		<cantidad>14</cantidad>
 		<ancho>60</ancho>
 		<alto>67</alto>
 	</sprite>
 	<sprite>
 		<id>player3</id>
 		<path>Assets/Sprites/player3.png</path>
-		<cantidad>1</cantidad>
+		<cantidad>14</cantidad>
 		<ancho>60</ancho>
 		<alto>67</alto>
 	</sprite>
 	<sprite>
 		<id>player4</id>
 		<path>Assets/Sprites/player4.png</path>
-		<cantidad>1</cantidad>
+		<cantidad>14</cantidad>
 		<ancho>60</ancho>
 		<alto>67</alto>
 	</sprite>
@@ -74,8 +74,8 @@
 	<alto>1500</alto>
 	<fondo>
 		<spriteId>agua</spriteId>
-		<ancho>10</ancho>
-		<alto>10</alto>
+		<ancho>64</ancho>
+		<alto>64</alto>
 	</fondo>
 	<elementos>
 		<elemento>

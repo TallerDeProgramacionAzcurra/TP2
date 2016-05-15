@@ -57,7 +57,8 @@ Server/server.d: ../Server/server.cpp ../Server/server.h \
  ../Server/../Weapons/../Vector2D.h ../Server/../Vector2D.h \
  ../Server/../Singletons/GameTimeHelper.h \
  ../Server/../Utils/TiposDefinidos.h ../Server/../Weapons/BasicWeapon.h \
- ../Server/../Weapons/Weapon.h
+ ../Server/../Weapons/Weapon.h ../Server/../Utils/Parser/ParserNivel.h \
+ ../Server/../Utils/TextureHelper.h
 
 ../Server/server.h:
 
@@ -212,3 +213,7 @@ Server/server.d: ../Server/server.cpp ../Server/server.h \
 ../Server/../Weapons/BasicWeapon.h:
 
 ../Server/../Weapons/Weapon.h:
+
+../Server/../Utils/Parser/ParserNivel.h:
+
+../Server/../Utils/TextureHelper.h:

@@ -56,7 +56,8 @@ Server/DrawMessagesPacker.d: ../Server/DrawMessagesPacker.cpp \
  ../Server/../Weapons/../Vector2D.h ../Server/../Vector2D.h \
  ../Server/../Singletons/GameTimeHelper.h \
  ../Server/../Utils/TiposDefinidos.h ../Server/../Weapons/BasicWeapon.h \
- ../Server/../Weapons/Weapon.h
+ ../Server/../Weapons/Weapon.h ../Server/../Utils/Parser/ParserNivel.h \
+ ../Server/../Utils/TextureHelper.h
 
 ../Server/DrawMessagesPacker.h:
 
@@ -209,3 +210,7 @@ Server/DrawMessagesPacker.d: ../Server/DrawMessagesPacker.cpp \
 ../Server/../Weapons/BasicWeapon.h:
 
 ../Server/../Weapons/Weapon.h:
+
+../Server/../Utils/Parser/ParserNivel.h:
+
+../Server/../Utils/TextureHelper.h:

@@ -9,6 +9,8 @@
 #include "../Utils/StringHelper.h"
 #include "../Utils/Logger.h"
 #include "../Game.h"
+#include "../Utils/Parser/ParserNivel.h"
+#include "../Utils/TextureHelper.h"
 
 #include <stdio.h>
 #include <queue>
@@ -22,6 +24,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <memory>
+#include <vector>
+#include <boost/utility.hpp>
 
 #define TIMEOUT_SECONDS 10
 #define TIMEOUT_MICROSECONDS 0
@@ -40,6 +44,9 @@ class server
         void closeAllsockets();
         const int getMaxClientes();
         const int getNumClientes();
+
+
+        /******************************Mensajes***********************************/
         void sendNetworkMsg(int socketReceptor, NetworkMessage netMsg);
         void sendDrawMsgToAll(DrawMessage msg);
         void sendPackToAll(DrawMessagePack msg);
@@ -48,8 +55,12 @@ class server
         void sendResetMsgToAll(ResetInfo resetMsg);
 
         void sendDisconnectionMsg(int socketReceptor, PlayerDisconnection msg);
+
         void informPlayerDisconnection(PlayerDisconnection, int playerDiscID);
         void informGameBeginning();
+        void informGameBegan(int clientID);
+        void informTextureInfos(int clientID);
+        /**************************************************************************/
 
         bool isRunning();
 
@@ -102,6 +113,7 @@ class server
 
         void agregarTimeOutTimer(int clientPosition);
         void removeTimeOutTimer(int clientPosition);
+
 };
 
 #endif // SERVER_H

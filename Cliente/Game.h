@@ -52,7 +52,13 @@ public:
 
     void paintbackground(int backgroundTextureID);
 
+    bool canContinue();
+    void checkContinueConditions();
+
     void resetGame();
+    void requestTexturesInfo();
+    void addTexture(TextureInfo textureInfo);
+    void loadTextures();
 
     void createPlayer(int objectID, int textureID);
     void disconnectObject(int objectID, int layer);
@@ -70,10 +76,12 @@ public:
 
     SDL_Renderer* getRenderer() const { return m_pRenderer; }
     SDL_Window* getWindow() const { return m_pWindow; }
-
+    void mrMusculo();
+    void setRunning(bool loco){m_running = loco;}
     bool isRunning() { return m_running; }
     bool isReseting() { return m_reseting; }
     bool isInitializingSDL(){ return m_initializingSDL;}
+    bool isWaitingForTextures() {return m_waitingTextures; }
 
     void quit() { m_running = false; }
 
@@ -84,7 +92,9 @@ public:
     void setGameStarted(bool state) { m_gameStarted = state; }
     void setReseting(bool state) { m_reseting = state; }
     void setWindowSize(int width, int heigth);
-
+    void setRestart(bool loco){m_restart = loco;}
+    bool getRestart(){return m_restart;}
+    int createGame(int DELAY_TIME);
     static void *thread_method(void *context);
     pthread_t listenThread;
 
@@ -100,7 +110,7 @@ private:
     void removeDrawObject(int objectID, int layer);
     void updateGameObject(const DrawMessage drawMessage);
     bool existDrawObject(int objectID, int layer);
-
+    bool m_restart;
     SDL_Window* m_pWindow;
     SDL_Renderer* m_pRenderer;
 
@@ -111,11 +121,17 @@ private:
     Background* m_background;
     Island* m_island;
     cliente* m_client;
+    int m_backgroundTextureID;
     bool m_running;
 
     bool m_gameStarted;
     bool m_reseting;
     bool m_initializingSDL;
+    bool m_waitingTextures;
+    bool m_continueLooping;
+
+    void stopLooping();
+    void continueLooping();
 
     std::string m_playerName;
 

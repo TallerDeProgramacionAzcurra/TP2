@@ -182,6 +182,14 @@ ConnectionInfo AlanTuring::decodeConnectionInfoMessage(NetworkMessage netMsg)
 	memcpy(&connectionInfoMsg, netMsg.msg_Data, sizeof(ConnectionInfo));
 	return connectionInfoMsg;
 }
+
+TextureInfo  AlanTuring::decodeTextureInfo(NetworkMessage netMsg)
+{
+	TextureInfo textureInfoMsg;
+	memcpy(&textureInfoMsg, netMsg.msg_Data, sizeof(TextureInfo));
+	return textureInfoMsg;
+}
+
 PlayerDisconnection AlanTuring::decodePlayerDisconnectionMessage(NetworkMessage netMsg)
 {
 	PlayerDisconnection playerDiscMsg;
@@ -215,7 +223,7 @@ NetworkMessage AlanTuring::drawMessageToNetwork(DrawMessage drawMessage)
 	networkMessage.msg_Code[2] = 's';
 
 	memcpy(networkMessage.msg_Data, &drawMessage, sizeof(DrawMessage));
-	networkMessage.msg_Length = DRAW_MESSAGE_SIZE + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	networkMessage.msg_Length = sizeof(DrawMessage) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	return networkMessage;
 }
@@ -228,7 +236,22 @@ NetworkMessage AlanTuring::playerDisconnectionToNetwork(PlayerDisconnection play
 	networkMessage.msg_Code[2] = 'c';
 
 	memcpy(networkMessage.msg_Data, &playerDiscMessage, sizeof(PlayerDisconnection));
-	networkMessage.msg_Length = PLAYER_DISCONNECTION_MESSAGE_SIZE + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	networkMessage.msg_Length = sizeof(PlayerDisconnection) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+
+
+NetworkMessage AlanTuring::TextureInfoToNetwork(TextureInfo textureInfoMsg)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 't';
+	networkMessage.msg_Code[1] = 'x';
+	networkMessage.msg_Code[2] = 'i';
+
+	memcpy(networkMessage.msg_Data, &textureInfoMsg, sizeof(TextureInfo));
+	networkMessage.msg_Length = sizeof(TextureInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	return networkMessage;
 }

@@ -11,6 +11,13 @@ Background/Level.d: ../Background/Level.cpp ../Background/Level.h \
  ../Background/../Server/MessageFactory.h \
  ../Background/../Server/../Utils/StringHelper.h \
  ../Background/../Server/../Game.h \
+ ../Background/../Server/../Utils/Parser/ParserNivel.h \
+ ../Background/../Server/../Utils/Parser/Parser.h \
+ ../Background/../Server/../Utils/Parser/../Logger.h \
+ ../Background/../Server/../Utils/Parser/../TiposDefinidos.h \
+ ../Background/../Server/../Utils/Parser/../pugixml/pugixml.hpp \
+ ../Background/../Server/../Utils/Parser/../pugixml/pugiconfig.hpp \
+ ../Background/../Server/../Utils/TextureHelper.h \
  ../Background/../Server/DrawMessagesPacker.h \
  ../Background/../Server/server.h \
  ../Background/../Utils/Parser/ParserServidor.h \
@@ -85,6 +92,20 @@ Background/Level.d: ../Background/Level.cpp ../Background/Level.h \
 ../Background/../Server/../Utils/StringHelper.h:
 
 ../Background/../Server/../Game.h:
+
+../Background/../Server/../Utils/Parser/ParserNivel.h:
+
+../Background/../Server/../Utils/Parser/Parser.h:
+
+../Background/../Server/../Utils/Parser/../Logger.h:
+
+../Background/../Server/../Utils/Parser/../TiposDefinidos.h:
+
+../Background/../Server/../Utils/Parser/../pugixml/pugixml.hpp:
+
+../Background/../Server/../Utils/Parser/../pugixml/pugiconfig.hpp:
+
+../Background/../Server/../Utils/TextureHelper.h:
 
 ../Background/../Server/DrawMessagesPacker.h:
 

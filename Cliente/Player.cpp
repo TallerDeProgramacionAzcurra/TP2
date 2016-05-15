@@ -134,6 +134,12 @@ void Player::handleInput()
 			Game::Instance()->sendNetworkMsg(netMsg);
 		}
 	}
+	//Abort
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_X))
+	{
+		Game::Instance()->quit();
+		dirty = false;
+	}
 
 	if (dirty)
 	{

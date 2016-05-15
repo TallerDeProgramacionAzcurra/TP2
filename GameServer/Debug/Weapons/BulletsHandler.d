@@ -12,8 +12,15 @@ Weapons/BulletsHandler.d: ../Weapons/BulletsHandler.cpp \
  ../Weapons/../Server/../Utils/Timer.h \
  ../Weapons/../Server/MessageFactory.h \
  ../Weapons/../Server/../Utils/StringHelper.h \
- ../Weapons/../Server/../Game.h ../Weapons/../Server/DrawMessagesPacker.h \
- ../Weapons/../Server/server.h \
+ ../Weapons/../Server/../Game.h \
+ ../Weapons/../Server/../Utils/Parser/ParserNivel.h \
+ ../Weapons/../Server/../Utils/Parser/Parser.h \
+ ../Weapons/../Server/../Utils/Parser/../Logger.h \
+ ../Weapons/../Server/../Utils/Parser/../TiposDefinidos.h \
+ ../Weapons/../Server/../Utils/Parser/../pugixml/pugixml.hpp \
+ ../Weapons/../Server/../Utils/Parser/../pugixml/pugiconfig.hpp \
+ ../Weapons/../Server/../Utils/TextureHelper.h \
+ ../Weapons/../Server/DrawMessagesPacker.h ../Weapons/../Server/server.h \
  ../Weapons/../Utils/Parser/ParserServidor.h \
  ../Weapons/../Utils/Parser/Parser.h \
  ../Weapons/../Utils/Parser/../Logger.h \
@@ -37,11 +44,6 @@ Weapons/BulletsHandler.d: ../Weapons/BulletsHandler.cpp \
  ../Weapons/../Background/RecurrentObject.h \
  ../Weapons/../Background/Island.h \
  ../Weapons/../Background/../Utils/Parser/ParserNivel.h \
- ../Weapons/../Background/../Utils/Parser/Parser.h \
- ../Weapons/../Background/../Utils/Parser/../Logger.h \
- ../Weapons/../Background/../Utils/Parser/../TiposDefinidos.h \
- ../Weapons/../Background/../Utils/Parser/../pugixml/pugixml.hpp \
- ../Weapons/../Background/../Utils/Parser/../pugixml/pugiconfig.hpp \
  ../Weapons/../Background/../Utils/TextureHelper.h \
  ../Weapons/../Background/../Utils/GameObjectFactory.h \
  ../Weapons/../Background/../Utils/../GameObject.h \
@@ -104,6 +106,20 @@ Weapons/BulletsHandler.d: ../Weapons/BulletsHandler.cpp \
 
 ../Weapons/../Server/../Game.h:
 
+../Weapons/../Server/../Utils/Parser/ParserNivel.h:
+
+../Weapons/../Server/../Utils/Parser/Parser.h:
+
+../Weapons/../Server/../Utils/Parser/../Logger.h:
+
+../Weapons/../Server/../Utils/Parser/../TiposDefinidos.h:
+
+../Weapons/../Server/../Utils/Parser/../pugixml/pugixml.hpp:
+
+../Weapons/../Server/../Utils/Parser/../pugixml/pugiconfig.hpp:
+
+../Weapons/../Server/../Utils/TextureHelper.h:
+
 ../Weapons/../Server/DrawMessagesPacker.h:
 
 ../Weapons/../Server/server.h:
@@ -155,16 +171,6 @@ Weapons/BulletsHandler.d: ../Weapons/BulletsHandler.cpp \
 ../Weapons/../Background/Island.h:
 
 ../Weapons/../Background/../Utils/Parser/ParserNivel.h:
-
-../Weapons/../Background/../Utils/Parser/Parser.h:
-
-../Weapons/../Background/../Utils/Parser/../Logger.h:
-
-../Weapons/../Background/../Utils/Parser/../TiposDefinidos.h:
-
-../Weapons/../Background/../Utils/Parser/../pugixml/pugixml.hpp:
-
-../Weapons/../Background/../Utils/Parser/../pugixml/pugiconfig.hpp:
 
 ../Weapons/../Background/../Utils/TextureHelper.h:
 

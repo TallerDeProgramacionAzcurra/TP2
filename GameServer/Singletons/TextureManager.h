@@ -8,12 +8,16 @@
 #ifndef SINGLETONS_TEXTUREMANAGER_H_
 #define SINGLETONS_TEXTUREMANAGER_H_
 
-#include <iostream>
-#include <string>
-#include <map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../Utils/TiposDefinidos.h"
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <map>
+
+
+#define DEFAULT_PATH "Assets/Sprites/missing.jpg"
 
 class TextureManager
 {
@@ -33,12 +37,20 @@ public:
     //devuelve true si se cargo con éxito y false si no lo hizo
     bool load(std::string fileName, int id, SDL_Renderer* pRenderer);
 
+    //deprecated
+    void init(SDL_Renderer* pRenderer);
+
     TextureInfo getTextureInfo(int textureId);
+    void loadTextures(SDL_Renderer* pRenderer);
+    void addTextureInfo(TextureInfo textureInfo);
+    void removeTextureInfoAt(int textureID);
+
+    void changeTextureColor(int textureID, Uint8 r, Uint8 g, Uint8 b);
+
     // Libera la memoria utilizada por todas las imagenes cargadas al map
     void clearTextureMap();
     // Libera la memoria de la imagen con id pasado como parametro (la saca del map)
     void clearFromTextureMap(int id);
-
     //Funcion para dibujar el objeto en pantalla en forma simple
     void draw(int id, int x, int y, int width, int height, double angle, SDL_Renderer* renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
     //Funcion para dibujar el objeto en pantalla mas completa, tomando en cuenta las variables de animación y transparencia
@@ -51,6 +63,8 @@ private:
     std::map<int, SDL_Texture*> m_textureMap;
     std::map<int, TextureInfo> m_textureMapInfo;
     static TextureManager* s_pInstance;
+
+    bool validPath(const std::string& filePath);
 
     TextureManager() {}
     ~TextureManager() {}

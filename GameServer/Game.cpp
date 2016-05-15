@@ -32,6 +32,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     m_gameWidth = m_parserNivel->getVentana().ancho;
     m_gameHeight = m_parserNivel->getVentana().alto;
 
+    //es necesario llamar a initialize Textures despues de haber creado el parser y textureHelper porque los usa
+    initializeTexturesInfo();
+
     //printf("Path isla: %s \n", m_parserNivel->getListaSprites()[5].path.c_str());
    // printf("ID isla: %s \n", m_parserNivel->getListaSprites()[5].id.c_str());
 
@@ -42,81 +45,87 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     m_level = new Level();
     m_level->loadFromXML();
 
-    //TextureManager::Instance()-> init();
-
-    //Provisorio rompen porq blackship water island son string... pone ints (hacer mapas primero)
-   //m_player = new Player();
-   //m_player->load(m_gameWidth/2, m_gameHeight/2, 38, 64, "blackship", 1);
-   //m_player->load(m_gameWidth/2, m_gameHeight/2, 38, 64, 1, 1);
-   //listOfPlayer[m_player->getObjectId()]= *m_player;
-
-  /* m_background = new Background();
-   m_background->load(0, 0, m_gameWidth, m_gameHeight, 2);
-   m_background->setLayer(BACKGROUND);
-	printf("Background inicializado con objectID: %d y textureID: %d y layer : %d\n", m_background->getObjectId(), 2, m_background->getLayer());
-	m_listOfGameObjects[m_background->getObjectId()] = m_background;*/
-
-
-  /* m_island = new Island();
-   m_island->load(0, m_gameHeight/2, 150, 150, 3, 1);
-   m_island->setLayer(MIDDLEGROUND);
-   m_island->setReappearanceTime(5000);   // en ms
-   printf("Isla inicializada con objectID: %d y textureID: %d\n", m_island->getObjectId(), 3);
-   m_listOfGameObjects[m_island->getObjectId()] = m_island;*/
-
-
-
-
     //tudo ben
     m_running = true;
 
     return true;
 }
 
-bool Game::createPlayer(int playerID,  const std::string& playerName)
+bool Game::createPlayer(int clientID,  const std::string& playerName)
 {
+
+	bool nameExists;
+	std::stringstream ss;
+
 	//Se fija si existe un jugador con el nombre ingresado
-	if (!validatePlayerName(playerName))
+	nameExists = !validatePlayerName(playerName);
+
+	if (nameExists)
+	{
+		int actualPlayerID = getFromNameID(playerName);
+		Player* player = m_listOfPlayer[actualPlayerID];
+		if (player->isConnected()) //El jugador con ese nombre ya esta conectado
+		{
+			ss <<"Server: El jugador con nombre" << playerName << " ya se encuentra conectado.";
+			Logger::Instance()->LOG(ss.str(), WARN);
+			printf("%s \n", ss.str().c_str());
+			player->refreshDirty();
+			return false;
+		}
+		else //Se desconecto y se esta volviendo a conectar
+		{
+			player->setConnected(true);
+			player->refreshDirty();
+			m_server->informGameBegan(clientID);
+			return true;
+		}
+	}
+	//Si no existe el nombre:
+
+	//Esto controla que solo se puedan volver a conectar los que arrancaron jugando al ppio
+	if (m_listOfPlayer.size() == m_parserNivel->getEscenario().cantidadJugadores)
+	{
+		ss <<"Server: El jugador con nombre" << playerName << " no se pudo conectar, ya está llena la partida.";
+		Logger::Instance()->LOG(ss.str(), WARN);
+		printf("%s \n", ss.str().c_str());
 		return false;
+	}
 
 	int playerSpeed = m_parserNivel->getAvion().velDespl;
 	int shootingCooldown = m_parserNivel->getAvion().cdDisp;
 	int bulletsSpeed = m_parserNivel->getAvion().velDisp;
 
 	Player* newPlayer = new Player();
-	newPlayer->setObjectID(playerID);
+	newPlayer->setObjectID(clientID);
 	newPlayer->setSpeed(Vector2D(playerSpeed, playerSpeed));
 	newPlayer->setShootingCooldown(shootingCooldown);
 	newPlayer->setShootingSpeed(bulletsSpeed);
 
 
-	m_playerNames[playerID] = playerName;
+	m_playerNames[clientID] = playerName;
 
-	std::stringstream ss;
-	ss << "player" << (playerID + 1);
+	ss << "player" << (clientID + 1);
 	string playerStringID = ss.str();
 	int playerTextureID = m_textureHelper->stringToInt(playerStringID);
 
-	//Workaround
-	bool found = false;;
-	for(int i=0; i < m_parserNivel->getListaSprites().size(); i++)
-	{
-	  if (playerStringID == m_parserNivel->getListaSprites()[i].id)
-	  {
-		  found = true;
-		  break;
-	  }
-	}
-	if (!found)
-		playerTextureID = m_textureHelper->stringToInt("default");
-
+	//14 HARDCODEADO
 	newPlayer->load(m_gameWidth/2, m_gameHeight/2, 38, 64, playerTextureID, 14);
 	newPlayer->setConnected(true);
 
 	m_listOfPlayer[newPlayer->getObjectId()]= newPlayer;
-	printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[playerID].c_str(), newPlayer->getObjectId(), playerID);
+	printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[clientID].c_str(), newPlayer->getObjectId(), clientID);
 
 	return true;
+}
+
+int Game::getFromNameID(const std::string& playerName)
+{
+	for (std::map<int, std::string>::iterator it = m_playerNames.begin(); it != m_playerNames.end(); ++it )
+	{
+		if (it->second.compare(playerName.c_str()) == 0)
+			return it->first;
+	}
+	return -1;
 }
 
 bool Game::validatePlayerName(const std::string& playerName)
@@ -140,7 +149,7 @@ void Game::disconnectPlayer(int playerID)
 	m_server->informPlayerDisconnection(playerDiscMsg, playerID);
 
 	m_listOfPlayer[playerID]->setConnected(false);
-	m_playerNames.erase(playerID);
+	//m_playerNames.erase(playerID);
 	//listOfPlayer.erase(id);
 	//mostrar en gris
 }
@@ -178,6 +187,37 @@ void Game::update()
 
 }
 
+void Game::initializeTexturesInfo()
+{
+	std::vector<Sprite> sprites = m_parserNivel->getListaSprites();
+	for (std::vector<Sprite>::iterator it = sprites.begin() ; it !=  sprites.end(); ++it)
+	{
+		TextureInfo textureInfo;
+		//id string to int
+		textureInfo.textureID = m_textureHelper->stringToInt((*it).id);
+		//path string to buffer
+		std::size_t length = (*it).path.copy(textureInfo.path, PATH_MAX_LENGTH, 0);
+		textureInfo.path[length]='\0';
+		//otras variables de imagen
+		textureInfo.numFrames = (*it).cantidad;
+		textureInfo.height = (*it).alto;
+		textureInfo.width = (*it).ancho;
+		textureInfo.lastTexture = false;
+
+		TextureManager::Instance()->addTextureInfo(textureInfo);
+	}
+
+}
+
+void Game::setPlayersDirty()
+{
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+		{
+			//printf("objectID = %d \n", it->second.getObjectId());
+		     it->second->setDirty(true);
+		}
+}
+
 void Game::handleEvents()
 {
 }
@@ -212,6 +252,7 @@ void Game::inicializarServer()
 	//Informa a los clientes que el juego comenzará
 	m_server->informGameBeginning();
 
+	keepListening();
 }
 
 
@@ -229,24 +270,19 @@ void Game::sendPackages()
 	m_drawMessagePacker->sendPackedMessages();
 }
 
-
-
 void* Game::koreaMethod(void)
 {
-
-	std::cout << "Empece a ciclar bitches!\n";
-	while (Game::Instance()->isRunning()) {
-
-			/*if (!m_server->leer())
-				break;*/
-	        }
+	while (m_server->isRunning())
+	{
+		m_server -> aceptar();
+	}
 	 pthread_exit(NULL);
 }
 void *Game::thread_method(void *context)
 {
 	return ((Game *)context)->koreaMethod();
 }
-void Game::readFromKorea()
+void Game::keepListening()
 {
 	pthread_create(&listenThread, NULL, &Game::thread_method, (void*)this);
 
@@ -302,6 +338,14 @@ void Game::clean()
     SDL_Quit();
 }
 
+void Game::refreshPlayersDirty()
+{
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		 it->second->setDirty(true);
+	}
+}
+
 void Game::resetGame()
 {
 	 BulletsHandler::Instance()->clearBullets();
@@ -332,27 +376,9 @@ void Game::resetGame()
 		 it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
 		 it->second->setShootingCooldown(newShootingCooldown);
 		 it->second->setShootingSpeed(newBulletsSpeed);
+		 it->second->refreshDirty();
 	}
 
 	 //tudo ben
 	 m_running = true;
 }
-/*	 m_background = new Background();
-	 m_background->load(0, 0, m_gameWidth, m_gameHeight, 2);
-	 m_background->setLayer(BACKGROUND);
-	 printf("Background inicializado con objectID: %d y textureID: %d y layer : %d\n", m_background->getObjectId(), 2, m_background->getLayer());
-	 m_listOfGameObjects[m_background->getObjectId()] = m_background;
-
-	 printf("Se creó bien el background");
-
-	 m_island = new Island();
-	 m_island->load(0, m_gameHeight/2, 150, 150, 3, 1);
-	 m_island->setLayer(MIDDLEGROUND);
-	 m_island->setReappearanceTime(5000);   // en ms
-	 printf("Isla inicializada con objectID: %d y textureID: %d\n", m_island->getObjectId(), 3);
-	 m_listOfGameObjects[m_island->getObjectId()] = m_island;
-
-	 printf("Se creó bien la isla");
-*/
-	 //tudo ben
-	 //m_running = true;

@@ -29,10 +29,10 @@ class server;
 class DrawMessagesPacker;
 
 #define USE_DRAWMESSAGE_PACKAGING 0
-#define DRAG_DISCONNECTED_PLAYER 1
-#define FRONZE_DISCONNECTED_PLAYER 1
 
-#define XML_PATH "nivel.xml"
+#define DRAG_PLAYER 0
+
+#define XML_PATH "test.xml"
 
 class Game
 {
@@ -57,9 +57,11 @@ public:
     void handleEvents();
     void clean();
     void resetGame();
+    void refreshPlayersDirty();
 
-    bool createPlayer(int playerId, const std::string& playerName);
+    bool createPlayer(int clientID, const std::string& playerName);
     bool validatePlayerName(const std::string& playerName);
+    int  getFromNameID(const std::string& playerName);
     void disconnectPlayer(int playerId);
     void inicializarServer();
     void conectToKorea();
@@ -67,8 +69,12 @@ public:
     void addToPackage(DrawMessage drawMsg);
     void sendPackages();
 
+    void initializeTexturesInfo();
+    void setPlayersDirty();
+
    	void* koreaMethod(void);
    	void readFromKorea();
+   	void keepListening();
 
    	void actualizarEstado(int id,InputMessage dataMsg);
 

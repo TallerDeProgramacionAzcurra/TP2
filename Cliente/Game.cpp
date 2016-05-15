@@ -6,11 +6,16 @@ Game::Game():
 m_pWindow(0),
 m_pRenderer(0),
  m_timeOutCounter(0),
+ m_backgroundTextureID(10),
 m_running(false),
 m_gameStarted(false),
 m_reseting(false),
 m_initializingSDL(false),
-m_scrollSpeed(0.8)
+m_waitingTextures(false),
+m_continueLooping(false),
+m_scrollSpeed(0.8),
+m_gameWidth(0),
+m_gameHeight(0)
 {
 	//m_player = new Player();
 }
@@ -26,10 +31,6 @@ Game::~Game()
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int SDL_WINDOW_flag)
 {
 
-	askForName();
-
-    if (!initializeClient())
-    	return false;
 
     m_initializingSDL = true;
 
@@ -68,8 +69,15 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
         cout << "SDL init fail\n";
         return false;
     }
-    TextureManager::Instance()->clearTextureMap();
-    TextureManager::Instance()->init(m_pRenderer);
+
+    printf("Finish Initializing\n");
+
+    requestTexturesInfo(); // setea waiting textures en true
+
+    //TextureManager::Instance()->init(m_pRenderer);
+
+    m_backgroundTextureID = 10;
+
 
     //tudo ben
     m_initializingSDL = false;
@@ -111,6 +119,9 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 	printf("layer: %d\n", drwMsg.layer);
 	printf("textureID: %d\n", drwMsg.textureID);
 	printf("alive: %d\n", drwMsg.alive);*/
+	if (m_initializingSDL || m_waitingTextures)
+		return;
+
 	if ( existDrawObject(drwMsg.objectID, static_cast<int>(drwMsg.layer)))
 	{
 		if (drwMsg.connectionStatus == false)
@@ -136,8 +147,7 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 		{
 			return;
 		}
-
-		//printf("Creando nuevo objeto con objectID: %d\n", drwMsg.objectID);
+		//printf("Creando nuevo objeto con objectID: %d y textura %d\n", drwMsg.objectID, drwMsg.textureID);
 
 		DrawObject* newObject = new DrawObject();
 		newObject->setObjectID(drwMsg.objectID);
@@ -265,6 +275,7 @@ bool Game::initializeClient()
 
 	    string ip = parsersito->getConexionInfo().ip;
 	    int porto = parsersito->getConexionInfo().puerto;
+	    printf("Conectando a %s : %d \n", ip.c_str(), porto);
 
 	    m_client = new cliente(3,ip,porto, m_playerName);
 
@@ -321,9 +332,39 @@ void Game::createPlayer(int objectID, int textureID)
 	m_player = new Player();
 	m_player->setObjectID(objectID);
 	m_player->setTextureID(textureID);
+}
 
+bool Game::canContinue()
+{
+	bool canContinue = true;
+	if (!m_continueLooping || !m_gameStarted || m_reseting || m_initializingSDL || m_waitingTextures)
+	{
+		canContinue = false;
+	}
+	return canContinue;
+}
+
+void Game::checkContinueConditions()
+{
+	if (!m_continueLooping && !m_waitingTextures && !m_initializingSDL)
+	{
+		//printf("finish waiting\n");
+		TextureManager::Instance()->clearTextureMap();
+		loadTextures();
+		m_continueLooping = true;
+	}
 
 }
+
+void Game::stopLooping()
+{
+	m_continueLooping = false;
+}
+void Game::continueLooping()
+{
+	m_continueLooping = true;
+}
+
 
 void Game::disconnectObject(int objectID, int layer)
 {
@@ -437,6 +478,65 @@ bool Game::updateTimeOut()
 	return true;
 }
 
+void Game::requestTexturesInfo()
+{
+	m_waitingTextures = true;
+	m_continueLooping = false;
+	NetworkMessage netMsg;
+	netMsg.msg_Code[0] = 't';
+	netMsg.msg_Code[1] = 'x';
+	netMsg.msg_Code[2] = 'r';
+	netMsg.msg_Length =  MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	m_client->sendNetworkMsg(netMsg);
+}
+
+void Game::addTexture(TextureInfo textureInfo)
+{
+	//printf("Se ha agregado la textura %d con path %s . Ultima = %d\n", textureInfo.textureID, textureInfo.path, textureInfo.lastTexture );
+	TextureManager::Instance()->addTextureInfo(textureInfo);
+	if (textureInfo.lastTexture)
+	{
+		m_waitingTextures = false;
+		printf("Se agregaron todas las texturas\n");
+	}
+}
+
+void Game::loadTextures()
+{
+	//printf("Se cargaron todas las texturas\n");
+	Logger::Instance()->LOG("Cliente: Se recibieron y cargaron todas las texturas satisfactoriamente.", DEBUG);
+	TextureManager::Instance()->loadTextures(m_pRenderer);
+}
+void Game::mrMusculo(){
+	 cout << "Musculow\n";
+
+	    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+	    {
+	    	it->second->clean();
+			delete it->second;
+	    }
+	    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+	    {
+	    	it->second->clean();
+			delete it->second;
+	    }
+	    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+	    {
+	    	it->second->clean();
+			delete it->second;
+	    }
+
+	    TextureManager::Instance()->clearTextureMap();
+	    backgroundObjects.clear();
+	    middlegroundObjects.clear();
+	    foregroundObjects.clear();
+	 	InputHandler::Instance()->reset();
+
+	    SDL_DestroyRenderer(m_pRenderer);
+	    SDL_DestroyWindow(m_pWindow);
+	    SDL_Quit();
+}
 void Game::clean()
 {
     cout << "cleaning game\n";
@@ -475,42 +575,98 @@ void Game::clean()
 
 void Game::resetGame()
 {
-	m_reseting = true;
-	 cout << "reseting game\n";
+//	m_reseting = true;
+//	 cout << "reseting game\n";
+//
+//	 for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+//	 {
+//		 cout << "destroying background\n";
+//		it->second->clean();
+//		delete it->second;
+//	 }
+//	 for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+//	 {
+//		 cout << "destroying middleground\n";
+//		it->second->clean();
+//		delete it->second;
+//	 }
+//	 for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+//	 {
+//		 cout << "destroying foreground\n";
+//		it->second->clean();
+//		delete it->second;
+//	 }
+//	 printf("GameObjects Destroyed");
+//	 InputHandler::Instance()->reset();
+//	 TextureManager::Instance()->clearTextureMap();
+//	 backgroundObjects.clear();
+//	 middlegroundObjects.clear();
+//	 foregroundObjects.clear();
 
-	 for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
-	 {
-		 cout << "destroying background\n";
-		it->second->clean();
-		delete it->second;
-	 }
-	 for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
-	 {
-		 cout << "destroying middleground\n";
-		it->second->clean();
-		delete it->second;
-	 }
-	 for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
-	 {
-		 cout << "destroying foreground\n";
-		it->second->clean();
-		delete it->second;
-	 }
-	 printf("GameObjects Destroyed");
-	 InputHandler::Instance()->reset();
-	 TextureManager::Instance()->clearTextureMap();
-	 backgroundObjects.clear();
-	 middlegroundObjects.clear();
-	 foregroundObjects.clear();
 
-
-	 SDL_SetWindowSize(m_pWindow,m_gameWidth, m_gameHeight);
+//	 SDL_DestroyWindow(m_pWindow);
 
 	 printf("Se modificó el tamaño de la window\n");
 
+	 setRunning(false);
+	 setRestart(true);
 	 //TextureManager::Instance()->init(m_pRenderer);
 
 	 cout << "Finish reseting game\n";
 	 m_reseting = false;
 
+}
+int Game::createGame(int DELAY_TIME){
+	//Armar un thread podria servir
+	int frameStartTime, frameEndTime;
+
+	std::cout << "Abriendo juego...\n";
+	setRestart(false);
+	if (Game::Instance()->init("1942 Ultraa Diesel", 400, 150, 800, 600, SDL_WINDOWPOS_CENTERED)) //flag por ejemplo: SDL_WINDOW_FULLSCREEN_DESKTOP
+				{
+					std::cout << "game init success!\n";
+
+					std::cout << "Game Online!\n";
+
+					//Bucle del juego
+					while (Game::Instance()->isRunning()) {
+
+						frameStartTime = SDL_GetTicks();
+
+						if (!Game::Instance()->canContinue())
+						{
+							Game::Instance()->checkContinueConditions();
+							continue;
+						}
+
+						Game::Instance()->updateTimeOut();
+
+						Game::Instance()->handleEvents();
+
+
+						Game::Instance()->render();
+
+						frameEndTime = SDL_GetTicks() - frameStartTime;
+
+						//tiempo a esperar = tiempo que demoro en finalizar el  frame = tiempo en que finalizó - tiempo en que inició
+						if (frameEndTime < DELAY_TIME)
+						{
+							SDL_Delay((int) ((DELAY_TIME - frameEndTime)));
+							GameTimeHelper::Instance()->updateDeltaTime(DELAY_TIME);
+						}
+						else
+						{
+							GameTimeHelper::Instance()->updateDeltaTime(frameEndTime);
+						}
+						//framesCount++;
+						//fpsCount +=  1000/ frameEndTime;
+						//printf("FPS: %d \n", (1000/ frameEndTime));
+
+					}
+				}
+				else
+				{
+					std::cout << "game init failure - " << SDL_GetError() << "\n";
+					return -1;
+				}
 }

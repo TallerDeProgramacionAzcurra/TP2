@@ -5,6 +5,13 @@
  *      Author: gonzalo
  */
 
+/*
+ * tiposDefinidos.h
+ *
+ *  Created on: Mar 23, 2016
+ *      Author: gonzalo
+ */
+
 #ifndef UTILS_TIPOSDEFINIDOS_H_
 #define UTILS_TIPOSDEFINIDOS_H_
 
@@ -15,6 +22,7 @@
 #define MESSAGE_DATA_SIZE (MESSAGE_BUFFER_SIZE - MESSAGE_LENGTH_BYTES - MESSAGE_CODE_BYTES)
 #define MESSAGE_VALUE_SIZE (MESSAGE_DATA_SIZE - MESSAGE_ID_BYTES_LIMIT - 1)
 #define MAX_NAME_LENGTH 24
+#define PATH_MAX_LENGTH 36
 
 #define DRAW_MESSAGE_SIZE 24
 #define INPUT_MESSAGE_SIZE 16
@@ -22,6 +30,7 @@
 #define CONNECTIONINFO_MESSAGE_SIZE 24
 #define PLAYER_DISCONNECTION_MESSAGE_SIZE 32
 #define RESET_MESSAGE_SIZE 4
+#define TEXTUREINFO_MESSAGE_SIZE (PATH_MAX_LENGTH + 12)
 
 #define DRAW_MESSAGE_PACK_SIZE  20
 
@@ -30,6 +39,7 @@
 #define FOREGROUND 20
 
 #include <string>
+#include <vector>
 
 // TIPOS RELACIONADOS A ARCHIVOS XML
 
@@ -131,11 +141,12 @@ struct DataMessage
 
 struct TextureInfo
 {
-	std::string path;
-	int width;
-	int height;
-	int numFrames;
-
+	bool lastTexture;
+	int textureID;
+	short width;
+	short height;
+	short numFrames;
+	char path[PATH_MAX_LENGTH];
 };
 
 struct DrawMessagePack
@@ -143,6 +154,70 @@ struct DrawMessagePack
 	int totalSize;
 	DrawMessage drawMessages[DRAW_MESSAGE_PACK_SIZE];
 };
+
+struct Ventana
+{
+	int ancho;
+	int alto;
+
+};
+
+struct Sprite
+{
+	std::string id;
+	std::string path;
+	int cantidad;
+	int ancho;
+	int alto;
+
+};
+struct Fondo
+{
+	std::string spriteId;
+	int ancho;
+	int alto;
+
+};
+
+struct Posicion
+{
+	int x;
+	int y;
+};
+
+struct Elemento
+{
+	std::string spriteId;
+	struct Posicion posicion;
+
+};
+
+struct Escenario
+{
+	int velScroll;
+	int cantidadJugadores;
+	int ancho;
+	int alto;
+	struct Fondo fondo;
+	std::vector<struct Elemento> listaDeElementos;
+
+};
+
+struct Avion
+{
+	int velDespl;
+	int velDisp;
+	int cdDisp;
+	std::string avionSprId;
+	std::string vueltaSprId;
+	std::string disparoSprId;
+
+};
+
+
+
+
+
 
 /*struct intMessage
 {
@@ -166,4 +241,3 @@ struct stringMessage
 };*/
 
 #endif /* UTILS_TIPOSDEFINIDOS_H_ */
-

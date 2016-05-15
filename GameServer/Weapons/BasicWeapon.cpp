@@ -13,6 +13,8 @@ BasicWeapon::BasicWeapon(): Weapon()
 	m_waitTime = 0;
 	m_canShoot = true;
 	m_bulletSpeed = 10;
+
+
 }
 
 BasicWeapon::~BasicWeapon()

@@ -32,6 +32,7 @@ void TextureHelper::initialize()
 	m_textureIDMap["player3"] = 2;
 	m_textureIDMap["player4"] = 3;
 
+
 	//ELEMENTOS DE BACKGROUND
 	m_textureIDMap["isla"] = 20;
 	m_textureIDMap["piedra"] = 21;

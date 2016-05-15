@@ -17,7 +17,8 @@ Player::Player() :  MoveableObject(),
 					m_holdQuietTimer(100),
 					m_currentHoldQuietTime(0),
 					m_dead(false),
-					m_dying(false)
+					m_dying(false),
+					m_movedByPlayer(false)
 {
 	m_tag = "Player";
 	m_layer = FOREGROUND;
@@ -65,6 +66,11 @@ void Player::draw()
 
 void Player::update()
 {
+	//Workaround para que no aparezca invisible
+	if (!m_movedByPlayer)
+	{
+		m_dirty = true;
+	}
 	//printf("currentFrame: %d \n", m_currentFrame);
 	//printf("doing flip: %d \n", m_doingFlip);
 	if (m_doingFlip)
@@ -76,27 +82,27 @@ void Player::update()
 	if (!m_doingFlip)
 	{
 		MoveableObject::update();
-		// si esta quieto Y no esta enl borde de abajo, lo empuja hacia abajo. Si esta desconectado se comporta de acuerdo a DRAG_DISCONNECTED_PLAYER
-		if (((m_direction.getX() == 0) && (m_direction.getY() == 0)) &&
-			(((m_position.getY() + m_height) < Game::Instance()->getGameHeight() - 10) ||
-			(DRAG_DISCONNECTED_PLAYER && !m_connected)))
-		{
-			if (FRONZE_DISCONNECTED_PLAYER && !m_connected)
-				return;
-			//Esta quieto. Iniciar Timer para arrastrar
-            if (m_currentHoldQuietTime >= m_holdQuietTimer)
-            {
-            	m_position.m_y += Game::Instance()->getScrollSpeed();
-    			m_dirty = true;
-            }
-            else
-            {
-                m_currentHoldQuietTime += GameTimeHelper::Instance()->deltaTime();
-            }
 
+		//FUNCIONALIDAD DE ARRASTRE, POR LAS DUDAS LO DEJO
+		if (DRAG_PLAYER)
+		{
+			// si esta quieto Y no esta enl borde de abajo, lo empuja hacia abajo. Si esta desconectado se comporta de acuerdo a DRAG_DISCONNECTED_PLAYER
+			if ((m_direction.getX() == 0) && (m_direction.getY() == 0) &&
+				(((m_position.getY() + m_height) < Game::Instance()->getGameHeight() - 10)))
+			{
+				//Esta quieto. Iniciar Timer para arrastrar
+				if (m_currentHoldQuietTime >= m_holdQuietTimer)
+				{
+					m_position.m_y += Game::Instance()->getScrollSpeed();
+					m_dirty = true;
+				}
+				else
+				{
+					m_currentHoldQuietTime += GameTimeHelper::Instance()->deltaTime();
+				}
+			}
 		}
 	}
-
 
 	m_currentWeapon->update();
 
@@ -138,6 +144,10 @@ void Player::clean()
 
 void Player::handleInput(InputMessage inputMsg)
 {
+	if (!m_movedByPlayer)
+	{
+		m_movedByPlayer = true;
+	}
 
     if(!m_dead && !m_dying)
     {

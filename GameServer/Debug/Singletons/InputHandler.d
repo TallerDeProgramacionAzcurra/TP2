@@ -12,6 +12,13 @@ Singletons/InputHandler.d: ../Singletons/InputHandler.cpp \
  ../Singletons/../Server/MessageFactory.h \
  ../Singletons/../Server/../Utils/StringHelper.h \
  ../Singletons/../Server/../Game.h \
+ ../Singletons/../Server/../Utils/Parser/ParserNivel.h \
+ ../Singletons/../Server/../Utils/Parser/Parser.h \
+ ../Singletons/../Server/../Utils/Parser/../Logger.h \
+ ../Singletons/../Server/../Utils/Parser/../TiposDefinidos.h \
+ ../Singletons/../Server/../Utils/Parser/../pugixml/pugixml.hpp \
+ ../Singletons/../Server/../Utils/Parser/../pugixml/pugiconfig.hpp \
+ ../Singletons/../Server/../Utils/TextureHelper.h \
  ../Singletons/../Server/DrawMessagesPacker.h \
  ../Singletons/../Server/server.h \
  ../Singletons/../Utils/Parser/ParserServidor.h \
@@ -42,11 +49,6 @@ Singletons/InputHandler.d: ../Singletons/InputHandler.cpp \
  ../Singletons/../Background/RecurrentObject.h \
  ../Singletons/../Background/Island.h \
  ../Singletons/../Background/../Utils/Parser/ParserNivel.h \
- ../Singletons/../Background/../Utils/Parser/Parser.h \
- ../Singletons/../Background/../Utils/Parser/../Logger.h \
- ../Singletons/../Background/../Utils/Parser/../TiposDefinidos.h \
- ../Singletons/../Background/../Utils/Parser/../pugixml/pugixml.hpp \
- ../Singletons/../Background/../Utils/Parser/../pugixml/pugiconfig.hpp \
  ../Singletons/../Background/../Utils/TextureHelper.h \
  ../Singletons/../Background/../Utils/GameObjectFactory.h \
  ../Singletons/../Background/../Utils/../GameObject.h \
@@ -98,6 +100,20 @@ Singletons/InputHandler.d: ../Singletons/InputHandler.cpp \
 ../Singletons/../Server/../Utils/StringHelper.h:
 
 ../Singletons/../Server/../Game.h:
+
+../Singletons/../Server/../Utils/Parser/ParserNivel.h:
+
+../Singletons/../Server/../Utils/Parser/Parser.h:
+
+../Singletons/../Server/../Utils/Parser/../Logger.h:
+
+../Singletons/../Server/../Utils/Parser/../TiposDefinidos.h:
+
+../Singletons/../Server/../Utils/Parser/../pugixml/pugixml.hpp:
+
+../Singletons/../Server/../Utils/Parser/../pugixml/pugiconfig.hpp:
+
+../Singletons/../Server/../Utils/TextureHelper.h:
 
 ../Singletons/../Server/DrawMessagesPacker.h:
 
@@ -158,16 +174,6 @@ Singletons/InputHandler.d: ../Singletons/InputHandler.cpp \
 ../Singletons/../Background/Island.h:
 
 ../Singletons/../Background/../Utils/Parser/ParserNivel.h:
-
-../Singletons/../Background/../Utils/Parser/Parser.h:
-
-../Singletons/../Background/../Utils/Parser/../Logger.h:
-
-../Singletons/../Background/../Utils/Parser/../TiposDefinidos.h:
-
-../Singletons/../Background/../Utils/Parser/../pugixml/pugixml.hpp:
-
-../Singletons/../Background/../Utils/Parser/../pugixml/pugiconfig.hpp:
 
 ../Singletons/../Background/../Utils/TextureHelper.h:
 

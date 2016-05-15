@@ -6,7 +6,6 @@ server::server(int port, int maxC): MAX_CLIENTES(maxC)
 	m_svRunning = true;
 	m_alanTuring = new AlanTuring();
 	printf("El puerto es %d \n",port);
-	port = 13333;
     pthread_mutex_init(&m_mutex, NULL);
     pthread_cond_init(&m_condv, NULL);
     //Creo Socket
@@ -235,6 +234,39 @@ void server::sendResetMsgToAll(ResetInfo resetMsg){
 	 }
 }
 
+void server::informTextureInfos(int clientID)
+{
+	ParserNivel* parserNivel = new ParserNivel();
+	TextureHelper* textureHelper = new TextureHelper();
+
+	parserNivel->parsearDocumento(XML_PATH);
+	std::vector<Sprite> sprites = parserNivel->getListaSprites();
+	for (std::vector<Sprite>::iterator it = sprites.begin() ; it !=  sprites.end(); ++it)
+	{
+		TextureInfo textureInfoToSend;
+		//id string to int
+		textureInfoToSend.textureID = textureHelper->stringToInt((*it).id);
+		//path string to buffer
+		std::size_t length = (*it).path.copy(textureInfoToSend.path, PATH_MAX_LENGTH, 0);
+		textureInfoToSend.path[length]='\0';
+		//otras variables de imagen
+		textureInfoToSend.numFrames = (*it).cantidad;
+		textureInfoToSend.height = (*it).alto;
+		textureInfoToSend.width = (*it).ancho;
+		textureInfoToSend.lastTexture = false;
+
+		if (boost::next(it) == sprites.end())
+		{
+			textureInfoToSend.lastTexture = true;
+		}
+
+		NetworkMessage networkMessage = m_alanTuring->TextureInfoToNetwork(textureInfoToSend);
+		m_queuePost[clientID].add(networkMessage);
+	}
+	delete parserNivel;
+	delete textureHelper;
+}
+
 void server::sendPackToAll(DrawMessagePack drawPackMsg){
 
 	 NetworkMessage netMsg = m_alanTuring->drawMsgPackToNetwork(drawPackMsg);
@@ -278,6 +310,17 @@ void server::informGameBeginning(){
 	     }
 	 }
 }
+
+void server::informGameBegan(int clientID)
+{
+	NetworkMessage gameBeginningMsg;
+	gameBeginningMsg.msg_Code[0] = 'g';
+	gameBeginningMsg.msg_Code[1] = 'b';
+	gameBeginningMsg.msg_Code[2] = 'g';
+	gameBeginningMsg.msg_Length = MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	m_queuePost[clientID].add(gameBeginningMsg); //Hace falta el isAvailable?
+}
+
 
 
 void server::sendDrawMsg(int socketReceptor, DrawMessage msg)
@@ -679,13 +722,6 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 			Logger::Instance()->LOG(ss.str(), DEBUG);
 			printf("%s \n", ss.str().c_str());
 		}
-		else
-		{
-			std::stringstream ss;
-			ss <<"Server: No se pudo crear el cliente con ip" << inet_ntoa(cli_addr.sin_addr) << ". el nombre: " << playerName << " ya está en uso.";
-			Logger::Instance()->LOG(ss.str(), WARN);
-			printf("%s \n", ss.str().c_str());
-		}
 
 		return m_successfulPlayerCreation;
 	}
@@ -705,6 +741,8 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 			resetInfo.windowWidth = Game::Instance()->getGameWidth();
 
 			sendResetMsgToAll(resetInfo);
+
+			Game::Instance()->refreshPlayersDirty();
 			Game::Instance()->setReseting(false);
 			Logger::Instance()->LOG("Server: Se ha reiniciado el juego.", DEBUG);
 		}
@@ -712,12 +750,21 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 		return true;
 	}
 
+	//TextureInfo Request
+	if ((netMsg.msg_Code[0] == 't') && (netMsg.msg_Code[1] == 'x') && (netMsg.msg_Code[2] == 'r'))
+	{
+		informTextureInfos(serverMsg->clientID);
+		return true;
+	}
+
 
 	//Input Msg
 	if ((netMsg.msg_Code[0] == 'i') && (netMsg.msg_Code[1] == 'm') && (netMsg.msg_Code[2] == 's'))
 	{
+		//printf("Decodificando Input Msg\n");
 		InputMessage inputMsg = m_alanTuring->decodeInputMessage(netMsg);
 		Game::Instance()->actualizarEstado(serverMsg->clientID,inputMsg);
+		//printf(" Fin Decodificando Input Msg\n");
 		return true;
 	}
 

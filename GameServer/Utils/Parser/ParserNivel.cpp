@@ -106,8 +106,8 @@ bool ParserNivel::extraerSprites(const pugi::xml_document* doc)
 		if (!validarPath(path))
 			{
 				Logger::Instance()->LOG("Se cargo el path del sprite por default", WARN);
-				path = "Utils/Default/sprite.jpg";
-				id = "default";
+				path = "Assets/Sprites/missing.jpg";
+				//id = "default";
 
 			}
 
@@ -340,7 +340,7 @@ bool ParserNivel::extraerAvion(const pugi::xml_document* doc, bool isLoadingDefa
 
 
 	m_avion.velDespl = std::stoi(velDesplStr);
-	m_avion.velDisp = std::stoi(velDispStr);
+	m_avion.velDisp = std::stoi(velDispStr) + m_avion.velDespl;
 	m_avion.cdDisp = std::stoi(cdDispStr);
 	m_avion.avionSprId = avionSprId;
 	m_avion.vueltaSprId = vueltaSprId;

@@ -36,6 +36,8 @@ public:
     void setConnected(bool connected) { m_connected = connected; }
     void setShootingSpeed(int speed);
     void setShootingCooldown(int cooldown);
+    void refreshDirty() { m_movedByPlayer = false; m_dirty = true;}
+
     //Getters
     bool isDead() { return m_dead; }
     bool isDying() { return m_dying; }
@@ -64,6 +66,8 @@ private:
     // variables de control de estado
     bool m_dead;
     bool m_dying;
+
+    bool m_movedByPlayer;
 
     //Modifica el estado del juego de acuerdo al input del jugador
 };

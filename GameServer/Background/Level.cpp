@@ -42,11 +42,15 @@ void Level::loadFromXML()
 	for (std::vector<Elemento>::iterator it = scene.listaDeElementos.begin() ; it !=  scene.listaDeElementos.end(); ++it)
 	{
 		//GameObjectFactory::createGameObject((*it).spriteId);
-		//printf("Cargando %s en posicion %d, %d \n",(*it).spriteId.c_str(), (*it).posicion.x, (*it).posicion.y );
+		printf("Cargando %s en posicion %d, %d \n",(*it).spriteId.c_str(), (*it).posicion.x, (*it).posicion.y );
+		int textureID = m_textureHelper->stringToInt((*it).spriteId);
+
+		TextureInfo texInfo = TextureManager::Instance()->getTextureInfo(textureID);
+		printf("texture int = %d \n", texInfo.textureID);
 		GameObject* gameObject = GameObjectFactory::createGameObject((*it).spriteId);
 		gameObject->setLayer(MIDDLEGROUND);
-		gameObject->setHeight(128);
-		gameObject->setTextureID(m_textureHelper->stringToInt((*it).spriteId));
+		gameObject->setHeight(static_cast<int>(texInfo.height));
+		gameObject->setTextureID((texInfo.textureID));
 
 		addObject(gameObject, (*it).posicion.x, (*it).posicion.y);
 
@@ -86,7 +90,7 @@ void Level::addObject(GameObject* gameObject, int x, int y)
 	Vector2D virtualPosition;
 	virtualPosition.setX(x);
 	//El cero esta en la pos alto de ventana e incrementa hacia arriba
-	virtualPosition.setY(Game::Instance()->getGameHeight() - y - gameObject->getHeight());
+	virtualPosition.setY(Game::Instance()->getGameHeight() - y);
 
 	gameObject->setPosition(virtualPosition);
 	m_levelObjects.push_back(gameObject);
