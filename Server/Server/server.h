@@ -58,6 +58,7 @@ class server
 
         void informPlayerDisconnection(PlayerDisconnection, int playerDiscID);
         void informGameBeginning();
+        void informGameBegan(int clientID);
         void informTextureInfos(int clientID);
         /**************************************************************************/
 

@@ -1,8 +1,8 @@
 #ifndef UTILS_PARSERNIVEL_H_
 #define UTILS_PARSERNIVEL_H_
 
-#define XML_NIVEL_DEFAULT_PATH "Utils/Default/nivel.xml"
-
+//#define XML_NIVEL_DEFAULT_PATH "Utils/Default/nivel.xml"
+#define XML_NIVEL_DEFAULT_PATH "nivel.xml"
 #include "Parser.h"
 #include "../Logger.h"
 #include "../TiposDefinidos.h"

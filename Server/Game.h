@@ -58,8 +58,9 @@ public:
     void clean();
     void resetGame();
 
-    bool createPlayer(int playerId, const std::string& playerName);
+    bool createPlayer(int clientID, const std::string& playerName);
     bool validatePlayerName(const std::string& playerName);
+    int  getFromNameID(const std::string& playerName);
     void disconnectPlayer(int playerId);
     void inicializarServer();
     void conectToKorea();
@@ -72,6 +73,7 @@ public:
 
    	void* koreaMethod(void);
    	void readFromKorea();
+   	void keepListening();
 
    	void actualizarEstado(int id,InputMessage dataMsg);
 

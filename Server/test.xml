@@ -68,7 +68,7 @@
 	</sprite>
 </sprites>
 <escenario>
-	<cantidadMaximaJugadores>1</cantidadMaximaJugadores>
+	<cantidadMaximaJugadores>2</cantidadMaximaJugadores>
 	<velocidadScroll>3</velocidadScroll>
 	<ancho>600</ancho>
 	<alto>800</alto>

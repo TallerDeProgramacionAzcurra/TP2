@@ -51,27 +51,58 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     return true;
 }
 
-bool Game::createPlayer(int playerID,  const std::string& playerName)
+bool Game::createPlayer(int clientID,  const std::string& playerName)
 {
+
+	bool nameExists;
+	std::stringstream ss;
+
 	//Se fija si existe un jugador con el nombre ingresado
-	if (!validatePlayerName(playerName))
+	nameExists = !validatePlayerName(playerName);
+
+	if (nameExists)
+	{
+		int actualPlayerID = getFromNameID(playerName);
+		Player* player = m_listOfPlayer[actualPlayerID];
+		if (player->isConnected()) //El jugador con ese nombre ya esta conectado
+		{
+			ss <<"Server: El jugador con nombre" << playerName << " ya se encuentra conectado.";
+			Logger::Instance()->LOG(ss.str(), WARN);
+			printf("%s \n", ss.str().c_str());
+			return false;
+		}
+		else //Se desconecto y se esta volviendo a conectar
+		{
+			player->setConnected(true);
+			m_server->informGameBegan(clientID);
+			return true;
+		}
+	}
+	//Si no existe el nombre:
+
+	//Esto controla que solo se puedan volver a conectar los que arrancaron jugando al ppio
+	if (m_listOfPlayer.size() == m_parserNivel->getEscenario().cantidadJugadores)
+	{
+		ss <<"Server: El jugador con nombre" << playerName << " no se pudo conectar, ya está llena la partida.";
+		Logger::Instance()->LOG(ss.str(), WARN);
+		printf("%s \n", ss.str().c_str());
 		return false;
+	}
 
 	int playerSpeed = m_parserNivel->getAvion().velDespl;
 	int shootingCooldown = m_parserNivel->getAvion().cdDisp;
 	int bulletsSpeed = m_parserNivel->getAvion().velDisp;
 
 	Player* newPlayer = new Player();
-	newPlayer->setObjectID(playerID);
+	newPlayer->setObjectID(clientID);
 	newPlayer->setSpeed(Vector2D(playerSpeed, playerSpeed));
 	newPlayer->setShootingCooldown(shootingCooldown);
 	newPlayer->setShootingSpeed(bulletsSpeed);
 
 
-	m_playerNames[playerID] = playerName;
+	m_playerNames[clientID] = playerName;
 
-	std::stringstream ss;
-	ss << "player" << (playerID + 1);
+	ss << "player" << (clientID + 1);
 	string playerStringID = ss.str();
 	int playerTextureID = m_textureHelper->stringToInt(playerStringID);
 
@@ -80,9 +111,19 @@ bool Game::createPlayer(int playerID,  const std::string& playerName)
 	newPlayer->setConnected(true);
 
 	m_listOfPlayer[newPlayer->getObjectId()]= newPlayer;
-	printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[playerID].c_str(), newPlayer->getObjectId(), playerID);
+	printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[clientID].c_str(), newPlayer->getObjectId(), clientID);
 
 	return true;
+}
+
+int Game::getFromNameID(const std::string& playerName)
+{
+	for (std::map<int, std::string>::iterator it = m_playerNames.begin(); it != m_playerNames.end(); ++it )
+	{
+		if (it->second.compare(playerName.c_str()) == 0)
+			return it->first;
+	}
+	return -1;
 }
 
 bool Game::validatePlayerName(const std::string& playerName)
@@ -106,7 +147,7 @@ void Game::disconnectPlayer(int playerID)
 	m_server->informPlayerDisconnection(playerDiscMsg, playerID);
 
 	m_listOfPlayer[playerID]->setConnected(false);
-	m_playerNames.erase(playerID);
+	//m_playerNames.erase(playerID);
 	//listOfPlayer.erase(id);
 	//mostrar en gris
 }
@@ -209,6 +250,7 @@ void Game::inicializarServer()
 	//Informa a los clientes que el juego comenzará
 	m_server->informGameBeginning();
 
+	keepListening();
 }
 
 
@@ -228,20 +270,17 @@ void Game::sendPackages()
 
 void* Game::koreaMethod(void)
 {
-
-	std::cout << "Empece a ciclar bitches!\n";
-	while (Game::Instance()->isRunning()) {
-
-			/*if (!m_server->leer())
-				break;*/
-	        }
+	while (m_server->isRunning())
+	{
+		m_server -> aceptar();
+	}
 	 pthread_exit(NULL);
 }
 void *Game::thread_method(void *context)
 {
 	return ((Game *)context)->koreaMethod();
 }
-void Game::readFromKorea()
+void Game::keepListening()
 {
 	pthread_create(&listenThread, NULL, &Game::thread_method, (void*)this);
 

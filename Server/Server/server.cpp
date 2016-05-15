@@ -312,6 +312,17 @@ void server::informGameBeginning(){
 	 }
 }
 
+void server::informGameBegan(int clientID)
+{
+	NetworkMessage gameBeginningMsg;
+	gameBeginningMsg.msg_Code[0] = 'g';
+	gameBeginningMsg.msg_Code[1] = 'b';
+	gameBeginningMsg.msg_Code[2] = 'g';
+	gameBeginningMsg.msg_Length = MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	m_queuePost[clientID].add(gameBeginningMsg); //Hace falta el isAvailable?
+}
+
+
 
 void server::sendDrawMsg(int socketReceptor, DrawMessage msg)
 {
@@ -710,13 +721,6 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 			std::stringstream ss;
 			ss <<"Server: " << playerName << " ha ingresado a la partida.";
 			Logger::Instance()->LOG(ss.str(), DEBUG);
-			printf("%s \n", ss.str().c_str());
-		}
-		else
-		{
-			std::stringstream ss;
-			ss <<"Server: No se pudo crear el cliente con ip" << inet_ntoa(cli_addr.sin_addr) << ". el nombre: " << playerName << " ya está en uso.";
-			Logger::Instance()->LOG(ss.str(), WARN);
 			printf("%s \n", ss.str().c_str());
 		}
 

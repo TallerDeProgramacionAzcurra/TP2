@@ -13,7 +13,9 @@ m_reseting(false),
 m_initializingSDL(false),
 m_waitingTextures(false),
 m_continueLooping(false),
-m_scrollSpeed(0.8)
+m_scrollSpeed(0.8),
+m_gameWidth(0),
+m_gameHeight(0)
 {
 	//m_player = new Player();
 }
