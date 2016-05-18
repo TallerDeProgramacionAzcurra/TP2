@@ -40,10 +40,10 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
 
     printf("Se cargo el escenario con ancho %d y alto %d\n",m_gameWidth, m_gameHeight );
 
-    inicializarServer();
-
     m_level = new Level();
     m_level->loadFromXML();
+
+    inicializarServer();
 
     //tudo ben
     m_running = true;
@@ -350,42 +350,46 @@ void Game::refreshPlayersDirty()
 
 void Game::resetGame()
 {
-	 BulletsHandler::Instance()->clearBullets();
-	 InputHandler::Instance()->clean();
-	 //delete m_background;
-	 //delete m_island;
-	 //m_listOfGameObjects.clear();
-	 if (m_level)
-	 {
-		 m_level->clean();
-		 delete m_level;
-	 }
-	 m_parserNivel->clean();
+	Game::Instance()->setReseting(true);
 
-	 //CARGAR XML
-	 m_parserNivel = new ParserNivel();
-	 m_parserNivel->parsearDocumento(XML_PATH);
-	 m_gameWidth = m_parserNivel->getVentana().ancho;
-	 m_gameHeight = m_parserNivel->getVentana().alto;
-
-	 m_level = new Level();
-	 m_level->loadFromXML();
-
-	int newPlayerSpeed = m_parserNivel->getAvion().velDespl;
-	int newShootingCooldown = m_parserNivel->getAvion().cdDisp;
-	int newBulletsSpeed = m_parserNivel->getAvion().velDisp;
-	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
-	{
-		if (it->second)
-		{
-			 it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
-			 it->second->setShootingCooldown(newShootingCooldown);
-			 it->second->setShootingSpeed(newBulletsSpeed);
-			 it->second->refreshDirty();
-			 it->second->StopFlipAnimation();
-		}
+	// Release all objects.
+	if (m_level) {
+		m_level->clean();
+		delete m_level;
 	}
 
-	 //tudo ben
-	 m_running = true;
+	TextureManager::Instance()->clearTextureMap();
+
+	if (m_textureHelper) {
+		delete m_textureHelper;
+	}
+
+	if (m_parserNivel) {
+		m_parserNivel->clean();
+		delete m_parserNivel;
+	}
+
+	for (std::map<int,GameObject*>::iterator it=m_listOfGameObjects.begin(); it != m_listOfGameObjects.end(); ++it) {
+		it->second->clean();
+		delete  it->second;
+	}
+	m_listOfGameObjects.clear();
+
+	BulletsHandler::Instance()->clearBullets();
+	InputHandler::Instance()->clean();
+
+	// Renew all objects.
+	m_parserNivel = new ParserNivel();
+	m_parserNivel->parsearDocumento(XML_PATH);
+	m_gameWidth = m_parserNivel->getVentana().ancho;
+	m_gameHeight = m_parserNivel->getVentana().alto;
+
+	m_textureHelper = new TextureHelper();
+
+	initializeTexturesInfo();
+
+	m_level = new Level();
+	m_level->loadFromXML();
+
+	setReseting(false);
 }

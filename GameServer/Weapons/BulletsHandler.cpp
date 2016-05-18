@@ -22,10 +22,10 @@ void BulletsHandler::addBullet(Bullet* bullet)
 
 void BulletsHandler::clearBullets()
 {
-	for (std::vector< Bullet* >::iterator it = m_bullets.begin() ; it != m_bullets.end(); ++it)
-	{
+	for (std::vector< Bullet* >::iterator it = m_bullets.begin() ; it != m_bullets.end(); ++it) {
 		delete (*it);
 	}
+
 	m_bullets.clear();
 }
 

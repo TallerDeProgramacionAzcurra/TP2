@@ -118,22 +118,23 @@ void Player::handleInput()
 		inputMsg.buttonRoll = 1;
 		dirty = true;
 	}
+
 	//RESET GAME
-	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_R))
-	{
-		if (!Game::Instance()->isReseting())
-		{
-			SDL_FlushEvent(SDL_KEYDOWN);
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_R)) {
+		if (!Game::Instance()->isReseting()) {
 			Game::Instance()->setReseting(true);
+
+			SDL_FlushEvent(SDL_KEYDOWN);
+
 			NetworkMessage netMsg;
 			netMsg.msg_Code[0] = 'r';
 			netMsg.msg_Code[1] = 's';
 			netMsg.msg_Code[2] = 't';
 			netMsg.msg_Length =  MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
-
 			Game::Instance()->sendNetworkMsg(netMsg);
 		}
 	}
+
 	//Abort
 	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_X))
 	{

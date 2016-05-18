@@ -616,47 +616,25 @@ void Game::clean()
 
 void Game::resetGame()
 {
-//	m_reseting = true;
-//	 cout << "reseting game\n";
-//
-//	 for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
-//	 {
-//		 cout << "destroying background\n";
-//		it->second->clean();
-//		delete it->second;
-//	 }
-//	 for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
-//	 {
-//		 cout << "destroying middleground\n";
-//		it->second->clean();
-//		delete it->second;
-//	 }
-//	 for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
-//	 {
-//		 cout << "destroying foreground\n";
-//		it->second->clean();
-//		delete it->second;
-//	 }
-//	 printf("GameObjects Destroyed");
-//	 InputHandler::Instance()->reset();
-//	 TextureManager::Instance()->clearTextureMap();
-//	 backgroundObjects.clear();
-//	 middlegroundObjects.clear();
-//	 foregroundObjects.clear();
+	setReseting(true);
 
+	TextureManager::Instance()->clearTextureMap();
+	InputHandler::Instance()->reset();
 
-//	 SDL_DestroyWindow(m_pWindow);
+	// Delete Middle DrawObjects.
+	for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it) {
+		if (it->second) {
+			it->second->clean();
+			delete it->second;
+		}
+	}
+	middlegroundObjects.clear();
 
-	 printf("Se modificó el tamaño de la window\n");
+	TextureManager::Instance()->loadTextures(m_pRenderer);
 
-	 setRunning(false);
-	 setRestart(true);
-	 //TextureManager::Instance()->init(m_pRenderer);
-
-	 cout << "Finish reseting game\n";
-	 m_reseting = false;
-
+	setReseting(false);
 }
+
 int Game::createGame(int DELAY_TIME){
 	//Armar un thread podria servir
 	int frameStartTime, frameEndTime;
