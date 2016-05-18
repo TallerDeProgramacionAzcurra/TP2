@@ -268,7 +268,6 @@ void server::informTextureInfos(int clientID)
 }
 
 void server::sendPackToAll(DrawMessagePack drawPackMsg){
-
 	 NetworkMessage netMsg = m_alanTuring->drawMsgPackToNetwork(drawPackMsg);
 	 for (int i = 0; i < m_listaDeClientes.size(); i++)
 	 {

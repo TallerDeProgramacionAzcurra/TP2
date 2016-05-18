@@ -38,6 +38,8 @@ public:
     void setShootingCooldown(int cooldown);
     void refreshDirty() { m_movedByPlayer = false; m_dirty = true;}
 
+    void StopFlipAnimation();
+
     //Getters
     bool isDead() { return m_dead; }
     bool isDying() { return m_dying; }

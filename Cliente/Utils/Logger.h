@@ -12,6 +12,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <pthread.h>
 
 using namespace std;
 
@@ -52,6 +53,7 @@ private:
     static Logger* s_pInstance;
     Logger(const Logger&);
     Logger& operator=(const Logger&);
+    pthread_mutex_t  m_logMutex;
 
     //Constructor y Destructor privados
     Logger();

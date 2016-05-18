@@ -78,6 +78,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 			player->refreshDirty();
 			m_server->informGameBegan(clientID);
 			m_server->informPlayerReconnected(clientID);
+			setPlayersDirty();
 			return true;
 		}
 	}
@@ -381,6 +382,7 @@ void Game::resetGame()
 			 it->second->setShootingCooldown(newShootingCooldown);
 			 it->second->setShootingSpeed(newBulletsSpeed);
 			 it->second->refreshDirty();
+			 it->second->StopFlipAnimation();
 		}
 	}
 

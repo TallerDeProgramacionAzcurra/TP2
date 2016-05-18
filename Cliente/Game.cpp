@@ -126,7 +126,7 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 	{
 		if (drwMsg.connectionStatus == false)
 		{
-			printf("DrawMessage de objeto desconectado\n");
+			//printf("DrawMessage de objeto desconectado\n");
 			disconnectObject(drwMsg.objectID, static_cast<int>(drwMsg.layer));
 		}
 

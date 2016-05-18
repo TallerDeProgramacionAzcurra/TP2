@@ -36,7 +36,6 @@ void BulletsHandler::updateBullets()
         if((*p_it)->getPosition().getX() < -20 || (*p_it)->getPosition().getX() > Game::Instance()->getGameWidth()
            || (*p_it)->getPosition().getY() < -20 || (*p_it)->getPosition().getY() > Game::Instance()->getGameHeight() || (*p_it)->isDead())
         {
-
         	(*p_it)->clean();
             delete * p_it;
             p_it = m_bullets.erase(p_it);
