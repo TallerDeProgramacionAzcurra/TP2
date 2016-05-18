@@ -1,8 +1,15 @@
+/*
+ * NaveObject.cpp
+ *
+ *  Created on: Apr 8, 2016
+ *      Author: gonzalo
+ */
+
 #include "MoveableObject.h"
 
 MoveableObject::MoveableObject() :  GameObject(),
 				m_direction(0,0),
-				m_speed(25,25)
+				m_speed(5,5)
 {
 	m_tag = "Nave";
 }
@@ -29,17 +36,10 @@ void MoveableObject::update()
 {
 	//se mueve en la dirección seteada
 	if (m_direction.getX() != 0)
-	{
 		m_position.m_x += (m_direction.getX() * m_speed.getX());
-        m_dirty = true;
-	}
 
 	if (m_direction.getY() != 0)
-	{
 		m_position.m_y += (m_direction.getY() * m_speed.getY());
-        m_dirty = true;
-	}
-
 }
 
 void MoveableObject::clean()

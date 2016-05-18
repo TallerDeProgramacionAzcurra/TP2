@@ -23,7 +23,10 @@ void BulletsHandler::addBullet(Bullet* bullet)
 void BulletsHandler::clearBullets()
 {
 	for (std::vector< Bullet* >::iterator it = m_bullets.begin() ; it != m_bullets.end(); ++it) {
-		delete (*it);
+		if ((*it))
+		{
+			delete (*it);
+		}
 	}
 
 	m_bullets.clear();
@@ -36,9 +39,12 @@ void BulletsHandler::updateBullets()
         if((*p_it)->getPosition().getX() < -20 || (*p_it)->getPosition().getX() > Game::Instance()->getGameWidth()
            || (*p_it)->getPosition().getY() < -20 || (*p_it)->getPosition().getY() > Game::Instance()->getGameHeight() || (*p_it)->isDead())
         {
-        	(*p_it)->clean();
-            delete * p_it;
-            p_it = m_bullets.erase(p_it);
+        	if ((*p_it))
+        	{
+				(*p_it)->clean();
+				delete * p_it;
+				p_it = m_bullets.erase(p_it);
+        	}
         }
         else
         {

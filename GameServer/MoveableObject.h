@@ -1,8 +1,15 @@
+/*
+ * Nave.h
+ *
+ *  Created on: Apr 8, 2016
+ *      Author: gonzalo
+ */
+
 #ifndef MOVEABLEOBJECT_H_
 #define MOVEABLEOBJECT_H_
 
 #include "GameObject.h"
-class Game;
+//#include "Game.h"
 //#include "Singletons/TextureManager.h"
 #include "Vector2D.h"
 #include <string>
@@ -11,6 +18,7 @@ class Game;
 #define DIRECTION_DOWN 1
 #define DIRECTION_RIGHT 1
 #define DIRECTION_LEFT -1
+
 class MoveableObject : public GameObject
 {
 public:
@@ -26,8 +34,7 @@ public:
     
     Vector2D& getDirection() { return m_direction; }
     Vector2D& getSpeed() { return m_speed; }
-    void setDirection(const Vector2D& direction) { m_direction = direction; }
-    void setSpeed(const Vector2D& speed) { m_speed = speed; }
+
 
 
 protected:

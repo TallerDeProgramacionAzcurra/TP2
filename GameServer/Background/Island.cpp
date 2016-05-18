@@ -12,7 +12,7 @@ Uint32 Island_TimerCallback(Uint32 interval, void *island) {
    return 0;
 }
 
-Island::Island() : RecurrentObject()
+Island::Island() : BackgroundObject()
 {
 	m_tag = "island";
 }
@@ -43,16 +43,15 @@ void Island::draw()
 
 void Island::update()
 {
-	/*if (!m_waiting)
+	if (!m_waiting)
 	{
-		m_dirty = true;
 		//se mueve en la dirección seteada
 		m_position.m_x += (m_direction.getX() * m_scrollSpeed.getX());
 		m_position.m_y += (m_direction.getY() * m_scrollSpeed.getY());
 
 		if (m_position.getY() >= Game::Instance()->getGameHeight())
 		{
-			//printf("El objeto %s %f %d scrolleo toda la pantalla.\n", m_tag.c_str(), m_position.getY(), Game::Instance()->getGameHeight());
+			printf("El objeto %s %f %d scrolleo toda la pantalla.\n", m_tag.c_str(), m_position.getY(), Game::Instance()->getGameHeight());
 			if (m_reappearanceTime > 0)
 			{
 				//inicia Timer con el callback de reaparecer, luego del tiempo establecido
@@ -65,13 +64,7 @@ void Island::update()
 				reappear();
 			}
 		}
-	}*/
-
-	//if (m_dirty)
-	//{
-		sendDrawMessage(true);
-		//m_dirty = false;
-	//}
+	}
 }
 
 void Island::reappear()
@@ -83,39 +76,5 @@ void Island::reappear()
 	int randomX = Random::getRange(0, Game::Instance()->getGameWidth() - m_width);
 	m_position.setX(randomX);
 	m_waiting = false;
-}
-
-void Island::clean()
-{
-	//setea Y en el comienzo
-	RecurrentObject::clean();
-	//sendDrawMessage(false);
-}
-
-void Island::sendDrawMessage(bool isAlive)
-{
-	DrawMessage drawMsg;
-	drawMsg.unused1 = false;
-	drawMsg.connectionStatus = true;
-	drawMsg.alive = isAlive;
-	drawMsg.hasSound = false;
-
-	drawMsg.objectID = m_objectId;
-	drawMsg.layer = m_layer;
-	drawMsg.soundID = 0;
-	drawMsg.column = m_currentFrame;
-	drawMsg.row = m_currentRow;
-	drawMsg.posX = m_position.getX();
-	drawMsg.posY = m_position.getY();
-	drawMsg.textureID = m_textureID;
-
-	if (USE_DRAWMESSAGE_PACKAGING)
-	{
-		Game::Instance()->addToPackage(drawMsg);
-	}
-	else
-	{
-		Game::Instance()->sendToAllClients(drawMsg);
-	}
 }
 

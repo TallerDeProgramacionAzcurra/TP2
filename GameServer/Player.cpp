@@ -10,20 +10,22 @@
 using namespace std;
 
 Player::Player() :  MoveableObject(),
-					m_connected(true),
+					m_controllable(true),
 					m_doingFlip(false),
-					m_flipAnimationTime(1000),
-					m_flipRemainingTime(0),
-					m_holdQuietTimer(100),
-					m_currentHoldQuietTime(0),
 					m_dead(false),
-					m_dying(false),
-					m_movedByPlayer(false)
+					m_dying(false)
 {
 	m_tag = "Player";
 	m_layer = FOREGROUND;
-	m_currentWeapon = new BasicWeapon();
-	m_shootOffset = Vector2D(15, -5);
+}
+
+Player::Player(bool canControl) :  MoveableObject(),
+									m_dead(false),
+									m_dying(false)
+{
+	m_controllable = canControl;
+	m_tag = "Player";
+	m_layer = FOREGROUND;
 }
 
 void Player::collision()
@@ -31,34 +33,12 @@ void Player::collision()
 
 }
 
-void Player::setShootingSpeed(int speed)
-{
-	if (m_currentWeapon)
-	{
-		m_currentWeapon->setBulletSpeed(speed);
-	}
-}
-void Player::setShootingCooldown(int cooldown)
-{
-	if (m_currentWeapon)
-	{
-		m_currentWeapon->setShootingCooldown(cooldown);
-	}
-}
-
-
-void Player::StopFlipAnimation()
-{
-	//m_doingFlip = false;
-	m_flipRemainingTime = 0;
-}
-
 void Player::load(int x, int y, int width, int height, int textureID, int numFrames)
 {
     // Load comun. Inicializa variables
     MoveableObject::load(x, y, width, height, textureID, numFrames);
 
-   // TextureManager::Instance()->load("Assets/Sprites/BlackShip.png", m_textureID, Game::Instance()->getRenderer());
+    TextureManager::Instance()->load("Assets/Sprites/BlackShip.png", m_textureID, Game::Instance()->getRenderer());
 
     // Otras acciones de inicialización del Player más especificas
 
@@ -73,170 +53,98 @@ void Player::draw()
 
 void Player::update()
 {
-	//Workaround para que no aparezca invisible
-	if (!m_movedByPlayer)
-	{
-		m_dirty = true;
-	}
-	//printf("currentFrame: %d \n", m_currentFrame);
-	//printf("doing flip: %d \n", m_doingFlip);
-	if (m_doingFlip)
-	{
-		updateFlipAnimation();
-	}
-
-	//Si esta girando no actualiza posicion
-	if (!m_doingFlip)
-	{
-		MoveableObject::update();
-
-		//FUNCIONALIDAD DE ARRASTRE, POR LAS DUDAS LO DEJO
-		if (DRAG_PLAYER)
-		{
-			// si esta quieto Y no esta enl borde de abajo, lo empuja hacia abajo. Si esta desconectado se comporta de acuerdo a DRAG_DISCONNECTED_PLAYER
-			if ((m_direction.getX() == 0) && (m_direction.getY() == 0) &&
-				(((m_position.getY() + m_height) < Game::Instance()->getGameHeight() - 10)))
-			{
-				//Esta quieto. Iniciar Timer para arrastrar
-				if (m_currentHoldQuietTime >= m_holdQuietTimer)
-				{
-					m_position.m_y += Game::Instance()->getScrollSpeed();
-					m_dirty = true;
-				}
-				else
-				{
-					m_currentHoldQuietTime += GameTimeHelper::Instance()->deltaTime();
-				}
-			}
-		}
-	}
-
-	m_currentWeapon->update();
-
-
-	if (m_dirty)
-	{
-		sendDrawMessage(true);
-		m_dirty = false;
-	}
-
-	m_direction.setX(0);
-	m_direction.setY(0);
-}
-
-void Player::updateFlipAnimation()
-{
-	m_flipRemainingTime -= GameTimeHelper::Instance()->deltaTime();
-	int step = m_flipAnimationTime / m_numFrames;
-	int lastFrame = m_currentFrame;
-	m_currentFrame = (m_flipAnimationTime - m_flipRemainingTime) / step;
-
-	if (m_flipRemainingTime <= 0)
-	{
-		m_currentFrame = 0;
-		m_doingFlip = false;
-	}
-
-	if (lastFrame != m_currentFrame)
-		m_dirty = true;
+	MoveableObject::update();
+	//Probar valores para animacion
+	//m_currentFrame = int(((SDL_GetTicks() / (1000 / 3)) % m_numFrames));
 }
 
 
 void Player::clean()
 {
     MoveableObject::clean();
-
-	delete m_currentWeapon;
 }
 
-void Player::handleInput(InputMessage inputMsg)
+void Player::handleInput()
 {
-	if (!m_movedByPlayer)
+	if (!m_controllable || m_dead || m_dying || Game::Instance()->isReseting())
+		return;
+
+	InputMessage inputMsg;
+
+	inputMsg.objectID = getObjectId();
+	inputMsg.buttonUp=0;
+	inputMsg.buttonDown=0;
+	inputMsg.buttonRight=0;
+	inputMsg.buttonLeft=0;
+	inputMsg.buttonShoot=0;
+	inputMsg.buttonRoll=0;
+
+	bool dirty = false;
+
+	// handle keys
+	//Espacio
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE))
 	{
-		m_movedByPlayer = true;
+		inputMsg.buttonShoot = 1;
+		dirty = true;
+	}
+	//Movimiento Hacia Arriba
+	if (((InputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) || (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_W))))
+	{
+		inputMsg.buttonUp = 1;
+		dirty = true;
+	}
+	//Movimiento Hacia Abajo
+	if (((InputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) || (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_S))))
+	{
+		inputMsg.buttonDown = 1;
+		dirty = true;
+	}
+	//Movimiento Hacia la Izquierda
+	if (((InputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) || (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_A))))
+	{
+		inputMsg.buttonLeft = 1;
+		dirty = true;
+	}
+	//Movimiento Hacia La Derecha
+	if (((InputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) || (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_D))))
+	{
+		inputMsg.buttonRight = 1;
+		dirty = true;
+	}
+	//Vuelta
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_RETURN))
+	{
+		inputMsg.buttonRoll = 1;
+		dirty = true;
 	}
 
-    if(!m_dead && !m_dying)
-    {
-    	//Si esta girando no admite inputs de disparo ni movimiento
-    	if(m_doingFlip)
-    	{
-    		return;
-    	}
+	//RESET GAME
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_R)) {
+		if (!Game::Instance()->isReseting()) {
+			Game::Instance()->setReseting(true);
 
-        // handle keys
-        if ((inputMsg.buttonUp == 1) && (m_position.getY() > 0))
-        {
-            m_direction.setY(DIRECTION_UP);
-            m_currentHoldQuietTime = 0;
-            m_dirty = true;
-        }
-        else if ((inputMsg.buttonDown == 1) && ((m_position.getY() + m_height) < Game::Instance()->getGameHeight() - 10))
-        {
-        	m_direction.setY(DIRECTION_DOWN);
-        	m_currentHoldQuietTime = 0;
-            m_dirty = true;
-        }
+			SDL_FlushEvent(SDL_KEYDOWN);
 
-        if ((inputMsg.buttonLeft == 1)	&& m_position.getX() > 0)
-        {
-        	m_direction.setX(DIRECTION_LEFT);
-        	m_currentHoldQuietTime = 0;
-            m_dirty = true;
-        }
-        else if ((inputMsg.buttonRight == 1) && ((m_position.getX() + m_width) < Game::Instance()->getGameWidth()))
-        {
-        	m_direction.setX(DIRECTION_RIGHT);
-        	m_currentHoldQuietTime = 0;
-            m_dirty = true;
-        }
-        //Se mueve a velocidades constantes. Evita que vaay a mayot velocidad en diagonal
-        m_direction.normalize();
-
-        if (inputMsg.buttonShoot)
-        {
-        	m_currentWeapon->shoot(Vector2D(m_position.getX() + m_shootOffset.getX(), m_position.getY() + m_shootOffset.getY()));
-            m_dirty = true;
-        }
-
-        if (inputMsg.buttonRoll)
-        {
-        	if (!m_doingFlip)
-        	{
-        		m_flipRemainingTime = m_flipAnimationTime;
-        		m_doingFlip = true;
-        	}
-            m_dirty = true;
-        }
-        //printf("Direcion = %f , %f \n", m_direction.m_x, m_direction.m_y);
-
-    }
-    //update();
-}
-
-void Player::sendDrawMessage(bool isAlive)
-{
-	DrawMessage drawMsg;
-	drawMsg.connectionStatus = m_connected;
-	drawMsg.unused1 = false;
-	drawMsg.alive = isAlive;
-	drawMsg.hasSound = false;
-
-	drawMsg.objectID = m_objectId;
-	drawMsg.layer = m_layer;
-	drawMsg.soundID = 0;
-	drawMsg.column = m_currentFrame;
-	drawMsg.row = m_currentRow;
-	drawMsg.posX = m_position.getX();
-	drawMsg.posY = m_position.getY();
-	drawMsg.textureID = m_textureID;
-
-	if (USE_DRAWMESSAGE_PACKAGING)
-	{
-		Game::Instance()->addToPackage(drawMsg);
+			NetworkMessage netMsg;
+			netMsg.msg_Code[0] = 'r';
+			netMsg.msg_Code[1] = 's';
+			netMsg.msg_Code[2] = 't';
+			netMsg.msg_Length =  MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+			Game::Instance()->sendNetworkMsg(netMsg);
+		}
 	}
-	else
+
+	//Abort
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_X))
 	{
-		Game::Instance()->sendToAllClients(drawMsg);
+		Game::Instance()->quit();
+		dirty = false;
+	}
+
+	if (dirty)
+	{
+		//printf("Enviando Input del objeto %d \n", getObjectId());
+		Game::Instance()->sendInputMsg( inputMsg);
 	}
 }

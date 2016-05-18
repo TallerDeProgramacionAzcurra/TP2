@@ -758,6 +758,8 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 			resetInfo.windowHeight = Game::Instance()->getGameHeight();
 			resetInfo.windowWidth = Game::Instance()->getGameWidth();
 			sendResetMsgToAll(resetInfo);
+
+			Game::Instance()->refreshPlayersDirty();
 		}
 
 		return true;

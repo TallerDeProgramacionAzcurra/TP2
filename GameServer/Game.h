@@ -1,38 +1,31 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-
-#include "Server/server.h"
-#include "Server/DrawMessagesPacker.h"
-#include "Utils/Parser/ParserServidor.h"
-#include "Background/Level.h"
+#include "Player.h"
+#include "Cliente/cliente.h"
+#include "Utils/Parser/ParserCliente.h"
 #include "Background/Island.h"
 #include "Background/Background.h"
 #include "Singletons/InputHandler.h"
 #include "Singletons/TextureManager.h"
-#include "Weapons/BulletsHandler.h"
-#include "Utils/TextureHelper.h"
-#include "Utils/Parser/ParserNivel.h"
-#include "Player.h"
+#include "Singletons/GameTimeHelper.h"
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <sstream>
+#include "DrawObject.h"
 #include <map>
 #include <string>
-using namespace std;
+#include <math.h>
 
+using namespace std;
 class Island;
 class Background;
 class Player;
-class Level;
-class server;
-class DrawMessagesPacker;
+class cliente;
+class DrawObject;
 
-#define USE_DRAWMESSAGE_PACKAGING 0
+#define TiMEOUT_MESSAGE_RATE 3000
 
-#define DRAG_PLAYER 0
-
-#define XML_PATH "test.xml"
 
 class Game
 {
@@ -49,78 +42,99 @@ public:
     }
 
 
-    bool init(const char* title, int xpos, int ypos, int width, int height);
+    bool init(const char* title, int xpos, int ypos, int width, int height, int SDL_WINDOW_flag);
 
     //Funciones generales del ciclo de jueo
     void render();
     void update();
     void handleEvents();
     void clean();
+
+    void paintbackground(int backgroundTextureID);
+
+    bool canContinue();
+    void checkContinueConditions();
+
     void resetGame();
-    void refreshPlayersDirty();
+    void requestTexturesInfo();
+    void addTexture(TextureInfo textureInfo);
+    void loadTextures();
+    void resetTextureColor(int objectID, int layer);
 
-    bool createPlayer(int clientID, const std::string& playerName);
-    bool validatePlayerName(const std::string& playerName);
-    int  getFromNameID(const std::string& playerName);
-    void disconnectPlayer(int playerId);
-    void inicializarServer();
-    void conectToKorea();
-    void sendToAllClients(DrawMessage drawMsg);
-    void addToPackage(DrawMessage drawMsg);
-    void sendPackages();
-
-    void initializeTexturesInfo();
-    void setPlayersDirty();
-
+    void createPlayer(int objectID, int textureID);
+    void disconnectObject(int objectID, int layer);
+    void disconnect();
+    bool initializeClient();
+    void askForName();
+    bool conectToKorea();
+   	void sendInputMsg(InputMessage mensaje);
+   	void sendNetworkMsg(NetworkMessage netMsg);
    	void* koreaMethod(void);
    	void readFromKorea();
-   	void keepListening();
+   	void interpretarDrawMsg(DrawMessage drwMsg);
 
-   	void actualizarEstado(int id,InputMessage dataMsg);
-
+   	bool updateTimeOut();
 
     SDL_Renderer* getRenderer() const { return m_pRenderer; }
     SDL_Window* getWindow() const { return m_pWindow; }
-
+    void mrMusculo();
+    void setRunning(bool loco){m_running = loco;}
     bool isRunning() { return m_running; }
-    bool isResseting() { return m_reseting; }
+    bool isReseting() { return m_reseting; }
+    bool isInitializingSDL(){ return m_initializingSDL;}
+    bool isWaitingForTextures() {return m_waitingTextures; }
 
     void quit() { m_running = false; }
 
     //Alto y Ancho de la ventana de juego
     int getGameWidth() const { return m_gameWidth; }
     int getGameHeight() const { return m_gameHeight; }
-    void setReseting(bool state) { m_reseting = state; }
-
-    pthread_t listenThread;
     float getScrollSpeed() { return m_scrollSpeed; }
+    void setGameStarted(bool state) { m_gameStarted = state; }
+    void setReseting(bool state) { m_reseting = state; }
+    void setWindowSize(int width, int heigth);
+    void setRestart(bool loco){m_restart = loco;}
+    bool getRestart(){return m_restart;}
+    int createGame(int DELAY_TIME);
     static void *thread_method(void *context);
+    pthread_t listenThread;
+
 
 private:
 
-    std::map<int,Player*> m_listOfPlayer;
-    std::map<int,std::string> m_playerNames;
+    //Layers
+    std::map<int,DrawObject*> backgroundObjects;
+    std::map<int,DrawObject*> middlegroundObjects;
+    std::map<int,DrawObject*> foregroundObjects;
 
-    std::map<int,GameObject*> m_listOfGameObjects;
-
+    void addDrawObject(int objectID, int layer, DrawObject* newDrawObject);
+    void removeDrawObject(int objectID, int layer);
+    void updateGameObject(const DrawMessage drawMessage);
+    bool existDrawObject(int objectID, int layer);
+    bool m_restart;
     SDL_Window* m_pWindow;
     SDL_Renderer* m_pRenderer;
 
-    ParserNivel* m_parserNivel;
-    Level* m_level;
-    TextureHelper* m_textureHelper;
+   	int m_timeOutCounter;
 
     //Provisorio
     Player* m_player;
     Background* m_background;
     Island* m_island;
-
-    server* m_server;
-    DrawMessagesPacker* m_drawMessagePacker;
-
-
+    cliente* m_client;
+    int m_backgroundTextureID;
     bool m_running;
+
+    bool m_gameStarted;
     bool m_reseting;
+    bool m_initializingSDL;
+    bool m_waitingTextures;
+    bool m_continueLooping;
+
+    void stopLooping();
+    void continueLooping();
+
+    std::string m_playerName;
 
     static Game* s_pInstance;
 

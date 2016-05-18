@@ -1,7 +1,12 @@
 <Cliente>
+	<logger>
+		<debug>True</debug>
+		<warning>True</warning>
+		<error>True</error>
+	</logger>
 	<conexion>
-		<IP>192.168.0.1</IP>
-		<puerto>51577</puerto>
+		<IP>127.0.0.1</IP>
+		<puerto>51757</puerto>
 	</conexion>
 	<mensajes>
 		<mensaje>

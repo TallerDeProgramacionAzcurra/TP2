@@ -8,13 +8,12 @@
 #ifndef BACKGROUND_H_
 #define BACKGROUND_H_
 
+#include "BackgroundObject.h"
 #include "../Vector2D.h"
 #include "../Singletons/TextureManager.h"
 #include "../Utils/TiposDefinidos.h"
 #include "../Game.h"
-#include "../GameObject.h"
 #include <string>
-#include "RecurrentObject.h"
 
 class Background: public GameObject
 {
@@ -23,13 +22,11 @@ public:
 	Background();
 	Background(const Vector2D& direction, const Vector2D& scrollSpeed);
 	virtual ~Background();
-	virtual void load(int x, int y, int width, int height, int textureID,int i){load( x,  y,  width,  height,  textureID);}
+
 	virtual void load(int x, int y, int width, int height, int textureID);
     virtual void draw();
     virtual void update();
     virtual void clean();
-
-    void sendDrawMessage(bool isAlive);
 
     //Getters
     Vector2D& getDirection() { return m_direction; }
