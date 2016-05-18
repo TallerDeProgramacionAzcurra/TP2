@@ -10,6 +10,7 @@
 
 #include "Bullet.h"
 #include <vector>
+#include <pthread.h>
 class Bullet;
 
 class BulletsHandler
@@ -46,6 +47,8 @@ private:
 
     // in play bullets
 	std::vector<Bullet*> m_bullets;
+
+	pthread_mutex_t  m_bulletsMutex;
 };
 
 

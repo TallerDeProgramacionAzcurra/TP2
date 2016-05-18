@@ -13,7 +13,9 @@ m_reseting(false),
 m_initializingSDL(false),
 m_waitingTextures(false),
 m_continueLooping(false),
-m_scrollSpeed(0.8)
+m_scrollSpeed(0.8),
+m_gameWidth(0),
+m_gameHeight(0)
 {
 	//m_player = new Player();
 }
@@ -29,10 +31,6 @@ Game::~Game()
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int SDL_WINDOW_flag)
 {
 
-	askForName();
-
-    if (!initializeClient())
-    	return false;
 
     m_initializingSDL = true;
 
@@ -102,15 +100,18 @@ void Game::render()
 
     for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
-         it->second->draw();
+    	if (it->second)
+    		it->second->draw();
     }
     for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
     {
-         it->second->draw();
+    	if (it->second)
+    		it->second->draw();
     }
     for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
     {
-         it->second->draw();
+    	if (it->second)
+    		it->second->draw();
     }
 
     SDL_RenderPresent(m_pRenderer);
@@ -128,7 +129,7 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 	{
 		if (drwMsg.connectionStatus == false)
 		{
-			printf("DrawMessage de objeto desconectado\n");
+			//printf("DrawMessage de objeto desconectado\n");
 			disconnectObject(drwMsg.objectID, static_cast<int>(drwMsg.layer));
 		}
 
@@ -181,24 +182,32 @@ void Game::updateGameObject(const DrawMessage drawMessage)
 {
 	switch(drawMessage.layer)
 	{
-	case BACKGROUND: backgroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			backgroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			backgroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+	case BACKGROUND:
+			if ( backgroundObjects[drawMessage.objectID])
+			{
+				backgroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
+				backgroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
+				backgroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+			}
 			break;
 
-	case MIDDLEGROUND: middlegroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			middlegroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			middlegroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+	case MIDDLEGROUND:
+			if ( middlegroundObjects[drawMessage.objectID])
+			{
+				middlegroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
+				middlegroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
+				middlegroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+			}
 			break;
 
-	case FOREGROUND: foregroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			foregroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			foregroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+	case FOREGROUND:
+			if ( foregroundObjects[drawMessage.objectID])
+			{
+				foregroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
+				foregroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
+				foregroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+			}
 			break;
-
-	default: middlegroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			middlegroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			middlegroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
 	}
 }
 
@@ -207,18 +216,27 @@ void Game::removeDrawObject(int objectID, int layer)
 	switch(layer)
 	{
 	case BACKGROUND:
-			delete backgroundObjects[objectID];
-			backgroundObjects.erase(objectID);
+			if (backgroundObjects[objectID])
+			{
+				delete backgroundObjects[objectID];
+				backgroundObjects.erase(objectID);
+			}
 			break;
 
 	case MIDDLEGROUND:
-		delete middlegroundObjects[objectID];
-		middlegroundObjects.erase(objectID);
+		if (middlegroundObjects[objectID])
+		{
+			delete middlegroundObjects[objectID];
+			middlegroundObjects.erase(objectID);
+		}
 		break;
 
 	case FOREGROUND:
-		delete foregroundObjects[objectID];
-		foregroundObjects.erase(objectID);
+		if (foregroundObjects[objectID])
+		{
+			delete foregroundObjects[objectID];
+			foregroundObjects.erase(objectID);
+		}
 		break;
 	}
 }
@@ -391,6 +409,29 @@ void Game::disconnectObject(int objectID, int layer)
 	}
 }
 
+void Game::resetTextureColor(int objectID, int layer)
+{
+	Uint8 r = 0xFF;
+	Uint8 g = 0xFF;
+	Uint8 b = 0xFF;
+
+	switch(layer)
+	{
+	case BACKGROUND:
+		TextureManager::Instance()->changeTextureColor(backgroundObjects[objectID]->getTextureId(), r, g, b);
+		break;
+	case MIDDLEGROUND:
+		TextureManager::Instance()->changeTextureColor(middlegroundObjects[objectID]->getTextureId(), r, g, b);
+		break;
+	case FOREGROUND:
+		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
+		break;
+	default:
+		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
+	}
+}
+
+
 void Game::disconnect()
 {
 	m_player->setControllable(false);
@@ -510,7 +551,44 @@ void Game::loadTextures()
 	Logger::Instance()->LOG("Cliente: Se recibieron y cargaron todas las texturas satisfactoriamente.", DEBUG);
 	TextureManager::Instance()->loadTextures(m_pRenderer);
 }
+void Game::mrMusculo(){
+	 cout << "Musculow\n";
 
+	    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+	    {
+	    	if (it->second)
+	    	{
+				it->second->clean();
+				delete it->second;
+	    	}
+	    }
+	    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+	    {
+	    	if (it->second)
+	    	{
+				it->second->clean();
+				delete it->second;
+	    	}
+	    }
+	    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+	    {
+	    	if (it->second)
+	    	{
+				it->second->clean();
+				delete it->second;
+	    	}
+	    }
+
+	    TextureManager::Instance()->clearTextureMap();
+	    backgroundObjects.clear();
+	    middlegroundObjects.clear();
+	    foregroundObjects.clear();
+	 	InputHandler::Instance()->reset();
+
+	    SDL_DestroyRenderer(m_pRenderer);
+	    SDL_DestroyWindow(m_pWindow);
+	    SDL_Quit();
+}
 void Game::clean()
 {
     cout << "cleaning game\n";
@@ -518,18 +596,27 @@ void Game::clean()
 
     for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
-    	it->second->clean();
-		delete it->second;
+    	if (it->second)
+    	{
+			it->second->clean();
+			delete it->second;
+    	}
     }
     for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
     {
-    	it->second->clean();
-		delete it->second;
+    	if (it->second)
+    	{
+			it->second->clean();
+			delete it->second;
+    	}
     }
     for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
     {
-    	it->second->clean();
-		delete it->second;
+    	if (it->second)
+    	{
+			it->second->clean();
+			delete it->second;
+    	}
     }
 
     m_client->desconectar();
@@ -549,42 +636,98 @@ void Game::clean()
 
 void Game::resetGame()
 {
-	m_reseting = true;
-	 cout << "reseting game\n";
+//	m_reseting = true;
+//	 cout << "reseting game\n";
+//
+//	 for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+//	 {
+//		 cout << "destroying background\n";
+//		it->second->clean();
+//		delete it->second;
+//	 }
+//	 for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+//	 {
+//		 cout << "destroying middleground\n";
+//		it->second->clean();
+//		delete it->second;
+//	 }
+//	 for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+//	 {
+//		 cout << "destroying foreground\n";
+//		it->second->clean();
+//		delete it->second;
+//	 }
+//	 printf("GameObjects Destroyed");
+//	 InputHandler::Instance()->reset();
+//	 TextureManager::Instance()->clearTextureMap();
+//	 backgroundObjects.clear();
+//	 middlegroundObjects.clear();
+//	 foregroundObjects.clear();
 
-	 for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
-	 {
-		 cout << "destroying background\n";
-		it->second->clean();
-		delete it->second;
-	 }
-	 for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
-	 {
-		 cout << "destroying middleground\n";
-		it->second->clean();
-		delete it->second;
-	 }
-	 for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
-	 {
-		 cout << "destroying foreground\n";
-		it->second->clean();
-		delete it->second;
-	 }
-	 printf("GameObjects Destroyed");
-	 InputHandler::Instance()->reset();
-	 TextureManager::Instance()->clearTextureMap();
-	 backgroundObjects.clear();
-	 middlegroundObjects.clear();
-	 foregroundObjects.clear();
 
-
-	 SDL_SetWindowSize(m_pWindow,m_gameWidth, m_gameHeight);
+//	 SDL_DestroyWindow(m_pWindow);
 
 	 printf("Se modificó el tamaño de la window\n");
 
+	 setRunning(false);
+	 setRestart(true);
 	 //TextureManager::Instance()->init(m_pRenderer);
 
 	 cout << "Finish reseting game\n";
 	 m_reseting = false;
 
+}
+int Game::createGame(int DELAY_TIME){
+	//Armar un thread podria servir
+	int frameStartTime, frameEndTime;
+
+	std::cout << "Abriendo juego...\n";
+	setRestart(false);
+	if (Game::Instance()->init("1942 Ultraa Diesel", 400, 150, 800, 600, SDL_WINDOWPOS_CENTERED)) //flag por ejemplo: SDL_WINDOW_FULLSCREEN_DESKTOP
+				{
+					std::cout << "game init success!\n";
+
+					std::cout << "Game Online!\n";
+
+					//Bucle del juego
+					while (Game::Instance()->isRunning()) {
+
+						frameStartTime = SDL_GetTicks();
+
+						if (!Game::Instance()->canContinue())
+						{
+							Game::Instance()->checkContinueConditions();
+							continue;
+						}
+
+						Game::Instance()->updateTimeOut();
+
+						Game::Instance()->handleEvents();
+
+
+						Game::Instance()->render();
+
+						frameEndTime = SDL_GetTicks() - frameStartTime;
+
+						//tiempo a esperar = tiempo que demoro en finalizar el  frame = tiempo en que finalizó - tiempo en que inició
+						if (frameEndTime < DELAY_TIME)
+						{
+							SDL_Delay((int) ((DELAY_TIME - frameEndTime)));
+							GameTimeHelper::Instance()->updateDeltaTime(DELAY_TIME);
+						}
+						else
+						{
+							GameTimeHelper::Instance()->updateDeltaTime(frameEndTime);
+						}
+						//framesCount++;
+						//fpsCount +=  1000/ frameEndTime;
+						//printf("FPS: %d \n", (1000/ frameEndTime));
+
+					}
+				}
+				else
+				{
+					std::cout << "game init failure - " << SDL_GetError() << "\n";
+					return -1;
+				}
 }

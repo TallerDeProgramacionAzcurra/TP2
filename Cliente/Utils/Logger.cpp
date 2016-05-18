@@ -11,11 +11,11 @@ Logger* Logger::s_pInstance = 0;
 
 Logger::Logger()
 {
+	pthread_mutex_init(&m_logMutex, NULL);
+    m_debugAvailable = true;
+    m_warningAvailable = true;
+    m_errorAvailable = true;
 	 std::string filename = generateFilename();
-	 //Inicializo para que loguee todos los niveles inicialmente, al procesar el XML se pisa
-	 m_debugAvailable = true;
-	 m_warningAvailable = true;
-	 m_errorAvailable = true;
 
 	m_file.open( filename.c_str(), std::ios::out|std::ios::in|std::ios::app );
 	 if (!m_file.good())
@@ -44,11 +44,13 @@ Logger::~Logger()
         << Time::getTime()
         << " ) \n  ===============================================\n\n";
   m_file.flush();
+  pthread_mutex_destroy(&m_logMutex);
   m_file.close();
 }
 
-void Logger::LOG(const std::string& message, LogType logLevel)
-{
+ void Logger::LOG(const std::string& message, LogType logLevel)
+ {
+	 pthread_mutex_lock(&m_logMutex);
 	 switch(logLevel)
 	 {
 	 case DEBUG:
@@ -72,15 +74,16 @@ void Logger::LOG(const std::string& message, LogType logLevel)
 
 	 m_file << message << "\n";
 	 m_file.flush();
+	pthread_mutex_unlock(&m_logMutex);
 
-}
+ }
 
-void Logger::setLoglevel(bool debug, bool warn, bool errors)
-{
+ void Logger::setLoglevel(bool debug, bool warn, bool errors)
+ {
 	 m_debugAvailable = debug;
 	 m_warningAvailable = warn;
 	 m_errorAvailable = errors;
-}
+ }
 
  void Logger::Close()
  {

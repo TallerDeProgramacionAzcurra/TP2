@@ -19,6 +19,7 @@
 #include <sstream>
 #include <map>
 #include <string>
+#include <pthread.h>
 using namespace std;
 
 class Island;
@@ -57,9 +58,11 @@ public:
     void handleEvents();
     void clean();
     void resetGame();
+    void refreshPlayersDirty();
 
-    bool createPlayer(int playerId, const std::string& playerName);
+    bool createPlayer(int clientID, const std::string& playerName);
     bool validatePlayerName(const std::string& playerName);
+    int  getFromNameID(const std::string& playerName);
     void disconnectPlayer(int playerId);
     void inicializarServer();
     void conectToKorea();
@@ -72,6 +75,7 @@ public:
 
    	void* koreaMethod(void);
    	void readFromKorea();
+   	void keepListening();
 
    	void actualizarEstado(int id,InputMessage dataMsg);
 
@@ -124,6 +128,8 @@ private:
     int m_gameWidth;
     int m_gameHeight;
     float m_scrollSpeed;
+
+    pthread_mutex_t  m_resetMutex;
 
     Game();
     ~Game();

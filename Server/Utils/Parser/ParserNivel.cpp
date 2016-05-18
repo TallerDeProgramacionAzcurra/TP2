@@ -42,7 +42,7 @@ bool ParserNivel::parsearDocumento(const std::string& nombreArchivoXML){
 			//cout << "No se pudieron parsear ninguno delos archivos XML nivel";
 		}
 	}
-	cout << "Si se cargo \n";
+	//cout << "Si se cargo \n";
 	return exito;
 
 }

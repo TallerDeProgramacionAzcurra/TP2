@@ -4,6 +4,6 @@
 		<warning>True</warning>
 		<error>True</error>
 	</logger>
-	<CantidadMaximaClientes>2</CantidadMaximaClientes>
-	<puerto>13333</puerto>
+	<CantidadMaximaClientes>1</CantidadMaximaClientes>
+	<puerto>51757</puerto>
 </servidor>

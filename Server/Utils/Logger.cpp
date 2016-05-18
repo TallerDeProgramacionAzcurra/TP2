@@ -11,6 +11,7 @@ Logger* Logger::s_pInstance = 0;
 
 Logger::Logger()
 {
+	pthread_mutex_init(&m_logMutex, NULL);
     m_debugAvailable = true;
     m_warningAvailable = true;
     m_errorAvailable = true;
@@ -43,11 +44,13 @@ Logger::~Logger()
         << Time::getTime()
         << " ) \n  ===============================================\n\n";
   m_file.flush();
+  pthread_mutex_destroy(&m_logMutex);
   m_file.close();
 }
 
  void Logger::LOG(const std::string& message, LogType logLevel)
  {
+	 pthread_mutex_lock(&m_logMutex);
 	 switch(logLevel)
 	 {
 	 case DEBUG:
@@ -71,6 +74,7 @@ Logger::~Logger()
 
 	 m_file << message << "\n";
 	 m_file.flush();
+	pthread_mutex_unlock(&m_logMutex);
 
  }
 

@@ -46,6 +46,13 @@ void Player::setShootingCooldown(int cooldown)
 	}
 }
 
+
+void Player::StopFlipAnimation()
+{
+	//m_doingFlip = false;
+	m_flipRemainingTime = 0;
+}
+
 void Player::load(int x, int y, int width, int height, int textureID, int numFrames)
 {
     // Load comun. Inicializa variables

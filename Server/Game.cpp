@@ -9,7 +9,7 @@ m_running(false),
 m_reseting(false),
 m_scrollSpeed(2)
 {
-
+	pthread_mutex_init(&m_resetMutex, NULL);
 }
 
 Game::~Game()
@@ -17,6 +17,7 @@ Game::~Game()
     // we must clean up after ourselves to prevent memory leaks
     m_pRenderer= 0;
     m_pWindow = 0;
+    pthread_mutex_destroy(&m_resetMutex);
 }
 
 
@@ -51,27 +52,62 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     return true;
 }
 
-bool Game::createPlayer(int playerID,  const std::string& playerName)
+bool Game::createPlayer(int clientID,  const std::string& playerName)
 {
+
+	bool nameExists;
+	std::stringstream ss;
+
 	//Se fija si existe un jugador con el nombre ingresado
-	if (!validatePlayerName(playerName))
+	nameExists = !validatePlayerName(playerName);
+
+	if (nameExists)
+	{
+		int actualPlayerID = getFromNameID(playerName);
+		Player* player = m_listOfPlayer[actualPlayerID];
+		if (player->isConnected()) //El jugador con ese nombre ya esta conectado
+		{
+			ss <<"Server: El jugador con nombre" << playerName << " ya se encuentra conectado.";
+			Logger::Instance()->LOG(ss.str(), WARN);
+			printf("%s \n", ss.str().c_str());
+			player->refreshDirty();
+			return false;
+		}
+		else //Se desconecto y se esta volviendo a conectar
+		{
+			player->setConnected(true);
+			player->refreshDirty();
+			m_server->informGameBegan(clientID);
+			m_server->informPlayerReconnected(clientID);
+			setPlayersDirty();
+			return true;
+		}
+	}
+	//Si no existe el nombre:
+
+	//Esto controla que solo se puedan volver a conectar los que arrancaron jugando al ppio
+	if (m_listOfPlayer.size() == m_parserNivel->getEscenario().cantidadJugadores)
+	{
+		ss <<"Server: El jugador con nombre" << playerName << " no se pudo conectar, ya está llena la partida.";
+		Logger::Instance()->LOG(ss.str(), WARN);
+		printf("%s \n", ss.str().c_str());
 		return false;
+	}
 
 	int playerSpeed = m_parserNivel->getAvion().velDespl;
 	int shootingCooldown = m_parserNivel->getAvion().cdDisp;
 	int bulletsSpeed = m_parserNivel->getAvion().velDisp;
 
 	Player* newPlayer = new Player();
-	newPlayer->setObjectID(playerID);
+	newPlayer->setObjectID(clientID);
 	newPlayer->setSpeed(Vector2D(playerSpeed, playerSpeed));
 	newPlayer->setShootingCooldown(shootingCooldown);
 	newPlayer->setShootingSpeed(bulletsSpeed);
 
 
-	m_playerNames[playerID] = playerName;
+	m_playerNames[clientID] = playerName;
 
-	std::stringstream ss;
-	ss << "player" << (playerID + 1);
+	ss << "player" << (clientID + 1);
 	string playerStringID = ss.str();
 	int playerTextureID = m_textureHelper->stringToInt(playerStringID);
 
@@ -80,9 +116,19 @@ bool Game::createPlayer(int playerID,  const std::string& playerName)
 	newPlayer->setConnected(true);
 
 	m_listOfPlayer[newPlayer->getObjectId()]= newPlayer;
-	printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[playerID].c_str(), newPlayer->getObjectId(), playerID);
+	printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[clientID].c_str(), newPlayer->getObjectId(), clientID);
 
 	return true;
+}
+
+int Game::getFromNameID(const std::string& playerName)
+{
+	for (std::map<int, std::string>::iterator it = m_playerNames.begin(); it != m_playerNames.end(); ++it )
+	{
+		if (it->second.compare(playerName.c_str()) == 0)
+			return it->first;
+	}
+	return -1;
 }
 
 bool Game::validatePlayerName(const std::string& playerName)
@@ -106,7 +152,7 @@ void Game::disconnectPlayer(int playerID)
 	m_server->informPlayerDisconnection(playerDiscMsg, playerID);
 
 	m_listOfPlayer[playerID]->setConnected(false);
-	m_playerNames.erase(playerID);
+	//m_playerNames.erase(playerID);
 	//listOfPlayer.erase(id);
 	//mostrar en gris
 }
@@ -169,10 +215,12 @@ void Game::initializeTexturesInfo()
 void Game::setPlayersDirty()
 {
 	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
 		{
-			//printf("objectID = %d \n", it->second.getObjectId());
-		     it->second->setDirty(true);
+			it->second->setDirty(true);
 		}
+	}
 }
 
 void Game::handleEvents()
@@ -209,6 +257,7 @@ void Game::inicializarServer()
 	//Informa a los clientes que el juego comenzará
 	m_server->informGameBeginning();
 
+	keepListening();
 }
 
 
@@ -228,20 +277,17 @@ void Game::sendPackages()
 
 void* Game::koreaMethod(void)
 {
-
-	std::cout << "Empece a ciclar bitches!\n";
-	while (Game::Instance()->isRunning()) {
-
-			/*if (!m_server->leer())
-				break;*/
-	        }
+	while (m_server->isRunning())
+	{
+		m_server -> aceptar();
+	}
 	 pthread_exit(NULL);
 }
 void *Game::thread_method(void *context)
 {
 	return ((Game *)context)->koreaMethod();
 }
-void Game::readFromKorea()
+void Game::keepListening()
 {
 	pthread_create(&listenThread, NULL, &Game::thread_method, (void*)this);
 
@@ -264,15 +310,19 @@ void Game::clean()
 
 	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
 	{
-		//printf("objectID = %d \n", it->second.getObjectId());
-	     it->second->clean();
-	     delete  it->second;
+		if (it->second)
+		{
+			 it->second->clean();
+			 delete  it->second;
+		}
 	}
 	for (std::map<int,GameObject*>::iterator it=m_listOfGameObjects.begin(); it != m_listOfGameObjects.end(); ++it)
 	{
-		//printf("objectID = %d \n", it->second.getObjectId());
-	     it->second->clean();
-	     delete  it->second;
+		if (it->second)
+		{
+			 it->second->clean();
+			 delete  it->second;
+		}
 	}
     m_listOfPlayer.clear();
     m_listOfGameObjects.clear();
@@ -297,18 +347,31 @@ void Game::clean()
     SDL_Quit();
 }
 
+void Game::refreshPlayersDirty()
+{
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->setDirty(true);
+		}
+	}
+}
+
 void Game::resetGame()
 {
+	pthread_mutex_lock(&m_resetMutex);
 	 BulletsHandler::Instance()->clearBullets();
 	 InputHandler::Instance()->clean();
 	 //delete m_background;
 	 //delete m_island;
 	 //m_listOfGameObjects.clear();
-	 m_level->clean();
-	 delete m_level;
+	 if (m_level)
+	 {
+		 m_level->clean();
+		 delete m_level;
+	 }
 	 m_parserNivel->clean();
-
-	 printf("Se terminó de borrar bien\n");
 
 	 //CARGAR XML
 	 m_parserNivel = new ParserNivel();
@@ -324,30 +387,17 @@ void Game::resetGame()
 	int newBulletsSpeed = m_parserNivel->getAvion().velDisp;
 	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
 	{
-		 it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
-		 it->second->setShootingCooldown(newShootingCooldown);
-		 it->second->setShootingSpeed(newBulletsSpeed);
+		if (it->second)
+		{
+			 it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
+			 it->second->setShootingCooldown(newShootingCooldown);
+			 it->second->setShootingSpeed(newBulletsSpeed);
+			 it->second->refreshDirty();
+			 it->second->StopFlipAnimation();
+		}
 	}
 
 	 //tudo ben
 	 m_running = true;
+	 pthread_mutex_unlock(&m_resetMutex);
 }
-/*	 m_background = new Background();
-	 m_background->load(0, 0, m_gameWidth, m_gameHeight, 2);
-	 m_background->setLayer(BACKGROUND);
-	 printf("Background inicializado con objectID: %d y textureID: %d y layer : %d\n", m_background->getObjectId(), 2, m_background->getLayer());
-	 m_listOfGameObjects[m_background->getObjectId()] = m_background;
-
-	 printf("Se creó bien el background");
-
-	 m_island = new Island();
-	 m_island->load(0, m_gameHeight/2, 150, 150, 3, 1);
-	 m_island->setLayer(MIDDLEGROUND);
-	 m_island->setReappearanceTime(5000);   // en ms
-	 printf("Isla inicializada con objectID: %d y textureID: %d\n", m_island->getObjectId(), 3);
-	 m_listOfGameObjects[m_island->getObjectId()] = m_island;
-
-	 printf("Se creó bien la isla");
-*/
-	 //tudo ben
-	 //m_running = true;

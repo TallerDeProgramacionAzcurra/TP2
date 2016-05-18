@@ -12,7 +12,7 @@
 	</sprite>
 	<sprite>
 		<id>player2</id>
-		<path>Assets/Sprites/player2.png</path>
+		<path>Assets/Sprites/player1.png</path>
 		<cantidad>14</cantidad>
 		<ancho>60</ancho>
 		<alto>67</alto>
@@ -68,10 +68,10 @@
 	</sprite>
 </sprites>
 <escenario>
-	<cantidadMaximaJugadores>1</cantidadMaximaJugadores>
-	<velocidadScroll>3</velocidadScroll>
+	<cantidadMaximaJugadores>2</cantidadMaximaJugadores>
+	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>
-	<alto>800</alto>
+	<alto>600</alto>
 	<fondo>
 		<spriteId>agua</spriteId>
 		<ancho>10</ancho>
@@ -103,8 +103,8 @@
 </escenario>
 <avion>
 	<velocidadDesplazamiento>10</velocidadDesplazamiento>
-	<velocidadDisparos>10</velocidadDisparos>
-	<cooldownDisparos>250</cooldownDisparos>
+	<velocidadDisparos>0</velocidadDisparos>
+	<cooldownDisparos>100</cooldownDisparos>
 	<avionSpriteId>avion</avionSpriteId>
 	<vueltaSpriteId>vuelta</vueltaSpriteId>
 	<disparosSpriteId>disparo</disparosSpriteId>

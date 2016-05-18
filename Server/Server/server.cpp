@@ -6,7 +6,7 @@ server::server(int port, int maxC): MAX_CLIENTES(maxC)
 	m_svRunning = true;
 	m_alanTuring = new AlanTuring();
 	printf("El puerto es %d \n",port);
-	port = 13333;
+	pthread_mutex_init(&m_serverInitMutex, NULL);
     pthread_mutex_init(&m_mutex, NULL);
     pthread_cond_init(&m_condv, NULL);
     //Creo Socket
@@ -51,6 +51,7 @@ server::~server()
 	m_queuePost.clear();
 
 	delete m_alanTuring;
+	pthread_mutex_destroy(&m_serverInitMutex);
     pthread_mutex_destroy(&m_mutex);
     pthread_cond_destroy(&m_condv);
 }
@@ -114,6 +115,7 @@ void server::aceptar(){
 
 bool server::crearCliente (int clientSocket)
 {
+	 pthread_mutex_lock(&m_serverInitMutex);
 	//m_lastID almacena el indice de la lista Inteligente en el que el cliente fue agregado
 	m_lastID = m_listaDeClientes.add(clientSocket);
 
@@ -123,6 +125,7 @@ bool server::crearCliente (int clientSocket)
 	if (m_lastID < 0)
 	{
 		Logger::Instance()->LOG("Server: Cliente rechazado. El servidor no puede aceptar más clientes.", WARN);
+		pthread_mutex_unlock(&m_serverInitMutex);
 		return false;
 	}
 
@@ -145,7 +148,7 @@ bool server::crearCliente (int clientSocket)
 		removeTimeOutTimer(m_lastID);
 		m_listaDeClientes.removeAt(m_lastID);
 		close(clientSocket);
-
+		pthread_mutex_unlock(&m_serverInitMutex);
 		return false;
 	}
 
@@ -159,6 +162,7 @@ bool server::crearCliente (int clientSocket)
 		removeTimeOutTimer(m_lastID);
 		m_listaDeClientes.removeAt(m_lastID);
 		close(clientSocket);
+		pthread_mutex_unlock(&m_serverInitMutex);
 		return false;
 	}
 
@@ -173,6 +177,7 @@ bool server::crearCliente (int clientSocket)
 	std::stringstream ss;
 	ss << "Server: Se acepto el cliente: " << inet_ntoa(cli_addr.sin_addr);
 	Logger::Instance()->LOG(ss.str(), DEBUG);
+	pthread_mutex_unlock(&m_serverInitMutex);
 
 	return true;
 }
@@ -269,7 +274,6 @@ void server::informTextureInfos(int clientID)
 }
 
 void server::sendPackToAll(DrawMessagePack drawPackMsg){
-
 	 NetworkMessage netMsg = m_alanTuring->drawMsgPackToNetwork(drawPackMsg);
 	 for (int i = 0; i < m_listaDeClientes.size(); i++)
 	 {
@@ -295,8 +299,8 @@ void server::informPlayerDisconnection(PlayerDisconnection playerDiscMsg, int pl
 }
 
 
-void server::informGameBeginning(){
-
+void server::informGameBeginning()
+{
 	NetworkMessage gameBeginningMsg;
 	gameBeginningMsg.msg_Code[0] = 'g';
 	gameBeginningMsg.msg_Code[1] = 'b';
@@ -311,6 +315,34 @@ void server::informGameBeginning(){
 	     }
 	 }
 }
+
+void server::informPlayerReconnected(int clientID)
+{
+	PlayerReconnectionInfo playerRecInfo;
+	playerRecInfo.playerID = clientID;
+	NetworkMessage netWorkMessage = m_alanTuring->PlayerReconnectionInfoToNetwork(playerRecInfo);
+	 for (int i = 0; i < m_listaDeClientes.size(); i++)
+	 {
+		 if (i == clientID)
+			 continue;
+	     if ( m_listaDeClientes.isAvailable(i))
+	     {
+
+	    	 m_queuePost[i].add(netWorkMessage);
+	     }
+	 }
+}
+
+void server::informGameBegan(int clientID)
+{
+	NetworkMessage gameBeginningMsg;
+	gameBeginningMsg.msg_Code[0] = 'g';
+	gameBeginningMsg.msg_Code[1] = 'b';
+	gameBeginningMsg.msg_Code[2] = 'g';
+	gameBeginningMsg.msg_Length = MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	m_queuePost[clientID].add(gameBeginningMsg); //Hace falta el isAvailable?
+}
+
 
 
 void server::sendDrawMsg(int socketReceptor, DrawMessage msg)
@@ -712,13 +744,6 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 			Logger::Instance()->LOG(ss.str(), DEBUG);
 			printf("%s \n", ss.str().c_str());
 		}
-		else
-		{
-			std::stringstream ss;
-			ss <<"Server: No se pudo crear el cliente con ip" << inet_ntoa(cli_addr.sin_addr) << ". el nombre: " << playerName << " ya está en uso.";
-			Logger::Instance()->LOG(ss.str(), WARN);
-			printf("%s \n", ss.str().c_str());
-		}
 
 		return m_successfulPlayerCreation;
 	}
@@ -738,6 +763,8 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 			resetInfo.windowWidth = Game::Instance()->getGameWidth();
 
 			sendResetMsgToAll(resetInfo);
+
+			Game::Instance()->refreshPlayersDirty();
 			Game::Instance()->setReseting(false);
 			Logger::Instance()->LOG("Server: Se ha reiniciado el juego.", DEBUG);
 		}

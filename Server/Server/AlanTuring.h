@@ -54,12 +54,14 @@ public:
 	PlayerDisconnection decodePlayerDisconnectionMessage(NetworkMessage netMsg);
 	ResetInfo decodeResetInfo(NetworkMessage netMsg);
 	TextureInfo decodeTextureInfo(NetworkMessage netMsg);
+	PlayerReconnectionInfo decodePlayerReconnectionInfo(NetworkMessage netMsg);
 
 	NetworkMessage drawMessageToNetwork(DrawMessage drawMessage);
 	NetworkMessage playerDisconnectionToNetwork(PlayerDisconnection playerDiscMessage);
 	NetworkMessage drawMsgPackToNetwork(DrawMessagePack drawMsgPack);
 	NetworkMessage ResetMsgToNetwork(ResetInfo resetMessage);
 	NetworkMessage TextureInfoToNetwork(TextureInfo textureInfoMsg);
+	NetworkMessage PlayerReconnectionInfoToNetwork(PlayerReconnectionInfo playerReconnectionInfo);
 
 
 	//devuelve un buffer de 256 bytes con el mensaje codificado en binario en buffeSalida y un int con el tamaño Mensaje

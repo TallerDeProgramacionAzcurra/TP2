@@ -58,6 +58,8 @@ class server
 
         void informPlayerDisconnection(PlayerDisconnection, int playerDiscID);
         void informGameBeginning();
+        void informPlayerReconnected(int clientID);
+        void informGameBegan(int clientID);
         void informTextureInfos(int clientID);
         /**************************************************************************/
 
@@ -112,6 +114,8 @@ class server
 
         void agregarTimeOutTimer(int clientPosition);
         void removeTimeOutTimer(int clientPosition);
+
+        pthread_mutex_t  m_serverInitMutex;
 
 };
 

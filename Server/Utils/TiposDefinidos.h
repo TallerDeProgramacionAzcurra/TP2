@@ -31,6 +31,7 @@
 #define PLAYER_DISCONNECTION_MESSAGE_SIZE 32
 #define RESET_MESSAGE_SIZE 4
 #define TEXTUREINFO_MESSAGE_SIZE (PATH_MAX_LENGTH + 12)
+#define PLAYER_RECONNECTION_MEESAGE 4
 
 #define DRAW_MESSAGE_PACK_SIZE  20
 
@@ -147,6 +148,11 @@ struct TextureInfo
 	short height;
 	short numFrames;
 	char path[PATH_MAX_LENGTH];
+};
+
+struct PlayerReconnectionInfo
+{
+	int playerID;
 };
 
 struct DrawMessagePack

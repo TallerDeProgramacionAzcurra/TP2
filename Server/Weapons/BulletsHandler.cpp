@@ -13,6 +13,12 @@ BulletsHandler* BulletsHandler::s_pInstance = new BulletsHandler();
 
 BulletsHandler::BulletsHandler()
 {
+	pthread_mutex_init(&m_bulletsMutex, NULL);
+}
+
+BulletsHandler::~BulletsHandler()
+{
+	  pthread_mutex_destroy(&m_bulletsMutex);
 }
 
 void BulletsHandler::addBullet(Bullet* bullet)
@@ -22,24 +28,32 @@ void BulletsHandler::addBullet(Bullet* bullet)
 
 void BulletsHandler::clearBullets()
 {
+	 pthread_mutex_lock(&m_bulletsMutex);
 	for (std::vector< Bullet* >::iterator it = m_bullets.begin() ; it != m_bullets.end(); ++it)
 	{
-		delete (*it);
+		if ((*it))
+		{
+			delete (*it);
+		}
 	}
 	m_bullets.clear();
+	pthread_mutex_unlock(&m_bulletsMutex);
 }
 
 void BulletsHandler::updateBullets()
 {
+	pthread_mutex_lock(&m_bulletsMutex);
     for (std::vector<Bullet*>::iterator p_it = m_bullets.begin(); p_it != m_bullets.end();)
     {
         if((*p_it)->getPosition().getX() < -20 || (*p_it)->getPosition().getX() > Game::Instance()->getGameWidth()
            || (*p_it)->getPosition().getY() < -20 || (*p_it)->getPosition().getY() > Game::Instance()->getGameHeight() || (*p_it)->isDead())
         {
-
-        	(*p_it)->clean();
-            delete * p_it;
-            p_it = m_bullets.erase(p_it);
+        	if ((*p_it))
+        	{
+				(*p_it)->clean();
+				delete * p_it;
+				p_it = m_bullets.erase(p_it);
+        	}
         }
         else
         {
@@ -47,5 +61,6 @@ void BulletsHandler::updateBullets()
             ++p_it;
         }
     }
+    pthread_mutex_unlock(&m_bulletsMutex);
 }
 
