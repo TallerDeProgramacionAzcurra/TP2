@@ -389,6 +389,29 @@ void Game::disconnectObject(int objectID, int layer)
 	}
 }
 
+void Game::resetTextureColor(int objectID, int layer)
+{
+	Uint8 r = 0xFF;
+	Uint8 g = 0xFF;
+	Uint8 b = 0xFF;
+
+	switch(layer)
+	{
+	case BACKGROUND:
+		TextureManager::Instance()->changeTextureColor(backgroundObjects[objectID]->getTextureId(), r, g, b);
+		break;
+	case MIDDLEGROUND:
+		TextureManager::Instance()->changeTextureColor(middlegroundObjects[objectID]->getTextureId(), r, g, b);
+		break;
+	case FOREGROUND:
+		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
+		break;
+	default:
+		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
+	}
+}
+
+
 void Game::disconnect()
 {
 	m_player->setControllable(false);
@@ -513,18 +536,27 @@ void Game::mrMusculo(){
 
 	    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
 	    {
-	    	it->second->clean();
-			delete it->second;
+	    	if (it->second)
+	    	{
+				it->second->clean();
+				delete it->second;
+	    	}
 	    }
 	    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
 	    {
-	    	it->second->clean();
-			delete it->second;
+	    	if (it->second)
+	    	{
+				it->second->clean();
+				delete it->second;
+	    	}
 	    }
 	    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
 	    {
-	    	it->second->clean();
-			delete it->second;
+	    	if (it->second)
+	    	{
+				it->second->clean();
+				delete it->second;
+	    	}
 	    }
 
 	    TextureManager::Instance()->clearTextureMap();
@@ -544,18 +576,27 @@ void Game::clean()
 
     for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
-    	it->second->clean();
-		delete it->second;
+    	if (it->second)
+    	{
+			it->second->clean();
+			delete it->second;
+    	}
     }
     for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
     {
-    	it->second->clean();
-		delete it->second;
+    	if (it->second)
+    	{
+			it->second->clean();
+			delete it->second;
+    	}
     }
     for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
     {
-    	it->second->clean();
-		delete it->second;
+    	if (it->second)
+    	{
+			it->second->clean();
+			delete it->second;
+    	}
     }
 
     m_client->desconectar();

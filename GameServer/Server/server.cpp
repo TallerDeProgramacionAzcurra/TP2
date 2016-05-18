@@ -294,8 +294,8 @@ void server::informPlayerDisconnection(PlayerDisconnection playerDiscMsg, int pl
 }
 
 
-void server::informGameBeginning(){
-
+void server::informGameBeginning()
+{
 	NetworkMessage gameBeginningMsg;
 	gameBeginningMsg.msg_Code[0] = 'g';
 	gameBeginningMsg.msg_Code[1] = 'b';
@@ -307,6 +307,23 @@ void server::informGameBeginning(){
 	     {
 
 	    	 m_queuePost[i].add(gameBeginningMsg);
+	     }
+	 }
+}
+
+void server::informPlayerReconnected(int clientID)
+{
+	PlayerReconnectionInfo playerRecInfo;
+	playerRecInfo.playerID = clientID;
+	NetworkMessage netWorkMessage = m_alanTuring->PlayerReconnectionInfoToNetwork(playerRecInfo);
+	 for (int i = 0; i < m_listaDeClientes.size(); i++)
+	 {
+		 if (i == clientID)
+			 continue;
+	     if ( m_listaDeClientes.isAvailable(i))
+	     {
+
+	    	 m_queuePost[i].add(netWorkMessage);
 	     }
 	 }
 }

@@ -77,6 +77,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 			player->setConnected(true);
 			player->refreshDirty();
 			m_server->informGameBegan(clientID);
+			m_server->informPlayerReconnected(clientID);
 			return true;
 		}
 	}
@@ -353,11 +354,12 @@ void Game::resetGame()
 	 //delete m_background;
 	 //delete m_island;
 	 //m_listOfGameObjects.clear();
-	 m_level->clean();
-	 delete m_level;
+	 if (m_level)
+	 {
+		 m_level->clean();
+		 delete m_level;
+	 }
 	 m_parserNivel->clean();
-
-	 printf("Se terminó de borrar bien\n");
 
 	 //CARGAR XML
 	 m_parserNivel = new ParserNivel();
@@ -373,10 +375,13 @@ void Game::resetGame()
 	int newBulletsSpeed = m_parserNivel->getAvion().velDisp;
 	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
 	{
-		 it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
-		 it->second->setShootingCooldown(newShootingCooldown);
-		 it->second->setShootingSpeed(newBulletsSpeed);
-		 it->second->refreshDirty();
+		if (it->second)
+		{
+			 it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
+			 it->second->setShootingCooldown(newShootingCooldown);
+			 it->second->setShootingSpeed(newBulletsSpeed);
+			 it->second->refreshDirty();
+		}
 	}
 
 	 //tudo ben

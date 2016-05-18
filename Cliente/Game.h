@@ -59,6 +59,7 @@ public:
     void requestTexturesInfo();
     void addTexture(TextureInfo textureInfo);
     void loadTextures();
+    void resetTextureColor(int objectID, int layer);
 
     void createPlayer(int objectID, int textureID);
     void disconnectObject(int objectID, int layer);

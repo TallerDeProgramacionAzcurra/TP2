@@ -1,0 +1,375 @@
+  ===============================================
+    Comienzo del Log ( 17-05-2016 a las 22:54 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: asddsa ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: asddd ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: asddd ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 17-05-2016 a las 23:20 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: asdasd ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: asdasd ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  ===============================================
+    Comienzo del Log ( 17-05-2016 a las 23:41 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: sdad ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 17-05-2016 a las 23:43 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: s ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: s ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 17-05-2016 a las 23:44 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: s ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: s ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: s ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto isla en la posición x = 0, y = 600Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 364
+  DEBUG: Server: Se ha reiniciado el juego.
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.

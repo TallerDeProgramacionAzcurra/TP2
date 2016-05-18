@@ -421,6 +421,15 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		return;
 	}
 
+	//Player Reconnection
+	if ((networkMessage.msg_Code[0] == 'p') && (networkMessage.msg_Code[1] == 'r') && (networkMessage.msg_Code[2] == 'i'))
+	{
+		Logger::Instance()->LOG("Cliente: Se ha reconectado un Cliente.", DEBUG);
+		PlayerReconnectionInfo playerReconnectionInfo = m_alanTuring->decodePlayerReconnectionInfo(networkMessage);
+		Game::Instance()->resetTextureColor(playerReconnectionInfo.playerID, FOREGROUND);
+		return;
+	}
+
 
 	//Draw Message
 	if ((networkMessage.msg_Code[0] == 'd') && (networkMessage.msg_Code[1] == 'm') && (networkMessage.msg_Code[2] == 's'))

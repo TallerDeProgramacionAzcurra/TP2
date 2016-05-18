@@ -32,7 +32,7 @@ int AlanTuring::encodeDrawMessage(DrawMessage drawMsg, char* bufferSalida)
 	//copia el draw message en el buffer de network message data
 	memcpy(codigoEnigma.msg_Data, &drawMsg, sizeof(DrawMessage));
 
-	codigoEnigma.msg_Length = DRAW_MESSAGE_SIZE + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	codigoEnigma.msg_Length = sizeof(DrawMessage) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	//copia el mensaje de red al buffer ingresado
 	memcpy(bufferSalida, &codigoEnigma, sizeof(NetworkMessage));
@@ -80,7 +80,7 @@ int AlanTuring::encodeInputMessage(InputMessage inputMsg, char* bufferSalida)
 	//copia el draw message en el buffer de network message data
 	memcpy(codigoEnigma.msg_Data, &inputMsg, sizeof(InputMessage));
 
-	codigoEnigma.msg_Length = INPUT_MESSAGE_SIZE + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	codigoEnigma.msg_Length = sizeof(InputMessage) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	//copia el mensaje de red al buffer ingresado
 	memcpy(bufferSalida, &codigoEnigma, sizeof(NetworkMessage));
@@ -103,7 +103,7 @@ int AlanTuring::encodeConnectedMessage(ConnectedMessage connectedMsg, char* buff
 	//copia el draw message en el buffer de network message data
 	memcpy(codigoEnigma.msg_Data, &connectedMsg, sizeof(ConnectedMessage));
 
-	codigoEnigma.msg_Length = CONNECTED_MESSAGE_SIZE + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	codigoEnigma.msg_Length = sizeof(ConnectedMessage) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	//copia el mensaje de red al buffer ingresado
 	memcpy(bufferSalida, &codigoEnigma, sizeof(NetworkMessage));
@@ -126,7 +126,7 @@ int AlanTuring::encodeConnectionInfoMessage(ConnectionInfo connectionInfoMesg, c
 	//copia el draw message en el buffer de network message data
 	memcpy(codigoEnigma.msg_Data, &connectionInfoMesg, sizeof(ConnectionInfo));
 
-	codigoEnigma.msg_Length = CONNECTIONINFO_MESSAGE_SIZE + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	codigoEnigma.msg_Length = sizeof(ConnectionInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	//copia el mensaje de red al buffer ingresado
 	memcpy(bufferEntrada, &codigoEnigma, sizeof(NetworkMessage));
@@ -149,7 +149,7 @@ int AlanTuring::encodePlayerDisconnectionMessage(PlayerDisconnection playerDiscM
 	//copia el draw message en el buffer de network message data
 	memcpy(codigoEnigma.msg_Data, &playerDiscMsg, sizeof(PlayerDisconnection));
 
-	codigoEnigma.msg_Length = PLAYER_DISCONNECTION_MESSAGE_SIZE + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+	codigoEnigma.msg_Length = sizeof(PlayerDisconnection) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	//copia el mensaje de red al buffer ingresado
 	memcpy(bufferEntrada, &codigoEnigma, sizeof(NetworkMessage));
@@ -189,6 +189,13 @@ TextureInfo  AlanTuring::decodeTextureInfo(NetworkMessage netMsg)
 	memcpy(&textureInfoMsg, netMsg.msg_Data, sizeof(TextureInfo));
 	return textureInfoMsg;
 }
+PlayerReconnectionInfo AlanTuring::decodePlayerReconnectionInfo(NetworkMessage netMsg)
+{
+	PlayerReconnectionInfo playerReconnectionInfo;
+	memcpy(&playerReconnectionInfo, netMsg.msg_Data, sizeof(PlayerReconnectionInfo));
+	return playerReconnectionInfo;
+}
+
 
 PlayerDisconnection AlanTuring::decodePlayerDisconnectionMessage(NetworkMessage netMsg)
 {
@@ -252,6 +259,20 @@ NetworkMessage AlanTuring::TextureInfoToNetwork(TextureInfo textureInfoMsg)
 
 	memcpy(networkMessage.msg_Data, &textureInfoMsg, sizeof(TextureInfo));
 	networkMessage.msg_Length = sizeof(TextureInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+
+NetworkMessage AlanTuring::PlayerReconnectionInfoToNetwork(PlayerReconnectionInfo playerReconnectionInfo)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 'p';
+	networkMessage.msg_Code[1] = 'r';
+	networkMessage.msg_Code[2] = 'i';
+
+	memcpy(networkMessage.msg_Data, &playerReconnectionInfo, sizeof(PlayerReconnectionInfo));
+	networkMessage.msg_Length = sizeof(PlayerReconnectionInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	return networkMessage;
 }
