@@ -706,6 +706,9 @@ bool server::lecturaExitosa(int bytesLeidos, int clientID)
 
 bool server::procesarMensaje(ServerMessage* serverMsg)
 {
+	if (Game::Instance()->isResseting() == true) {
+		return false;
+	}
 
 	NetworkMessage netMsg = serverMsg->networkMessage;
 
