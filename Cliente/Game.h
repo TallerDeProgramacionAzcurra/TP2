@@ -81,6 +81,7 @@ public:
     void setRunning(bool loco){m_running = loco;}
     bool isRunning() { return m_running; }
     bool isReseting() { return m_reseting; }
+    bool isResseting() { return m_reseting; }
     bool isInitializingSDL(){ return m_initializingSDL;}
     bool isWaitingForTextures() {return m_waitingTextures; }
 
