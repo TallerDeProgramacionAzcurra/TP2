@@ -330,6 +330,10 @@ void cliente::setTimeOut()
 
 void cliente::procesarMensaje(NetworkMessage networkMessage)
 {
+	if (Game::Instance()->isResseting() == true) {
+		return;
+	}
+
 	//Timeout
 	if ((networkMessage.msg_Code[0] == 't') && (networkMessage.msg_Code[1] == 'm') && (networkMessage.msg_Code[2] == 'o'))
 	{
@@ -469,12 +473,11 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 	}
 
 	//Reinicio de Juego
-	if ((networkMessage.msg_Code[0] == 'r') && (networkMessage.msg_Code[1] == 's') && (networkMessage.msg_Code[2] == 't'))
-	{
+	if ((networkMessage.msg_Code[0] == 'r') && (networkMessage.msg_Code[1] == 's') && (networkMessage.msg_Code[2] == 't')) {
 		ResetInfo resetInfo = m_alanTuring->decodeResetInfo(networkMessage);
 		Game::Instance()->setWindowSize(static_cast<int>(resetInfo.windowWidth), static_cast<int>(resetInfo.windowHeight));
+
 		Game::Instance()->resetGame();
-		Logger::Instance()->LOG("Juego: El juego ha sido reiniciado.", DEBUG);
 
 		return;
 	}
@@ -500,7 +503,6 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		Game::Instance()->setGameStarted(true);
 		return;
 	}
-
 }
 
 bool cliente::validarMensaje(DataMessage dataMsg)
