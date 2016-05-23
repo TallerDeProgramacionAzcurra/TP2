@@ -360,27 +360,46 @@ void Game::refreshPlayersDirty()
 
 void Game::resetGame()
 {
-	pthread_mutex_lock(&m_resetMutex);
-	 BulletsHandler::Instance()->clearBullets();
-	 InputHandler::Instance()->clean();
-	 //delete m_background;
-	 //delete m_island;
-	 //m_listOfGameObjects.clear();
-	 if (m_level)
-	 {
-		 m_level->clean();
-		 delete m_level;
-	 }
-	 m_parserNivel->clean();
+	Game::Instance()->setReseting(true);
 
-	 //CARGAR XML
-	 m_parserNivel = new ParserNivel();
-	 m_parserNivel->parsearDocumento(XML_PATH);
-	 m_gameWidth = m_parserNivel->getVentana().ancho;
-	 m_gameHeight = m_parserNivel->getVentana().alto;
+	// Release all objects.
+	if (m_level) {
+		m_level->clean();
+		delete m_level;
+	}
 
-	 m_level = new Level();
-	 m_level->loadFromXML();
+	TextureManager::Instance()->clearTextureMap();
+
+	if (m_textureHelper) {
+		delete m_textureHelper;
+	}
+
+	if (m_parserNivel) {
+		m_parserNivel->clean();
+		delete m_parserNivel;
+	}
+
+	for (std::map<int,GameObject*>::iterator it=m_listOfGameObjects.begin(); it != m_listOfGameObjects.end(); ++it) {
+		it->second->clean();
+		delete  it->second;
+	}
+	m_listOfGameObjects.clear();
+
+	BulletsHandler::Instance()->clearBullets();
+	InputHandler::Instance()->clean();
+
+	// Renew all objects.
+	m_parserNivel = new ParserNivel();
+	m_parserNivel->parsearDocumento(XML_PATH);
+	m_gameWidth = m_parserNivel->getVentana().ancho;
+	m_gameHeight = m_parserNivel->getVentana().alto;
+
+	m_textureHelper = new TextureHelper();
+
+	initializeTexturesInfo();
+
+	m_level = new Level();
+	m_level->loadFromXML();
 
 	int newPlayerSpeed = m_parserNivel->getAvion().velDespl;
 	int newShootingCooldown = m_parserNivel->getAvion().cdDisp;
@@ -389,15 +408,13 @@ void Game::resetGame()
 	{
 		if (it->second)
 		{
-			 it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
-			 it->second->setShootingCooldown(newShootingCooldown);
-			 it->second->setShootingSpeed(newBulletsSpeed);
-			 it->second->refreshDirty();
-			 it->second->StopFlipAnimation();
+			it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
+			it->second->setShootingCooldown(newShootingCooldown);
+			it->second->setShootingSpeed(newBulletsSpeed);
+			it->second->refreshDirty();
+			it->second->StopFlipAnimation();
 		}
 	}
 
-	 //tudo ben
-	 m_running = true;
-	 pthread_mutex_unlock(&m_resetMutex);
+	setReseting(false);
 }
