@@ -7,12 +7,19 @@
 
 #include "BulletsHandler.h"
 #include "../Game.h"
+#include "Bullet.h"
 
 
 BulletsHandler* BulletsHandler::s_pInstance = new BulletsHandler();
 
 BulletsHandler::BulletsHandler()
 {
+	pthread_mutex_init(&m_bulletsMutex, NULL);
+}
+
+BulletsHandler::~BulletsHandler()
+{
+	  pthread_mutex_destroy(&m_bulletsMutex);
 }
 
 void BulletsHandler::addBullet(Bullet* bullet)
@@ -22,14 +29,16 @@ void BulletsHandler::addBullet(Bullet* bullet)
 
 void BulletsHandler::clearBullets()
 {
-	for (std::vector< Bullet* >::iterator it = m_bullets.begin() ; it != m_bullets.end(); ++it) {
+	 pthread_mutex_lock(&m_bulletsMutex);
+	for (std::vector< Bullet* >::iterator it = m_bullets.begin() ; it != m_bullets.end(); ++it)
+	{
 		if ((*it))
 		{
 			delete (*it);
 		}
 	}
-
 	m_bullets.clear();
+	pthread_mutex_unlock(&m_bulletsMutex);
 }
 
 void BulletsHandler::updateBullets()
@@ -41,9 +50,11 @@ void BulletsHandler::updateBullets()
         {
         	if ((*p_it))
         	{
+        		pthread_mutex_lock(&m_bulletsMutex);
 				(*p_it)->clean();
 				delete * p_it;
 				p_it = m_bullets.erase(p_it);
+				pthread_mutex_unlock(&m_bulletsMutex);
         	}
         }
         else

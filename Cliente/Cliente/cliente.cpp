@@ -469,11 +469,12 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 	}
 
 	//Reinicio de Juego
-	if ((networkMessage.msg_Code[0] == 'r') && (networkMessage.msg_Code[1] == 's') && (networkMessage.msg_Code[2] == 't')) {
+	if ((networkMessage.msg_Code[0] == 'r') && (networkMessage.msg_Code[1] == 's') && (networkMessage.msg_Code[2] == 't'))
+	{
 		ResetInfo resetInfo = m_alanTuring->decodeResetInfo(networkMessage);
 		Game::Instance()->setWindowSize(static_cast<int>(resetInfo.windowWidth), static_cast<int>(resetInfo.windowHeight));
-
 		Game::Instance()->resetGame();
+		Logger::Instance()->LOG("Juego: El juego ha sido reiniciado.", DEBUG);
 
 		return;
 	}

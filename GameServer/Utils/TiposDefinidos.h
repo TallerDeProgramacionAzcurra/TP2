@@ -24,7 +24,7 @@
 #define MAX_NAME_LENGTH 24
 #define PATH_MAX_LENGTH 36
 
-#define DRAW_MESSAGE_SIZE 24
+#define DRAW_MESSAGE_SIZE 32
 #define INPUT_MESSAGE_SIZE 16
 #define CONNECTED_MESSAGE_SIZE 16
 #define CONNECTIONINFO_MESSAGE_SIZE 24
@@ -33,7 +33,7 @@
 #define TEXTUREINFO_MESSAGE_SIZE (PATH_MAX_LENGTH + 12)
 #define PLAYER_RECONNECTION_MEESAGE 4
 
-#define DRAW_MESSAGE_PACK_SIZE  20
+#define DRAW_MESSAGE_PACK_SIZE  10
 
 #define BACKGROUND 1
 #define MIDDLEGROUND 10
@@ -119,6 +119,9 @@ struct DrawMessage
 	short posY;
 	short row;
 	short column;
+	float angle;
+	short alpha;
+	short vacio;
 };
 
 struct InputMessage

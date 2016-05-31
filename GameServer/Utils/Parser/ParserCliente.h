@@ -39,27 +39,19 @@ public:
 	const Conexion getConexionInfo() const {
 		return m_conexionInfo;
 	}
-	const LoggerInfo getLoggerInfo() const{
-		return m_loggerInfo;
-	}
-
 	std::vector<Mensaje> getListaMensajes() const {
 		return m_listaMensajes;
 	}
-
 
 private:
 
 	Conexion m_conexionInfo;
 	std::vector<Mensaje> m_listaMensajes;
-	LoggerInfo m_loggerInfo;
 
 	bool parsearDoc(const std::string& nombreArchivoXML, bool isDefault);
 	bool extraerMensajes(const pugi::xml_document* doc);
 	bool extraerConexionInfo(const pugi::xml_document* doc, bool isLoadingDefault);
 	bool extraerConexionInfoDefault();
-	bool extraerLoggerInfo(const pugi::xml_document* doc, bool isLoadingDefault);
-	bool extraerLoggerInfoDefault();
 
 	//devuelve true si el nodo root del documento comienza con la palabra client, ignorando caracteres especiales y espacios
 	bool validarRoot(const pugi::xml_document* doc);
@@ -73,9 +65,6 @@ private:
 	//Mensaje ID y valor de mensaje solo chekea que el campo no esté vacío, ya que un string puede ser cualquier cosa.
 	bool validarMensajeID(std::string& tipoDatoString);
 	bool validarValorMensaje(std::string& valorMensajeString);
-	bool validarDuplicados();
-	bool validarLoggerInfo(std::string& loggerInfoString);
-	//void limpiarValores (std::string& tipo, std::string& valor);
 };
 
 

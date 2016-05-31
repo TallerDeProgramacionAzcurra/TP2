@@ -6,9 +6,13 @@
  */
 
 #include "Bullet.h"
+#include "../Game.h"
 
 Bullet::Bullet(): MoveableObject(),
-			m_dead(false)
+			m_dead(false),
+			m_damage(100),
+			m_ownerID(0),
+			m_ownerTeamNumber(0)
 {
 	m_tag = "Bullet";
 	m_layer = MIDDLEGROUND;
@@ -29,7 +33,6 @@ void Bullet::update()
 		m_dyingTime -= GameTimeHelper::Instance()->deltaTime();
 		if (m_dyingTime <= 0)
 		{
-			printf("murio una bala");
 			m_dead = true;
 		}
 	}
@@ -74,6 +77,8 @@ void Bullet::sendDrawMessage(bool isAlive)
 	drawMsg.posX = m_position.getX();
 	drawMsg.posY = m_position.getY();
 	drawMsg.textureID = m_textureID;
+	drawMsg.angle = m_angle;
+	drawMsg.alpha = m_alpha;
 
 	if (USE_DRAWMESSAGE_PACKAGING)
 	{

@@ -45,6 +45,7 @@ void RecurrentObject::load(int x, int y, int width, int height, int textureID, i
     m_height = height;
     m_textureID = textureID;
     m_numFrames = numFrames;
+    m_hitRadius = m_width/2;
 }
 
 void RecurrentObject::draw()

@@ -78,4 +78,3 @@ clock_t Timer::GetTicks()
 		return m_pausedAt - m_started;
 	return clock() - m_startedAt;
 }
-

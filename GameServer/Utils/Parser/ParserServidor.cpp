@@ -19,7 +19,7 @@ ParserServidor::~ParserServidor()
 bool ParserServidor::parsearDocumento(const std::string& nombreArchivoXML)
 {
 	bool exito = true;
-	if (!parsearDoc(nombreArchivoXML))
+	if (!parsearDoc(nombreArchivoXML, false))
 	{
 		std::stringstream ss;
 		ss << "No se pudo parsear el archivo XML: " << nombreArchivoXML.c_str() << ". ";
@@ -28,7 +28,7 @@ bool ParserServidor::parsearDocumento(const std::string& nombreArchivoXML)
 		ss << "Se cargará el archivo default: " << XML_SERVIDOR_DEFAULT_PATH << ".";
 		Logger::Instance()->LOG(ss.str(), WARN);
 
-		exito = parsearDoc(XML_SERVIDOR_DEFAULT_PATH);
+		exito = parsearDoc(XML_SERVIDOR_DEFAULT_PATH, true);
 		if (!exito)
 		{
 			//El archivo XML default también tiene errores. No se pudo parsear.
@@ -38,7 +38,7 @@ bool ParserServidor::parsearDocumento(const std::string& nombreArchivoXML)
 	return exito;
 }
 
-bool ParserServidor::parsearDoc(const std::string& nombreArchivoXML)
+bool ParserServidor::parsearDoc(const std::string& nombreArchivoXML, bool isDefault)
 {
 	bool parseadoExitoso = true;;
 	std::stringstream ss;
@@ -68,6 +68,8 @@ bool ParserServidor::parsearDoc(const std::string& nombreArchivoXML)
 	{
 		parseadoExitoso = false;
 	}
+	if (!extraerLoggerInfo(&doc, isDefault))
+		Logger::Instance()->LOG("No se pudo cargar la información de logger del servidor.", ERROR);
 
 	return parseadoExitoso;
 }
@@ -124,6 +126,117 @@ bool ParserServidor::extraerServidorInfo(const pugi::xml_document* doc)
 	}
 
 	return exito;
+}
+
+bool ParserServidor::extraerLoggerInfo(const pugi::xml_document* doc, bool isLoadingDefault)
+{
+	bool exito = true;
+	pugi::xml_node loggerNode = doc->first_child().child("logger");
+
+	std::string debugString = loggerNode.child("debug").first_child().value();
+	if (!validarLoggerInfo(debugString))
+	{
+		exito = false;
+		Logger::Instance()->LOG("Información de Logger con errores. Se cargará información de logger desde archivo default.", WARN);
+	}
+	std::string warningsString = loggerNode.child("warning").first_child().value();
+	if (!validarLoggerInfo(warningsString))
+	{
+		exito = false;
+		Logger::Instance()->LOG("Información de Logger con errores. Se cargará el archivo", WARN);
+	}
+	std::string errorString = loggerNode.child("error").first_child().value();
+	if (!validarLoggerInfo(errorString))
+	{
+		exito = false;
+		Logger::Instance()->LOG("Información de Logger con errores. Se cargará información de logger desde archivo default.", WARN);
+	}
+
+	if (!exito)
+	{
+		//si esta cargando desde el default retorna false, de lo contrario revisaria nuevamente el archivo default.
+		if (isLoadingDefault)
+			return false;
+
+		if (!extraerLoggerInfoDefault())
+			return false;
+	}
+	else
+	{
+		if (debugString.compare("true") == 0)
+			m_loggerInfo.debugAvailable = true;
+		else
+			m_loggerInfo.debugAvailable = false;
+
+		if (warningsString.compare("true") == 0)
+			m_loggerInfo.warningAvailable = true;
+		else
+			m_loggerInfo.warningAvailable = false;
+
+		if (errorString.compare("true") == 0)
+			m_loggerInfo.errorAvailable = true;
+		else
+			m_loggerInfo.errorAvailable = false;
+	}
+	return true;
+}
+
+bool ParserServidor::extraerLoggerInfoDefault()
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(XML_SERVIDOR_DEFAULT_PATH);
+	if (!result)
+		return false;
+
+	pugi::xml_node loggerNode = doc.first_child().child("logger");
+
+	std::string debugString = loggerNode.child("debug").first_child().value();
+	if (!validarLoggerInfo(debugString))
+	{
+		return false;
+	}
+	std::string warningsString = loggerNode.child("warning").first_child().value();
+	if (!validarLoggerInfo(warningsString))
+	{
+		return false;
+	}
+	std::string errorString = loggerNode.child("error").first_child().value();
+	if (!validarLoggerInfo(errorString))
+	{
+		return false;
+	}
+
+	if (debugString.compare("true") == 0)
+		m_loggerInfo.debugAvailable = true;
+	else
+		m_loggerInfo.debugAvailable = false;
+
+	if (warningsString.compare("true") == 0)
+		m_loggerInfo.warningAvailable = true;
+	else
+		m_loggerInfo.warningAvailable = false;
+
+	if (errorString.compare("true") == 0)
+		m_loggerInfo.errorAvailable = true;
+	else
+		m_loggerInfo.errorAvailable = false;
+
+	return true;
+}
+
+bool ParserServidor::validarLoggerInfo(std::string& loggerInfoString)
+{
+	if (loggerInfoString.empty())
+		return false;
+	quitarEspacios(loggerInfoString);
+	quitarCaracteresEspeciales(loggerInfoString, false);
+	pasarAMinuscula(loggerInfoString);
+
+	if ((loggerInfoString.compare("true") != 0) && (loggerInfoString.compare("false") != 0))
+	{
+		return false;
+	}
+	return true;
 }
 
 

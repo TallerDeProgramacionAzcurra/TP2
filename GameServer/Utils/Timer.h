@@ -35,5 +35,4 @@ public:
 
 };
 
-
 #endif /* SRC_UTILS_TIMER_H_ */

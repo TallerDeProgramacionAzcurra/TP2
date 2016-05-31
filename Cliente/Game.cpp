@@ -100,15 +100,31 @@ void Game::render()
 
     for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
-         it->second->draw();
+    	if (it->second)
+    		it->second->draw();
     }
     for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
     {
-         it->second->draw();
+    	if (it->second)
+    		it->second->draw();
     }
+    int foundOwnPlayer = -1;
     for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
     {
-         it->second->draw();
+    	if (it->second)
+    	{
+    		if (it->second->getObjectId() == m_player->getObjectId())
+    		{
+    			//al jugador propio lo renderiza al final para que quede adelante
+    			foundOwnPlayer = it->second->getObjectId();
+    			continue;
+    		}
+    		it->second->draw();
+    	}
+    }
+    if (foundOwnPlayer != -1)
+    {
+    	foregroundObjects[foundOwnPlayer]->draw();
     }
 
     SDL_RenderPresent(m_pRenderer);
@@ -121,6 +137,7 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 	printf("alive: %d\n", drwMsg.alive);*/
 	if (m_initializingSDL || m_waitingTextures)
 		return;
+
 
 	if ( existDrawObject(drwMsg.objectID, static_cast<int>(drwMsg.layer)))
 	{
@@ -155,6 +172,9 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 		newObject->load(static_cast<int>(drwMsg.posX),static_cast<int>(drwMsg.posY),drwMsg.textureID);
 		newObject->setCurrentRow(static_cast<int>(drwMsg.row));
 		newObject->setCurrentFrame(static_cast<int>(drwMsg.column));
+		newObject->setAlpha(static_cast<int>(drwMsg.alpha));
+		newObject->setAngle(static_cast<double>(drwMsg.angle));
+
 		addDrawObject(drwMsg.objectID, static_cast<int>(drwMsg.layer), newObject);
 	}
 	//PARA BORRAR listObjects.erase(id);
@@ -179,24 +199,59 @@ void Game::updateGameObject(const DrawMessage drawMessage)
 {
 	switch(drawMessage.layer)
 	{
-	case BACKGROUND: backgroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			backgroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			backgroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+	case BACKGROUND:
+			if ( backgroundObjects[drawMessage.objectID])
+			{
+				if (backgroundObjects[drawMessage.objectID]->getTextureId() != drawMessage.textureID)
+				{
+					backgroundObjects[drawMessage.objectID]->load(static_cast<int>(drawMessage.posX),static_cast<int>(drawMessage.posY),drawMessage.textureID);
+				}
+				else
+				{
+					backgroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+				}
+				backgroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
+				backgroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
+				backgroundObjects[drawMessage.objectID]->setAlpha(static_cast<int>(drawMessage.alpha));
+				backgroundObjects[drawMessage.objectID]->setAngle(static_cast<double>(drawMessage.angle));
+			}
 			break;
 
-	case MIDDLEGROUND: middlegroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			middlegroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			middlegroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+	case MIDDLEGROUND:
+			if ( middlegroundObjects[drawMessage.objectID])
+			{
+				if (middlegroundObjects[drawMessage.objectID]->getTextureId() != drawMessage.textureID)
+				{
+					middlegroundObjects[drawMessage.objectID]->load(static_cast<int>(drawMessage.posX),static_cast<int>(drawMessage.posY),drawMessage.textureID);
+				}
+				else
+				{
+					middlegroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+				}
+				middlegroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
+				middlegroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
+				middlegroundObjects[drawMessage.objectID]->setAlpha(static_cast<int>(drawMessage.alpha));
+				middlegroundObjects[drawMessage.objectID]->setAngle(static_cast<double>(drawMessage.angle));
+			}
 			break;
 
-	case FOREGROUND: foregroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			foregroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			foregroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+	case FOREGROUND:
+			if ( foregroundObjects[drawMessage.objectID])
+			{
+				if (foregroundObjects[drawMessage.objectID]->getTextureId() != drawMessage.textureID)
+				{
+					foregroundObjects[drawMessage.objectID]->load(static_cast<int>(drawMessage.posX),static_cast<int>(drawMessage.posY),drawMessage.textureID);
+				}
+				else
+				{
+					foregroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
+				}
+				foregroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
+				foregroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
+				foregroundObjects[drawMessage.objectID]->setAlpha(static_cast<int>(drawMessage.alpha));
+				foregroundObjects[drawMessage.objectID]->setAngle(static_cast<double>(drawMessage.angle));
+			}
 			break;
-
-	default: middlegroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			middlegroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			middlegroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
 	}
 }
 
@@ -205,18 +260,27 @@ void Game::removeDrawObject(int objectID, int layer)
 	switch(layer)
 	{
 	case BACKGROUND:
-			delete backgroundObjects[objectID];
-			backgroundObjects.erase(objectID);
+			if (backgroundObjects[objectID])
+			{
+				delete backgroundObjects[objectID];
+				backgroundObjects.erase(objectID);
+			}
 			break;
 
 	case MIDDLEGROUND:
-		delete middlegroundObjects[objectID];
-		middlegroundObjects.erase(objectID);
+		if (middlegroundObjects[objectID])
+		{
+			delete middlegroundObjects[objectID];
+			middlegroundObjects.erase(objectID);
+		}
 		break;
 
 	case FOREGROUND:
-		delete foregroundObjects[objectID];
-		foregroundObjects.erase(objectID);
+		if (foregroundObjects[objectID])
+		{
+			delete foregroundObjects[objectID];
+			foregroundObjects.erase(objectID);
+		}
 		break;
 	}
 }
@@ -616,25 +680,47 @@ void Game::clean()
 
 void Game::resetGame()
 {
-	setReseting(true);
+//	m_reseting = true;
+//	 cout << "reseting game\n";
+//
+//	 for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+//	 {
+//		 cout << "destroying background\n";
+//		it->second->clean();
+//		delete it->second;
+//	 }
+//	 for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+//	 {
+//		 cout << "destroying middleground\n";
+//		it->second->clean();
+//		delete it->second;
+//	 }
+//	 for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+//	 {
+//		 cout << "destroying foreground\n";
+//		it->second->clean();
+//		delete it->second;
+//	 }
+//	 printf("GameObjects Destroyed");
+//	 InputHandler::Instance()->reset();
+//	 TextureManager::Instance()->clearTextureMap();
+//	 backgroundObjects.clear();
+//	 middlegroundObjects.clear();
+//	 foregroundObjects.clear();
 
-	TextureManager::Instance()->clearTextureMap();
-	InputHandler::Instance()->reset();
 
-	// Delete Middle DrawObjects.
-	for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it) {
-		if (it->second) {
-			it->second->clean();
-			delete it->second;
-		}
-	}
-	middlegroundObjects.clear();
+//	 SDL_DestroyWindow(m_pWindow);
 
-	TextureManager::Instance()->loadTextures(m_pRenderer);
+	 printf("Se modificó el tamaño de la window\n");
 
-	setReseting(false);
+	 setRunning(false);
+	 setRestart(true);
+	 //TextureManager::Instance()->init(m_pRenderer);
+
+	 cout << "Finish reseting game\n";
+	 m_reseting = false;
+
 }
-
 int Game::createGame(int DELAY_TIME){
 	//Armar un thread podria servir
 	int frameStartTime, frameEndTime;

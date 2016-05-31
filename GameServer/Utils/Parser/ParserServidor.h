@@ -16,6 +16,7 @@
 #include "../TiposDefinidos.h"
 #include "../pugixml/pugixml.hpp"
 #include <string>
+#include <cstring>
 #include <sstream>
 
 using namespace pugi;
@@ -37,13 +38,20 @@ public:
 	const Servidor getServidorInfo() const {
 		return m_servidorInfo;
 	}
+	const LoggerInfo getLoggerInfo() const{
+		return m_loggerInfo;
+	}
 
 private:
 
 	Servidor m_servidorInfo;
+	LoggerInfo m_loggerInfo;
 
-	bool parsearDoc(const std::string& nombreArchivoXML);
+	bool parsearDoc(const std::string& nombreArchivoXML, bool isDefault);
 	bool extraerServidorInfo(const pugi::xml_document* doc);
+	bool extraerLoggerInfo(const pugi::xml_document* doc, bool isLoadingDefault);
+	bool extraerLoggerInfoDefault();
+
 
 	//devuelve true si el nodo root es server o servidor, luego de ignorar espacios y caracteres especiales
 	bool validarRoot(const pugi::xml_document* doc);
@@ -51,6 +59,7 @@ private:
 	bool validarCantMaximaClientes(std::string& cantMaximaMensajeString);
 	//Checkea si es un numero. No checkea si es un puerto bien conocido (<1024) u otros asuntos de protocolo
 	bool validarPuerto(std::string& puertoString);
+	bool validarLoggerInfo(std::string& loggerInfoString);
 };
 
 #endif /* UTILS_PARSER_PARSERSERVIDOR_H_ */

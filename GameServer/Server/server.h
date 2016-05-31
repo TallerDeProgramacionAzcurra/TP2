@@ -115,6 +115,8 @@ class server
         void agregarTimeOutTimer(int clientPosition);
         void removeTimeOutTimer(int clientPosition);
 
+        pthread_mutex_t  m_serverInitMutex;
+
 };
 
 #endif // SERVER_H

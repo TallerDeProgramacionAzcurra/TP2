@@ -1,23 +1,19 @@
 #include "Game.h"
+#include "Enemies/SmallEnemy.h"
+#include "Player.h"
+#include "Weapons/BulletsHandler.h"
+#include "Singletons/CollisionHandler.h"
 
 Game* Game::s_pInstance = 0;
 
 Game::Game():
 m_pWindow(0),
 m_pRenderer(0),
- m_timeOutCounter(0),
- m_backgroundTextureID(10),
 m_running(false),
-m_gameStarted(false),
 m_reseting(false),
-m_initializingSDL(false),
-m_waitingTextures(false),
-m_continueLooping(false),
-m_scrollSpeed(0.8),
-m_gameWidth(0),
-m_gameHeight(0)
+m_scrollSpeed(2)
 {
-	//m_player = new Player();
+	pthread_mutex_init(&m_resetMutex, NULL);
 }
 
 Game::~Game()
@@ -25,677 +21,472 @@ Game::~Game()
     // we must clean up after ourselves to prevent memory leaks
     m_pRenderer= 0;
     m_pWindow = 0;
+    pthread_mutex_destroy(&m_resetMutex);
 }
 
 
-bool Game::init(const char* title, int xpos, int ypos, int width, int height, int SDL_WINDOW_flag)
+bool Game::init(const char* title, int xpos, int ypos, int width, int height)
 {
+    // Tamaño de la ventana
 
+    m_parserNivel = new ParserNivel();
+    m_parserNivel->parsearDocumento(XML_PATH);
 
-    m_initializingSDL = true;
+    m_textureHelper = new TextureHelper();
 
-    if(SDL_Init(SDL_INIT_EVERYTHING) == 0)
-    {
-        cout << "SDL init success\n";
+    m_gameWidth = m_parserNivel->getVentana().ancho;
+    m_gameHeight = m_parserNivel->getVentana().alto;
 
-        printf("%d\n",m_gameWidth);
+    //es necesario llamar a initialize Textures despues de haber creado el parser y textureHelper porque los usa
+    initializeTexturesInfo();
 
-        m_pWindow = SDL_CreateWindow("1942 - Cliente", 400, 150, m_gameWidth, m_gameHeight, SDL_WINDOW_RESIZABLE);
+    //inicializa los mapas de los puntajes de los equipos
+    initializeTeamScores();
 
-        if(m_pWindow != 0)
-        {
-            cout << "window creation success\n";
-            m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, SDL_RENDERER_SOFTWARE);
+    //printf("Path isla: %s \n", m_parserNivel->getListaSprites()[5].path.c_str());
+   // printf("ID isla: %s \n", m_parserNivel->getListaSprites()[5].id.c_str());
 
-            if(m_pRenderer != 0)
-            {
-                cout << "renderer creation success\n";
-                SDL_SetRenderDrawColor(m_pRenderer, 0,0,0,255);
-            }
-            else
-            {
-                cout << "renderer init fail\n";
-                return false;
-            }
-        }
-        else
-        {
-            cout << "window init fail\n";
-            return false;
-        }
-    }
-    else
-    {
-        cout << "SDL init fail\n";
-        return false;
-    }
+    printf("Se cargo el escenario con ancho %d y alto %d\n",m_gameWidth, m_gameHeight );
 
-    printf("Finish Initializing\n");
+    inicializarServer();
 
-    requestTexturesInfo(); // setea waiting textures en true
+    m_level = new Level();
+    m_level->loadFromXML();
 
-    //TextureManager::Instance()->init(m_pRenderer);
-
-    m_backgroundTextureID = 10;
+    enemy = new SmallEnemy();
+    enemy->load(m_gameWidth/2,0,32,32,30,4);
+    CollitionHandler::Instance()->addEnemy(enemy);
 
 
     //tudo ben
-    m_initializingSDL = false;
     m_running = true;
 
     return true;
 }
 
-void Game::setWindowSize(int width, int height)
+bool Game::createPlayer(int clientID,  const std::string& playerName)
 {
-	m_gameWidth = width;
-	m_gameHeight = height;
+
+	bool nameExists;
+	std::stringstream ss;
+
+	//Se fija si existe un jugador con el nombre ingresado
+	nameExists = !validatePlayerName(playerName);
+
+	if (nameExists)
+	{
+		int actualPlayerID = getFromNameID(playerName);
+		Player* player = m_listOfPlayer[actualPlayerID];
+
+		//setea numero de equipo
+		player->setTeamNumber(actualPlayerID);
+
+		//agrega jugador al manejador de colisiones
+		CollitionHandler::Instance()->addPlayer(player);
+
+		if (player->isConnected()) //El jugador con ese nombre ya esta conectado
+		{
+			ss <<"Server: El jugador con nombre" << playerName << " ya se encuentra conectado.";
+			Logger::Instance()->LOG(ss.str(), WARN);
+			printf("%s \n", ss.str().c_str());
+			player->refreshDirty();
+			return false;
+		}
+		else //Se desconecto y se esta volviendo a conectar
+		{
+			player->setConnected(true);
+			player->refreshDirty();
+			m_server->informGameBegan(clientID);
+			m_server->informPlayerReconnected(clientID);
+			setPlayersDirty();
+
+			return true;
+		}
+	}
+	//Si no existe el nombre:
+
+	//Esto controla que solo se puedan volver a conectar los que arrancaron jugando al ppio
+
+	if (m_listOfPlayer.size() == m_parserNivel->getEscenario().cantidadJugadores)
+	{
+		ss <<"Server: El jugador con nombre" << playerName << " no se pudo conectar, ya está llena la partida.";
+		Logger::Instance()->LOG(ss.str(), WARN);
+		printf("%s \n", ss.str().c_str());
+		return false;
+	}
+
+	int playerSpeed = m_parserNivel->getAvion().velDespl;
+	int shootingCooldown = m_parserNivel->getAvion().cdDisp;
+	int bulletsSpeed = m_parserNivel->getAvion().velDisp;
+
+	Player* newPlayer = new Player();
+	newPlayer->setObjectID(clientID);
+	newPlayer->setSpeed(Vector2D(playerSpeed, playerSpeed));
+
+	newPlayer->setWeaponStats(bulletsSpeed, shootingCooldown, newPlayer->getObjectId(), newPlayer->getTeamNumber());
+
+	m_playerNames[clientID] = playerName;
+
+	ss << "player" << (clientID + 1);
+	string playerStringID = ss.str();
+	int playerTextureID = m_textureHelper->stringToInt(playerStringID);
+
+	//14 HARDCODEADO
+	newPlayer->load(m_gameWidth/2, m_gameHeight/2, 38, 64, playerTextureID, 14);
+	newPlayer->setConnected(true);
+
+	m_listOfPlayer[newPlayer->getObjectId()]= newPlayer;
+
+	printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[clientID].c_str(), newPlayer->getObjectId(), clientID);
+
+	CollitionHandler::Instance()->addPlayer(newPlayer);
+
+	return true;
+}
+
+int Game::getFromNameID(const std::string& playerName)
+{
+	for (std::map<int, std::string>::iterator it = m_playerNames.begin(); it != m_playerNames.end(); ++it )
+	{
+		if (it->second.compare(playerName.c_str()) == 0)
+			return it->first;
+	}
+	return -1;
+}
+
+bool Game::validatePlayerName(const std::string& playerName)
+{
+	for (std::map<int, std::string>::iterator it = m_playerNames.begin(); it != m_playerNames.end(); ++it )
+	{
+	    if (it->second.compare(playerName.c_str()) == 0)
+	        return false;
+	}
+	//Nombre disponible
+	return true;
+}
+
+Vector2D Game::getRandomPLayerCenter()
+{
+	int randomID = Random::getRange(0, m_listOfPlayer.size());
+	Vector2D playerCenter;
+	if ((m_listOfPlayer[randomID]) && (m_listOfPlayer[randomID]->isConnected()))
+	{
+		playerCenter = Vector2D(m_listOfPlayer[randomID]->getPosition().getX() + (m_listOfPlayer[randomID]->getWidth()/2),
+								m_listOfPlayer[randomID]->getPosition().getY() + (m_listOfPlayer[randomID]->getHeight()/2));
+		return playerCenter;
+	}
+	else
+	{
+		for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+		{
+
+			if ((it->second) && (it->second->isConnected()))
+			{
+				playerCenter = Vector2D(it->second->getPosition().getX() + (it->second->getWidth()/2),
+										it->second->getPosition().getY() + (it->second->getHeight()/2));
+				return playerCenter;
+			}
+		}
+	}
+	//No encontro ningun jugador
+	playerCenter =  Vector2D( Game::Instance()->getGameWidth() / 2 , Game::Instance()->getGameHeight());
+	return playerCenter;
+}
+
+void Game::disconnectPlayer(int playerID)
+{
+	PlayerDisconnection playerDiscMsg;
+	std::size_t length = m_playerNames[playerID].copy(playerDiscMsg.name, MAX_NAME_LENGTH, 0);
+	playerDiscMsg.name[length]='\0';
+	playerDiscMsg.objectID = m_listOfPlayer[playerID]->getObjectId();
+	playerDiscMsg.layer = m_listOfPlayer[playerID]->getLayer();
+	m_server->informPlayerDisconnection(playerDiscMsg, playerID);
+
+	m_listOfPlayer[playerID]->setConnected(false);
+	//m_playerNames.erase(playerID);
+	//listOfPlayer.erase(id);
+	//mostrar en gris
 }
 
 void Game::render()
 {
-    SDL_RenderClear(m_pRenderer);
+    //SDL_RenderClear(m_pRenderer);
 
-    paintbackground(10);
 
-    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
-    {
-         it->second->draw();
-    }
-    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
-    {
-         it->second->draw();
-    }
-    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
-    {
-         it->second->draw();
-    }
-
-    SDL_RenderPresent(m_pRenderer);
-}
-void Game::interpretarDrawMsg(DrawMessage drwMsg){
-
-	/*printf("objectID: %d\n", drwMsg.objectID);
-	printf("layer: %d\n", drwMsg.layer);
-	printf("textureID: %d\n", drwMsg.textureID);
-	printf("alive: %d\n", drwMsg.alive);*/
-	if (m_initializingSDL || m_waitingTextures)
-		return;
-
-	if ( existDrawObject(drwMsg.objectID, static_cast<int>(drwMsg.layer)))
-	{
-		if (drwMsg.connectionStatus == false)
-		{
-			//printf("DrawMessage de objeto desconectado\n");
-			disconnectObject(drwMsg.objectID, static_cast<int>(drwMsg.layer));
-		}
-
-		//Si existe y esta vivo lo actualia y sino lo quita del map
-		if (drwMsg.alive)
-		{
-			updateGameObject(drwMsg);
-		}
-		else
-		{
-			//printf("Destruyendo objeto con id: %d \n", drwMsg.objectID);
-			removeDrawObject(drwMsg.objectID, drwMsg.layer);
-		}
-	}
-	else //Si no existe en el mapa
-	{
-		if (!drwMsg.alive)
-		{
-			return;
-		}
-		//printf("Creando nuevo objeto con objectID: %d y textura %d\n", drwMsg.objectID, drwMsg.textureID);
-
-		DrawObject* newObject = new DrawObject();
-		newObject->setObjectID(drwMsg.objectID);
-		newObject->setLayer(static_cast<int>(drwMsg.layer));
-		newObject->load(static_cast<int>(drwMsg.posX),static_cast<int>(drwMsg.posY),drwMsg.textureID);
-		newObject->setCurrentRow(static_cast<int>(drwMsg.row));
-		newObject->setCurrentFrame(static_cast<int>(drwMsg.column));
-		addDrawObject(drwMsg.objectID, static_cast<int>(drwMsg.layer), newObject);
-	}
-	//PARA BORRAR listObjects.erase(id);
+    //Dibujar lo que haya que dibujar
+ /*   m_background->draw(); //Provisorio
+    m_island->draw(); //Provisorio
+    m_player->draw();//Provisorio
+*/
+    //SDL_RenderPresent(m_pRenderer);
 }
 
-void Game::addDrawObject(int objectID, int layer, DrawObject* newDrawObject)
-{
-	switch(layer)
-	{
-	case BACKGROUND: backgroundObjects[objectID] = newDrawObject;
-			break;
-	case MIDDLEGROUND: middlegroundObjects[objectID] = newDrawObject;
-			break;
-	case FOREGROUND: foregroundObjects[objectID] = newDrawObject;
-			break;
-
-	default: middlegroundObjects[objectID] = newDrawObject;
-	}
-}
-
-void Game::updateGameObject(const DrawMessage drawMessage)
-{
-	switch(drawMessage.layer)
-	{
-	case BACKGROUND: backgroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			backgroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			backgroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
-			break;
-
-	case MIDDLEGROUND: middlegroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			middlegroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			middlegroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
-			break;
-
-	case FOREGROUND: foregroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			foregroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			foregroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
-			break;
-
-	default: middlegroundObjects[drawMessage.objectID]->setCurrentRow(static_cast<int>(drawMessage.row));
-			middlegroundObjects[drawMessage.objectID]->setCurrentFrame(static_cast<int>(drawMessage.column));
-			middlegroundObjects[drawMessage.objectID]->setPosition(Vector2D(drawMessage.posX,drawMessage.posY));
-	}
-}
-
-void Game::removeDrawObject(int objectID, int layer)
-{
-	switch(layer)
-	{
-	case BACKGROUND:
-		if (backgroundObjects[objectID])
-		{
-			delete backgroundObjects[objectID];
-			backgroundObjects.erase(objectID);
-		}
-		break;
-
-
-	case MIDDLEGROUND:
-		if (middlegroundObjects[objectID])
-		{
-			delete middlegroundObjects[objectID];
-			middlegroundObjects.erase(objectID);
-		}
-		break;
-
-	case FOREGROUND:
-		if (foregroundObjects[objectID])
-		{
-			delete foregroundObjects[objectID];
-			foregroundObjects.erase(objectID);
-		}
-		break;
-	}
-}
-
-bool Game::existDrawObject(int objectID, int layer)
-{
-	switch(layer)
-	{
-	case BACKGROUND:
-	if (backgroundObjects.find(objectID) == backgroundObjects.end())
-	{
-		return false;
-	}
-	break;
-	case MIDDLEGROUND:
-	if (middlegroundObjects.find(objectID) == middlegroundObjects.end())
-	{
-		return false;
-	}
-	break;
-	case FOREGROUND:
-	if (foregroundObjects.find(objectID) == foregroundObjects.end())
-	{
-		return false;
-	}
-	break;
-
-	default: return true;
-	}
-	return true;
-}
 
 void Game::update()
 {
-	/*m_background->update(); //Provisorio
-	m_island->update(); //Provisorio
-	m_player->update(); // Provisorio*/
+	BulletsHandler::Instance()->updateBullets();
+
+	m_level->update();
+
+	enemy->update();
+
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		//printf("objectID = %d \n", it->second.getObjectId());
+		if (it->second)
+		{
+			it->second->update();
+		}
+	}
+	for (std::map<int,GameObject*>::iterator it=m_listOfGameObjects.begin(); it != m_listOfGameObjects.end(); ++it)
+	{
+		//printf("objectID = %d \n", it->second.getObjectId());
+		if (it->second)
+		{
+			it->second->update();
+		}
+	}
+
+	CollitionHandler::Instance()->handleCollitions();
+
+}
+
+void Game::initializeTexturesInfo()
+{
+	std::vector<Sprite> sprites = m_parserNivel->getListaSprites();
+	for (std::vector<Sprite>::iterator it = sprites.begin() ; it !=  sprites.end(); ++it)
+	{
+		TextureInfo textureInfo;
+		//id string to int
+		textureInfo.textureID = m_textureHelper->stringToInt((*it).id);
+		//path string to buffer
+		std::size_t length = (*it).path.copy(textureInfo.path, PATH_MAX_LENGTH, 0);
+		textureInfo.path[length]='\0';
+		//otras variables de imagen
+		textureInfo.numFrames = (*it).cantidad;
+		textureInfo.height = (*it).alto;
+		textureInfo.width = (*it).ancho;
+		textureInfo.lastTexture = false;
+
+		TextureManager::Instance()->addTextureInfo(textureInfo);
+	}
+
+}
+
+void Game::initializeTeamScores()
+{
+	m_teamScores[0] = 0;
+	m_teamScores[1] = 0;
+}
+
+void Game::setPlayersDirty()
+{
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->setDirty(true);
+		}
+	}
 }
 
 void Game::handleEvents()
 {
-	InputHandler::Instance()->update();
-	//Pseudo controler
-	if (m_player)
-		m_player->handleInput();
 }
-bool Game::initializeClient()
+void Game::inicializarServer()
 {
-		std::string	fileName = "Utils/Default/cliente.xml";
 
-		ParserCliente* parsersito = new ParserCliente();
-	    parsersito->parsearDocumento(fileName);
+	std::string fileName = "Utils/Default/servidor.xml";
 
-		LoggerInfo loggerInfo = parsersito->getLoggerInfo();
-		Logger::Instance()->setLoglevel(loggerInfo.debugAvailable, loggerInfo.warningAvailable, loggerInfo.errorAvailable);
+	ParserServidor* servidorParser = new ParserServidor();
+	servidorParser->parsearDocumento(fileName);
 
-	    string ip = parsersito->getConexionInfo().ip;
-	    int porto = parsersito->getConexionInfo().puerto;
-	    printf("Conectando a %s : %d \n", ip.c_str(), porto);
+	LoggerInfo loggerInfo = servidorParser->getLoggerInfo();
+	Logger::Instance()->setLoglevel(loggerInfo.debugAvailable, loggerInfo.warningAvailable, loggerInfo.errorAvailable);
 
-	    m_client = new cliente(3,ip,porto, m_playerName);
+	int porto = servidorParser->getServidorInfo().puerto ;
+	int maxClientes = m_parserNivel->getEscenario().cantidadJugadores;
+	//printf("Creando enlazamiento\n");
+	m_server = new server(porto, maxClientes);
 
-	    delete parsersito;
+    m_drawMessagePacker = new DrawMessagesPacker(m_server);
 
-	    if (!conectToKorea())
-	    	return false;
+	//printf("Se pone a escuchar\n");
+	m_server->escuchar();
 
-	    return true;
-
-}
-
-void Game::askForName()
-{
-    bool nombreValido = false;
-    while (!nombreValido)
-    {
-		printf("Ingrese el nombre con el que desea conectarse \n");
-		char name[24];
-		cin.getline(name, 24);
-		std::string playerName(name);
-		if (playerName.length() <= 0)
-		{
-			printf("Nombre Invalido \n");
-			nombreValido = false;
-		}
-		else
-		{
-		    m_playerName = playerName;
-			nombreValido = true;
-		}
-    }
-}
-
-void Game::paintbackground(int backgroundTextureID)
-{
-	int width = TextureManager::Instance()->getTextureInfo(backgroundTextureID).width;
-	int height = TextureManager::Instance()->getTextureInfo(backgroundTextureID).height;
-	int rowsAmount = ceil((float)m_gameWidth / (float) width);
-	int columnsAmount = ceil((float)m_gameHeight / (float) height);
-	for (int row = 0; row < rowsAmount; row++)
+	int auxi = 0;
+	while(m_server->getNumClientes() < m_server->getMaxClientes())
 	{
-		for (int column = 0; column < columnsAmount; column++)
-		{
-			int x = row * width;
-			int y = column * height;
-			TextureManager::Instance()->draw(backgroundTextureID, x, y, width, height, 0, m_pRenderer, SDL_FLIP_NONE);
-		}
-	}
-}
-
-void Game::createPlayer(int objectID, int textureID)
-{
-	m_player = new Player();
-	m_player->setObjectID(objectID);
-	m_player->setTextureID(textureID);
-}
-
-bool Game::canContinue()
-{
-	bool canContinue = true;
-	if (!m_continueLooping || !m_gameStarted || m_reseting || m_initializingSDL || m_waitingTextures)
-	{
-		canContinue = false;
-	}
-	return canContinue;
-}
-
-void Game::checkContinueConditions()
-{
-	if (!m_continueLooping && !m_waitingTextures && !m_initializingSDL)
-	{
-		//printf("finish waiting\n");
-		TextureManager::Instance()->clearTextureMap();
-		loadTextures();
-		m_continueLooping = true;
+		auxi++;
+		m_server->aceptar();
 	}
 
-}
+	//Informa a los clientes que el juego comenzará
+	m_server->informGameBeginning();
 
-void Game::stopLooping()
-{
-	m_continueLooping = false;
-}
-void Game::continueLooping()
-{
-	m_continueLooping = true;
+	keepListening();
 }
 
 
-void Game::disconnectObject(int objectID, int layer)
+void Game::sendToAllClients(DrawMessage mensaje)
 {
-	//Armo color gris
-	Uint8 r = 0xCC;
-	Uint8 g = 0xCC;
-	Uint8 b = 0xCC;
-
-	switch(layer)
-	{
-	case BACKGROUND:
-		TextureManager::Instance()->changeTextureColor(backgroundObjects[objectID]->getTextureId(), r, g, b);
-		break;
-	case MIDDLEGROUND:
-		TextureManager::Instance()->changeTextureColor(middlegroundObjects[objectID]->getTextureId(), r, g, b);
-		break;
-	case FOREGROUND:
-		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
-		break;
-	default:
-		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
-	}
+	m_server->sendDrawMsgToAll(mensaje);
 }
 
-void Game::resetTextureColor(int objectID, int layer)
+void Game::addToPackage(DrawMessage drawMsg)
 {
-	Uint8 r = 0xFF;
-	Uint8 g = 0xFF;
-	Uint8 b = 0xFF;
-
-	switch(layer)
-	{
-	case BACKGROUND:
-		TextureManager::Instance()->changeTextureColor(backgroundObjects[objectID]->getTextureId(), r, g, b);
-		break;
-	case MIDDLEGROUND:
-		TextureManager::Instance()->changeTextureColor(middlegroundObjects[objectID]->getTextureId(), r, g, b);
-		break;
-	case FOREGROUND:
-		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
-		break;
-	default:
-		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
-	}
+	m_drawMessagePacker->addDrawMessage(drawMsg);
 }
-
-
-void Game::disconnect()
+void Game::sendPackages()
 {
-	m_player->setControllable(false);
-
-	//Armo color gris
-	Uint8 r = 0xCC;
-	Uint8 g = 0xCC;
-	Uint8 b = 0xCC;
-
-	//hardcodeado el layer del player
-	TextureManager::Instance()->changeTextureColor(m_player->getTextureId(), r, g, b);
-
-	m_running = false;
-}
-
-bool Game::conectToKorea()
-{
-	if (!m_client->conectar())
-	{
-		printf("No se pudo establecer conexión con el servidor.\n");
-		return false;
-
-	}
-	else
-	{
-		readFromKorea();
-	}
-	return true;
-}
-
-
-void Game::sendInputMsg(InputMessage mensaje)
-{
-	m_client->sendInputMsg(mensaje);
-}
-
-void Game::sendNetworkMsg(NetworkMessage netMsg)
-{
-	m_client->sendNetworkMsg(netMsg);
+	m_drawMessagePacker->sendPackedMessages();
 }
 
 void* Game::koreaMethod(void)
 {
-	std::cout << "Empece a ciclar bitches!\n";
-	while (m_client->isConnected()) {
-			m_client->leer();
+	while (m_server->isRunning())
+	{
+		m_server -> aceptar();
 	}
 	 pthread_exit(NULL);
 }
-
 void *Game::thread_method(void *context)
 {
 	return ((Game *)context)->koreaMethod();
 }
-void Game::readFromKorea()
+void Game::keepListening()
 {
 	pthread_create(&listenThread, NULL, &Game::thread_method, (void*)this);
 
 }
 
-
-bool Game::updateTimeOut()
+void Game::addPointsToScore(int points, int playerID, int teamID)
 {
-	if (m_gameStarted)
-	{
-		 bool conectado= m_client->checkServerConnection();
-		 if (!conectado)
-			return false;
-	}
-
-	if (m_timeOutCounter >= TiMEOUT_MESSAGE_RATE)
-	{
-		NetworkMessage netMsg;
-		netMsg.msg_Code[0] = 't';
-		netMsg.msg_Code[1] = 'm';
-		netMsg.msg_Code[2] = 'o';
-		netMsg.msg_Length =  MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
-
-		m_client->sendNetworkMsg(netMsg);
-		//printf("Se envío Timeout Msg\n");
-		m_timeOutCounter = 0;
-	}
-	else
-	{
-		m_timeOutCounter += GameTimeHelper::Instance()->deltaTime();
-	}
-	return true;
+	m_listOfPlayer[playerID]->addPoints(points);
+	addPointsToTeam(points, teamID);
+	printf("jugador %s sumó %d puntos!\n", m_playerNames[playerID].c_str(), points);
+	printf ("Puntos totales = %d \n", m_listOfPlayer[playerID]->getScore());
 }
 
-void Game::requestTexturesInfo()
+void Game::addPointsToTeam(int points, int teamID)
 {
-	m_waitingTextures = true;
-	m_continueLooping = false;
-	NetworkMessage netMsg;
-	netMsg.msg_Code[0] = 't';
-	netMsg.msg_Code[1] = 'x';
-	netMsg.msg_Code[2] = 'r';
-	netMsg.msg_Length =  MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
-
-	m_client->sendNetworkMsg(netMsg);
-}
-
-void Game::addTexture(TextureInfo textureInfo)
-{
-	//printf("Se ha agregado la textura %d con path %s . Ultima = %d\n", textureInfo.textureID, textureInfo.path, textureInfo.lastTexture );
-	TextureManager::Instance()->addTextureInfo(textureInfo);
-	if (textureInfo.lastTexture)
+	m_teamScores[teamID] = m_teamScores[teamID] + points;
+	if (m_teamScores[teamID] < 0)
 	{
-		m_waitingTextures = false;
-		printf("Se agregaron todas las texturas\n");
+		m_teamScores[teamID] = 0;
 	}
 }
 
-void Game::loadTextures()
-{
-	//printf("Se cargaron todas las texturas\n");
-	Logger::Instance()->LOG("Cliente: Se recibieron y cargaron todas las texturas satisfactoriamente.", DEBUG);
-	TextureManager::Instance()->loadTextures(m_pRenderer);
+void Game::actualizarEstado(int id, InputMessage inputMsg){
+	/*printf("Actualizar player %d\n",inputMsg.objectID);
+	printf("button right: %d \n",inputMsg.buttonRight);
+	printf("button left: %d \n",inputMsg.buttonLeft);
+	printf("button up: %d \n",inputMsg.buttonUp);
+	printf("button down: %d \n",inputMsg.buttonDown);*/
+
+	m_listOfPlayer[inputMsg.objectID]->handleInput(inputMsg);
 }
-void Game::mrMusculo(){
-	 cout << "Musculow\n";
 
-	    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
-	    {
-	    	if (it->second)
-	    	{
-				it->second->clean();
-				delete it->second;
-	    	}
-	    }
-	    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
-	    {
-	    	if (it->second)
-	    	{
-				it->second->clean();
-				delete it->second;
-	    	}
-	    }
-	    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
-	    {
-	    	if (it->second)
-	    	{
-				it->second->clean();
-				delete it->second;
-	    	}
-	    }
-
-	    TextureManager::Instance()->clearTextureMap();
-	    backgroundObjects.clear();
-	    middlegroundObjects.clear();
-	    foregroundObjects.clear();
-	 	InputHandler::Instance()->reset();
-
-	    SDL_DestroyRenderer(m_pRenderer);
-	    SDL_DestroyWindow(m_pWindow);
-	    SDL_Quit();
-}
 void Game::clean()
 {
     cout << "cleaning game\n";
+    BulletsHandler::Instance()->clearBullets();
 
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			 it->second->clean();
+			 delete  it->second;
+		}
+	}
+	for (std::map<int,GameObject*>::iterator it=m_listOfGameObjects.begin(); it != m_listOfGameObjects.end(); ++it)
+	{
+		if (it->second)
+		{
+			 it->second->clean();
+			 delete  it->second;
+		}
+	}
+    m_listOfPlayer.clear();
+    m_listOfGameObjects.clear();
+    m_playerNames.clear();
 
-    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
-    {
-    	if (it->second)
-    	{
-			it->second->clean();
-			delete it->second;
-    	}
-    }
-    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
-    {
-    	if (it->second)
-    	{
-			it->second->clean();
-			delete it->second;
-    	}
-    }
-    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
-    {
-    	if (it->second)
-    	{
-			it->second->clean();
-			delete it->second;
-    	}
-    }
+    m_drawMessagePacker->clean();
+    delete m_drawMessagePacker;
 
-    m_client->desconectar();
-    delete m_client;
-    delete m_player;
+    m_parserNivel->clean();
+    delete m_parserNivel;
+
+    m_level->clean();
+    delete m_level;
+    delete m_textureHelper;
+
+    CollitionHandler::Instance()->clean();
 
     InputHandler::Instance()->clean();
     TextureManager::Instance()->clearTextureMap();
-    backgroundObjects.clear();
-    middlegroundObjects.clear();
-    foregroundObjects.clear();
 
-    SDL_DestroyRenderer(m_pRenderer);
+
     SDL_DestroyWindow(m_pWindow);
+    SDL_DestroyRenderer(m_pRenderer);
     SDL_Quit();
+}
+
+void Game::refreshPlayersDirty()
+{
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->setDirty(true);
+		}
+	}
 }
 
 void Game::resetGame()
 {
-	setReseting(true);
+	pthread_mutex_lock(&m_resetMutex);
+	 BulletsHandler::Instance()->clearBullets();
+	 InputHandler::Instance()->clean();
+	 CollitionHandler::Instance()->reset();
+	 //delete m_background;
+	 //delete m_island;
+	 //m_listOfGameObjects.clear();
+	 if (m_level)
+	 {
+		 m_level->clean();
+		 delete m_level;
+	 }
+	 m_parserNivel->clean();
 
-	TextureManager::Instance()->clearTextureMap();
-	InputHandler::Instance()->reset();
+	 //CARGAR XML
+	 m_parserNivel = new ParserNivel();
+	 m_parserNivel->parsearDocumento(XML_PATH);
+	 m_gameWidth = m_parserNivel->getVentana().ancho;
+	 m_gameHeight = m_parserNivel->getVentana().alto;
 
-	// Delete Middle DrawObjects.
-	for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it) {
-		if (it->second) {
-			it->second->clean();
-			delete it->second;
+	 m_level = new Level();
+	 m_level->loadFromXML();
+
+	int newPlayerSpeed = m_parserNivel->getAvion().velDespl;
+	int newShootingCooldown = m_parserNivel->getAvion().cdDisp;
+	int newBulletsSpeed = m_parserNivel->getAvion().velDisp;
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			 it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
+			 it->second->setShootingCooldown(newShootingCooldown);
+			 it->second->setShootingSpeed(newBulletsSpeed);
+			 it->second->refreshDirty();
+			 it->second->StopFlipAnimation();
+
+			 it->second->setPosition(Vector2D(Game::Instance()->getGameWidth()/2, Game::Instance()->getGameHeight()/2));
 		}
 	}
-	middlegroundObjects.clear();
 
-	TextureManager::Instance()->loadTextures(m_pRenderer);
-
-	setReseting(false);
-}
-
-int Game::createGame(int DELAY_TIME){
-	//Armar un thread podria servir
-	int frameStartTime, frameEndTime;
-
-	std::cout << "Abriendo juego...\n";
-	setRestart(false);
-	if (Game::Instance()->init("1942 Ultraa Diesel", 400, 150, 800, 600, SDL_WINDOWPOS_CENTERED)) //flag por ejemplo: SDL_WINDOW_FULLSCREEN_DESKTOP
-				{
-					std::cout << "game init success!\n";
-
-					std::cout << "Game Online!\n";
-
-					//Bucle del juego
-					while (Game::Instance()->isRunning()) {
-
-						frameStartTime = SDL_GetTicks();
-
-						if (!Game::Instance()->canContinue())
-						{
-							Game::Instance()->checkContinueConditions();
-							continue;
-						}
-
-						Game::Instance()->updateTimeOut();
-
-						Game::Instance()->handleEvents();
-
-
-						Game::Instance()->render();
-
-						frameEndTime = SDL_GetTicks() - frameStartTime;
-
-						//tiempo a esperar = tiempo que demoro en finalizar el  frame = tiempo en que finalizó - tiempo en que inició
-						if (frameEndTime < DELAY_TIME)
-						{
-							SDL_Delay((int) ((DELAY_TIME - frameEndTime)));
-							GameTimeHelper::Instance()->updateDeltaTime(DELAY_TIME);
-						}
-						else
-						{
-							GameTimeHelper::Instance()->updateDeltaTime(frameEndTime);
-						}
-						//framesCount++;
-						//fpsCount +=  1000/ frameEndTime;
-						//printf("FPS: %d \n", (1000/ frameEndTime));
-
-					}
-				}
-				else
-				{
-					std::cout << "game init failure - " << SDL_GetError() << "\n";
-					return -1;
-				}
+	 //tudo ben
+	 m_running = true;
+	 pthread_mutex_unlock(&m_resetMutex);
 }

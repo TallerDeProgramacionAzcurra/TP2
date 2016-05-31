@@ -55,6 +55,8 @@ public:
     void setObjectID(int objectId) {m_objectId = objectId;}
     void setLayer(int layer) {m_layer = layer;}
     void setTextureID(int textureID) {m_textureID = textureID;}
+    void setAlpha (int alpha) { m_alpha = alpha; }
+    void setAngle (int angle) { m_angle = angle; }
 
 
     // En este ejemplo de scroll, scrollea to do menos los objetos con tag player

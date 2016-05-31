@@ -10,17 +10,29 @@
 
 #include <string>
 #include "Vector2D.h"
+//#include "Game.h"
 #include "Singletons/ObjectIdGenerator.h"
 #include "Utils/TiposDefinidos.h"
 
-/*
- * Clase abstracta de la que heredan todos los GameObjects
-*/
 class GameObject
 {
 public:
-
-    // clase abstracta
+    GameObject() :  m_tag("GameObject"),
+    				m_textureID(0),
+					m_layer(MIDDLEGROUND),
+    				m_position(0,0),
+                    m_width(0),
+                    m_height(0),
+					m_hitRadius(0),
+					m_numFrames(0),
+                    m_angle(0),
+                    m_alpha(255),
+                    m_currentRow(0),
+                    m_currentFrame(0),
+					m_dirty(true)
+    {
+    	m_objectId = ObjectIdGenerator::Instance()->generateId();
+    }
     virtual ~GameObject() {}
 
     /* Debe ser llamado siempre al crear un GameObject, para inicializar sus variables, cargar la imagen en el map del TextureManager, etc
@@ -29,62 +41,47 @@ public:
      * textureID es el identificador con el que se vincula el sprite en el map del TextureManager.
      * numFrames son la cantidad de Frames
     */
-    virtual void load(int x, int y, int width, int height, int textureID, int numFrames){};
+    virtual void load(int x, int y, int width, int height, int textureID, int numFrames){}
 
     // Dibuja el objeto en pantalla respecto del estado actual del objeto
-    virtual void draw() {};
+    virtual void draw(){}
 
     // Actualiza el estado del objeto (posición, velocidad, etc)
-    virtual void update() {};
+    virtual void update(){ }
 
     // Libera memoria y los recursos que esté utilizando el GameObject
-    virtual void clean(){};
+    virtual void clean(){}
 
 
     // Getters
     const std::string getTag() { return m_tag; }
 
     Vector2D& getPosition() { return m_position; }
+    void setPosition(const Vector2D& position) { m_position = position; }
 
     int getWidth() { return m_width; }
     int getHeight() { return m_height; }
+    void setHeight(int height) { m_height = height; }
 
-    int getTextureId() { return m_textureID; }
     int getObjectId() { return m_objectId; }
     int getLayer() { return m_layer; }
-    void setObjectID(int objectId) {m_objectId = objectId;}
-    void setLayer(int layer) {m_layer = layer;}
-    void setTextureID(int textureID) {m_textureID = textureID;}
+    int getTextureID() { return m_textureID; }
+    int getHitRadius() { return m_hitRadius; }
 
+    void setNumFrames(int numFrames) { m_numFrames = numFrames; }
+    void setObjectID(int objectId) {m_objectId = objectId;}
+    void setTextureID(int textureID) {m_textureID = textureID;}
+    void setLayer(int layer) {m_layer = layer;}
+    void setDirty( bool dirty ) { m_dirty = true; }
+    void setHitRadius( int hitRadius ) { m_hitRadius = hitRadius; }
 
     // En este ejemplo de scroll, scrollea to do menos los objetos con tag player
-   /* void scroll(float scrollSpeed)
+   void scroll(float scrollSpeed)
     {
-        if(m_tag != std::string("Player")) // player is never scrolled
-        {
-            m_position.setX(m_position.getY() + scrollSpeed);
-        }
-    }*/
+	   m_position.m_y += scrollSpeed;
+    }
 
 protected:
-
-    // constructor with default initialisation list
-    GameObject() :  m_tag("GameObject"),
-					m_objectId(100),
-    				m_textureID(0),
-					m_layer(MIDDLEGROUND),
-    				m_position(0,0),
-                    m_width(0),
-                    m_height(0),
-					m_numFrames(0),
-                    m_angle(0),
-                    m_alpha(255),
-                    m_currentRow(0),
-                    m_currentFrame(0)
-
-
-    {
-    }
 
     // Tag que posee información acerca del tipo de GameObject
     std::string m_tag;
@@ -99,7 +96,9 @@ protected:
     int m_width;
     //Alto del sprite
     int m_height;
-    //ID del sprite que tomará en el map de lTextureManager
+
+    //radio de colision
+    int m_hitRadius;
 
     //numero de frames del sprite en el archivo de imagen
     int m_numFrames;
@@ -113,6 +112,8 @@ protected:
     int m_currentRow;
     //actual frame que se deberá dibujar
     int m_currentFrame;
+
+    bool m_dirty;
 
 };
 

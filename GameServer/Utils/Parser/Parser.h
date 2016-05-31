@@ -9,6 +9,7 @@
 #define UTILS_PARSER_PARSER_H_
 
 #include <string>
+#include <cstring>
 #include <algorithm>
 
 class Parser

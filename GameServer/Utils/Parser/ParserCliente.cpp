@@ -72,9 +72,6 @@ bool ParserCliente::parsearDoc(const std::string& nombreArchivoXML, bool isDefau
 	if (!extraerConexionInfo(&doc, isDefault))
 		Logger::Instance()->LOG("No se pudo cargar la información de conexión del cliente.", ERROR);
 
-	if (!extraerLoggerInfo(&doc, isDefault))
-		Logger::Instance()->LOG("No se pudo cargar la información de logger del cliente.", ERROR);
-
 	if (!extraerMensajes(&doc))
 		parseadoExitoso = false;
 
@@ -113,7 +110,7 @@ bool ParserCliente::extraerMensajes(const pugi::xml_document* doc)
 	   std::string id = msj.child("id").first_child().value();
 	   if (!validarMensajeID(id))
 	   {
-		   Logger::Instance()->LOG("Error en el parseo de mensajes. ID vacío", WARN);
+		   Logger::Instance()->LOG("Error en el parseo de mensajes. ID vacío", DEBUG);
 		   exito = false;
 		   break;
 	   }
@@ -122,14 +119,14 @@ bool ParserCliente::extraerMensajes(const pugi::xml_document* doc)
 	   {
 		   std::stringstream ss;
 		   ss << "Error en parseo de mensajes, en el mensaje con id " << id << ". Tipo de dato inválido: " << tipo;
-		   Logger::Instance()->LOG(ss.str(), WARN);
+		   Logger::Instance()->LOG(ss.str(), DEBUG);
 		   exito = false;
 		   break;
 	   }
 	   std::string valor = msj.child("valor").first_child().value();
 	   if (!validarValorMensaje(valor))
 	   {
-		   Logger::Instance()->LOG("Error en el parseo de mensajes. El valor de los mensajes no puede ser vacío", WARN);
+		   Logger::Instance()->LOG("Error en el parseo de mensajes. Los valores no pueden ser vacío", DEBUG);
 		   exito = false;
 		   break;
 	   }
@@ -140,148 +137,8 @@ bool ParserCliente::extraerMensajes(const pugi::xml_document* doc)
 	   m_listaMensajes.push_back(mensaje);
 	}
 
-	if (!validarDuplicados())
-	{
-		exito = false;
-		m_listaMensajes.clear();
-		Logger::Instance()->LOG("Error en el parseo de mensajes. Se ingresaron valores duplicados", WARN);
-	}
 	return exito;
 }
-
-bool ParserCliente::extraerLoggerInfo(const pugi::xml_document* doc, bool isLoadingDefault)
-{
-	bool exito = true;
-	pugi::xml_node loggerNode = doc->first_child().child("logger");
-
-	std::string debugString = loggerNode.child("debug").first_child().value();
-	if (!validarLoggerInfo(debugString))
-	{
-		exito = false;
-		Logger::Instance()->LOG("Información de Logger con errores. Se cargará información de logger desde archivo default.", WARN);
-	}
-	std::string warningsString = loggerNode.child("warning").first_child().value();
-	if (!validarLoggerInfo(warningsString))
-	{
-		exito = false;
-		Logger::Instance()->LOG("Información de Logger con errores. Se cargará el archivo", WARN);
-	}
-	std::string errorString = loggerNode.child("error").first_child().value();
-	if (!validarLoggerInfo(errorString))
-	{
-		exito = false;
-		Logger::Instance()->LOG("Información de Logger con errores. Se cargará información de logger desde archivo default.", WARN);
-	}
-
-	if (!exito)
-	{
-		//si esta cargando desde el default retorna false, de lo contrario revisaria nuevamente el archivo default.
-		if (isLoadingDefault)
-			return false;
-
-		if (!extraerLoggerInfoDefault())
-			return false;
-	}
-	else
-	{
-		if (debugString.compare("true") == 0)
-			m_loggerInfo.debugAvailable = true;
-		else
-			m_loggerInfo.debugAvailable = false;
-
-		if (warningsString.compare("true") == 0)
-			m_loggerInfo.warningAvailable = true;
-		else
-			m_loggerInfo.warningAvailable = false;
-
-		if (errorString.compare("true") == 0)
-			m_loggerInfo.errorAvailable = true;
-		else
-			m_loggerInfo.errorAvailable = false;
-	}
-	return true;
-}
-
-bool ParserCliente::extraerLoggerInfoDefault()
-{
-	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file(XML_CLIENTE_DEFAULT_PATH);
-	if (!result)
-		return false;
-
-	pugi::xml_node loggerNode = doc.first_child().child("logger");
-
-	std::string debugString = loggerNode.child("debug").first_child().value();
-	if (!validarLoggerInfo(debugString))
-	{
-		return false;
-	}
-	std::string warningsString = loggerNode.child("warning").first_child().value();
-	if (!validarLoggerInfo(warningsString))
-	{
-		return false;
-	}
-	std::string errorString = loggerNode.child("error").first_child().value();
-	if (!validarLoggerInfo(errorString))
-	{
-		return false;
-	}
-
-	if (debugString.compare("true") == 0)
-		m_loggerInfo.debugAvailable = true;
-	else
-		m_loggerInfo.debugAvailable = false;
-
-	if (warningsString.compare("true") == 0)
-		m_loggerInfo.warningAvailable = true;
-	else
-		m_loggerInfo.warningAvailable = false;
-
-	if (errorString.compare("true") == 0)
-		m_loggerInfo.errorAvailable = true;
-	else
-		m_loggerInfo.errorAvailable = false;
-
-	return true;
-}
-
-bool ParserCliente::validarLoggerInfo(std::string& loggerInfoString)
-{
-	if (loggerInfoString.empty())
-		return false;
-	quitarEspacios(loggerInfoString);
-	quitarCaracteresEspeciales(loggerInfoString, false);
-	pasarAMinuscula(loggerInfoString);
-	if ((loggerInfoString.compare("true") != 0) && (loggerInfoString.compare("false") != 0))
-	{
-		return false;
-	}
-	return true;
-}
-
-bool ParserCliente::validarDuplicados()
-{
-	for (unsigned int i = 0; i < m_listaMensajes.size(); ++i)
-	{
-		for (unsigned int j = 0; j < m_listaMensajes.size(); ++j)
-		{
-			if (i == j)
-				continue;
-			if (strcmp(m_listaMensajes[i].id.c_str(), m_listaMensajes[j].id.c_str()) == 0)
-				return false;
-		}
-	}
-	return true;
-}
-
-/*void ParserCliente::limpiarValores (std::string& tipo, std::string& valor)
-{
-	   if ((strcmp(tipo.c_str(), "char") == 0) && valor.length() > 1)
-	 		   quitarEspacios(valor);
-	   if ((strcmp(tipo.c_str(), "int") == 0) || ((strcmp(tipo.c_str(), "double") == 0)))
-		   quitarEspacios(valor);
-}*/
-
 
 bool ParserCliente::extraerConexionInfo(const pugi::xml_document* doc, bool isLoadingDefault)
 {
@@ -342,7 +199,6 @@ bool ParserCliente::extraerConexionInfoDefault()
 	return true;
 }
 
-
 bool ParserCliente::validarTipoDeDato(std::string& tipoDatoString)
 {
 	if (tipoDatoString.empty())
@@ -360,17 +216,10 @@ bool ParserCliente::validarTipoDeDato(std::string& tipoDatoString)
 
 bool ParserCliente::validarMensajeID(std::string& tipoDatoString)
 {
-	if (tipoDatoString.empty())
-		return false;
-	if (tipoDatoString.length() > MESSAGE_ID_BYTES_LIMIT)
-		return false;
-
-	return true;
+	return !tipoDatoString.empty();
 }
 bool ParserCliente::validarValorMensaje(std::string& valorMensajeString)
 {
-	if((strcmp(valorMensajeString.c_str(), "char")==0)&&valorMensajeString.length() >1 )
-		quitarEspacios(valorMensajeString);
 	return !valorMensajeString.empty();
 }
 

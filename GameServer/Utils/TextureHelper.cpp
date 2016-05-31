@@ -33,12 +33,20 @@ void TextureHelper::initialize()
 	m_textureIDMap["player4"] = 3;
 
 
+	//Enemigos
+	m_textureIDMap["AvionPequeño"] = 30;
+	m_textureIDMap["AvionGrande"] = 31;
+
+	//Explosiones
+	m_textureIDMap["ExplosionPequeña"] = 40;
+
 	//ELEMENTOS DE BACKGROUND
 	m_textureIDMap["isla"] = 20;
 	m_textureIDMap["piedra"] = 21;
 
 	//Disparos
 	m_textureIDMap["disparo"] = 50;
+	m_textureIDMap["disparoRedondo"] = 51;
 
 
 }

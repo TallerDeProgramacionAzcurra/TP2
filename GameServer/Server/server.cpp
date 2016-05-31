@@ -6,6 +6,7 @@ server::server(int port, int maxC): MAX_CLIENTES(maxC)
 	m_svRunning = true;
 	m_alanTuring = new AlanTuring();
 	printf("El puerto es %d \n",port);
+	pthread_mutex_init(&m_serverInitMutex, NULL);
     pthread_mutex_init(&m_mutex, NULL);
     pthread_cond_init(&m_condv, NULL);
     //Creo Socket
@@ -50,6 +51,7 @@ server::~server()
 	m_queuePost.clear();
 
 	delete m_alanTuring;
+	pthread_mutex_destroy(&m_serverInitMutex);
     pthread_mutex_destroy(&m_mutex);
     pthread_cond_destroy(&m_condv);
 }
@@ -113,6 +115,7 @@ void server::aceptar(){
 
 bool server::crearCliente (int clientSocket)
 {
+	 pthread_mutex_lock(&m_serverInitMutex);
 	//m_lastID almacena el indice de la lista Inteligente en el que el cliente fue agregado
 	m_lastID = m_listaDeClientes.add(clientSocket);
 
@@ -122,6 +125,7 @@ bool server::crearCliente (int clientSocket)
 	if (m_lastID < 0)
 	{
 		Logger::Instance()->LOG("Server: Cliente rechazado. El servidor no puede aceptar más clientes.", WARN);
+		pthread_mutex_unlock(&m_serverInitMutex);
 		return false;
 	}
 
@@ -144,7 +148,7 @@ bool server::crearCliente (int clientSocket)
 		removeTimeOutTimer(m_lastID);
 		m_listaDeClientes.removeAt(m_lastID);
 		close(clientSocket);
-
+		pthread_mutex_unlock(&m_serverInitMutex);
 		return false;
 	}
 
@@ -158,6 +162,7 @@ bool server::crearCliente (int clientSocket)
 		removeTimeOutTimer(m_lastID);
 		m_listaDeClientes.removeAt(m_lastID);
 		close(clientSocket);
+		pthread_mutex_unlock(&m_serverInitMutex);
 		return false;
 	}
 
@@ -172,6 +177,7 @@ bool server::crearCliente (int clientSocket)
 	std::stringstream ss;
 	ss << "Server: Se acepto el cliente: " << inet_ntoa(cli_addr.sin_addr);
 	Logger::Instance()->LOG(ss.str(), DEBUG);
+	pthread_mutex_unlock(&m_serverInitMutex);
 
 	return true;
 }
@@ -706,9 +712,6 @@ bool server::lecturaExitosa(int bytesLeidos, int clientID)
 
 bool server::procesarMensaje(ServerMessage* serverMsg)
 {
-	if (Game::Instance()->isResseting() == true) {
-		return false;
-	}
 
 	NetworkMessage netMsg = serverMsg->networkMessage;
 
@@ -750,16 +753,20 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 	{
 		if (!Game::Instance()->isResseting())
 		{
+			Game::Instance()->setReseting(true);
+			Logger::Instance()->LOG("Server: Se reiniciará el juego.", DEBUG);
 			//Resetea el juego
 			Game::Instance()->resetGame();
-
 			//Envia la nueva informacion al cliente
 			ResetInfo resetInfo;
 			resetInfo.windowHeight = Game::Instance()->getGameHeight();
 			resetInfo.windowWidth = Game::Instance()->getGameWidth();
+
 			sendResetMsgToAll(resetInfo);
 
 			Game::Instance()->refreshPlayersDirty();
+			Game::Instance()->setReseting(false);
+			Logger::Instance()->LOG("Server: Se ha reiniciado el juego.", DEBUG);
 		}
 
 		return true;
