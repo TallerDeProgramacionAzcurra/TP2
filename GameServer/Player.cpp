@@ -172,7 +172,8 @@ void Player::clean()
 {
     MoveableObject::clean();
 
-	delete m_currentWeapon;
+    if (m_currentWeapon)
+    	delete m_currentWeapon;
 }
 
 void Player::handleInput(InputMessage inputMsg)

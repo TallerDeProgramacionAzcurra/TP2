@@ -28,5 +28,6 @@ GameObject* GameObjectFactory::createGameObject(const std::string& gameObjectID)
 	}
 
 	delete go;
+	return nullptr;
 
 }

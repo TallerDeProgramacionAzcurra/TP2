@@ -116,9 +116,10 @@ void Level::clean()
 {
 	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end(); ++it)
 	 {
-		 delete (*it);
+		delete (*it);
 	 }
 	 m_levelObjects.clear();
+
 
 	 delete m_parserNivel;
 	 delete m_textureHelper;

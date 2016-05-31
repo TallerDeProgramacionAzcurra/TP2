@@ -136,7 +136,9 @@ private:
     int m_gameHeight;
     float m_scrollSpeed;
 
-    pthread_mutex_t  m_resetMutex;
+    pthread_mutex_t m_resetMutex;
+    pthread_mutex_t m_updatePlayerMutex;
+    pthread_mutex_t m_createPlayerMutex;
 
     Game();
     ~Game();

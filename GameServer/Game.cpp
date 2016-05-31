@@ -14,6 +14,8 @@ m_reseting(false),
 m_scrollSpeed(2)
 {
 	pthread_mutex_init(&m_resetMutex, NULL);
+	pthread_mutex_init(&m_updatePlayerMutex, NULL);
+	pthread_mutex_init(&m_createPlayerMutex, NULL);
 }
 
 Game::~Game()
@@ -22,6 +24,8 @@ Game::~Game()
     m_pRenderer= 0;
     m_pWindow = 0;
     pthread_mutex_destroy(&m_resetMutex);
+    pthread_mutex_destroy(&m_updatePlayerMutex);
+    pthread_mutex_destroy(&m_createPlayerMutex);
 }
 
 
@@ -66,6 +70,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
 
 bool Game::createPlayer(int clientID,  const std::string& playerName)
 {
+	pthread_mutex_lock(&m_createPlayerMutex);
 
 	bool nameExists;
 	std::stringstream ss;
@@ -90,6 +95,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 			Logger::Instance()->LOG(ss.str(), WARN);
 			printf("%s \n", ss.str().c_str());
 			player->refreshDirty();
+			pthread_mutex_unlock(&m_createPlayerMutex);
 			return false;
 		}
 		else //Se desconecto y se esta volviendo a conectar
@@ -100,6 +106,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 			m_server->informPlayerReconnected(clientID);
 			setPlayersDirty();
 
+			pthread_mutex_unlock(&m_createPlayerMutex);
 			return true;
 		}
 	}
@@ -112,6 +119,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 		ss <<"Server: El jugador con nombre" << playerName << " no se pudo conectar, ya está llena la partida.";
 		Logger::Instance()->LOG(ss.str(), WARN);
 		printf("%s \n", ss.str().c_str());
+		pthread_mutex_unlock(&m_createPlayerMutex);
 		return false;
 	}
 
@@ -141,6 +149,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 
 	CollitionHandler::Instance()->addPlayer(newPlayer);
 
+	pthread_mutex_unlock(&m_createPlayerMutex);
 	return true;
 }
 
@@ -378,13 +387,12 @@ void Game::addPointsToTeam(int points, int teamID)
 }
 
 void Game::actualizarEstado(int id, InputMessage inputMsg){
-	/*printf("Actualizar player %d\n",inputMsg.objectID);
-	printf("button right: %d \n",inputMsg.buttonRight);
-	printf("button left: %d \n",inputMsg.buttonLeft);
-	printf("button up: %d \n",inputMsg.buttonUp);
-	printf("button down: %d \n",inputMsg.buttonDown);*/
+	pthread_mutex_lock(&m_updatePlayerMutex);
 
 	m_listOfPlayer[inputMsg.objectID]->handleInput(inputMsg);
+
+	pthread_mutex_unlock(&m_updatePlayerMutex);
+
 }
 
 void Game::clean()

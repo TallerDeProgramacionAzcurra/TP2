@@ -97,9 +97,10 @@ cliente::~cliente()
     pthread_mutex_destroy(&m_readingMutex);
     pthread_mutex_destroy(&m_writingMutex);
     pthread_cond_destroy(&m_condv);
+    if (serverTimeOut)
 	delete serverTimeOut;
 	//delete sendTimeOutTimer;
-
+    if (m_alanTuring)
 	delete m_alanTuring;
 }
 
@@ -381,7 +382,8 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 					continue;
 				}
 			}
-			delete initializingTimer;
+			if (initializingTimer)
+				delete initializingTimer;
 			//aca estaba setWindowSize tambien
 			Game::Instance()->createPlayer(connectedMessage.objectID, connectedMessage.textureID);
 			//El cliente se conecto con exito.

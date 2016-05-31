@@ -15,6 +15,7 @@
 #include "DrawObject.h"
 #include <map>
 #include <string>
+#include <pthread.h>
 #include <math.h>
 
 using namespace std;
@@ -141,6 +142,11 @@ private:
     int m_gameWidth;
     int m_gameHeight;
     float m_scrollSpeed;
+
+	pthread_mutex_t  m_removeMutex;
+	pthread_mutex_t  m_drawMsgMutex;
+	pthread_mutex_t m_cleanMutex;
+	pthread_mutex_t m_resetMutex;
 
     Game();
     ~Game();

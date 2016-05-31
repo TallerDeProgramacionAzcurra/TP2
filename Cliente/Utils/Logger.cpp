@@ -87,7 +87,8 @@ Logger::~Logger()
 
  void Logger::Close()
  {
-	 delete s_pInstance;
+	 if (s_pInstance)
+		 delete s_pInstance;
 	 s_pInstance = 0;
  }
 

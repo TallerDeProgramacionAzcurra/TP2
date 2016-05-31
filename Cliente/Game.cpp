@@ -17,14 +17,20 @@ m_scrollSpeed(0.8),
 m_gameWidth(0),
 m_gameHeight(0)
 {
-	//m_player = new Player();
+	pthread_mutex_init(&m_removeMutex, NULL);
+	pthread_mutex_init(&m_drawMsgMutex, NULL);
+	pthread_mutex_init(&m_cleanMutex, NULL);
+	pthread_mutex_init(&m_resetMutex, NULL);
 }
 
 Game::~Game()
 {
-    // we must clean up after ourselves to prevent memory leaks
-    m_pRenderer= 0;
+    m_pRenderer = 0;
     m_pWindow = 0;
+    pthread_mutex_destroy(&m_removeMutex);
+    pthread_mutex_destroy(&m_drawMsgMutex);
+    pthread_mutex_destroy(&m_cleanMutex);
+    pthread_mutex_destroy(&m_resetMutex);
 }
 
 
@@ -131,13 +137,17 @@ void Game::render()
 }
 void Game::interpretarDrawMsg(DrawMessage drwMsg){
 
+
 	/*printf("objectID: %d\n", drwMsg.objectID);
 	printf("layer: %d\n", drwMsg.layer);
 	printf("textureID: %d\n", drwMsg.textureID);
 	printf("alive: %d\n", drwMsg.alive);*/
 	if (m_initializingSDL || m_waitingTextures)
+	{
 		return;
+	}
 
+	 pthread_mutex_lock(&m_drawMsgMutex);
 
 	if ( existDrawObject(drwMsg.objectID, static_cast<int>(drwMsg.layer)))
 	{
@@ -162,6 +172,7 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 	{
 		if (!drwMsg.alive)
 		{
+			pthread_mutex_unlock(&m_drawMsgMutex);
 			return;
 		}
 		//printf("Creando nuevo objeto con objectID: %d y textura %d\n", drwMsg.objectID, drwMsg.textureID);
@@ -177,7 +188,8 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 
 		addDrawObject(drwMsg.objectID, static_cast<int>(drwMsg.layer), newObject);
 	}
-	//PARA BORRAR listObjects.erase(id);
+
+	pthread_mutex_unlock(&m_drawMsgMutex);
 }
 
 void Game::addDrawObject(int objectID, int layer, DrawObject* newDrawObject)
@@ -257,6 +269,8 @@ void Game::updateGameObject(const DrawMessage drawMessage)
 
 void Game::removeDrawObject(int objectID, int layer)
 {
+	pthread_mutex_lock(&m_removeMutex);
+
 	switch(layer)
 	{
 	case BACKGROUND:
@@ -283,6 +297,8 @@ void Game::removeDrawObject(int objectID, int layer)
 		}
 		break;
 	}
+
+	pthread_mutex_unlock(&m_removeMutex);
 }
 
 bool Game::existDrawObject(int objectID, int layer)
@@ -343,7 +359,8 @@ bool Game::initializeClient()
 
 	    m_client = new cliente(3,ip,porto, m_playerName);
 
-	    delete parsersito;
+	    if (parsersito)
+	    	delete parsersito;
 
 	    if (!conectToKorea())
 	    	return false;
@@ -596,7 +613,8 @@ void Game::loadTextures()
 	TextureManager::Instance()->loadTextures(m_pRenderer);
 }
 void Game::mrMusculo(){
-	 cout << "Musculow\n";
+
+		pthread_mutex_lock(&m_resetMutex);
 
 	    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
 	    {
@@ -632,11 +650,13 @@ void Game::mrMusculo(){
 	    SDL_DestroyRenderer(m_pRenderer);
 	    SDL_DestroyWindow(m_pWindow);
 	    SDL_Quit();
+
+		pthread_mutex_unlock(&m_resetMutex);
 }
 void Game::clean()
 {
     cout << "cleaning game\n";
-
+    pthread_mutex_lock(&m_cleanMutex);
 
     for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
@@ -663,9 +683,13 @@ void Game::clean()
     	}
     }
 
-    m_client->desconectar();
-    delete m_client;
-    delete m_player;
+    if (m_client)
+    {
+        m_client->desconectar();
+        delete m_client;
+    }
+    if (m_player)
+    	delete m_player;
 
     InputHandler::Instance()->clean();
     TextureManager::Instance()->clearTextureMap();
@@ -676,6 +700,8 @@ void Game::clean()
     SDL_DestroyRenderer(m_pRenderer);
     SDL_DestroyWindow(m_pWindow);
     SDL_Quit();
+
+    pthread_mutex_unlock(&m_cleanMutex);
 }
 
 void Game::resetGame()
@@ -710,6 +736,7 @@ void Game::resetGame()
 
 
 //	 SDL_DestroyWindow(m_pWindow);
+	pthread_mutex_lock(&m_resetMutex);
 
 	 printf("Se modificó el tamaño de la window\n");
 
@@ -719,6 +746,8 @@ void Game::resetGame()
 
 	 cout << "Finish reseting game\n";
 	 m_reseting = false;
+
+	 pthread_mutex_unlock(&m_resetMutex);
 
 }
 int Game::createGame(int DELAY_TIME){
