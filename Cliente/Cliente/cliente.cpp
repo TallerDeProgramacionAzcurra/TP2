@@ -164,8 +164,9 @@ void cliente::sendInputMsg(InputMessage msg)
 {
 	pthread_mutex_lock(&m_writingMutex);
 	char bufferEscritura[MESSAGE_BUFFER_SIZE];
-	int msgLength = m_alanTuring->encodeInputMessage(msg, bufferEscritura);
 	char *ptr = (char*) bufferEscritura;
+	int msgLength = m_alanTuring->encodeInputMessage(msg, bufferEscritura);
+
 
     while (msgLength > 0)
     {

@@ -10,6 +10,7 @@
 
 #include "../Vector2D.h"
 #include <vector>
+#include <memory>
 class Bullet;
 class Enemy;
 class Player;
@@ -33,8 +34,8 @@ public:
 
     void addPlayer(Player* player);
     void addEnemy(Enemy* enemy);
-    void addPlayerBullet(Bullet* playerBullet);
-    void addEnemyBullet(Bullet* enemyBullet);
+    void addPlayerBullet(std::shared_ptr<Bullet> playerBullet);
+    void addEnemyBullet(std::shared_ptr<Bullet> enemyBullet);
 
     void clean();
 
@@ -45,8 +46,8 @@ private:
     std::vector<Player*> m_players;
     std::vector<Enemy*> m_enemies;
 
-    std::vector<Bullet*> m_playersBullets;
-    std::vector<Bullet*> m_enemiesBullets;
+    std::vector<std::shared_ptr<Bullet>> m_playersBullets;
+    std::vector<std::shared_ptr<Bullet>> m_enemiesBullets;
 
     //chekea player contra balas enemigas y enemigos
     void handlePlayerCollitions();

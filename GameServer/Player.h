@@ -9,6 +9,7 @@
 #include "Singletons/GameTimeHelper.h"
 #include "Utils/TiposDefinidos.h"
 #include "Weapons/PlayerWeapons/BasicWeapon.h"
+#include "Weapons/PlayerWeapons/FiveBulletsWeapon.h"
 class Weapon;
 
 

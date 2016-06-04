@@ -41,7 +41,7 @@ void DrawObject::load(int x, int y, int textureID)
 	m_textureID = textureID;
     m_numFrames = data.numFrames;
 
-    TextureManager::Instance()->load(data.path, m_textureID, Game::Instance()->getRenderer());
+    TextureManager::Instance()->load(std::string(data.path), m_textureID, Game::Instance()->getRenderer());
 
 
 }

@@ -19,7 +19,7 @@ SmallEnemy::SmallEnemy() :Enemy(),
 					    m_explotionAnimationTime(1000),
 					    m_explotionRemainingTime(0)
 {
-	m_speed = Vector2D(1.85f, 1.85f);
+	m_speed = Vector2D(2.5f, 2.5f);
 	float randomXDirection = Random::getFloatRange(-0.5f, 0.5f);
 	m_direction.setX(randomXDirection);
 	m_direction.setY(1);
@@ -33,7 +33,7 @@ SmallEnemy::SmallEnemy() :Enemy(),
 	m_health= 10;
 	m_pointOnKill = 50;
 	m_enemyWeapon = new EnemyBaseGun();
-	setWeaponStats(2, 250, m_objectId, -1);
+	setWeaponStats(4, 250, m_objectId, -1);
 
 	m_returnYOffset = Random::getRange(0, Game::Instance()->getGameHeight()/2);
 

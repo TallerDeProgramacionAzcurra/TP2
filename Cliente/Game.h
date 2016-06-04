@@ -17,6 +17,7 @@
 #include <string>
 #include <pthread.h>
 #include <math.h>
+#include <memory>
 
 using namespace std;
 class Island;
@@ -104,11 +105,11 @@ public:
 private:
 
     //Layers
-    std::map<int,DrawObject*> backgroundObjects;
-    std::map<int,DrawObject*> middlegroundObjects;
-    std::map<int,DrawObject*> foregroundObjects;
+    std::map<int, std::shared_ptr<DrawObject>> backgroundObjects;
+    std::map<int, std::shared_ptr<DrawObject>> middlegroundObjects;
+    std::map<int, std::shared_ptr<DrawObject>> foregroundObjects;
 
-    void addDrawObject(int objectID, int layer, DrawObject* newDrawObject);
+    void addDrawObject(int objectID, int layer, std::shared_ptr<DrawObject> newDrawObject);
     void removeDrawObject(int objectID, int layer);
     void updateGameObject(const DrawMessage drawMessage);
     bool existDrawObject(int objectID, int layer);
@@ -121,7 +122,6 @@ private:
     //Provisorio
     Player* m_player;
     Background* m_background;
-    Island* m_island;
     cliente* m_client;
     int m_backgroundTextureID;
     bool m_running;

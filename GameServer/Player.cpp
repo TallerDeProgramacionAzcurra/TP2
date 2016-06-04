@@ -26,7 +26,7 @@ Player::Player() :  MoveableObject(),
 {
 	m_tag = "Player";
 	m_layer = FOREGROUND;
-	m_currentWeapon = new BasicWeapon();
+	m_currentWeapon = new FiveBulletsWeapon();
 	m_shootOffset = Vector2D(15, -5);
 }
 

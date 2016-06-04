@@ -104,18 +104,19 @@ void Game::render()
 
     paintbackground(10);
 
-    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+    for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
     	if (it->second)
     		it->second->draw();
+
     }
-    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+    for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
     {
     	if (it->second)
     		it->second->draw();
     }
     int foundOwnPlayer = -1;
-    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+    for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
     {
     	if (it->second)
     	{
@@ -135,6 +136,7 @@ void Game::render()
 
     SDL_RenderPresent(m_pRenderer);
 }
+
 void Game::interpretarDrawMsg(DrawMessage drwMsg){
 
 
@@ -177,7 +179,7 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 		}
 		//printf("Creando nuevo objeto con objectID: %d y textura %d\n", drwMsg.objectID, drwMsg.textureID);
 
-		DrawObject* newObject = new DrawObject();
+		std::shared_ptr<DrawObject> newObject = std::make_shared<DrawObject>();
 		newObject->setObjectID(drwMsg.objectID);
 		newObject->setLayer(static_cast<int>(drwMsg.layer));
 		newObject->load(static_cast<int>(drwMsg.posX),static_cast<int>(drwMsg.posY),drwMsg.textureID);
@@ -192,7 +194,7 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 	pthread_mutex_unlock(&m_drawMsgMutex);
 }
 
-void Game::addDrawObject(int objectID, int layer, DrawObject* newDrawObject)
+void Game::addDrawObject(int objectID, int layer, std::shared_ptr<DrawObject> newDrawObject)
 {
 	switch(layer)
 	{
@@ -212,7 +214,7 @@ void Game::updateGameObject(const DrawMessage drawMessage)
 	switch(drawMessage.layer)
 	{
 	case BACKGROUND:
-			if ( backgroundObjects[drawMessage.objectID])
+			if ( backgroundObjects[drawMessage.objectID] != nullptr)
 			{
 				if (backgroundObjects[drawMessage.objectID]->getTextureId() != drawMessage.textureID)
 				{
@@ -230,7 +232,7 @@ void Game::updateGameObject(const DrawMessage drawMessage)
 			break;
 
 	case MIDDLEGROUND:
-			if ( middlegroundObjects[drawMessage.objectID])
+			if ( middlegroundObjects[drawMessage.objectID] != nullptr)
 			{
 				if (middlegroundObjects[drawMessage.objectID]->getTextureId() != drawMessage.textureID)
 				{
@@ -248,7 +250,7 @@ void Game::updateGameObject(const DrawMessage drawMessage)
 			break;
 
 	case FOREGROUND:
-			if ( foregroundObjects[drawMessage.objectID])
+			if ( foregroundObjects[drawMessage.objectID] != nullptr)
 			{
 				if (foregroundObjects[drawMessage.objectID]->getTextureId() != drawMessage.textureID)
 				{
@@ -274,25 +276,26 @@ void Game::removeDrawObject(int objectID, int layer)
 	switch(layer)
 	{
 	case BACKGROUND:
-			if (backgroundObjects[objectID])
+			if (backgroundObjects[objectID] != nullptr)
 			{
-				delete backgroundObjects[objectID];
+				backgroundObjects[objectID].reset();
 				backgroundObjects.erase(objectID);
 			}
 			break;
 
 	case MIDDLEGROUND:
-		if (middlegroundObjects[objectID])
+		if (middlegroundObjects[objectID] != nullptr)
 		{
-			delete middlegroundObjects[objectID];
+			middlegroundObjects[objectID].reset();
 			middlegroundObjects.erase(objectID);
 		}
 		break;
 
 	case FOREGROUND:
-		if (foregroundObjects[objectID])
+		if (foregroundObjects[objectID] != nullptr)
 		{
-			delete foregroundObjects[objectID];
+			foregroundObjects[objectID].reset();
+			//printf ("%d \n", foregroundObjects[objectID].use_count());
 			foregroundObjects.erase(objectID);
 		}
 		break;
@@ -616,28 +619,28 @@ void Game::mrMusculo(){
 
 		pthread_mutex_lock(&m_resetMutex);
 
-	    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+	    for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
 	    {
 	    	if (it->second)
 	    	{
 				it->second->clean();
-				delete it->second;
+				it->second.reset();
 	    	}
 	    }
-	    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+	    for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
 	    {
 	    	if (it->second)
 	    	{
 				it->second->clean();
-				delete it->second;
+				it->second.reset();
 	    	}
 	    }
-	    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+	    for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
 	    {
 	    	if (it->second)
 	    	{
 				it->second->clean();
-				delete it->second;
+				it->second.reset();
 	    	}
 	    }
 
@@ -658,28 +661,28 @@ void Game::clean()
     cout << "cleaning game\n";
     pthread_mutex_lock(&m_cleanMutex);
 
-    for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+    for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
     	if (it->second)
     	{
 			it->second->clean();
-			delete it->second;
+			it->second.reset();
     	}
     }
-    for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+    for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
     {
     	if (it->second)
     	{
 			it->second->clean();
-			delete it->second;
+			it->second.reset();
     	}
     }
-    for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+    for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
     {
     	if (it->second)
     	{
 			it->second->clean();
-			delete it->second;
+			it->second.reset();
     	}
     }
 

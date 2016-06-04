@@ -28,7 +28,7 @@ bool BasicWeapon::shoot(const Vector2D& bulletPosition, const Vector2D& directio
 
 	if (m_canShoot)
 	{
-		Bullet* bullet = new Bullet();
+		std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>();
 		bullet->setPosition(Vector2D(bulletPosition.m_x, bulletPosition.m_y));
 		bullet->setDirection(direction);
 		bullet->setSpeed(Vector2D(m_bulletSpeed, m_bulletSpeed));

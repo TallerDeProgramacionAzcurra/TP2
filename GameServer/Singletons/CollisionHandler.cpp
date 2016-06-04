@@ -39,7 +39,7 @@ void CollitionHandler::handlePlayerCollitions()
 			continue;
 
 		//Compara cada jugador contra cada bala enemiga
-		for(vector<Bullet*>::iterator it = m_enemiesBullets.begin(); it != m_enemiesBullets.end(); )
+		for(vector<std::shared_ptr<Bullet>>::iterator it = m_enemiesBullets.begin(); it != m_enemiesBullets.end(); )
 		{
 			if ((*it)->isDead())
 			{
@@ -47,7 +47,7 @@ void CollitionHandler::handlePlayerCollitions()
 				continue;
 			}
 
-			if (areColliding((*playersIterator), (*it)))
+			if (areColliding((*playersIterator), (*it).get()))
 			{
 				printf("Colision de player con bala\n");
 				//Hay colision del jugador con una bala enemiga
@@ -112,7 +112,7 @@ void CollitionHandler::handleEnemyCollitions()
 		}
 
 		//Compara cada jugador contra cada bala enemiga
-		for(vector<Bullet*>::iterator it = m_playersBullets.begin(); it != m_playersBullets.end(); )
+		for(vector<std::shared_ptr<Bullet>>::iterator it = m_playersBullets.begin(); it != m_playersBullets.end(); )
 		{
 			if ((*it)->isDead())
 			{
@@ -120,7 +120,7 @@ void CollitionHandler::handleEnemyCollitions()
 				continue;
 			}
 
-			if (areColliding((*enemiesIterator), (*it)))
+			if (areColliding((*enemiesIterator), (*it).get()))
 			{
 				printf("Colision de bala con enemigo\n");
 				//Hay colision del jugador con una bala enemiga
@@ -184,14 +184,16 @@ void CollitionHandler::addEnemy(Enemy* enemy)
 	m_enemies.push_back(enemy);
 }
 
-void CollitionHandler::addPlayerBullet(Bullet* playerBullet)
+void CollitionHandler::addPlayerBullet(std::shared_ptr<Bullet> playerBullet)
 {
 	m_playersBullets.push_back(playerBullet);
+	playerBullet.reset();
 }
 
-void CollitionHandler::addEnemyBullet(Bullet* enemyBullet)
+void CollitionHandler::addEnemyBullet(std::shared_ptr<Bullet> enemyBullet)
 {
 	m_enemiesBullets.push_back(enemyBullet);
+	enemyBullet.reset();
 }
 
 void CollitionHandler::reset()
