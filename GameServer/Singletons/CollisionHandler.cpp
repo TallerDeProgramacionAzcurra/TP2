@@ -39,7 +39,7 @@ void CollitionHandler::handlePlayerCollitions()
 			continue;
 
 		//Compara cada jugador contra cada bala enemiga
-		for(vector<Bullet*>::iterator it = m_enemiesBullets.begin(); it != m_enemiesBullets.end(); )
+		for(vector<std::shared_ptr<Bullet>>::iterator it = m_enemiesBullets.begin(); it != m_enemiesBullets.end(); )
 		{
 			if ((*it)->isDead())
 			{
@@ -47,7 +47,7 @@ void CollitionHandler::handlePlayerCollitions()
 				continue;
 			}
 
-			if (areColliding((*playersIterator), (*it)))
+			if (areColliding((*playersIterator), (*it).get()))
 			{
 				printf("Colision de player con bala\n");
 				//Hay colision del jugador con una bala enemiga
@@ -82,9 +82,9 @@ void CollitionHandler::handlePlayerCollitions()
 				(*playersIterator)->damage((*it)->getCollisionDamage());
 				//daña al enemigo
 				bool enemyKilled = (*it)->damage((*playersIterator)->getCollisionDamage());
-				if (enemyKilled)
+				if ((enemyKilled) && ((*it)->canRetrievePoints()))
 				{
-					Game::Instance()->addPointsToScore((*it)->getPoints(), (*playersIterator)->getObjectId(), (*playersIterator)->getTeamNumber());
+					Game::Instance()->addPointsToScore((*it)->retrievePoints(), (*playersIterator)->getObjectId(), (*playersIterator)->getTeamNumber());
 				}
 
 				//elimina al enemigo del chekeo de colisiones si el enemigo esta muerto o muriendo
@@ -103,6 +103,8 @@ void CollitionHandler::handlePlayerCollitions()
 
 void CollitionHandler::handleEnemyCollitions()
 {
+	addNewPlayerBullets();//Para evitar agregarlas mientras loopea. Las almacena y las agrega en el proximo frame (este)
+
 	for( vector<Enemy*>::iterator enemiesIterator = m_enemies.begin(); enemiesIterator != m_enemies.end(); )
 	{
 		if ((*enemiesIterator)->isDead() || (*enemiesIterator)->isDying())
@@ -112,7 +114,7 @@ void CollitionHandler::handleEnemyCollitions()
 		}
 
 		//Compara cada jugador contra cada bala enemiga
-		for(vector<Bullet*>::iterator it = m_playersBullets.begin(); it != m_playersBullets.end(); )
+		for(vector<std::shared_ptr<Bullet>>::iterator it = m_playersBullets.begin(); it != m_playersBullets.end(); )
 		{
 			if ((*it)->isDead())
 			{
@@ -120,16 +122,16 @@ void CollitionHandler::handleEnemyCollitions()
 				continue;
 			}
 
-			if (areColliding((*enemiesIterator), (*it)))
+			if (areColliding((*enemiesIterator), (*it).get()))
 			{
 				printf("Colision de bala con enemigo\n");
 				//Hay colision del jugador con una bala enemiga
 				//todo setea la bala en muerta, deberia tal vez hacer una explosion primero y dsp de la animacion matarla
 				bool enemyKilled = (*enemiesIterator)->damage((*it)->getDamage());
 				(*it)->kill(); //mata la bala
-				if (enemyKilled)
+				if ((enemyKilled) && ((*enemiesIterator)->canRetrievePoints()))
 				{
-					Game::Instance()->addPointsToScore((*enemiesIterator)->getPoints(), (*it)->getOwnerID(), (*it)->getOwnerTeamNumber());
+					Game::Instance()->addPointsToScore((*enemiesIterator)->retrievePoints(), (*it)->getOwnerID(), (*it)->getOwnerTeamNumber());
 				}
 
 				//elimina bala del chekeo de colisiones
@@ -184,12 +186,22 @@ void CollitionHandler::addEnemy(Enemy* enemy)
 	m_enemies.push_back(enemy);
 }
 
-void CollitionHandler::addPlayerBullet(Bullet* playerBullet)
+void CollitionHandler::addPlayerBullet(std::shared_ptr<Bullet> playerBullet)
 {
-	m_playersBullets.push_back(playerBullet);
+	m_playerBulletsToAdd.push_back(playerBullet);
+	//m_playersBullets.push_back(playerBullet);
 }
 
-void CollitionHandler::addEnemyBullet(Bullet* enemyBullet)
+void CollitionHandler::addNewPlayerBullets()
+{
+	for (std::vector<std::shared_ptr<Bullet>>::iterator it = m_playerBulletsToAdd.begin() ; it != m_playerBulletsToAdd.end(); ++it)
+	{
+		m_playersBullets.push_back((*it));
+	}
+	m_playerBulletsToAdd.clear();
+}
+
+void CollitionHandler::addEnemyBullet(std::shared_ptr<Bullet> enemyBullet)
 {
 	m_enemiesBullets.push_back(enemyBullet);
 }

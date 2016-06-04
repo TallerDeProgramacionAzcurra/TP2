@@ -12,7 +12,7 @@ BlueBullet::BlueBullet(): Bullet()
 {
 	m_tag = "BlueBullet";
 	m_layer = MIDDLEGROUND;
-	m_textureID = 11;
+	m_textureID = 50;
 
 	m_dyingTime = 3000;
 	m_speed = Vector2D(10,10);

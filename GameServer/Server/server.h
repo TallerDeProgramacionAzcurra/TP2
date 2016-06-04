@@ -11,6 +11,7 @@
 #include "../Game.h"
 #include "../Utils/Parser/ParserNivel.h"
 #include "../Utils/TextureHelper.h"
+#include "../Utils/TiposDefinidos.h"
 
 #include <stdio.h>
 #include <queue>

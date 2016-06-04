@@ -12,6 +12,7 @@
 #include "../Singletons/GameTimeHelper.h"
 #include "../Vector2D.h"
 #include <vector>
+#include <memory>
 
 //Abstacta
 class Weapon

@@ -22,11 +22,15 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <netinet/tcp.h>
 #include <iostream>
 #include <sys/time.h>
 #include "../Game.h"
+
 #define TIMEOUT_SECONDS 10
 #define TIMEOUT_MICROSECONDS 0
+
+#define DISABLE_NAGEL_ALGORITHM 1
 
 class cliente
 {
@@ -74,6 +78,7 @@ class cliente
 
         void procesarDrawPackage(DrawMessagePack drawMsgPackage);
         void cerrarSoket();
+        bool disableNagelAlgorithm(int socketID);
         void procesarMensaje(NetworkMessage networkMessage);
         void setTimeOut();
         bool validarMensaje(DataMessage dataMsg);

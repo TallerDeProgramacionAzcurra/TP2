@@ -29,7 +29,7 @@ bool EnemyBaseGun::shoot(const Vector2D& bulletPosition, const Vector2D& directi
 
 	if (m_canShoot)
 	{
-		Bullet* bullet = new CircleBullet();
+		std::shared_ptr<Bullet> bullet = std::make_shared<CircleBullet>();
 		bullet->setPosition(Vector2D(bulletPosition.m_x, bulletPosition.m_y));
 		bullet->setDirection(direction);
 		bullet->setSpeed(Vector2D(m_bulletSpeed, m_bulletSpeed));

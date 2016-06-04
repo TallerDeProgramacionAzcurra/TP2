@@ -240,10 +240,7 @@ void Player::handleInput(InputMessage inputMsg)
         	}
             m_dirty = true;
         }
-        //printf("Direcion = %f , %f \n", m_direction.m_x, m_direction.m_y);
-
     }
-    //update();
 }
 
 void Player::addPoints(const int points)

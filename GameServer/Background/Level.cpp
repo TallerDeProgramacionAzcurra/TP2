@@ -116,7 +116,8 @@ void Level::clean()
 {
 	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end(); ++it)
 	 {
-		delete (*it);
+		 if ((*it))
+			 delete (*it);
 	 }
 	 m_levelObjects.clear();
 

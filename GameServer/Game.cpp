@@ -480,7 +480,7 @@ void Game::resetGame()
 	int newPlayerSpeed = m_parserNivel->getAvion().velDespl;
 	int newShootingCooldown = m_parserNivel->getAvion().cdDisp;
 	int newBulletsSpeed = m_parserNivel->getAvion().velDisp;
-	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	for (std::map<int, Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
 	{
 		if (it->second)
 		{

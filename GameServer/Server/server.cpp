@@ -459,13 +459,14 @@ void server::sendMsg(int socketReceptor, Mensaje msg)
 bool server::leer(int id)
 {
     //Reseteo el buffer que se va a completar con nuevos mensajes
-    bzero(buffer,256);
+    bzero(buffer, MESSAGE_BUFFER_SIZE);
     char *p = (char*)buffer;
     int messageLength = 0;
 
     int readLimit = (DRAW_MESSAGE_PACK_SIZE * sizeof(DrawMessage)) + MESSAGE_CODE_BYTES + MESSAGE_LENGTH_BYTES + MESSAGE_LENGTH_BYTES;
 
     int n = recv(m_listaDeClientes.getElemAt(id), buffer, MESSAGE_LENGTH_BYTES, 0);
+
     if (!lecturaExitosa(n, id))
     	return false;
 
@@ -481,6 +482,7 @@ bool server::leer(int id)
 
     }
     messageLength = m_alanTuring->decodeLength(buffer);
+    //printf("Longitud Mensaje: %d \n", messageLength);
 
     p += n;
     messageLength -= acum;
@@ -488,7 +490,7 @@ bool server::leer(int id)
     //loopea hasta haber leido la totalidad de los bytes necarios
     while (messageLength > 0)
     {
-    	//printf("Leyó %d. Faltan leer %d \n", acum, messageLength);
+    	//printf("Faltan leer %d \n", messageLength);
     	n = recv(m_listaDeClientes.getElemAt(id), p, messageLength, 0);
 
     	 if(messageLength >readLimit)
@@ -796,7 +798,7 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 bool server::leerBloqueando(int id)
 {
     //Reseteo el buffer que se va a completar con nuevos mensajes
-    bzero(buffer,256);
+    bzero(buffer, MESSAGE_BUFFER_SIZE);
     char *p = (char*)buffer;
     int messageLength = 0;
 

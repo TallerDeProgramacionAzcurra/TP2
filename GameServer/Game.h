@@ -107,8 +107,7 @@ public:
     static void *thread_method(void *context);
 
 private:
-
-    std::map<int,Player*> m_listOfPlayer;
+    std::map<int, Player*> m_listOfPlayer;
     std::map<int,std::string> m_playerNames;
     std::map<int, int> m_teamScores; //id de equipos por ahora son 0 y 1
 

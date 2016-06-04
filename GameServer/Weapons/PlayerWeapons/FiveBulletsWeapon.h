@@ -17,7 +17,7 @@ public:
 	FiveBulletsWeapon();
 	virtual ~FiveBulletsWeapon();
 
-	virtual bool shoot(const Vector2D& bulletPosition);
+	virtual bool shoot(const Vector2D& bulletPosition, const Vector2D& direction);
 
 };
 
