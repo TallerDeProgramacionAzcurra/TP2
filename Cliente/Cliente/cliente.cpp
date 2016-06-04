@@ -21,6 +21,17 @@ bool cliente::conectar()
     	m_connecting = false;
     	return false;
     }
+
+    if (DISABLE_NAGEL_ALGORITHM)
+    {
+    	if (!disableNagelAlgorithm(sockfd))
+    	{
+    		Logger::Instance()->LOG("Cliente: Error al deshabilitar el algoritmo de Nagel.", ERROR);
+    		m_connecting = false;
+    		return false;
+    	}
+    }
+
     setTimeOut();
     if (connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
     {
@@ -47,6 +58,22 @@ bool cliente::conectar()
 
     return m_connected;
 }
+
+bool cliente::disableNagelAlgorithm(int socketID)
+{
+  int flag = 1;
+  int result = setsockopt(socketID,            /* socket affected */
+						  IPPROTO_TCP,     /* set option at TCP level */
+						  TCP_NODELAY,     /* name of option */
+						  (char *) &flag,  /* the cast is historical
+						  			  	  	  cruft */
+						  sizeof(int));    /* length of option value */
+  if (result < 0)
+	  return false;
+
+  return true;
+}
+
 void cliente::desconectar()
 {
 	if (!m_connected)

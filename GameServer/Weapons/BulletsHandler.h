@@ -48,6 +48,9 @@ private:
     // in play bullets
 	std::vector<std::shared_ptr<Bullet>> m_bullets;
 
+	std::vector<std::shared_ptr<Bullet>> m_newBulletsToAdd;
+	void addNewBullets();
+
 	pthread_mutex_t  m_bulletsMutex;
 };
 

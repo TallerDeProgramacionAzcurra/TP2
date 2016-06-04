@@ -14,6 +14,7 @@ Enemy::Enemy(): MoveableObject(),
 	    m_collisionDamage(100),
 		m_dead(false),
 		m_dying(false),
+		m_pointsRetrieved(false),
 		m_pointOnKill(50)
 {
 }
@@ -92,6 +93,17 @@ bool Enemy::isVisibleFromCamera()
 	}
 
 	return true;
+}
+
+int Enemy::retrievePoints()
+{
+	m_pointsRetrieved = true;
+	return m_pointOnKill;
+}
+
+bool Enemy::canRetrievePoints()
+{
+	return !m_pointsRetrieved;
 }
 
 

@@ -49,6 +49,9 @@ private:
     std::vector<std::shared_ptr<Bullet>> m_playersBullets;
     std::vector<std::shared_ptr<Bullet>> m_enemiesBullets;
 
+    std::vector<std::shared_ptr<Bullet>> m_playerBulletsToAdd;
+    void addNewPlayerBullets();
+
     //chekea player contra balas enemigas y enemigos
     void handlePlayerCollitions();
 

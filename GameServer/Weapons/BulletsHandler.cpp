@@ -24,8 +24,16 @@ BulletsHandler::~BulletsHandler()
 
 void BulletsHandler::addBullet(std::shared_ptr<Bullet> bullet)
 {
-    m_bullets.push_back(bullet);
-    bullet.reset();
+	m_newBulletsToAdd.push_back(bullet);
+}
+
+void BulletsHandler::addNewBullets()
+{
+	for (std::vector<std::shared_ptr<Bullet>>::iterator it = m_newBulletsToAdd.begin() ; it != m_newBulletsToAdd.end(); ++it)
+	{
+		m_bullets.push_back((*it));
+	}
+	m_newBulletsToAdd.clear();
 }
 
 void BulletsHandler::clearBullets()
@@ -44,6 +52,8 @@ void BulletsHandler::clearBullets()
 
 void BulletsHandler::updateBullets()
 {
+	addNewBullets();
+
     for (std::vector<std::shared_ptr<Bullet>>::iterator p_it = m_bullets.begin(); p_it != m_bullets.end();)
     {
     	if (!(*p_it))

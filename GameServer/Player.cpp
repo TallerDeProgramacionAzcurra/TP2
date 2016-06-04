@@ -26,7 +26,7 @@ Player::Player() :  MoveableObject(),
 {
 	m_tag = "Player";
 	m_layer = FOREGROUND;
-	m_currentWeapon = new FiveBulletsWeapon();
+	m_currentWeapon = new BasicWeapon();
 	m_shootOffset = Vector2D(15, -5);
 }
 
@@ -240,10 +240,7 @@ void Player::handleInput(InputMessage inputMsg)
         	}
             m_dirty = true;
         }
-        //printf("Direcion = %f , %f \n", m_direction.m_x, m_direction.m_y);
-
     }
-    //update();
 }
 
 void Player::addPoints(const int points)

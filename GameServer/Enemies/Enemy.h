@@ -37,7 +37,8 @@ public:
     bool isDead() { return m_dead; }
     bool isDying() { return m_dying; }
     int getCollisionDamage() { return m_collisionDamage; }
-    int getPoints() { return m_pointOnKill; }
+    int retrievePoints();
+    bool canRetrievePoints();
 
     bool isVisibleFromCamera();
 
@@ -58,6 +59,7 @@ protected:
 
     bool m_dead;
     bool m_dying;
+    bool m_pointsRetrieved;
 
     int m_pointOnKill;
 };
