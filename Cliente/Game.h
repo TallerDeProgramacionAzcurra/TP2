@@ -2,14 +2,17 @@
 #define GAME_H_
 
 #include "Player.h"
+#include "Hud.h"
 #include "Cliente/cliente.h"
 #include "Utils/Parser/ParserCliente.h"
 #include "Background/Island.h"
 #include "Background/Background.h"
 #include "Singletons/InputHandler.h"
+#include "Singletons/FontManager.h"
 #include "Singletons/TextureManager.h"
 #include "Singletons/GameTimeHelper.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include <sstream>
 #include "DrawObject.h"
@@ -23,6 +26,7 @@ using namespace std;
 class Island;
 class Background;
 class Player;
+class Hud;
 class cliente;
 class DrawObject;
 
@@ -123,6 +127,7 @@ private:
     Player* m_player;
     Background* m_background;
     cliente* m_client;
+    Hud* m_hud;
     int m_backgroundTextureID;
     bool m_running;
 

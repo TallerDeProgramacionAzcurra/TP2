@@ -41,6 +41,7 @@
 
 #include <string>
 #include <vector>
+#include <SDL2/SDL.h>
 
 // TIPOS RELACIONADOS A ARCHIVOS XML
 
@@ -151,6 +152,14 @@ struct TextureInfo
 	short height;
 	short numFrames;
 	char path[PATH_MAX_LENGTH];
+};
+
+struct FontTexture
+{
+	const char* text;
+	SDL_Texture* texture;
+	short width;
+	short height;
 };
 
 struct PlayerReconnectionInfo

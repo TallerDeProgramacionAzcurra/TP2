@@ -57,6 +57,16 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
             {
                 cout << "renderer creation success\n";
                 SDL_SetRenderDrawColor(m_pRenderer, 0,0,0,255);
+
+                if (TTF_Init() == 0)
+                {
+                	cout << "ttf init success\n";
+                }
+                else
+                {
+                	cout << "ttf init fail\n";
+                	return false;
+                }
             }
             else
             {
@@ -81,6 +91,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
     requestTexturesInfo(); // setea waiting textures en true
 
     //TextureManager::Instance()->init(m_pRenderer);
+    FontManager::Instance()->init();
+
+    m_hud = new Hud();
 
     m_backgroundTextureID = 10;
 
@@ -133,7 +146,8 @@ void Game::render()
     {
     	foregroundObjects[foundOwnPlayer]->draw();
     }
-
+    m_hud->draw();
+    //SDL_RenderCopy(m_pRenderer, FontManager::Instance()->drawtext(255,105,255,0,0,0,0,0,"PRUEBA",blended), NULL, NULL);
     SDL_RenderPresent(m_pRenderer);
 }
 
@@ -650,7 +664,8 @@ void Game::mrMusculo(){
 	    foregroundObjects.clear();
 	 	InputHandler::Instance()->reset();
 
-	    SDL_DestroyRenderer(m_pRenderer);
+	    TTF_Quit();
+	 	SDL_DestroyRenderer(m_pRenderer);
 	    SDL_DestroyWindow(m_pWindow);
 	    SDL_Quit();
 
@@ -700,6 +715,7 @@ void Game::clean()
     middlegroundObjects.clear();
     foregroundObjects.clear();
 
+    TTF_Quit();
     SDL_DestroyRenderer(m_pRenderer);
     SDL_DestroyWindow(m_pWindow);
     SDL_Quit();
