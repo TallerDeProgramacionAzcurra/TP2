@@ -93,7 +93,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
     //TextureManager::Instance()->init(m_pRenderer);
     FontManager::Instance()->init();
 
-    m_hud = new Hud();
+    m_hud = new Hud(m_gameWidth,m_gameHeight);
 
     m_backgroundTextureID = 10;
 
@@ -146,8 +146,7 @@ void Game::render()
     {
     	foregroundObjects[foundOwnPlayer]->draw();
     }
-    m_hud->draw();
-    //SDL_RenderCopy(m_pRenderer, FontManager::Instance()->drawtext(255,105,255,0,0,0,0,0,"PRUEBA",blended), NULL, NULL);
+    m_hud->draw(m_pRenderer);
     SDL_RenderPresent(m_pRenderer);
 }
 

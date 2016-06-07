@@ -160,6 +160,8 @@ struct FontTexture
 	SDL_Texture* texture;
 	short width;
 	short height;
+	short x;
+	short y;
 };
 
 struct PlayerReconnectionInfo

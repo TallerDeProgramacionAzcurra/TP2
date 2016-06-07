@@ -3,19 +3,25 @@
 
 #include "Utils/TiposDefinidos.h"
 #include "Singletons/FontManager.h"
+#include <SDL2/SDL.h>
+#include <sstream>
+#include <string>
+#include <iomanip>
 
 class Hud
 {
 public:
 
 	//constructor sin argumento: setea m_controllable siempre en true
-    Hud();
+    Hud(int gameWidth,int gameHeight);
+    ~Hud();
     void actualizarScore(long int score);
-    void draw();
+    void draw(SDL_Renderer* renderer);
 
 private:
-    FontTexture* m_score;
-    FontTexture* m_title;
+
+    FontTexture m_score;
+    FontTexture m_title;
     long int m_playerScore;
 
 };
