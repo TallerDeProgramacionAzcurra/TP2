@@ -4,9 +4,12 @@
 #include "Utils/TiposDefinidos.h"
 #include "Singletons/FontManager.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <sstream>
 #include <string>
 #include <iomanip>
+
+#define TEXT_SIZE_FACTOR 1
 
 class Hud
 {

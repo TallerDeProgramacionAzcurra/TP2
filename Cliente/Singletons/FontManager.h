@@ -32,6 +32,7 @@ public:
 
     void init();
     bool loadfont(char* file, int ptsize);
+    int textSize(const char* text,int *h,int* w);
     SDL_Texture* drawtext(char fgR, char fgG, char fgB, char fgA,
     	char bgR, char bgG, char bgB, char bgA, const char text[], textquality quality);
 

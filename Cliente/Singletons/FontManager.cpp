@@ -23,6 +23,11 @@ bool FontManager::loadfont(char* file, int ptsize)
 	return true;
 }
 
+int FontManager::textSize(const char* text,int *h,int* w)
+{
+	return TTF_SizeText(m_font,text,w,h);
+}
+
 SDL_Texture* FontManager::drawtext(char fgR, char fgG, char fgB, char fgA,
 	char bgR, char bgG, char bgB, char bgA, const char text[], textquality quality)
 {

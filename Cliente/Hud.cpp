@@ -3,17 +3,22 @@ using namespace std;
 
 Hud::Hud(int gameWidth, int gameHeight)
 {
+	int h,w;
+
 	m_title.text = "SCORE";
-	m_title.height = gameHeight/30;
-	m_title.width = gameWidth/10;
-	m_title.x = gameWidth/2-m_title.width;
-	m_title.y = 0;
 	m_title.texture = FontManager::Instance()->drawtext(206,220,9,0,0,0,0,0,m_title.text,blended);
+	FontManager::Instance()->textSize(m_title.text,&h,&w);
+	m_title.height = h*TEXT_SIZE_FACTOR;
+	m_title.width = w*TEXT_SIZE_FACTOR;
+	m_title.x = (gameWidth-m_title.width)/2;
+	m_title.y = 0;
+
 
 	actualizarScore(0);
-	m_score.height = gameHeight/30;
-	m_score.width = gameWidth/10;
-	m_score.x = gameWidth/2-m_score.width;
+	FontManager::Instance()->textSize(m_score.text,&h,&w);
+	m_score.height = h*TEXT_SIZE_FACTOR;
+	m_score.width = w*TEXT_SIZE_FACTOR;
+	m_score.x = (gameWidth-m_score.width)/2;
 	m_score.y = m_title.height;
 }
 
