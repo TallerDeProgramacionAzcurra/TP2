@@ -14,6 +14,7 @@ Enemy::Enemy(): MoveableObject(),
 	    m_collisionDamage(100),
 		m_dead(false),
 		m_dying(false),
+		m_exploting(false),
 		m_pointsRetrieved(false),
 		m_pointOnKill(50)
 {

@@ -523,6 +523,15 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		return;
 	}
 
+	//Recibe Suma de Puntaje
+	if ((networkMessage.msg_Code[0] == 's') && (networkMessage.msg_Code[1] == 'c') && (networkMessage.msg_Code[2] == 'm'))
+	{
+		ScoreMessage scoreMsg = m_alanTuring->decodeScoreMessage(networkMessage);
+		Game::Instance()->addPointsToScore(scoreMsg);
+
+		return;
+	}
+
 
 	//Game Beginning
 	if ((networkMessage.msg_Code[0] == 'g') && (networkMessage.msg_Code[1] == 'b') && (networkMessage.msg_Code[2] == 'g'))

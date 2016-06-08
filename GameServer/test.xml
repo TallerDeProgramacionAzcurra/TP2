@@ -81,6 +81,13 @@
 		<alto>48</alto>
 	</sprite>
 	<sprite>
+		<id>ExplosionJugador</id>
+		<path>Assets/Sprites/explosionPlayer.png</path>
+		<cantidad>14</cantidad>
+		<ancho>64</ancho>
+		<alto>64</alto>
+	</sprite>
+	<sprite>
 		<id>AvionPequeño</id>
 		<path>Assets/Sprites/SmallEnemy.png</path>
 		<cantidad>5</cantidad>

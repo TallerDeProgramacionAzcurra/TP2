@@ -55,10 +55,9 @@ void SmallEnemy::update()
 		m_dead = true;
 	}
 
-	if (m_dying)
+	if (m_exploting)
 	{
 		updateExplotionAnimation();
-
 	}
 
 	m_enemyWeapon->update();
@@ -122,14 +121,8 @@ bool SmallEnemy::damage(int damageReceived)
 	m_health -= damageReceived;
 	if (m_health <= 0)
 	{
-		//Hacer explosion, setear dying en true, etc
-		m_explotionRemainingTime = m_explotionAnimationTime;
-		//hardcodeado por ahora
-		m_numFrames = 29;
-		m_currentFrame = 0;
-		m_currentRow = 0;
-		m_textureID = 40;
 		m_dying = true;
+		explote();
 		killed = true;
 	}
 	return killed;
@@ -180,6 +173,17 @@ void SmallEnemy::updateFlipAnimation()
 	}
 }
 
+void SmallEnemy::explote()
+{
+	m_exploting = true;
+	m_explotionRemainingTime = m_explotionAnimationTime;
+	//hardcodeado por ahora
+	m_numFrames = 29;
+	m_currentFrame = 0;
+	m_currentRow = 0;
+	m_textureID = 40;
+}
+
 void SmallEnemy::updateExplotionAnimation()
 {
 	m_explotionRemainingTime -= GameTimeHelper::Instance()->deltaTime();
@@ -194,6 +198,7 @@ void SmallEnemy::updateExplotionAnimation()
 	{
 		m_dying = false;
 		m_dead = true;
+		m_exploting = false;
 	}
 
 	if ((lastFrame != m_currentFrame) || (lastRow != m_currentRow))

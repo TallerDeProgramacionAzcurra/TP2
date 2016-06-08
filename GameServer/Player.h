@@ -4,6 +4,7 @@
 
 #include "MoveableObject.h"
 #include "Vector2D.h"
+#include "Score.h"
 #include "Singletons/InputHandler.h"
 #include "Singletons/TextureManager.h"
 #include "Singletons/GameTimeHelper.h"
@@ -11,6 +12,9 @@
 #include "Weapons/PlayerWeapons/BasicWeapon.h"
 #include "Weapons/PlayerWeapons/FiveBulletsWeapon.h"
 class Weapon;
+
+#define EXPLOTION_ANIMATION_TIME 1000
+#define FLIP_ANIMATION_TIME 1000
 
 
 class Player : public MoveableObject
@@ -55,8 +59,9 @@ public:
 
     void damage(int damageReceived);
 
-    void addPoints(const int points);
-    const int getScore() { return m_score; }
+    void addPoints(int points);
+    const int getScore();
+    void resetScore();
 
 
 private:
@@ -72,15 +77,22 @@ private:
     int m_flipAnimationTime;
     int m_flipRemainingTime;
 
+    //tiempo de animación explosion
+    int m_explotionAnimationTime;
+    int m_explotionRemainingTime;
+
     //UN timer para esperar un par de milisegundos desde que el jguador dejo de moverse para arrastrarlo
     const int m_holdQuietTimer;
     int m_currentHoldQuietTime;
 
     void updateFlipAnimation();
+    void explote();
+    void updateExplotionAnimation();
 
     // variables de control de estado
     bool m_dead;
     bool m_dying;
+    bool m_exploting;
 
     /*******************/
     int m_health;
@@ -88,7 +100,7 @@ private:
     bool m_movedByPlayer;
     int m_teamNumber;
 
-    int m_score;
+    Score m_score;
 
     //Modifica el estado del juego de acuerdo al input del jugador
 };

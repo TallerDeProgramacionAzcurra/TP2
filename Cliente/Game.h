@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "Hud.h"
+#include "Score.h"
 #include "Cliente/cliente.h"
 #include "Utils/Parser/ParserCliente.h"
 #include "Background/Island.h"
@@ -92,6 +93,8 @@ public:
 
     void quit() { m_running = false; }
 
+    void addPointsToScore(ScoreMessage scoreMsg);
+
     //Alto y Ancho de la ventana de juego
     int getGameWidth() const { return m_gameWidth; }
     int getGameHeight() const { return m_gameHeight; }
@@ -148,10 +151,13 @@ private:
     int m_gameHeight;
     float m_scrollSpeed;
 
+    Score m_playerScore;
+
 	pthread_mutex_t  m_removeMutex;
 	pthread_mutex_t  m_drawMsgMutex;
 	pthread_mutex_t m_cleanMutex;
 	pthread_mutex_t m_resetMutex;
+	pthread_mutex_t m_scoreMutex;
 
     Game();
     ~Game();

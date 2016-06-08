@@ -39,6 +39,7 @@ void TextureHelper::initialize()
 
 	//Explosiones
 	m_textureIDMap["ExplosionPequeña"] = 40;
+	m_textureIDMap["ExplosionJugador"] = 41;
 
 	//ELEMENTOS DE BACKGROUND
 	m_textureIDMap["isla"] = 20;

@@ -17,10 +17,12 @@ m_scrollSpeed(0.8),
 m_gameWidth(0),
 m_gameHeight(0)
 {
+	m_playerScore = Score();
 	pthread_mutex_init(&m_removeMutex, NULL);
 	pthread_mutex_init(&m_drawMsgMutex, NULL);
 	pthread_mutex_init(&m_cleanMutex, NULL);
 	pthread_mutex_init(&m_resetMutex, NULL);
+	pthread_mutex_init(&m_scoreMutex, NULL);
 }
 
 Game::~Game()
@@ -31,12 +33,12 @@ Game::~Game()
     pthread_mutex_destroy(&m_drawMsgMutex);
     pthread_mutex_destroy(&m_cleanMutex);
     pthread_mutex_destroy(&m_resetMutex);
+    pthread_mutex_destroy(&m_scoreMutex);
 }
 
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int SDL_WINDOW_flag)
 {
-
 
     m_initializingSDL = true;
 
@@ -407,6 +409,27 @@ void Game::askForName()
     }
 }
 
+void Game::addPointsToScore(ScoreMessage scoreMsg)
+{
+	pthread_mutex_unlock(&m_scoreMutex);
+
+	//todo Habria que contemplar equipos.
+	//todo Por ahora hago que se envie a todos y que descarte si no es un score propio, para poder agregar lo otro despues
+
+	if (static_cast<int>(scoreMsg.playerID) != m_player->getObjectId()) //posiblemente provisorio
+	{
+		pthread_mutex_unlock(&m_scoreMutex);
+		return;
+	}
+
+	//actualiza el score del jugador
+	m_playerScore.addPoints(static_cast<int>(scoreMsg.pointsacquire));
+	//actualiza el hud
+	m_hud->actualizarScore(m_playerScore.getScore());
+
+	pthread_mutex_unlock(&m_scoreMutex);
+}
+
 void Game::paintbackground(int backgroundTextureID)
 {
 	int width = TextureManager::Instance()->getTextureInfo(backgroundTextureID).width;
@@ -662,6 +685,7 @@ void Game::mrMusculo(){
 	    middlegroundObjects.clear();
 	    foregroundObjects.clear();
 	 	InputHandler::Instance()->reset();
+	 	m_playerScore.reset();
 
 	    TTF_Quit();
 	 	SDL_DestroyRenderer(m_pRenderer);
@@ -760,6 +784,7 @@ void Game::resetGame()
 
 	 setRunning(false);
 	 setRestart(true);
+	 m_playerScore.reset();
 	 //TextureManager::Instance()->init(m_pRenderer);
 
 	 cout << "Finish reseting game\n";

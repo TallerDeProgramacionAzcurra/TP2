@@ -26,6 +26,7 @@
 
 #define DRAW_MESSAGE_SIZE 32
 #define INPUT_MESSAGE_SIZE 16
+#define SCORE_MESSAGE_SIZE 8
 #define CONNECTED_MESSAGE_SIZE 16
 #define CONNECTIONINFO_MESSAGE_SIZE 24
 #define PLAYER_DISCONNECTION_MESSAGE_SIZE 32
@@ -125,6 +126,14 @@ struct DrawMessage
 	short vacio;
 };
 
+struct ScoreMessage
+{
+	short playerID;
+	short teamID;
+	short pointsacquire;
+	short somethingElse;
+};
+
 struct InputMessage
 {
 	int objectID;
@@ -154,16 +163,6 @@ struct TextureInfo
 	char path[PATH_MAX_LENGTH];
 };
 
-struct FontTexture
-{
-	const char* text;
-	SDL_Texture* texture;
-	short width;
-	short height;
-	short x;
-	short y;
-};
-
 struct PlayerReconnectionInfo
 {
 	int playerID;
@@ -173,6 +172,16 @@ struct DrawMessagePack
 {
 	int totalSize;
 	DrawMessage drawMessages[DRAW_MESSAGE_PACK_SIZE];
+};
+
+struct FontTexture
+{
+	const char* text;
+	SDL_Texture* texture;
+	short width;
+	short height;
+	short x;
+	short y;
 };
 
 struct Ventana

@@ -39,6 +39,7 @@ private:
     void retire();
     void updateFlipAnimation();
     void updateExplotionAnimation();
+    void explote();
 
 };
 

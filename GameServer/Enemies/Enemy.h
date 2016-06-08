@@ -59,6 +59,7 @@ protected:
 
     bool m_dead;
     bool m_dying;
+    bool m_exploting;
     bool m_pointsRetrieved;
 
     int m_pointOnKill;

@@ -12,18 +12,21 @@ using namespace std;
 Player::Player() :  MoveableObject(),
 					m_connected(true),
 					m_doingFlip(false),
-					m_flipAnimationTime(1000),
+					m_flipAnimationTime(FLIP_ANIMATION_TIME),
 					m_flipRemainingTime(0),
+				    m_explotionAnimationTime(EXPLOTION_ANIMATION_TIME),
+				    m_explotionRemainingTime(0),
 					m_holdQuietTimer(100),
 					m_currentHoldQuietTime(0),
 					m_dead(false),
 					m_dying(false),
+					m_exploting(false),
 					m_health(100),
 					m_collisionDamage(100),
 					m_movedByPlayer(false),
-					m_teamNumber(1),
-					m_score(0)
+					m_teamNumber(1)
 {
+	m_score = Score();
 	m_tag = "Player";
 	m_layer = FOREGROUND;
 	m_currentWeapon = new BasicWeapon();
@@ -41,7 +44,8 @@ void Player::damage(int damageReceived)
 	if (m_health <= 0)
 	{
 		//Hacer explosion, setear dying en true, etc
-		m_dead = true;
+		m_dying = true;
+		explote();
 	}
 }
 
@@ -104,6 +108,12 @@ void Player::update()
 	{
 		m_dirty = true;
 	}
+
+	if (m_exploting)
+	{
+		updateExplotionAnimation();
+	}
+
 	//printf("currentFrame: %d \n", m_currentFrame);
 	//printf("doing flip: %d \n", m_doingFlip);
 	if (m_doingFlip)
@@ -165,6 +175,40 @@ void Player::updateFlipAnimation()
 
 	if (lastFrame != m_currentFrame)
 		m_dirty = true;
+}
+
+void Player::explote()
+{
+	m_exploting = true;
+	m_explotionRemainingTime = m_explotionAnimationTime;
+	//hardcodeado por ahora
+	m_numFrames = 14;
+	m_currentFrame = 0;
+	m_currentRow = 0;
+	m_textureID = 41;
+}
+
+void Player::updateExplotionAnimation()
+{
+	m_explotionRemainingTime -= GameTimeHelper::Instance()->deltaTime();
+	int step = m_explotionAnimationTime / m_numFrames;
+	int lastFrame = m_currentFrame;
+	int lastRow = m_currentRow;
+
+	m_currentFrame = ((m_explotionAnimationTime - m_explotionRemainingTime) / step) % 4;
+	m_currentRow = ((m_explotionAnimationTime - m_explotionRemainingTime) / step) / 4;
+
+	if (m_explotionRemainingTime <= 0)
+	{
+		m_dying = false;
+		m_dead = true;
+		m_exploting = false;
+	}
+
+	if ((lastFrame != m_currentFrame) || (lastRow != m_currentRow))
+	{
+		m_dirty = true;
+	}
 }
 
 
@@ -243,13 +287,27 @@ void Player::handleInput(InputMessage inputMsg)
     }
 }
 
-void Player::addPoints(const int points)
+void Player::addPoints(int points)
 {
-	m_score += points;
-	if (m_score < 0)
-	{
-		m_score = 0;
-	}
+	m_score.addPoints(points);
+
+	ScoreMessage scoreMsg;
+	scoreMsg.playerID = m_objectId;
+	scoreMsg.pointsacquire = points;
+	scoreMsg.teamID = m_teamNumber;
+	scoreMsg.somethingElse = 0;
+
+	Game::Instance()->sendScoreToClients(scoreMsg);
+}
+
+const int Player::getScore()
+{
+	return m_score.getScore();
+}
+
+void Player::resetScore()
+{
+	m_score.reset();
 }
 
 

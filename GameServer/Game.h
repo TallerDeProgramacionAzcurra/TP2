@@ -75,6 +75,7 @@ public:
     void sendToAllClients(DrawMessage drawMsg);
     void addToPackage(DrawMessage drawMsg);
     void sendPackages();
+    void sendScoreToClients(ScoreMessage scoreMsg);
 
     void addPointsToScore(int points, int playerID, int teamID);
     void addPointsToTeam(int points, int teamID);

@@ -342,6 +342,11 @@ void Game::sendToAllClients(DrawMessage mensaje)
 	m_server->sendDrawMsgToAll(mensaje);
 }
 
+void Game::sendScoreToClients(ScoreMessage scoreMsg)
+{
+	m_server->sendScoreMsgToAll(scoreMsg);
+}
+
 void Game::addToPackage(DrawMessage drawMsg)
 {
 	m_drawMessagePacker->addDrawMessage(drawMsg);
@@ -484,13 +489,13 @@ void Game::resetGame()
 	{
 		if (it->second)
 		{
-			 it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
-			 it->second->setShootingCooldown(newShootingCooldown);
-			 it->second->setShootingSpeed(newBulletsSpeed);
-			 it->second->refreshDirty();
-			 it->second->StopFlipAnimation();
-
-			 it->second->setPosition(Vector2D(Game::Instance()->getGameWidth()/2, Game::Instance()->getGameHeight()/2));
+			it->second->resetScore();
+			it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
+			it->second->setShootingCooldown(newShootingCooldown);
+			it->second->setShootingSpeed(newBulletsSpeed);
+			it->second->refreshDirty();
+			it->second->StopFlipAnimation();
+			it->second->setPosition(Vector2D(Game::Instance()->getGameWidth()/2, Game::Instance()->getGameHeight()/2));
 		}
 	}
 

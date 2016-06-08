@@ -22,7 +22,7 @@ Hud::Hud(int gameWidth, int gameHeight)
 	m_score.y = m_title.height;
 }
 
-void Hud::actualizarScore(long int score)
+void Hud::actualizarScore(int score)
 {
 	m_playerScore = score;
 	ostringstream oss;
@@ -30,7 +30,7 @@ void Hud::actualizarScore(long int score)
 	string s = oss.str();
 	const char *pchar = s.c_str();
 	m_score.text = pchar;
-	m_score.texture = FontManager::Instance()->drawtext(255,255,255,0,0,0,0,0,m_score.text,blended);
+	m_score.texture = FontManager::Instance()->drawtext(255,255,255,0,0,0,0,0, m_score.text, blended);
 }
 
 void Hud::draw(SDL_Renderer* renderer)
@@ -50,8 +50,4 @@ void Hud::draw(SDL_Renderer* renderer)
 	destRect.x = m_score.x;
 	destRect.y = m_score.y;
 	SDL_RenderCopy(renderer, m_score.texture, NULL, &destRect);
-
-
-
-
 }

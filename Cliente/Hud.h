@@ -18,14 +18,14 @@ public:
 	//constructor sin argumento: setea m_controllable siempre en true
     Hud(int gameWidth,int gameHeight);
     ~Hud();
-    void actualizarScore(long int score);
+    void actualizarScore(int score);
     void draw(SDL_Renderer* renderer);
 
 private:
 
     FontTexture m_score;
     FontTexture m_title;
-    long int m_playerScore;
+    int m_playerScore;
 
 };
 
