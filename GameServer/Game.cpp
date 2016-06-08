@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Enemies/SmallEnemy.h"
 #include "Player.h"
+#include "PowerUps/ExtraPointsPU.h"
 #include "Weapons/BulletsHandler.h"
 #include "Singletons/CollisionHandler.h"
 
@@ -61,6 +62,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     enemy->load(m_gameWidth/2,0,32,32,30,4);
     CollitionHandler::Instance()->addEnemy(enemy);
 
+    powerUp = new ExtraPointsPU(100);
+    powerUp->load(m_gameWidth/2, m_gameHeight/4,48,48,70,1);
+    CollitionHandler::Instance()->addPowerUp(powerUp);
 
     //tudo ben
     m_running = true;
@@ -238,6 +242,7 @@ void Game::update()
 	m_level->update();
 
 	enemy->update();
+	powerUp->update();
 
 	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
 	{
@@ -489,7 +494,7 @@ void Game::resetGame()
 	{
 		if (it->second)
 		{
-			it->second->resetScore();
+			it->second->reset();
 			it->second->setSpeed(Vector2D(newPlayerSpeed, newPlayerSpeed));
 			it->second->setShootingCooldown(newShootingCooldown);
 			it->second->setShootingSpeed(newBulletsSpeed);

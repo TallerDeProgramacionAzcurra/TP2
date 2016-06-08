@@ -24,7 +24,7 @@ public:
 	void addPoints(int points)
 	{
 		m_currentScore += points;
-		if (m_currentScore <= 0)
+		if (m_currentScore < 0)
 			m_currentScore = 0;
 	}
 
@@ -33,7 +33,7 @@ public:
 		m_currentScore = 0;
 	}
 
-	int getScore() { return m_currentScore; }
+	const int getScore() { return m_currentScore; }
 
 private:
 	int m_currentScore;

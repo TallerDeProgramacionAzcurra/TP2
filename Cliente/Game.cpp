@@ -349,6 +349,7 @@ bool Game::existDrawObject(int objectID, int layer)
 
 void Game::update()
 {
+	m_hud->update();
 	/*m_background->update(); //Provisorio
 	m_island->update(); //Provisorio
 	m_player->update(); // Provisorio*/
@@ -820,6 +821,7 @@ int Game::createGame(int DELAY_TIME){
 
 						Game::Instance()->handleEvents();
 
+						Game::Instance()->update();
 
 						Game::Instance()->render();
 

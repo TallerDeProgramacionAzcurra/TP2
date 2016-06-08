@@ -6,6 +6,7 @@
  */
 
 #include "CollisionHandler.h"
+#include "../PowerUps/PowerUp.h"
 #include "../Enemies/Enemy.h"
 #include "../Player.h"
 #include "../Weapons/Bullet.h"
@@ -57,6 +58,32 @@ void CollitionHandler::handlePlayerCollitions()
 
 				//elimina bala del chekeo de colisiones
 				it = m_enemiesBullets.erase(it);
+			}
+			else
+		    {
+			  ++it;
+		    }
+		}
+
+		//Compara cada Jugador con cada PowerUp
+		for(vector<PowerUp*>::iterator it = m_powerUps.begin(); it != m_powerUps.end(); )
+		{
+			if ((*it)->isDead() || ( ((*it)->canPickUp()) == false ))
+			{
+				it = m_powerUps.erase(it);
+				continue;
+			}
+
+			if (areColliding((*playersIterator), (*it)))
+			{
+				printf("Colision de player con powerUp\n");
+				//Hay colision del jugador con un power up
+
+				if ((*playersIterator))
+					(*it)->pickUp((*playersIterator));
+
+				//elimina el powerUp del checkeo de colisiones
+				it = m_powerUps.erase(it);
 			}
 			else
 		    {
@@ -186,6 +213,11 @@ void CollitionHandler::addEnemy(Enemy* enemy)
 	m_enemies.push_back(enemy);
 }
 
+void CollitionHandler::addPowerUp(PowerUp* powerUp)
+{
+	m_powerUps.push_back(powerUp);
+}
+
 void CollitionHandler::addPlayerBullet(std::shared_ptr<Bullet> playerBullet)
 {
 	m_playerBulletsToAdd.push_back(playerBullet);
@@ -211,6 +243,7 @@ void CollitionHandler::reset()
 	m_enemies.clear();
 	m_playersBullets.clear();
 	m_enemiesBullets.clear();
+	m_powerUps.clear();
 }
 
 void CollitionHandler::clean()
@@ -220,4 +253,5 @@ void CollitionHandler::clean()
 	m_enemies.clear();
 	m_playersBullets.clear();
 	m_enemiesBullets.clear();
+	m_powerUps.clear();
 }

@@ -49,6 +49,9 @@ void TextureHelper::initialize()
 	m_textureIDMap["disparo"] = 50;
 	m_textureIDMap["disparoRedondo"] = 51;
 
+	//PowerUps
+	m_textureIDMap["ExtraPoints"] = 70;
+
 
 }
 

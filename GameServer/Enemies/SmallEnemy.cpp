@@ -36,7 +36,6 @@ SmallEnemy::SmallEnemy() :Enemy(),
 	setWeaponStats(4, 250, m_objectId, -1);
 
 	m_returnYOffset = Random::getRange(0, Game::Instance()->getGameHeight()/2);
-
 }
 
 SmallEnemy::~SmallEnemy()

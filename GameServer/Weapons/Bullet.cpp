@@ -20,6 +20,7 @@ Bullet::Bullet(): MoveableObject(),
 
 	m_dyingTime = 3000;
 	m_speed = Vector2D(20,20);
+
 }
 
 Bullet::~Bullet() {}

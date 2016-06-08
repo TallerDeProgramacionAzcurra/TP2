@@ -61,7 +61,7 @@ public:
 
     void addPoints(int points);
     const int getScore();
-    void resetScore();
+    void reset();
 
 
 private:

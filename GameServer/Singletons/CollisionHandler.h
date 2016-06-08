@@ -14,6 +14,7 @@
 class Bullet;
 class Enemy;
 class Player;
+class PowerUp;
 class GameObject;
 
 class CollitionHandler
@@ -34,6 +35,7 @@ public:
 
     void addPlayer(Player* player);
     void addEnemy(Enemy* enemy);
+    void addPowerUp(PowerUp* powerUp);
     void addPlayerBullet(std::shared_ptr<Bullet> playerBullet);
     void addEnemyBullet(std::shared_ptr<Bullet> enemyBullet);
 
@@ -45,6 +47,7 @@ private:
 
     std::vector<Player*> m_players;
     std::vector<Enemy*> m_enemies;
+    std::vector<PowerUp*> m_powerUps;
 
     std::vector<std::shared_ptr<Bullet>> m_playersBullets;
     std::vector<std::shared_ptr<Bullet>> m_enemiesBullets;

@@ -305,8 +305,21 @@ const int Player::getScore()
 	return m_score.getScore();
 }
 
-void Player::resetScore()
+void Player::reset()
 {
+	m_connected = true;
+	m_doingFlip = false;
+	m_flipAnimationTime = FLIP_ANIMATION_TIME;
+	m_flipRemainingTime = 0;
+    m_explotionAnimationTime = EXPLOTION_ANIMATION_TIME;
+    m_explotionRemainingTime = 0;
+	m_currentHoldQuietTime = 0;
+	m_dead = false;
+	m_dying = false;
+	m_exploting = false;
+	m_health = 100;
+	m_movedByPlayer = false;
+
 	m_score.reset();
 }
 

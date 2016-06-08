@@ -1,7 +1,9 @@
 #include "Hud.h"
 using namespace std;
 
-Hud::Hud(int gameWidth, int gameHeight)
+Hud::Hud(int gameWidth, int gameHeight): m_playerScore(0),
+										 m_newScore(0),
+										 m_lerping(false)
 {
 	int h,w;
 
@@ -20,11 +22,18 @@ Hud::Hud(int gameWidth, int gameHeight)
 	m_score.width = w*TEXT_SIZE_FACTOR;
 	m_score.x = (gameWidth-m_score.width)/2;
 	m_score.y = m_title.height;
+
+	updateScoreTexture(m_playerScore);
 }
 
 void Hud::actualizarScore(int score)
 {
-	m_playerScore = score;
+	m_newScore = (int) score;
+	m_lerping = true;
+}
+
+void Hud::updateScoreTexture(int score)
+{
 	ostringstream oss;
 	oss << setfill('0') << setw(6) << score;
 	string s = oss.str();
@@ -50,4 +59,29 @@ void Hud::draw(SDL_Renderer* renderer)
 	destRect.x = m_score.x;
 	destRect.y = m_score.y;
 	SDL_RenderCopy(renderer, m_score.texture, NULL, &destRect);
+}
+
+void Hud::update()
+{
+	if (m_playerScore != m_newScore)
+	{
+		if (m_lerping)
+		{
+			float difference = m_newScore - m_playerScore;
+			m_playerScore = m_playerScore + ((difference) * LERP_WEIGHT);
+
+			if (difference <= 1.0f)
+			{
+				m_playerScore = m_newScore;
+				m_lerping = false;
+			}
+			updateScoreTexture((int) m_playerScore);
+		}
+		else
+		{
+			//Paso algo extraño y no esta lerpeando pero el score esta desactualizado, actualiza en forma forzada
+			m_playerScore = m_newScore;
+			updateScoreTexture((int) m_playerScore);
+		}
+	}
 }

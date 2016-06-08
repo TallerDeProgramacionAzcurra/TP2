@@ -28,6 +28,7 @@ class Enemy;
 class SmallEnemy;
 class Player;
 class Level;
+class PowerUp;
 class server;
 class DrawMessagesPacker;
 class BulletsHandler;
@@ -121,7 +122,10 @@ private:
     Level* m_level;
     TextureHelper* m_textureHelper;
 
+    /*******Sacar********/
     Enemy* enemy;
+    PowerUp* powerUp;
+    /***********************/
 
     server* m_server;
     DrawMessagesPacker* m_drawMessagePacker;
