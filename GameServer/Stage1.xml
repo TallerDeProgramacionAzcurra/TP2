@@ -1,0 +1,65 @@
+<tamaño>
+	<ancho>600</ancho>
+	<alto>2000</largo>
+</tamaño>
+<enemigos>
+	<enemigo>
+		<id>AvionPequeño</id>
+		<frames>14</frames>
+		<ancho>60</ancho>
+		<alto>66</alto>
+	</enemigo>
+	<enemigo>
+		<id>AvionMediano</id>
+		<frames>999999</frames>
+		<ancho>9999999</ancho>
+		<alto>999999</alto>
+	</enemigo>
+	<enemigo>
+		<id>AvionGrande</id>
+		<frames>12</frames>
+		<ancho>128</ancho>
+		<alto>96</alto>
+	</enemigo>
+	<enemigo>
+		<id>FormacionRoja</id>
+		<frames>999999</frames>
+		<ancho>999999</ancho>
+		<alto>999999</alto>
+	</enemigo>
+</enemigos>
+<powerups>
+	<powerup>
+		<id>ExtraPoints</id>
+		<frames>1</frames>
+		<ancho>48</ancho>
+		<alto>48</alto>
+	</powerup>
+	<powerup>
+		<id>*********</id>
+		<frames>999999</frames>
+		<ancho>9999999</ancho>
+		<alto>999999</alto>
+	</powerup>
+	<powerup>
+		<id>**********</id>
+		<frames>9999</frames>
+		<ancho>9999</ancho>
+		<alto>9999</alto>
+	</powerup>
+	<powerup>
+		<id>*********</id>
+		<frames>999999</frames>
+		<ancho>999999</ancho>
+		<alto>999999</alto>
+	</powerup>
+</powerups>
+<bosses>
+	<boss>
+		<id>*******</id>
+		<posicion>9999</posicion>
+		<frames>9999</frames>
+		<ancho>9999</ancho>
+		<alto>9999</alto>
+	</boss>
+</bosses>

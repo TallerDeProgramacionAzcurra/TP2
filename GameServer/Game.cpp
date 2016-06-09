@@ -183,7 +183,7 @@ Vector2D Game::getRandomPLayerCenter()
 {
 	int randomID = Random::getRange(0, m_listOfPlayer.size());
 	Vector2D playerCenter;
-	if ((m_listOfPlayer[randomID]) && (m_listOfPlayer[randomID]->isConnected()))
+	if ((m_listOfPlayer[randomID]) && (m_listOfPlayer[randomID]->isConnected()) && (!(m_listOfPlayer[randomID]->isDead())))
 	{
 		playerCenter = Vector2D(m_listOfPlayer[randomID]->getPosition().getX() + (m_listOfPlayer[randomID]->getWidth()/2),
 								m_listOfPlayer[randomID]->getPosition().getY() + (m_listOfPlayer[randomID]->getHeight()/2));
@@ -194,7 +194,7 @@ Vector2D Game::getRandomPLayerCenter()
 		for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
 		{
 
-			if ((it->second) && (it->second->isConnected()))
+			if ((it->second) && (it->second->isConnected()) && (!(it->second->isDead())))
 			{
 				playerCenter = Vector2D(it->second->getPosition().getX() + (it->second->getWidth()/2),
 										it->second->getPosition().getY() + (it->second->getHeight()/2));

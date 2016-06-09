@@ -110,7 +110,7 @@
 	</sprite>
 </sprites>
 <escenario>
-	<cantidadMaximaJugadores>1</cantidadMaximaJugadores>
+	<cantidadMaximaJugadores>2</cantidadMaximaJugadores>
 	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>
 	<alto>2000</alto>

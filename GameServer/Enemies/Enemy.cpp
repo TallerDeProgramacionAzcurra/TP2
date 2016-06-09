@@ -63,7 +63,7 @@ void Enemy::shoot()
 	}
 }
 
-bool Enemy::damage(int damageReceived, Player* player)
+bool Enemy::damage(int damageReceived, Player* damager)
 {
 	bool killed = false;
 	m_health -= damageReceived;

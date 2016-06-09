@@ -12,8 +12,6 @@
 #include <math.h>
 class Player;
 
-#define SHOOT_CHANCE 5 // 0.05% de disparar por frame.
-
 class SmallEnemy: public Enemy
 {
 public:
@@ -24,9 +22,12 @@ public:
 
     virtual void shoot();
 
-    virtual bool damage(int damageReceived, Player* player);
+    virtual bool damage(int damageReceived, Player* damager);
 
 private:
+
+    int m_shootChance;
+
     bool m_fleeing;
     int m_returnYOffset;
 

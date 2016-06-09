@@ -10,8 +10,6 @@
 
 #include "Enemy.h"
 
-#define SHOOT_CHANCE 10
-
 class BigPlane: public Enemy
 {
 public:
@@ -23,9 +21,12 @@ public:
 
     virtual void shoot();
 
-    virtual bool damage(int damageReceived, Player* player);
+    virtual bool damage(int damageReceived, Player* damager);
 
 private:
+
+    const int m_shootChance;
+
     bool m_goingUp;
     bool m_goingRight;
 
@@ -36,12 +37,10 @@ private:
     int m_explotionRemainingTime;
 
     void flip();
-    void updateFlipAnimation();
     void updateExplotionAnimation();
     void explote();
 
     void generateBorderReturnOffset();
-    void randomizeY();
 };
 
 

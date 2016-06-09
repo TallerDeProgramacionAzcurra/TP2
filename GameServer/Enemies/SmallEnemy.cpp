@@ -13,6 +13,7 @@
 
 
 SmallEnemy::SmallEnemy() :Enemy(),
+						m_shootChance(5),
 						m_fleeing(false),
 						m_flipping(false),
 						m_flipAnimationTime(500),
@@ -96,7 +97,7 @@ void SmallEnemy::update()
 
 		//Analiza si debe disparar
 		int shootLuck = Random::getRange(0, 1000);
-		if ((shootLuck <= SHOOT_CHANCE) && (!m_flipping))
+		if ((shootLuck <= m_shootChance) && (!m_flipping))
 		{
 			//dispara
 			shoot();
@@ -115,7 +116,7 @@ void SmallEnemy::update()
 
 }
 
-bool SmallEnemy::damage(int damageReceived, Player* player)
+bool SmallEnemy::damage(int damageReceived, Player* damager)
 {
 	bool killed = false;
 	m_health -= damageReceived;
@@ -123,10 +124,10 @@ bool SmallEnemy::damage(int damageReceived, Player* player)
 	{
 		m_dying = true;
 		explote();
-		if (canRetrievePoints() && player)
+		if (canRetrievePoints() && damager)
 		{
 			int points = retrievePoints();
-			Game::Instance()->addPointsToScore(points, player->getObjectId(), player->getTeamNumber());
+			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getTeamNumber());
 		}
 	}
 	return killed;
@@ -138,9 +139,7 @@ void SmallEnemy::shoot()
 
 	if (m_enemyWeapon)
 	{
-		Vector2D shootDirection;
-		shootDirection.setX(m_target.m_x - m_position.m_x);
-		shootDirection.setY(m_target.m_y - m_position.m_y);
+		Vector2D shootDirection = m_target - m_position;
 		shootDirection.normalize();
 		m_enemyWeapon->shoot(m_position, shootDirection);
 	}

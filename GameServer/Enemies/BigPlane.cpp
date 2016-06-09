@@ -13,6 +13,7 @@
 
 
 BigPlane::BigPlane() :Enemy(),
+					  m_shootChance(10),
 					  m_goingUp(true),
 					  m_goingRight(false),
 					  m_explotionAnimationTime(1000),
@@ -111,7 +112,7 @@ void BigPlane::update()
 		if (!m_goingUp)
 		{
 			int shootLuck = Random::getRange(0, 1000);
-			if (shootLuck <= SHOOT_CHANCE)
+			if (shootLuck <= m_shootChance)
 			{
 				shoot();
 			}
@@ -123,20 +124,15 @@ void BigPlane::update()
 
 }
 
-void BigPlane::randomizeY()
-{
-
-}
-
-bool BigPlane::damage(int damageReceived, Player* player)
+bool BigPlane::damage(int damageReceived, Player* damager)
 {
 	bool killed = false;
 
 	//Daña al avion
 	m_health -= damageReceived;
-	if (player)
+	if (damager)
 	{
-		Game::Instance()->addPointsToScore(m_pointOnHit, player->getObjectId(), player->getTeamNumber());
+		Game::Instance()->addPointsToScore(m_pointOnHit, damager->getObjectId(), damager->getTeamNumber());
 	}
 
 	//Si lo mato suma puntos al player que lo mato
@@ -144,10 +140,10 @@ bool BigPlane::damage(int damageReceived, Player* player)
 	{
 		m_dying = true;
 		explote();
-		if (canRetrievePoints() && player)
+		if (canRetrievePoints() && damager)
 		{
 			int points = retrievePoints();
-			Game::Instance()->addPointsToScore(points, player->getObjectId(), player->getTeamNumber());
+			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getTeamNumber());
 		}
 	}
 	return killed;
@@ -159,9 +155,7 @@ void BigPlane::shoot()
 
 	if (m_enemyWeapon)
 	{
-		Vector2D shootDirection;
-		shootDirection.setX(m_target.m_x - m_position.m_x);
-		shootDirection.setY(m_target.m_y - m_position.m_y);
+		Vector2D shootDirection = m_target - (m_shootingOffset + m_position);
 		shootDirection.normalize();
 		Vector2D shootPosition = m_shootingOffset + m_position;
 		m_enemyWeapon->shoot(shootPosition, shootDirection);
