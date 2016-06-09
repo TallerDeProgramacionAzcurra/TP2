@@ -5,24 +5,28 @@
 <enemigos>
 	<enemigo>
 		<id>AvionPequeño</id>
+		<cantidad>25</cantidad>
 		<frames>14</frames>
 		<ancho>60</ancho>
 		<alto>66</alto>
 	</enemigo>
 	<enemigo>
 		<id>AvionMediano</id>
+		<cantidad>99999</cantidad>
 		<frames>999999</frames>
 		<ancho>9999999</ancho>
 		<alto>999999</alto>
 	</enemigo>
 	<enemigo>
 		<id>AvionGrande</id>
+		<cantidad>99999</cantidad>
 		<frames>12</frames>
 		<ancho>128</ancho>
 		<alto>96</alto>
 	</enemigo>
 	<enemigo>
 		<id>FormacionRoja</id>
+		<cantidad>99999</cantidad>
 		<frames>999999</frames>
 		<ancho>999999</ancho>
 		<alto>999999</alto>
@@ -31,24 +35,28 @@
 <powerups>
 	<powerup>
 		<id>ExtraPoints</id>
+		<cantidad>5</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>
 	</powerup>
 	<powerup>
 		<id>*********</id>
+		<cantidad>5</cantidad>
 		<frames>999999</frames>
 		<ancho>9999999</ancho>
 		<alto>999999</alto>
 	</powerup>
 	<powerup>
 		<id>**********</id>
+		<cantidad>5</cantidad>
 		<frames>9999</frames>
 		<ancho>9999</ancho>
 		<alto>9999</alto>
 	</powerup>
 	<powerup>
 		<id>*********</id>
+		<cantidad>5</cantidad>
 		<frames>999999</frames>
 		<ancho>999999</ancho>
 		<alto>999999</alto>
