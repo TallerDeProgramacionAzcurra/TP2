@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include "../Game.h"
 #include "../Weapons/Weapon.h"
+#include "../Player.h"
 
 Enemy::Enemy(): MoveableObject(),
 		m_health(10),
@@ -16,7 +17,8 @@ Enemy::Enemy(): MoveableObject(),
 		m_dying(false),
 		m_exploting(false),
 		m_pointsRetrieved(false),
-		m_pointOnKill(50)
+		m_pointOnKill(50),
+		m_pointOnHit(0)
 {
 }
 
@@ -61,7 +63,7 @@ void Enemy::shoot()
 	}
 }
 
-bool Enemy::damage(int damageReceived)
+bool Enemy::damage(int damageReceived, Player* player)
 {
 	bool killed = false;
 	m_health -= damageReceived;

@@ -108,11 +108,7 @@ void CollitionHandler::handlePlayerCollitions()
 				//daña al jugador
 				(*playersIterator)->damage((*it)->getCollisionDamage());
 				//daña al enemigo
-				bool enemyKilled = (*it)->damage((*playersIterator)->getCollisionDamage());
-				if ((enemyKilled) && ((*it)->canRetrievePoints()))
-				{
-					Game::Instance()->addPointsToScore((*it)->retrievePoints(), (*playersIterator)->getObjectId(), (*playersIterator)->getTeamNumber());
-				}
+				(*it)->damage((*playersIterator)->getCollisionDamage(), (*playersIterator));
 
 				//elimina al enemigo del chekeo de colisiones si el enemigo esta muerto o muriendo
 				if ((*it)->isDead() || (*it)->isDying())
@@ -154,12 +150,8 @@ void CollitionHandler::handleEnemyCollitions()
 				printf("Colision de bala con enemigo\n");
 				//Hay colision del jugador con una bala enemiga
 				//todo setea la bala en muerta, deberia tal vez hacer una explosion primero y dsp de la animacion matarla
-				bool enemyKilled = (*enemiesIterator)->damage((*it)->getDamage());
+				(*enemiesIterator)->damage((*it)->getDamage(), Game::Instance()->getPlayer((*it)->getOwnerID()));
 				(*it)->kill(); //mata la bala
-				if ((enemyKilled) && ((*enemiesIterator)->canRetrievePoints()))
-				{
-					Game::Instance()->addPointsToScore((*enemiesIterator)->retrievePoints(), (*it)->getOwnerID(), (*it)->getOwnerTeamNumber());
-				}
 
 				//elimina bala del chekeo de colisiones
 				it = m_playersBullets.erase(it);

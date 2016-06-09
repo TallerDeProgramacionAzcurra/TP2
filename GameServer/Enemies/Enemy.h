@@ -11,6 +11,7 @@
 #include "../MoveableObject.h"
 #include "../Utils/TiposDefinidos.h"
 class Weapon;
+class Player;
 
 class Enemy : public MoveableObject
 {
@@ -24,7 +25,7 @@ public:
     virtual void update();
     virtual void clean();
 
-    virtual bool damage(int damageReceived);
+    virtual bool damage(int damageReceived, Player* player);
 
     virtual void shoot();
 
@@ -63,6 +64,7 @@ protected:
     bool m_pointsRetrieved;
 
     int m_pointOnKill;
+    int m_pointOnHit;
 };
 
 

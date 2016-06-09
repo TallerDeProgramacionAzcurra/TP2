@@ -9,7 +9,7 @@
 #include <string>
 #include <iomanip>
 
-#define TEXT_SIZE_FACTOR 1
+#define TEXT_SIZE_FACTOR 1.5f
 #define LERP_WEIGHT 0.1f
 
 class Hud

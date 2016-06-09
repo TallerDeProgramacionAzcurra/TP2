@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Enemies/SmallEnemy.h"
+#include "Enemies/BigPlane.h"
 #include "Player.h"
 #include "PowerUps/ExtraPointsPU.h"
 #include "Weapons/BulletsHandler.h"
@@ -58,8 +59,8 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     m_level = new Level();
     m_level->loadFromXML();
 
-    enemy = new SmallEnemy();
-    enemy->load(m_gameWidth/2,0,32,32,30,4);
+    enemy = new BigPlane();
+    enemy->load(m_gameWidth/5, m_gameHeight + 100, 128, 96, 31, 12);
     CollitionHandler::Instance()->addEnemy(enemy);
 
     powerUp = new ExtraPointsPU(100);
@@ -394,6 +395,16 @@ void Game::addPointsToTeam(int points, int teamID)
 	{
 		m_teamScores[teamID] = 0;
 	}
+}
+
+Player* Game::getPlayer(int playerID)
+{
+	if (m_listOfPlayer[playerID])
+	{
+		return m_listOfPlayer[playerID];
+	}
+
+	return NULL;
 }
 
 void Game::actualizarEstado(int id, InputMessage inputMsg){

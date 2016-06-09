@@ -9,6 +9,7 @@
 #include "../Game.h"
 #include "../Vector2D.h"
 #include "../Weapons/EnemyWeapons/EnemyBaseGun.h"
+#include "../Player.h"
 
 
 SmallEnemy::SmallEnemy() :Enemy(),
@@ -114,7 +115,7 @@ void SmallEnemy::update()
 
 }
 
-bool SmallEnemy::damage(int damageReceived)
+bool SmallEnemy::damage(int damageReceived, Player* player)
 {
 	bool killed = false;
 	m_health -= damageReceived;
@@ -122,7 +123,11 @@ bool SmallEnemy::damage(int damageReceived)
 	{
 		m_dying = true;
 		explote();
-		killed = true;
+		if (canRetrievePoints() && player)
+		{
+			int points = retrievePoints();
+			Game::Instance()->addPointsToScore(points, player->getObjectId(), player->getTeamNumber());
+		}
 	}
 	return killed;
 }

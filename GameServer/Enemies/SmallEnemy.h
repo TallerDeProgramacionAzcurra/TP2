@@ -10,8 +10,9 @@
 
 #include "Enemy.h"
 #include <math.h>
+class Player;
 
-#define SHOOT_CHANCE 5 // 0.05% de disparar por frame. Aproximadamente 10% de probabilidad de disparo por seg a 100fps como ahora
+#define SHOOT_CHANCE 5 // 0.05% de disparar por frame.
 
 class SmallEnemy: public Enemy
 {
@@ -23,7 +24,7 @@ public:
 
     virtual void shoot();
 
-    virtual bool damage(int damageReceived);
+    virtual bool damage(int damageReceived, Player* player);
 
 private:
     bool m_fleeing;

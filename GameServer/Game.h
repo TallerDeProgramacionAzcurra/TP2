@@ -102,6 +102,7 @@ public:
     //Alto y Ancho de la ventana de juego
     int getGameWidth() const { return m_gameWidth; }
     int getGameHeight() const { return m_gameHeight; }
+    Player* getPlayer(int playerID);
     void setReseting(bool state) { m_reseting = state; }
 
     pthread_t listenThread;
