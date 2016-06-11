@@ -57,7 +57,7 @@ public:
     void handleEvents();
     void clean();
 
-    void paintbackground(int backgroundTextureID);
+    void paintbackground(int backgroundTextureID, int scrollSpeed);
 
     bool canContinue();
     void checkContinueConditions();
@@ -150,6 +150,8 @@ private:
     int m_gameWidth;
     int m_gameHeight;
     float m_scrollSpeed;
+
+    int m_bgOff;
 
     Score m_playerScore;
 

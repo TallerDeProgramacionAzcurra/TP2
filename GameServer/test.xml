@@ -33,10 +33,10 @@
 	</sprite>
 	<sprite>
 		<id>agua</id>
-		<path>Assets/Sprites/Water.jpg</path>
+		<path>Assets/Sprites/waterr.png</path>
 		<cantidad>1</cantidad>
-		<ancho>64</ancho>
-		<alto>64</alto>
+		<ancho>800</ancho>
+		<alto>1200</alto>
 	</sprite>
 	<sprite>
 		<id>isla</id>
@@ -110,7 +110,7 @@
 	</sprite>
 </sprites>
 <escenario>
-	<cantidadMaximaJugadores>2</cantidadMaximaJugadores>
+	<cantidadMaximaJugadores>1</cantidadMaximaJugadores>
 	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>
 	<alto>2000</alto>

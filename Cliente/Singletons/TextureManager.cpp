@@ -100,6 +100,22 @@ void TextureManager::drawFrame(int id, int x, int y, int width, int height, int 
     SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, angle, 0, flip);
 }
 
+void TextureManager::drawOffset(int id, int x, int y, int srcWidth, int srcHeight, int width, int height, int xOff, int yOff, SDL_Renderer *pRenderer, double angle, SDL_RendererFlip flip)
+{
+    SDL_Rect srcRect;
+    SDL_Rect destRect;
+    srcRect.x = xOff;
+    srcRect.y = yOff;
+    srcRect.w = srcWidth;
+    srcRect.h = srcHeight;
+    destRect.w = width;
+    destRect.h = height;
+    destRect.x = x;
+    destRect.y = y;
+
+    SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, angle, 0, flip);
+}
+
 void TextureManager::changeTextureColor(int textureID, Uint8 r, Uint8 g, Uint8 b)
 {
 	SDL_SetTextureColorMod(m_textureMap[textureID], r, g, b);
