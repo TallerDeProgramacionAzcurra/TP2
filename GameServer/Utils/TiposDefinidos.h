@@ -191,6 +191,35 @@ struct Ventana
 
 };
 
+struct Enemigo
+{
+	std::string id;
+	int cantidad;
+	int frames;
+	int ancho;
+	int alto;
+
+};
+
+struct Jefe
+{
+	std::string id;
+	int posicion;
+	int frames;
+	int ancho;
+	int alto;
+
+};
+
+struct Powerup
+{
+	std::string id;
+	int cantidad;
+	int frames;
+	int ancho;
+	int alto;
+
+};
 struct Sprite
 {
 	std::string id;
