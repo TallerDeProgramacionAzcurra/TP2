@@ -68,13 +68,11 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     m_level = new Level();
     m_level->loadFromXML();
 
-    enemy = new Formation(false);
-    enemy->load(m_gameWidth, 0 + 100, 128, 96, 50, 12);
-    //CollitionHandler::Instance()->addEnemy(enemy);
-
     powerUp = new ExtraPointsPU(1500);
     powerUp->load(m_gameWidth/2, m_gameHeight/4,48,48,70,1);
     CollitionHandler::Instance()->addPowerUp(powerUp);
+
+    loadCurrentStage();
 
     //tudo ben
     m_running = true;
@@ -172,6 +170,11 @@ void Game::addPowerUp(PowerUp* powerUp)
 	m_powerUps.push_back(powerUp);
 }
 
+void Game::addEnemy(Enemy* enemy)
+{
+	m_enemies.push_back(enemy);
+}
+
 int Game::getFromNameID(const std::string& playerName)
 {
 	for (std::map<int, std::string>::iterator it = m_playerNames.begin(); it != m_playerNames.end(); ++it )
@@ -254,11 +257,12 @@ void Game::update()
 {
 	checkPracticeMode();
 
+	updateSpawners();
+
 	BulletsHandler::Instance()->updateBullets();
 
 	m_level->update();
 
-	enemy->update();
 	powerUp->update();
 
 	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
@@ -269,12 +273,14 @@ void Game::update()
 			it->second->update();
 		}
 	}
-
-	 for (std::vector<PowerUp*>::iterator it = m_powerUps.begin() ; it != m_powerUps.end(); ++it)
+	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end(); ++it)
 	 {
 		 (*it)->update();
 	 }
-
+	 for (std::vector<PowerUp*>::iterator it = m_powerUps.begin() ; it != m_powerUps.end(); ++it)
+	 {
+			(*it)->update();
+	 }
 
 	for (std::map<int,GameObject*>::iterator it=m_listOfGameObjects.begin(); it != m_listOfGameObjects.end(); ++it)
 	{
@@ -583,16 +589,28 @@ void Game::resetGame()
 	 pthread_mutex_unlock(&m_resetMutex);
 }
 
+/*Carga los objetos que deba cargar, dependiendo de la posicion del mapa*/
+void Game::updateSpawners()
+{
+	m_enemiesSpawner->update(m_level->getVirtualPosition());
+}
+
 void Game::loadCurrentStage()
 {
+	if (m_parserStages)
+	{
+		m_parserStages->clean();
+		delete m_parserStages;
+	}
+
 	m_parserStages = new ParserStage();
 	std::stringstream ss;
 	ss <<"Stage" << m_currentStage << ".xml";
 
 	m_parserStages->parsearDocumento(ss.str());
 
-	//std::vector<>
+	m_enemiesSpawner->feed(m_parserStages->getListaDeEnemigos(), m_parserStages->getVentana().alto);
 
-
+	printf("Se cargó el Stage %d \n", m_currentStage);
 
 }

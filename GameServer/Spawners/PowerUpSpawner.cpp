@@ -11,9 +11,9 @@ void PowerUpSpawner::clean()
 {
 	for (std::vector<PowerUpSpawnInfo>::iterator it = m_powerUpsToSpawn.begin() ; it != m_powerUpsToSpawn.end(); ++it)
 	{
-		if ((*it).gameObjectToSpawn)
+		if ((*it).powerUpToSpawn)
 		{
-			delete (*it).gameObjectToSpawn;
+			delete (*it).powerUpToSpawn;
 		}
 	}
 	m_powerUpsToSpawn.clear();

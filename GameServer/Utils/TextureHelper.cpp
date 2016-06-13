@@ -37,6 +37,7 @@ void TextureHelper::initialize()
 	m_textureIDMap["AvionPequeño"] = 30;
 	m_textureIDMap["AvionGrande"] = 31;
 	m_textureIDMap["AvionFormacion"] = 32;
+	m_textureIDMap["AvionMediano"] = 31;
 
 	//Explosiones
 	m_textureIDMap["ExplosionPequeña"] = 40;

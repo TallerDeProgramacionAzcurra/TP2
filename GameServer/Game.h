@@ -100,6 +100,7 @@ public:
    	void actualizarEstado(int id,InputMessage dataMsg);
 
     void addPowerUp(PowerUp* powerUp);
+    void addEnemy(Enemy* enemy);
 
 
     SDL_Renderer* getRenderer() const { return m_pRenderer; }
@@ -146,7 +147,6 @@ private:
     TextureHelper* m_textureHelper;
 
     /*******Sacar********/
-    Enemy* enemy;
     PowerUp* powerUp;
     /***********************/
 
@@ -182,6 +182,7 @@ private:
     Game(const Game&);
 	Game& operator=(const Game&);
 
+	void updateSpawners();
 	void initializeTeamScores();
 	void checkPracticeMode();
 };

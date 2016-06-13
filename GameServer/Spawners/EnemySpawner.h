@@ -19,13 +19,15 @@ class EnemySpawner
 public:
 	EnemySpawner();
 	~EnemySpawner();
-	void feed(std::vector<Enemigo> enemies);
+	void feed(std::vector<Enemigo> enemies, int stageSize);
+	void update(int stagePosition);
 	void clean();
 
 private:
 
 	std::vector<EnemySpawnInfo> m_enemiesToSpawn;
 	TextureHelper* m_textureHelper;
+	int m_stageSize;
 
 	void addEnemy(Enemigo enemyInfo);
 

@@ -159,8 +159,8 @@ void Formation::doCircleFormation()
 	if (m_goingRight)
 	{
 		m_circleUpdatePosition = m_planes[0]->getPosition();
-		m_position.m_x += m_width/4;
-		m_position.m_y += m_height/4;
+		m_position.m_x += m_width/2;
+		m_position.m_y += m_height/2;
 	}
 	else
 	{

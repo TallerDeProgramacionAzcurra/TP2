@@ -190,14 +190,14 @@ struct FontTexture
 
 struct EnemySpawnInfo
 {
-	Enemy* gameObjectToSpawn;
+	Enemy* enemyToSpawn;
 	int stagePosition;
 	int posX;
 	int posY;
 };
 struct PowerUpSpawnInfo
 {
-	PowerUp* gameObjectToSpawn;
+	PowerUp* powerUpToSpawn;
 	int stagePosition;
 	int posX;
 	int posY;
