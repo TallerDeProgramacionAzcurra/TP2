@@ -344,8 +344,18 @@ void Formation::keepInScreen()
 	}
 }
 
-bool Formation::damage(int damageReceived, Player* damager)
+bool Formation::damage(int damageReceived, bool wasShoot,  Player* damager)
 {
+	int killCount = 0;
+	for (int i = 0; i < m_kFormationSize; ++i)
+	{
+		bool killed = m_planes[i]->damage(damageReceived, wasShoot, damager);
+		if (killed)
+			++killCount;
+	}
+	if (killCount >= m_kFormationSize)
+		return true;
+
 	return false;
 }
 

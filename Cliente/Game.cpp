@@ -443,6 +443,11 @@ void Game::paintbackground(int backgroundTextureID,int scrollSpeed)
 
 }
 
+void Game::updateBackground(BackgroundInfo backgroundInfo)
+{
+
+}
+
 void Game::createPlayer(int objectID, int textureID)
 {
 	m_player = new Player();

@@ -29,7 +29,8 @@ public:
                     m_alpha(255),
                     m_currentRow(0),
                     m_currentFrame(0),
-					m_dirty(true)
+					m_dirty(true),
+					m_canRecycle(false)
     {
     	m_objectId = ObjectIdGenerator::Instance()->generateId();
     }
@@ -76,6 +77,8 @@ public:
     void setDirty( bool dirty ) { m_dirty = true; }
     void setHitRadius( int hitRadius ) { m_hitRadius = hitRadius; }
 
+    bool canRecycle() { return m_canRecycle; }
+
     // En este ejemplo de scroll, scrollea to do menos los objetos con tag player
    void scroll(float scrollSpeed)
     {
@@ -115,6 +118,7 @@ protected:
     int m_currentFrame;
 
     bool m_dirty;
+    bool m_canRecycle;
 
 };
 

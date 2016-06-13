@@ -531,6 +531,14 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 
 		return;
 	}
+	//Recibe Background Info (offset)
+	if ((networkMessage.msg_Code[0] == 'b') && (networkMessage.msg_Code[1] == 'g') && (networkMessage.msg_Code[2] == 'i'))
+	{
+		BackgroundInfo backgroundInfo = m_alanTuring->decodeBackgroundInfo(networkMessage);
+		Game::Instance()->updateBackground(backgroundInfo);
+
+		return;
+	}
 
 
 	//Game Beginning

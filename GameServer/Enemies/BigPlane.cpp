@@ -129,13 +129,13 @@ void BigPlane::update()
 
 }
 
-bool BigPlane::damage(int damageReceived, Player* damager)
+bool BigPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 {
 	bool killed = false;
 
 	//Daña al avion
 	m_health -= damageReceived;
-	if (damager)
+	if (damager && wasShoot)
 	{
 		Game::Instance()->addPointsToScore(m_pointOnHit, damager->getObjectId(), damager->getTeamNumber());
 	}

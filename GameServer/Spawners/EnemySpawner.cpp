@@ -91,7 +91,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			int posY = Random::getRange(0, Game::Instance()->getGameHeight()/1.5f);
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/5), (i + 1 * step) + (step/7));
+			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -128,7 +128,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			int posY = Random::getRange(0, Game::Instance()->getGameHeight()/1.5f);
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/5), (i + 1 * step) + (step/7));
+			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -166,7 +166,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			int posY = Random::getRange(0, Game::Instance()->getGameHeight()/2);
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/5), (i + 1 * step) + (step/8));
+			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -193,7 +193,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			int posY = Game::Instance()->getGameHeight();
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/5), (i + 1 * step) + (step/8));
+			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)

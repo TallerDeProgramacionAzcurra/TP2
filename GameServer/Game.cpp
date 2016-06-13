@@ -1,9 +1,12 @@
 #include "Game.h"
+
 #include "Enemies/SmallEnemy.h"
 #include "Enemies/BigPlane.h"
 #include "Enemies/Formation.h"
-#include "Player.h"
 #include "PowerUps/ExtraPointsPU.h"
+#include "PowerUps/BombPU.h"
+
+#include "Player.h"
 #include "Weapons/BulletsHandler.h"
 #include "Singletons/CollisionHandler.h"
 #include "Spawners/PowerUpSpawner.h"
@@ -68,8 +71,8 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     m_level = new Level();
     m_level->loadFromXML();
 
-    powerUp = new ExtraPointsPU(1500);
-    powerUp->load(m_gameWidth/2, m_gameHeight/4,48,48,70,1);
+    powerUp = new BombPU();
+    powerUp->load(m_gameWidth/2, m_gameHeight/4,48,48,71,1);
     CollitionHandler::Instance()->addPowerUp(powerUp);
 
     loadCurrentStage();
@@ -293,6 +296,8 @@ void Game::update()
 
 	CollitionHandler::Instance()->handleCollitions();
 
+	cleanDeadObjects();
+
 }
 
 void Game::checkPracticeMode()
@@ -404,6 +409,11 @@ void Game::sendToAllClients(DrawMessage mensaje)
 void Game::sendScoreToClients(ScoreMessage scoreMsg)
 {
 	m_server->sendScoreMsgToAll(scoreMsg);
+}
+
+void Game::sendBackgroundInfo(BackgroundInfo backgroundInfo)
+{
+	m_server->sendBackgroundInfoToAll(backgroundInfo);
 }
 
 void Game::addToPackage(DrawMessage drawMsg)
@@ -587,6 +597,48 @@ void Game::resetGame()
 	 //tudo ben
 	 m_running = true;
 	 pthread_mutex_unlock(&m_resetMutex);
+}
+
+//Mata a todos los enemigos y suma puntos al responsable
+void  Game::killAllEnemies(Player* killer)
+{
+	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end();++it)
+	 {
+		 if((*it) && ((*it)->isDying() == false) && ((*it)->isDead() == false))
+		 {
+			 (*it)->damage(50000, false, killer);
+		 }
+	 }
+}
+
+void Game::cleanDeadObjects()
+{
+	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end();)
+	 {
+	   if((*it) && ((*it)->canRecycle()) && ((*it)->isDead()))
+	   {
+			(*it)->clean();
+			delete (*it);
+			it = m_enemies.erase(it);
+	   }
+	   else
+	   {
+		   ++it;
+	   }
+	 }
+	 for (std::vector<PowerUp*>::iterator it = m_powerUps.begin() ; it != m_powerUps.end();)
+	 {
+		 if((*it) && ((*it)->canRecycle()) && ((*it)->isDead()))
+		 {
+			 (*it)->clean();
+			 delete (*it);
+			 it = m_powerUps.erase(it);
+		 }
+		 else
+		 {
+			 ++it;
+		 }
+	 }
 }
 
 /*Carga los objetos que deba cargar, dependiendo de la posicion del mapa*/

@@ -253,6 +253,18 @@ void server::sendScoreMsgToAll(ScoreMessage scoreMsg)
 	     }
 	 }
 }
+void server::sendBackgroundInfoToAll(BackgroundInfo backgroundInfo)
+{
+
+	 NetworkMessage netMsg = m_alanTuring->BackgroundInfoToNetwork(backgroundInfo);
+	 for (int i = 0; i < m_listaDeClientes.size(); i++)
+	 {
+	     if ( m_listaDeClientes.isAvailable(i))
+	     {
+	    	 m_queuePost[i].add(netMsg);
+	     }
+	 }
+}
 
 void server::informTextureInfos(int clientID)
 {

@@ -80,6 +80,8 @@ public:
    	void readFromKorea();
    	void interpretarDrawMsg(DrawMessage drwMsg);
 
+   	void updateBackground(BackgroundInfo backgroundInfo);
+
    	bool updateTimeOut();
 
     SDL_Renderer* getRenderer() const { return m_pRenderer; }

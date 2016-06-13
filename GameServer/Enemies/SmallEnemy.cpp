@@ -116,7 +116,7 @@ void SmallEnemy::update()
 
 }
 
-bool SmallEnemy::damage(int damageReceived, Player* damager)
+bool SmallEnemy::damage(int damageReceived, bool wasShoot,  Player* damager)
 {
 	bool killed = false;
 	m_health -= damageReceived;

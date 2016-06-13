@@ -63,7 +63,7 @@ void Enemy::shoot()
 	}
 }
 
-bool Enemy::damage(int damageReceived, Player* damager)
+bool Enemy::damage(int damageReceived, bool wasShoot, Player* damager)
 {
 	bool killed = false;
 	m_health -= damageReceived;
@@ -134,6 +134,9 @@ void Enemy::sendDrawMessage(bool isAlive)
 	drawMsg.angle = static_cast<float>(m_angle);
 	drawMsg.alpha = m_alpha;
 	drawMsg.vacio = 0;
+
+	if (!isAlive)
+		m_canRecycle = true;
 
 	if (USE_DRAWMESSAGE_PACKAGING)
 	{

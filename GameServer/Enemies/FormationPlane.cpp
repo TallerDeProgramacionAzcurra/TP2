@@ -80,7 +80,7 @@ void FormationPlane::updateAngle()
 	m_angle = (atan2f(m_direction.m_y, m_direction.m_x)* 57.295645531f) + 90;
 }
 
-bool FormationPlane::damage(int damageReceived, Player* damager)
+bool FormationPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 {
 	bool killed = false;
 	m_health -= damageReceived;

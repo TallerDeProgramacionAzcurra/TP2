@@ -82,10 +82,12 @@ public:
     void disconnectPlayer(int playerId);
     void inicializarServer();
     void conectToKorea();
+
     void sendToAllClients(DrawMessage drawMsg);
     void addToPackage(DrawMessage drawMsg);
     void sendPackages();
     void sendScoreToClients(ScoreMessage scoreMsg);
+   	void sendBackgroundInfo(BackgroundInfo backgroundInfo);
 
     void addPointsToScore(int points, int playerID, int teamID);
     void addPointsToTeam(int points, int teamID);
@@ -120,6 +122,7 @@ public:
     bool isPracticeMode();
 	void setPracticeMode(bool practiceMode);
 
+	void killAllEnemies(Player* killer);
 	void loadCurrentStage();
 
     pthread_t listenThread;
@@ -185,6 +188,8 @@ private:
 	void updateSpawners();
 	void initializeTeamScores();
 	void checkPracticeMode();
+
+	void cleanDeadObjects();
 };
 
 

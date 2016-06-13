@@ -74,6 +74,13 @@
 		<alto>48</alto>
 	</sprite>
 	<sprite>
+		<id>BombPU</id>
+		<path>Assets/Sprites/NuclearSymbol.png</path>
+		<cantidad>1</cantidad>
+		<ancho>48</ancho>
+		<alto>48</alto>
+	</sprite>
+	<sprite>
 		<id>vuelta</id>
 		<path>Assets/Sprites/vuelta.png</path>
 		<cantidad>1</cantidad>

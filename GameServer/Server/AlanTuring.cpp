@@ -203,6 +203,13 @@ ScoreMessage AlanTuring::decodeScoreMessage(NetworkMessage netMsg)
 	return scoreMessage;
 }
 
+BackgroundInfo AlanTuring::decodeBackgroundInfo(NetworkMessage netMsg)
+{
+	BackgroundInfo backgroundInfo;
+	memcpy(&backgroundInfo, netMsg.msg_Data, sizeof(BackgroundInfo));
+	return backgroundInfo;
+}
+
 PlayerDisconnection AlanTuring::decodePlayerDisconnectionMessage(NetworkMessage netMsg)
 {
 	PlayerDisconnection playerDiscMsg;
@@ -331,6 +338,19 @@ NetworkMessage AlanTuring::ScoreMessageToNetwork(ScoreMessage scoreMessage)
 	return networkMessage;
 }
 
+NetworkMessage AlanTuring::BackgroundInfoToNetwork(BackgroundInfo backgroundMessage)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 'b';
+	networkMessage.msg_Code[1] = 'g';
+	networkMessage.msg_Code[2] = 'i';
+
+	memcpy(networkMessage.msg_Data, &backgroundMessage, sizeof(BackgroundInfo));
+	networkMessage.msg_Length = sizeof(BackgroundInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
 /**********************************************************************************************************************************/
 
 int AlanTuring::encodeXMLMessage(Mensaje mensaje, char* bufferSalida)

@@ -53,7 +53,7 @@ void TextureHelper::initialize()
 
 	//PowerUps
 	m_textureIDMap["ExtraPoints"] = 70;
-
+	m_textureIDMap["BombPU"] = 71;
 
 }
 

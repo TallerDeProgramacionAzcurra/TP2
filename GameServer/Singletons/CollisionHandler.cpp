@@ -114,7 +114,7 @@ void CollitionHandler::handlePlayerCollitions()
 				//daña al jugador
 				(*playersIterator)->damage((*it)->getCollisionDamage());
 				//daña al enemigo
-				(*it)->damage((*playersIterator)->getCollisionDamage(), (*playersIterator));
+				(*it)->damage((*playersIterator)->getCollisionDamage(), false, (*playersIterator));
 
 				//elimina al enemigo del chekeo de colisiones si el enemigo esta muerto o muriendo
 				if ((*it)->isDead() || (*it)->isDying())
@@ -142,7 +142,7 @@ void CollitionHandler::handleEnemyCollitions()
 			continue;
 		}
 
-		//Compara cada jugador contra cada bala enemiga
+		//Compara cada Enemigo contra cada bala del jugador
 		for(vector<std::shared_ptr<Bullet>>::iterator it = m_playersBullets.begin(); it != m_playersBullets.end(); )
 		{
 			if ((*it)->isDead())
@@ -154,9 +154,7 @@ void CollitionHandler::handleEnemyCollitions()
 			if (areColliding((*enemiesIterator), (*it).get()))
 			{
 				printf("Colision de bala con enemigo\n");
-				//Hay colision del jugador con una bala enemiga
-				//todo setea la bala en muerta, deberia tal vez hacer una explosion primero y dsp de la animacion matarla
-				(*enemiesIterator)->damage((*it)->getDamage(), Game::Instance()->getPlayer((*it)->getOwnerID()));
+				(*enemiesIterator)->damage((*it)->getDamage(), true, Game::Instance()->getPlayer((*it)->getOwnerID()));
 				(*it)->kill(); //mata la bala
 
 				//elimina bala del chekeo de colisiones

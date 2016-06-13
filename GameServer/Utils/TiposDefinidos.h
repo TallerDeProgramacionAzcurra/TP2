@@ -31,6 +31,7 @@
 #define CONNECTIONINFO_MESSAGE_SIZE 24
 #define PLAYER_DISCONNECTION_MESSAGE_SIZE 32
 #define RESET_MESSAGE_SIZE 4
+#define BACKGROUNDINFO_MESSAGE_SIZE 4
 #define TEXTUREINFO_MESSAGE_SIZE (PATH_MAX_LENGTH + 12)
 #define PLAYER_RECONNECTION_MEESAGE 4
 
@@ -108,6 +109,10 @@ struct PlayerDisconnection
 	char name[24];
 };
 
+struct BackgroundInfo
+{
+	int backgroundOffser;
+};
 
 struct DrawMessage
 {

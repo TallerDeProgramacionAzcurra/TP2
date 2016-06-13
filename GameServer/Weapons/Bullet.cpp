@@ -81,6 +81,9 @@ void Bullet::sendDrawMessage(bool isAlive)
 	drawMsg.angle = m_angle;
 	drawMsg.alpha = m_alpha;
 
+	if (!isAlive)
+		m_canRecycle = true;
+
 	if (USE_DRAWMESSAGE_PACKAGING)
 	{
 		Game::Instance()->addToPackage(drawMsg);

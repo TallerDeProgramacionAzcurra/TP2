@@ -22,7 +22,7 @@ public:
 
     virtual void shoot();
 
-    virtual bool damage(int damageReceived, Player* damager);
+    virtual bool damage(int damageReceived, bool wasShoot,  Player* damager);
 
 private:
 
