@@ -25,7 +25,7 @@
 #define PATH_MAX_LENGTH 36
 
 #define DRAW_MESSAGE_SIZE 32
-#define INPUT_MESSAGE_SIZE 16
+#define INPUT_MESSAGE_SIZE 20
 #define SCORE_MESSAGE_SIZE 8
 #define CONNECTED_MESSAGE_SIZE 16
 #define CONNECTIONINFO_MESSAGE_SIZE 24
@@ -43,6 +43,8 @@
 #include <string>
 #include <vector>
 #include <SDL2/SDL.h>
+class Enemy;
+class PowerUp;
 
 // TIPOS RELACIONADOS A ARCHIVOS XML
 
@@ -143,6 +145,8 @@ struct InputMessage
 	short buttonLeft;
 	short buttonShoot;
 	short buttonRoll;
+	short togglePracticeMode;
+	short something;
 };
 
 
@@ -182,6 +186,21 @@ struct FontTexture
 	short height;
 	short x;
 	short y;
+};
+
+struct EnemySpawnInfo
+{
+	Enemy* enemyToSpawn;
+	int stagePosition;
+	int posX;
+	int posY;
+};
+struct PowerUpSpawnInfo
+{
+	PowerUp* powerUpToSpawn;
+	int stagePosition;
+	int posX;
+	int posY;
 };
 
 struct Ventana

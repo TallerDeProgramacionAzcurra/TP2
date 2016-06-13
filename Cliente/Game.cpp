@@ -118,7 +118,7 @@ void Game::render()
 {
     SDL_RenderClear(m_pRenderer);
 
-    paintbackground(10,2); //Sacar el scroll speed hardcodeado
+    paintbackground(10, 1); //Sacar el scroll speed hardcodeado
 
     for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {

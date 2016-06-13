@@ -32,6 +32,9 @@ public:
 	void update();
 	void clean();
 
+	int getVirtualPosition() { return m_virtualPosition; }
+	int getLevelHeight() { return m_levelHeight; }
+
 private:
 
 	void resetPositions();

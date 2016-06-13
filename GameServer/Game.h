@@ -12,6 +12,7 @@
 
 #include "Utils/TextureHelper.h"
 #include "Utils/Parser/ParserNivel.h"
+#include "Utils/Parser/ParserStage.h"
 
 
 #include <SDL2/SDL.h>
@@ -31,6 +32,8 @@ class Level;
 class PowerUp;
 class server;
 class DrawMessagesPacker;
+class PowerUpSpawner;
+class EnemySpawner;
 class BulletsHandler;
 class CollitionHandler;
 
@@ -39,6 +42,12 @@ class CollitionHandler;
 #define DRAG_PLAYER 0
 
 #define XML_PATH "test.xml"
+
+enum GameMode
+{
+    GAMEMODE_COOPERATIVE,
+    GAMEMODE_COMPETITION
+};
 
 class Game
 {
@@ -90,6 +99,9 @@ public:
 
    	void actualizarEstado(int id,InputMessage dataMsg);
 
+    void addPowerUp(PowerUp* powerUp);
+    void addEnemy(Enemy* enemy);
+
 
     SDL_Renderer* getRenderer() const { return m_pRenderer; }
     SDL_Window* getWindow() const { return m_pWindow; }
@@ -103,7 +115,12 @@ public:
     int getGameWidth() const { return m_gameWidth; }
     int getGameHeight() const { return m_gameHeight; }
     Player* getPlayer(int playerID);
+    int getPlayerTeam(int playerID);
     void setReseting(bool state) { m_reseting = state; }
+    bool isPracticeMode();
+	void setPracticeMode(bool practiceMode);
+
+	void loadCurrentStage();
 
     pthread_t listenThread;
     float getScrollSpeed() { return m_scrollSpeed; }
@@ -116,20 +133,35 @@ private:
 
     std::map<int,GameObject*> m_listOfGameObjects;
 
+    /***************Contenedores de Objetos del Stage********************/
+    std::vector<PowerUp*> m_powerUps;
+    std::vector<Enemy*> m_enemies;
+    /*******************************************************************/
+
     SDL_Window* m_pWindow;
     SDL_Renderer* m_pRenderer;
 
     ParserNivel* m_parserNivel;
+    ParserStage* m_parserStages;
     Level* m_level;
     TextureHelper* m_textureHelper;
 
     /*******Sacar********/
-    Enemy* enemy;
     PowerUp* powerUp;
     /***********************/
 
     server* m_server;
     DrawMessagesPacker* m_drawMessagePacker;
+
+    /********Stages Info*********/
+    int m_currentStage;
+
+    PowerUpSpawner* m_powerUpsSpawner;
+    EnemySpawner* m_enemiesSpawner;
+    /****************************/
+
+    GameMode m_currentMode;
+    bool m_practiceMode;
 
 
     bool m_running;
@@ -150,7 +182,9 @@ private:
     Game(const Game&);
 	Game& operator=(const Game&);
 
+	void updateSpawners();
 	void initializeTeamScores();
+	void checkPracticeMode();
 };
 
 

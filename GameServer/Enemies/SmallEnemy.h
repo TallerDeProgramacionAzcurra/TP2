@@ -26,7 +26,7 @@ public:
 
 private:
 
-    int m_shootChance;
+    const int m_shootChance;
 
     bool m_fleeing;
     int m_returnYOffset;

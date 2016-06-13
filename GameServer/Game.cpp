@@ -1,20 +1,29 @@
 #include "Game.h"
 #include "Enemies/SmallEnemy.h"
 #include "Enemies/BigPlane.h"
+#include "Enemies/Formation.h"
 #include "Player.h"
 #include "PowerUps/ExtraPointsPU.h"
 #include "Weapons/BulletsHandler.h"
 #include "Singletons/CollisionHandler.h"
+#include "Spawners/PowerUpSpawner.h"
+#include "Spawners/EnemySpawner.h"
+#include <sstream>
 
 Game* Game::s_pInstance = 0;
 
 Game::Game():
 m_pWindow(0),
 m_pRenderer(0),
+m_currentStage(1),
+m_practiceMode(false),
 m_running(false),
 m_reseting(false),
 m_scrollSpeed(2)
 {
+	m_powerUpsSpawner = new PowerUpSpawner();
+	m_enemiesSpawner = new EnemySpawner();
+	m_currentMode = GAMEMODE_COMPETITION;
 	pthread_mutex_init(&m_resetMutex, NULL);
 	pthread_mutex_init(&m_updatePlayerMutex, NULL);
 	pthread_mutex_init(&m_createPlayerMutex, NULL);
@@ -59,13 +68,11 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     m_level = new Level();
     m_level->loadFromXML();
 
-    enemy = new BigPlane();
-    enemy->load(m_gameWidth/5, m_gameHeight + 100, 128, 96, 31, 12);
-    CollitionHandler::Instance()->addEnemy(enemy);
-
-    powerUp = new ExtraPointsPU(100);
+    powerUp = new ExtraPointsPU(1500);
     powerUp->load(m_gameWidth/2, m_gameHeight/4,48,48,70,1);
     CollitionHandler::Instance()->addPowerUp(powerUp);
+
+    loadCurrentStage();
 
     //tudo ben
     m_running = true;
@@ -158,6 +165,16 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 	return true;
 }
 
+void Game::addPowerUp(PowerUp* powerUp)
+{
+	m_powerUps.push_back(powerUp);
+}
+
+void Game::addEnemy(Enemy* enemy)
+{
+	m_enemies.push_back(enemy);
+}
+
 int Game::getFromNameID(const std::string& playerName)
 {
 	for (std::map<int, std::string>::iterator it = m_playerNames.begin(); it != m_playerNames.end(); ++it )
@@ -238,11 +255,14 @@ void Game::render()
 
 void Game::update()
 {
+	checkPracticeMode();
+
+	updateSpawners();
+
 	BulletsHandler::Instance()->updateBullets();
 
 	m_level->update();
 
-	enemy->update();
 	powerUp->update();
 
 	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
@@ -253,6 +273,15 @@ void Game::update()
 			it->second->update();
 		}
 	}
+	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end(); ++it)
+	 {
+		 (*it)->update();
+	 }
+	 for (std::vector<PowerUp*>::iterator it = m_powerUps.begin() ; it != m_powerUps.end(); ++it)
+	 {
+			(*it)->update();
+	 }
+
 	for (std::map<int,GameObject*>::iterator it=m_listOfGameObjects.begin(); it != m_listOfGameObjects.end(); ++it)
 	{
 		//printf("objectID = %d \n", it->second.getObjectId());
@@ -264,6 +293,30 @@ void Game::update()
 
 	CollitionHandler::Instance()->handleCollitions();
 
+}
+
+void Game::checkPracticeMode()
+{
+	if (m_practiceMode)
+	{
+		if (!CollitionHandler::Instance()->isPracticeMode())
+			CollitionHandler::Instance()->setPracticeMode(true);
+	}
+	else
+	{
+		if (CollitionHandler::Instance()->isPracticeMode())
+			CollitionHandler::Instance()->setPracticeMode(false);
+	}
+}
+
+void Game::setPracticeMode(bool practiceMode)
+{
+	m_practiceMode = practiceMode;
+}
+
+bool Game::isPracticeMode()
+{
+	return m_practiceMode;
 }
 
 void Game::initializeTexturesInfo()
@@ -407,6 +460,16 @@ Player* Game::getPlayer(int playerID)
 	return NULL;
 }
 
+int Game::getPlayerTeam(int playerID)
+{
+	if (m_listOfPlayer.find(playerID) == m_listOfPlayer.end())
+	{
+		return -1;
+	}
+
+	return (m_listOfPlayer[playerID]->getTeamNumber());
+}
+
 void Game::actualizarEstado(int id, InputMessage inputMsg){
 	pthread_mutex_lock(&m_updatePlayerMutex);
 
@@ -446,6 +509,8 @@ void Game::clean()
 
     m_parserNivel->clean();
     delete m_parserNivel;
+    m_parserStages->clean();
+    delete m_parserStages;
 
     m_level->clean();
     delete m_level;
@@ -456,6 +521,10 @@ void Game::clean()
     InputHandler::Instance()->clean();
     TextureManager::Instance()->clearTextureMap();
 
+    m_powerUpsSpawner->clean();
+    m_enemiesSpawner->clean();
+    delete m_powerUpsSpawner;
+    delete m_enemiesSpawner;
 
     SDL_DestroyWindow(m_pWindow);
     SDL_DestroyRenderer(m_pRenderer);
@@ -518,4 +587,30 @@ void Game::resetGame()
 	 //tudo ben
 	 m_running = true;
 	 pthread_mutex_unlock(&m_resetMutex);
+}
+
+/*Carga los objetos que deba cargar, dependiendo de la posicion del mapa*/
+void Game::updateSpawners()
+{
+	m_enemiesSpawner->update(m_level->getVirtualPosition());
+}
+
+void Game::loadCurrentStage()
+{
+	if (m_parserStages)
+	{
+		m_parserStages->clean();
+		delete m_parserStages;
+	}
+
+	m_parserStages = new ParserStage();
+	std::stringstream ss;
+	ss <<"Stage" << m_currentStage << ".xml";
+
+	m_parserStages->parsearDocumento(ss.str());
+
+	m_enemiesSpawner->feed(m_parserStages->getListaDeEnemigos(), m_parserStages->getVentana().alto);
+
+	printf("Se cargó el Stage %d \n", m_currentStage);
+
 }

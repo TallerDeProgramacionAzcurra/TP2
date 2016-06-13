@@ -118,6 +118,14 @@ void Player::handleInput()
 		inputMsg.buttonRoll = 1;
 		dirty = true;
 	}
+
+	//Toggle Practice Mode
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_F1))
+	{
+		inputMsg.togglePracticeMode = 1;
+		dirty = true;
+	}
+
 	//RESET GAME
 	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_R))
 	{
