@@ -23,13 +23,19 @@ public:
     // Public functions.
     void clientMenuShow();
     
+    // Drawing methods.
     void clientMenuFillWithColor(const int red, const int green, const int blue);
     bool clientMenuAddImage(const char *imageName);
+    
+    // Events methods.
+    void clientMenuHandleEvents();
     
 private:
     SDL_Window *clientMenuWindow;
     
     std::list<SDL_Surface *> *clientMenuSurfaces;
+    
+    bool clientMenuQuit;
 };
 
 #endif /* ClienteMenu_hpp */

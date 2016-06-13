@@ -12,6 +12,8 @@
 ClientMenu::ClientMenu(const char *menuTitle, const int menuWidth, const int menuHeight) {
     printf("ClienteMenu.cpp - Constructor.\n");
     
+    this->clientMenuQuit = false;
+    
     // The window we'll be rendering to.
     this->clientMenuWindow = NULL;
     
@@ -58,10 +60,9 @@ void ClientMenu::clientMenuShow() {
     
     // Update the surface to show the changes made to the windows surface.
     SDL_UpdateWindowSurface(this->clientMenuWindow);
-    
-    SDL_Delay(2000);
 }
 
+// Drawing methods.
 void ClientMenu::clientMenuFillWithColor(const int red, const int green, const int blue) {
     printf("ClienteMenu.cpp - clientMenuFillWithColor.\n");
     
@@ -90,4 +91,19 @@ bool ClientMenu::clientMenuAddImage(const char *imageName) {
     this->clientMenuSurfaces->push_back(sdlImage);
     
     return true;
+}
+
+// Events methods.
+void ClientMenu::clientMenuHandleEvents() {
+    //Event handler
+    SDL_Event e;
+    
+    while (this->clientMenuQuit == false) {
+        while(SDL_PollEvent(&e) != 0) {
+            //User requests quit
+            if (e.type == SDL_QUIT) {
+                this->clientMenuQuit = true;
+            }
+        }
+    }
 }
