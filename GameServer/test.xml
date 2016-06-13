@@ -102,6 +102,13 @@
 		<alto>48</alto>
 	</sprite>
 	<sprite>
+		<id>AvionFormacion</id>
+		<path>Assets/Sprites/FormationShip.png</path>
+		<cantidad>1</cantidad>
+		<ancho>48</ancho>
+		<alto>48</alto>
+	</sprite>
+	<sprite>
 		<id>AvionGrande</id>
 		<path>Assets/Sprites/BigPlane.png</path>
 		<cantidad>12</cantidad>

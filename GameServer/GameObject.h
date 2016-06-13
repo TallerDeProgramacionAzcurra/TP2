@@ -72,6 +72,7 @@ public:
     void setObjectID(int objectId) {m_objectId = objectId;}
     void setTextureID(int textureID) {m_textureID = textureID;}
     void setLayer(int layer) {m_layer = layer;}
+    double getAngle() {return m_angle;}
     void setDirty( bool dirty ) { m_dirty = true; }
     void setHitRadius( int hitRadius ) { m_hitRadius = hitRadius; }
 

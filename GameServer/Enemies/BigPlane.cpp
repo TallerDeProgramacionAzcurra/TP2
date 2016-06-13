@@ -10,12 +10,17 @@
 #include "../Vector2D.h"
 #include "../Weapons/EnemyWeapons/EnemyBaseGun.h"
 #include "../Player.h"
+#include "../PowerUps/ExtraPointsPU.h"
+#include "../PowerUps/PowerUp.h"
+#include "../Singletons/CollisionHandler.h"
 
 
 BigPlane::BigPlane() :Enemy(),
 					  m_shootChance(10),
+					  m_kMaxHealth(1000),
 					  m_goingUp(true),
 					  m_goingRight(false),
+					  m_pointsOnCombo(1500),
 					  m_explotionAnimationTime(1000),
 					  m_explotionRemainingTime(0)
 {
@@ -134,6 +139,7 @@ bool BigPlane::damage(int damageReceived, Player* damager)
 	{
 		Game::Instance()->addPointsToScore(m_pointOnHit, damager->getObjectId(), damager->getTeamNumber());
 	}
+	updateKillerStats(damager->getObjectId(), damageReceived);
 
 	//Si lo mato suma puntos al player que lo mato
 	if (m_health <= 0)
@@ -146,11 +152,25 @@ bool BigPlane::damage(int damageReceived, Player* damager)
 			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getTeamNumber());
 		}
 	}
+
 	return killed;
+}
+
+void BigPlane::dropLoot()
+{
+	PowerUp* drop = new ExtraPointsPU(1500);
+	int posX = m_position.m_x + (m_width/2) - 24;
+	int posY = m_position.m_y + (m_height/2) - 24;
+	drop->load(posX, posY, 48, 48, 70, 1);
+	CollitionHandler::Instance()->addPowerUp(drop);
+	Game::Instance()->addPowerUp(drop);
 }
 
 void BigPlane::shoot()
 {
+	if (Game::Instance()->isPracticeMode())
+		return;
+
 	m_target = Game::Instance()->getRandomPLayerCenter();
 
 	if (m_enemyWeapon)
@@ -159,6 +179,47 @@ void BigPlane::shoot()
 		shootDirection.normalize();
 		Vector2D shootPosition = m_shootingOffset + m_position;
 		m_enemyWeapon->shoot(shootPosition, shootDirection);
+	}
+}
+
+void BigPlane::updateKillerStats(int playerID, int damageDone)
+{
+	if (m_playerIDDamageDone.find(playerID) == m_playerIDDamageDone.end())
+	{
+		//nuevo killer
+		m_playerIDDamageDone[playerID] = damageDone;
+	}
+	else
+	{
+		//ya habia matado a algun avion del a formacion
+		m_playerIDDamageDone[playerID] = m_playerIDDamageDone[playerID] + damageDone;
+	}
+
+	if (m_health <= 0)
+	{
+		//Todos los aviones han sido matados
+		calculateRewards();
+	}
+}
+
+void BigPlane::calculateRewards()
+{
+	for (std::map<int,int>::iterator it = m_playerIDDamageDone.begin(); it != m_playerIDDamageDone.end(); ++it)
+	{
+		if (it->second >= m_kMaxHealth)
+		{
+			//Todos los aviones fueron derrotados por un mismo jugador
+			int playerKillerID = it->first;
+			//busca el equipo del player que derribo a todos los aviones de la formación
+			int teamKillerID = Game::Instance()->getPlayerTeam(playerKillerID);
+
+			//Suma los puntos
+			if ((playerKillerID != -1) && (teamKillerID != -1))
+			{
+				Game::Instance()->addPointsToScore(m_pointsOnCombo, playerKillerID, teamKillerID);
+				break;
+			}
+		}
 	}
 }
 
@@ -220,6 +281,7 @@ void BigPlane::updateExplotionAnimation()
 		m_dying = false;
 		m_dead = true;
 		m_exploting = false;
+		dropLoot();
 	}
 
 	if ((lastFrame != m_currentFrame) || (lastRow != m_currentRow))

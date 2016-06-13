@@ -32,6 +32,8 @@ public:
 	void update();
 	void clean();
 
+	int getVirtualPosition() { return m_virtualPosition; }
+
 private:
 
 	void resetPositions();

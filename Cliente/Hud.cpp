@@ -70,7 +70,7 @@ void Hud::update()
 			float difference = m_newScore - m_playerScore;
 			m_playerScore = m_playerScore + ((difference) * LERP_WEIGHT);
 
-			if (difference <= 1.0f)
+			if (difference <= 5.0f)
 			{
 				m_playerScore = m_newScore;
 				m_lerping = false;

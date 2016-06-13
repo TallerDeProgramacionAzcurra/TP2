@@ -227,6 +227,12 @@ void Player::handleInput(InputMessage inputMsg)
 		m_movedByPlayer = true;
 	}
 
+	if (inputMsg.togglePracticeMode == 1)
+	{
+		bool practiceMode = (!(Game::Instance()->isPracticeMode()));
+		Game::Instance()->setPracticeMode(practiceMode);
+	}
+
     if(!m_dead && !m_dying)
     {
     	//Si esta girando no admite inputs de disparo ni movimiento

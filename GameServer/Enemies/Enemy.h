@@ -35,6 +35,7 @@ public:
 
     void setCollisionDamage(int collisionDamage) { m_collisionDamage = collisionDamage; }
 
+    void setDead(bool dead) { m_dead = dead; }
     bool isDead() { return m_dead; }
     bool isDying() { return m_dying; }
     int getCollisionDamage() { return m_collisionDamage; }

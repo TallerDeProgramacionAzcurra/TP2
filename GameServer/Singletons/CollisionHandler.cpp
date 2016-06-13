@@ -16,7 +16,7 @@
 CollitionHandler* CollitionHandler::s_pInstance;
 
 
-CollitionHandler::CollitionHandler()
+CollitionHandler::CollitionHandler(): m_practiceMode(false)
 {
 
 }
@@ -42,6 +42,9 @@ void CollitionHandler::handlePlayerCollitions()
 		//Compara cada jugador contra cada bala enemiga
 		for(vector<std::shared_ptr<Bullet>>::iterator it = m_enemiesBullets.begin(); it != m_enemiesBullets.end(); )
 		{
+			if (m_practiceMode)
+				break;
+
 			if ((*it)->isDead())
 			{
 				it = m_enemiesBullets.erase(it);
@@ -94,6 +97,9 @@ void CollitionHandler::handlePlayerCollitions()
 		//Compara cada jugador con cada enemigo
 		for(vector<Enemy*>::iterator it = m_enemies.begin(); it != m_enemies.end(); )
 		{
+			if (m_practiceMode)
+				break;
+
 			if ((*it)->isDead() || (*it)->isDying())
 			{
 				it = m_enemies.erase(it);

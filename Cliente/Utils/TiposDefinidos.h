@@ -25,7 +25,7 @@
 #define PATH_MAX_LENGTH 36
 
 #define DRAW_MESSAGE_SIZE 32
-#define INPUT_MESSAGE_SIZE 16
+#define INPUT_MESSAGE_SIZE 20
 #define SCORE_MESSAGE_SIZE 8
 #define CONNECTED_MESSAGE_SIZE 16
 #define CONNECTIONINFO_MESSAGE_SIZE 24
@@ -143,6 +143,8 @@ struct InputMessage
 	short buttonLeft;
 	short buttonShoot;
 	short buttonRoll;
+	short togglePracticeMode;
+	short something;
 };
 
 
@@ -191,6 +193,35 @@ struct Ventana
 
 };
 
+struct Enemigo
+{
+	std::string id;
+	int cantidad;
+	int frames;
+	int ancho;
+	int alto;
+
+};
+
+struct Jefe
+{
+	std::string id;
+	int posicion;
+	int frames;
+	int ancho;
+	int alto;
+
+};
+
+struct Powerup
+{
+	std::string id;
+	int cantidad;
+	int frames;
+	int ancho;
+	int alto;
+
+};
 struct Sprite
 {
 	std::string id;

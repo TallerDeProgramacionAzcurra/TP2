@@ -39,9 +39,14 @@ public:
     void addPlayerBullet(std::shared_ptr<Bullet> playerBullet);
     void addEnemyBullet(std::shared_ptr<Bullet> enemyBullet);
 
+    void setPracticeMode(bool practiceMode) { m_practiceMode = practiceMode; }
+    bool isPracticeMode() { return m_practiceMode; }
+
     void clean();
 
 private:
+
+    bool m_practiceMode;
 
     static CollitionHandler* s_pInstance;
 

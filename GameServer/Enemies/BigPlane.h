@@ -9,6 +9,7 @@
 #define ENEMIES_BIGPLANE_H_
 
 #include "Enemy.h"
+#include <map>
 
 class BigPlane: public Enemy
 {
@@ -25,10 +26,14 @@ public:
 
 private:
 
+    std::map<int, int> m_playerIDDamageDone;
+
     const int m_shootChance;
+    const int m_kMaxHealth;
 
     bool m_goingUp;
     bool m_goingRight;
+    int m_pointsOnCombo;
 
     int m_borderReturnOffset;
     Vector2D m_shootingOffset;
@@ -39,6 +44,9 @@ private:
     void flip();
     void updateExplotionAnimation();
     void explote();
+    void dropLoot();
+    void updateKillerStats(int playerID, int damageDone);
+    void calculateRewards();
 
     void generateBorderReturnOffset();
 };
