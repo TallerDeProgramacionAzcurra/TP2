@@ -5,7 +5,7 @@
 <enemigos>
 	<enemigo>
 		<id>AvionPequeño</id>
-		<cantidad>1</cantidad>
+		<cantidad>20</cantidad>
 		<frames>4</frames>
 		<ancho>60</ancho>
 		<alto>66</alto>
@@ -19,14 +19,14 @@
 	</enemigo>
 	<enemigo>
 		<id>AvionGrande</id>
-		<cantidad>1</cantidad>
+		<cantidad>5</cantidad>
 		<frames>12</frames>
 		<ancho>128</ancho>
 		<alto>96</alto>
 	</enemigo>
 	<enemigo>
 		<id>FormacionRoja</id>
-		<cantidad>1</cantidad>
+		<cantidad>3</cantidad>
 		<frames>5</frames>
 		<ancho>1</ancho>
 		<alto>1</alto>

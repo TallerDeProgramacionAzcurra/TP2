@@ -67,6 +67,13 @@
 		<alto>12</alto>
 	</sprite>
 	<sprite>
+		<id>MagicAppearance</id>
+		<path>Assets/Sprites/poof.png</path>
+		<cantidad>5</cantidad>
+		<ancho>48</ancho>
+		<alto>48</alto>
+	</sprite>
+	<sprite>
 		<id>ExtraPoints</id>
 		<path>Assets/Sprites/ExtraPoints.png</path>
 		<cantidad>1</cantidad>

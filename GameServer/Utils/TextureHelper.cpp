@@ -55,6 +55,9 @@ void TextureHelper::initialize()
 	m_textureIDMap["ExtraPoints"] = 70;
 	m_textureIDMap["BombPU"] = 71;
 
+	//Otros
+	m_textureIDMap["MagicAppearance"] = 90;
+
 }
 
 int TextureHelper::stringToInt(const std::string& stringID)

@@ -71,13 +71,13 @@ void CollitionHandler::handlePlayerCollitions()
 		//Compara cada Jugador con cada PowerUp
 		for(vector<PowerUp*>::iterator it = m_powerUps.begin(); it != m_powerUps.end(); )
 		{
-			if ((*it)->isDead() || ( ((*it)->canPickUp()) == false ))
+			if ((*it)->isDead())
 			{
 				it = m_powerUps.erase(it);
 				continue;
 			}
 
-			if (areColliding((*playersIterator), (*it)))
+			if ((areColliding((*playersIterator), (*it))) && (((*it)->canPickUp())))
 			{
 				printf("Colision de player con powerUp\n");
 				//Hay colision del jugador con un power up

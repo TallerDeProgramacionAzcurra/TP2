@@ -32,6 +32,7 @@ public:
     void sendDrawMessage(bool isAlive);
 
     bool isDead() { return m_dead; }
+    void doAppearAnimation();
 
 protected:
 
@@ -39,6 +40,13 @@ protected:
     bool m_pickedUp;
     bool m_animatingPickUp;
     bool m_dead;
+    bool m_appearing;
+
+    int m_savedTextureID;
+    int m_savedNumFrames;
+    int m_appearenceAnimationTime;
+    int m_appearenceRemainingTime;
+    void updateAppearingAnimation();
 
 };
 
