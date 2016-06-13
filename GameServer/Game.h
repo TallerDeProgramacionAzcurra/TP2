@@ -165,6 +165,7 @@ private:
 
     GameMode m_currentMode;
     bool m_practiceMode;
+    int m_practiceHoldTimer;
 
 
     bool m_running;

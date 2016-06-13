@@ -11,17 +11,26 @@
 #include "../Utils/TiposDefinidos.h"
 #include <vector>
 class PowerUp;
+class TextureHelper;
 
 class PowerUpSpawner
 {
 public:
-
-	void feed(std::vector<Powerup> powerUps);
+	PowerUpSpawner();
+	~PowerUpSpawner();
+	void feed(std::vector<Powerup> powerUps, int stageSize);
+	void update(int stagePosition);
 	void clean();
 
 private:
 
 	std::vector<PowerUpSpawnInfo> m_powerUpsToSpawn;
+
+	TextureHelper* m_textureHelper;
+	int m_stageSize;
+
+	void addPowerUp(Powerup powerUpInfo);
+	int getRandomPointsValue();
 
 };
 

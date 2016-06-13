@@ -5,7 +5,7 @@
 <enemigos>
 	<enemigo>
 		<id>AvionPequeño</id>
-		<cantidad>20</cantidad>
+		<cantidad>1</cantidad>
 		<frames>4</frames>
 		<ancho>60</ancho>
 		<alto>66</alto>
@@ -19,7 +19,7 @@
 	</enemigo>
 	<enemigo>
 		<id>AvionGrande</id>
-		<cantidad>5</cantidad>
+		<cantidad>1</cantidad>
 		<frames>12</frames>
 		<ancho>128</ancho>
 		<alto>96</alto>
@@ -41,11 +41,11 @@
 		<alto>48</alto>
 	</powerup>
 	<powerup>
-		<id>*********</id>
+		<id>BombPU</id>
 		<cantidad>5</cantidad>
-		<frames>999999</frames>
-		<ancho>9999999</ancho>
-		<alto>999999</alto>
+		<frames>1</frames>
+		<ancho>48</ancho>
+		<alto>48</alto>
 	</powerup>
 	<powerup>
 		<id>**********</id>

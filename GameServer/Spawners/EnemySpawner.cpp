@@ -35,7 +35,8 @@ void EnemySpawner::clean()
 		}
 	}
 	m_enemiesToSpawn.clear();
-	delete m_textureHelper;
+	if (m_textureHelper)
+		delete m_textureHelper;
 }
 
 

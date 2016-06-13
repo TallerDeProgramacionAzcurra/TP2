@@ -20,6 +20,7 @@ m_pWindow(0),
 m_pRenderer(0),
 m_currentStage(1),
 m_practiceMode(false),
+m_practiceHoldTimer(0),
 m_running(false),
 m_reseting(false),
 m_scrollSpeed(2)
@@ -302,6 +303,11 @@ void Game::update()
 
 void Game::checkPracticeMode()
 {
+	if (m_practiceHoldTimer > 0)
+	{
+		m_practiceHoldTimer -= GameTimeHelper::Instance()->deltaTime();
+	}
+
 	if (m_practiceMode)
 	{
 		if (!CollitionHandler::Instance()->isPracticeMode())
@@ -316,8 +322,13 @@ void Game::checkPracticeMode()
 
 void Game::setPracticeMode(bool practiceMode)
 {
+	if (m_practiceHoldTimer > 0)
+		return;
 	m_practiceMode = practiceMode;
+	m_practiceHoldTimer = 500;
+
 }
+
 
 bool Game::isPracticeMode()
 {
@@ -645,6 +656,7 @@ void Game::cleanDeadObjects()
 void Game::updateSpawners()
 {
 	m_enemiesSpawner->update(m_level->getVirtualPosition());
+	m_powerUpsSpawner->update(m_level->getVirtualPosition());
 }
 
 void Game::loadCurrentStage()
@@ -662,6 +674,7 @@ void Game::loadCurrentStage()
 	m_parserStages->parsearDocumento(ss.str());
 
 	m_enemiesSpawner->feed(m_parserStages->getListaDeEnemigos(), m_parserStages->getVentana().alto);
+	m_powerUpsSpawner->feed(m_parserStages->getListaDePowerups(), m_parserStages->getVentana().alto);
 
 	printf("Se cargó el Stage %d \n", m_currentStage);
 
