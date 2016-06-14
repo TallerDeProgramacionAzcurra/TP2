@@ -9,6 +9,7 @@
 #ifndef ClienteMenu_hpp
 #define ClienteMenu_hpp
 
+#include <SDL2_image/SDL_image.h>
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -25,7 +26,10 @@ public:
     
     // Drawing methods.
     void clientMenuFillWithColor(const int red, const int green, const int blue);
-    bool clientMenuAddImage(const char *imageName, const int xPost, const int yPost, const int width, const int height);
+    
+    bool clientMenuOptimizeImageSurface(SDL_Surface* sdlImage, SDL_Rect stretchRect, const char *imageName);
+    bool clientMenuAddBMPImage(const char *imageName, const int xPost, const int yPost, const int width, const int height);
+    bool clientMenuAddJPGImage(const char *imageName, const int xPost, const int yPost, const int width, const int height);
     
     // Events methods.
     void clientMenuHandleQuitEvent();

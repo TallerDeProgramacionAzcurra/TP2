@@ -73,11 +73,28 @@ void ClientMenu::clientMenuFillWithColor(const int red, const int green, const i
     SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, red, green, blue));
 }
 
-bool ClientMenu::clientMenuAddImage(const char *imageName, const int xPost, const int yPost, const int width, const int height) {
-    printf("ClienteMenu.cpp - clientMenuShowImage.\n");
+bool ClientMenu::clientMenuOptimizeImageSurface(SDL_Surface* sdlImage, SDL_Rect stretchRect, const char *imageName) {
+    printf("ClienteMenu.cpp - clientMenuOptimizeImageSurface.\n");
     
     // Get window surface.
     SDL_Surface *screenSurface = SDL_GetWindowSurface(this->clientMenuWindow);
+    
+    SDL_Surface *optimizedImage = SDL_ConvertSurface(sdlImage, screenSurface->format, NULL);
+    if (optimizedImage == NULL) {
+        printf("ClienteMenu.cpp - Unable to optimize image %s! SDL Error: %s\n", imageName, SDL_GetError());
+        SDL_FreeSurface(sdlImage);
+        return false;
+    }
+    
+    SDL_BlitScaled(optimizedImage, NULL, screenSurface, &stretchRect);
+    this->clientMenuSurfaces->push_back(optimizedImage);
+    SDL_FreeSurface(sdlImage);
+    
+    return true;
+}
+
+bool ClientMenu::clientMenuAddBMPImage(const char *imageName, const int xPost, const int yPost, const int width, const int height) {
+    printf("ClienteMenu.cpp - clientMenuAddBMPImage.\n");
     
     //The image we will load and show on the screen
     SDL_Surface* sdlImage = SDL_LoadBMP(imageName);
@@ -87,25 +104,41 @@ bool ClientMenu::clientMenuAddImage(const char *imageName, const int xPost, cons
         return false;
     }
     
-    SDL_Surface *optimizedImage = SDL_ConvertSurface(sdlImage, screenSurface->format, NULL);
-    if (optimizedImage == NULL) {
-        printf("ClienteMenu.cpp - Unable to optimize image %s! SDL Error: %s\n", imageName, SDL_GetError());
-        SDL_FreeSurface(sdlImage);
-        return false;
-    }
-    
-    //Apply the image stretched
     SDL_Rect stretchRect;
     stretchRect.x = xPost;
     stretchRect.y = yPost;
     stretchRect.w = width;
     stretchRect.h = height;
     
-    SDL_BlitScaled(optimizedImage, NULL, screenSurface, &stretchRect);
-    this->clientMenuSurfaces->push_back(optimizedImage);
-    SDL_FreeSurface(sdlImage);
+    return this->clientMenuOptimizeImageSurface(sdlImage, stretchRect, imageName);
+}
+
+bool ClientMenu::clientMenuAddJPGImage(const char *imageName, const int xPost, const int yPost, const int width, const int height) {
+    printf("ClienteMenu.cpp - clientMenuAddJPGImage.\n");
     
-    return true;
+    //Initialize JPG loading
+    int imgFlags = IMG_INIT_JPG;
+    
+    if (!(IMG_Init(imgFlags) & imgFlags)) {
+        printf("ClienteMenu.cpp - SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        return false;
+    }
+    
+    //Load image at specified path
+    SDL_Surface *jpgImage = IMG_Load(imageName);
+    
+    if (jpgImage == NULL) {
+        printf("ClienteMenu.cpp - Unable to load image %s! SDL_image Error: %s\n", imageName, IMG_GetError());
+        return false;
+    }
+    
+    SDL_Rect stretchRect;
+    stretchRect.x = xPost;
+    stretchRect.y = yPost;
+    stretchRect.w = width;
+    stretchRect.h = height;
+    
+    return this->clientMenuOptimizeImageSurface(jpgImage, stretchRect, imageName);
 }
 
 // Events methods.

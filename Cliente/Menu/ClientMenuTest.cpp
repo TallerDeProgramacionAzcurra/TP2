@@ -16,7 +16,7 @@ static int const kScreenheight = 480;
 int main(int argc, char **argv) {
     ClientMenu clientMenu = ClientMenu("Menú", kScreenWidth, kScreenheight);
     
-    if (clientMenu.clientMenuAddImage("TP2/Cliente/Menu/Bomber.bmp", 0, 0, kScreenWidth, kScreenheight) == true) {
+    if (clientMenu.clientMenuAddJPGImage("TP2/Cliente/Menu/Bomber.JPG", 0, 0, kScreenWidth, kScreenheight) == true) {
         clientMenu.clientMenuShow();
         
         clientMenu.clientMenuHandleQuitEvent();
