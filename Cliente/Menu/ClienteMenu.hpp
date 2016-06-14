@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <list>
 
+#include "ClientMenuTexture.hpp"
+
 class ClientMenu {
 public:
     // Constructor and Destructor.
@@ -27,20 +29,13 @@ public:
 private:
     SDL_Window *clientMenuWindow;
     SDL_Renderer *clientMenuRender;
-    SDL_Texture *clientMenuTexture;
-    
-    std::list<SDL_Surface *> *clientMenuSurfaces;
     
     // Drawing methods.
     bool clientMenuLoadTexture(const char *imageName);
-    void clientMenuFillWithColor(const int red, const int green, const int blue);
-    bool clientMenuOptimizeImageSurface(SDL_Surface* sdlImage, SDL_Rect stretchRect, const char *imageName);
-    bool clientMenuAddBMPImage(const char *imageName, const int xPost, const int yPost, const int width, const int height);
-    bool clientMenuAddJPGImage(const char *imageName, const int xPost, const int yPost, const int width, const int height);
-    void clientMenuAddViewPort();
-    
+
     // Showing functions.
-    void clientMenuShow();
+    void clientMenuClear();
+    void clientMenuShow(ClientMenuTexture *texture);
     
     // Events methods.
     bool clientMenuHandleQuitEvent();
