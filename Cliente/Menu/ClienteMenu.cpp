@@ -13,8 +13,6 @@ static int const kScreenheight = 480;
 
 // Constructor and Destructor.
 ClientMenu::ClientMenu(const char *menuTitle, const int menuWidth, const int menuHeight) {
-    printf("ClienteMenu.cpp - Constructor.\n");
-    
     // The window we'll be rendering to.
     this->clientMenuWindow = NULL;
     
@@ -35,15 +33,13 @@ ClientMenu::ClientMenu(const char *menuTitle, const int menuWidth, const int men
             //Create renderer for window
             this->clientMenuRender = SDL_CreateRenderer(this->clientMenuWindow, -1, SDL_RENDERER_ACCELERATED);
             if (this->clientMenuRender == NULL) {
-                printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+                printf("ClienteMenu.cpp - Renderer could not be created! SDL Error: %s\n", SDL_GetError());
             }
         }
     }
 }
 
 ClientMenu::~ClientMenu() {
-    printf("ClienteMenu.cpp - Destructor.\n");
-    
     // Free used surfaces.
     std::list<SDL_Surface *>::iterator iterator = this->clientMenuSurfaces->begin();
     for (iterator; iterator != this->clientMenuSurfaces->end(); ++iterator) {
@@ -69,8 +65,6 @@ ClientMenu::~ClientMenu() {
 
 // Public functions.
 void ClientMenu::clientMenuShow() {
-    printf("ClienteMenu.cpp - clientMenuShow.\n");
-    
     // Clear screen.
     SDL_SetRenderDrawColor(this->clientMenuRender, 255, 255, 255, 255);
     SDL_RenderClear(this->clientMenuRender);
@@ -84,8 +78,6 @@ void ClientMenu::clientMenuShow() {
 
 // Drawing methods.
 void ClientMenu::clientMenuFillWithColor(const int red, const int green, const int blue) {
-    printf("ClienteMenu.cpp - clientMenuFillWithColor.\n");
-    
     // Get window surface.
     SDL_Surface *screenSurface = SDL_GetWindowSurface(this->clientMenuWindow);
     
@@ -94,8 +86,6 @@ void ClientMenu::clientMenuFillWithColor(const int red, const int green, const i
 }
 
 bool ClientMenu::clientMenuOptimizeImageSurface(SDL_Surface* sdlImage, SDL_Rect stretchRect, const char *imageName) {
-    printf("ClienteMenu.cpp - clientMenuOptimizeImageSurface.\n");
-    
     // Get window surface.
     SDL_Surface *screenSurface = SDL_GetWindowSurface(this->clientMenuWindow);
     
@@ -114,8 +104,6 @@ bool ClientMenu::clientMenuOptimizeImageSurface(SDL_Surface* sdlImage, SDL_Rect 
 }
 
 bool ClientMenu::clientMenuAddBMPImage(const char *imageName, const int xPost, const int yPost, const int width, const int height) {
-    printf("ClienteMenu.cpp - clientMenuAddBMPImage.\n");
-    
     //The image we will load and show on the screen
     SDL_Surface* sdlImage = SDL_LoadBMP(imageName);
     
@@ -134,8 +122,6 @@ bool ClientMenu::clientMenuAddBMPImage(const char *imageName, const int xPost, c
 }
 
 bool ClientMenu::clientMenuAddJPGImage(const char *imageName, const int xPost, const int yPost, const int width, const int height) {
-    printf("ClienteMenu.cpp - clientMenuAddJPGImage.\n");
-    
     //Initialize JPG loading
     int imgFlags = IMG_INIT_JPG;
     
@@ -162,8 +148,6 @@ bool ClientMenu::clientMenuAddJPGImage(const char *imageName, const int xPost, c
 }
 
 bool ClientMenu::clientMenuLoadTexture(const char *imageName) {
-    printf("ClienteMenu.cpp - clientMenuLoadTexture.\n");
-    
     //Load image at specified path
     SDL_Surface *loadedImage = IMG_Load(imageName);
     
