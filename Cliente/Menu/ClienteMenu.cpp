@@ -12,8 +12,6 @@
 ClientMenu::ClientMenu(const char *menuTitle, const int menuWidth, const int menuHeight) {
     printf("ClienteMenu.cpp - Constructor.\n");
     
-    this->clientMenuQuit = false;
-    
     // The window we'll be rendering to.
     this->clientMenuWindow = NULL;
     
@@ -28,6 +26,12 @@ ClientMenu::ClientMenu(const char *menuTitle, const int menuWidth, const int men
         
         if (this->clientMenuWindow == NULL) {
             printf("ClienteMenu.cpp - SDL Window could not be created! SDL_Error: %s\n", SDL_GetError());
+        } else {
+            //Create renderer for window
+            this->clientMenuRender = SDL_CreateRenderer(this->clientMenuWindow, -1, SDL_RENDERER_ACCELERATED);
+            if (this->clientMenuRender == NULL) {
+                printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+            }
         }
     }
 }
@@ -48,18 +52,20 @@ ClientMenu::~ClientMenu() {
     SDL_FreeSurface(screenSurface);
     
     //Destroy window
+    SDL_DestroyRenderer(this->clientMenuRender);
     SDL_DestroyWindow(this->clientMenuWindow);
     
     //Quit SDL subsystems
+    IMG_Quit();
     SDL_Quit();
 }
 
 // Public functions.
 void ClientMenu::clientMenuShow() {
     printf("ClienteMenu.cpp - clientMenuShow.\n");
-    
-    // Update the surface to show the changes made to the windows surface.
-    SDL_UpdateWindowSurface(this->clientMenuWindow);
+
+    //Update screen
+    SDL_RenderPresent(this->clientMenuRender);
 }
 
 // Drawing methods.
@@ -141,17 +147,47 @@ bool ClientMenu::clientMenuAddJPGImage(const char *imageName, const int xPost, c
     return this->clientMenuOptimizeImageSurface(jpgImage, stretchRect, imageName);
 }
 
+void ClientMenu::clientMenuLoadTexture(const char *imageName) {
+    printf("ClienteMenu.cpp - clientMenuLoadTexture.\n");
+    
+    //Load image at specified path
+    SDL_Surface *loadedImage = IMG_Load(imageName);
+    
+    if (loadedImage == NULL) {
+        printf("ClienteMenu.cpp - Unable to load image %s! SDL_image Error: %s\n", imageName, IMG_GetError());
+    } else {
+        //Create texture from surface pixels
+        SDL_Texture *newTexture = NULL;
+        newTexture = SDL_CreateTextureFromSurface(this->clientMenuRender, loadedImage);
+        
+        if (newTexture == NULL) {
+            printf("ClienteMenu.cpp - Unable to create texture from %s! SDL Error: %s\n", imageName, SDL_GetError());
+            SDL_FreeSurface(loadedImage);
+        }
+        
+        //Clear screen
+        SDL_RenderClear(this->clientMenuRender);
+        
+        //Render texture to screen
+        SDL_RenderCopy(this->clientMenuRender, newTexture, NULL, NULL );
+        
+        SDL_DestroyTexture(newTexture);
+    }
+    
+    SDL_FreeSurface(loadedImage);
+}
+
 // Events methods.
-void ClientMenu::clientMenuHandleQuitEvent() {
+bool ClientMenu::clientMenuHandleQuitEvent() {
     //Event handler
     SDL_Event e;
     
-    while (this->clientMenuQuit == false) {
-        while(SDL_PollEvent(&e) != 0) {
-            //User requests quit
-            if (e.type == SDL_QUIT) {
-                this->clientMenuQuit = true;
-            }
+    while(SDL_PollEvent(&e) != 0) {
+        //User requests quit
+        if (e.type == SDL_QUIT) {
+            return true;
         }
     }
+    
+    return false;
 }

@@ -30,16 +30,16 @@ public:
     bool clientMenuOptimizeImageSurface(SDL_Surface* sdlImage, SDL_Rect stretchRect, const char *imageName);
     bool clientMenuAddBMPImage(const char *imageName, const int xPost, const int yPost, const int width, const int height);
     bool clientMenuAddJPGImage(const char *imageName, const int xPost, const int yPost, const int width, const int height);
+    void clientMenuLoadTexture(const char *imageName);
     
     // Events methods.
-    void clientMenuHandleQuitEvent();
+    bool clientMenuHandleQuitEvent();
     
 private:
     SDL_Window *clientMenuWindow;
+    SDL_Renderer *clientMenuRender;
     
     std::list<SDL_Surface *> *clientMenuSurfaces;
-    
-    bool clientMenuQuit;
 };
 
 #endif /* ClienteMenu_hpp */
