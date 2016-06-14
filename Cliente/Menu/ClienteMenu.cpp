@@ -34,7 +34,7 @@ ClientMenu::ClientMenu(const char *menuTitle, const int menuWidth, const int men
 
 ClientMenu::~ClientMenu() {
     printf("ClienteMenu.cpp - Destructor.\n");
-
+    
     // Free used surfaces.
     std::list<SDL_Surface *>::iterator iterator = this->clientMenuSurfaces->begin();
     for (iterator; iterator != this->clientMenuSurfaces->end(); ++iterator) {
@@ -73,7 +73,7 @@ void ClientMenu::clientMenuFillWithColor(const int red, const int green, const i
     SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, red, green, blue));
 }
 
-bool ClientMenu::clientMenuAddImage(const char *imageName) {
+bool ClientMenu::clientMenuAddImage(const char *imageName, const int xPost, const int yPost, const int width, const int height) {
     printf("ClienteMenu.cpp - clientMenuShowImage.\n");
     
     // Get window surface.
@@ -87,14 +87,29 @@ bool ClientMenu::clientMenuAddImage(const char *imageName) {
         return false;
     }
     
-    SDL_BlitSurface(sdlImage, NULL, screenSurface, NULL );
-    this->clientMenuSurfaces->push_back(sdlImage);
+    SDL_Surface *optimizedImage = SDL_ConvertSurface(sdlImage, screenSurface->format, NULL);
+    if (optimizedImage == NULL) {
+        printf("ClienteMenu.cpp - Unable to optimize image %s! SDL Error: %s\n", imageName, SDL_GetError());
+        SDL_FreeSurface(sdlImage);
+        return false;
+    }
+    
+    //Apply the image stretched
+    SDL_Rect stretchRect;
+    stretchRect.x = xPost;
+    stretchRect.y = yPost;
+    stretchRect.w = width;
+    stretchRect.h = height;
+    
+    SDL_BlitScaled(optimizedImage, NULL, screenSurface, &stretchRect);
+    this->clientMenuSurfaces->push_back(optimizedImage);
+    SDL_FreeSurface(sdlImage);
     
     return true;
 }
 
 // Events methods.
-void ClientMenu::clientMenuHandleEvents() {
+void ClientMenu::clientMenuHandleQuitEvent() {
     //Event handler
     SDL_Event e;
     

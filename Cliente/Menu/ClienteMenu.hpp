@@ -25,10 +25,10 @@ public:
     
     // Drawing methods.
     void clientMenuFillWithColor(const int red, const int green, const int blue);
-    bool clientMenuAddImage(const char *imageName);
+    bool clientMenuAddImage(const char *imageName, const int xPost, const int yPost, const int width, const int height);
     
     // Events methods.
-    void clientMenuHandleEvents();
+    void clientMenuHandleQuitEvent();
     
 private:
     SDL_Window *clientMenuWindow;
