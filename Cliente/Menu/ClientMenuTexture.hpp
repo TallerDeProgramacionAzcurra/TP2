@@ -31,6 +31,8 @@ public:
     //Loads image at specified path
     virtual void menuTextureLoadFromFile(const char *filePath);
     
+    void menuTextureSetModulation(SDL_Color modulationColor);
+    
 protected:
     //Image dimensions.
     int menuTextureWidth;

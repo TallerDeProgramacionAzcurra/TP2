@@ -9,6 +9,7 @@
 #include "ClientMenuImageTexture.hpp"
 #include "ClientMenuTextTexture.hpp"
 #include "ClientMenuTexture.hpp"
+#include "ClientMenuUtil.hpp"
 #include "ClienteMenu.hpp"
 
 // Constructor and Destructor.
@@ -81,11 +82,12 @@ void ClientMenu::clientMenuRun() {
     
     ClientMenuImageTexture backgrounImage = ClientMenuImageTexture(this->clientMenuRender);
     backgrounImage.menuTextureLoadFromFile("TP2/Cliente/Menu/Bomber.JPG");
+    backgrounImage.menuTextureSetModulation(ClientMenuUtils::clientMenuModulationColor());
     textures.push_back(backgrounImage);
     
     ClientMenuTextTexture firstText = ClientMenuTextTexture(this->clientMenuRender);
-    firstText.menuTextureLoadFromFile("TP2/Cliente/Menu/Arcade.ttf");
-    firstText.menuTextureSetTextProperties("Texto 1", { 200, 0, 100 });
+    firstText.menuTextureLoadFromFile("TP2/Cliente/Menu/bummer3d.ttf");
+    firstText.menuTextureSetTextProperties("TEXTO 1", ClientMenuUtils::clientMenuTextColor());
     textures.push_back(firstText);
     
     bool loadingTextureOK = true;

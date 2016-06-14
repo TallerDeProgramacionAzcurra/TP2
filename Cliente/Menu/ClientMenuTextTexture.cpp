@@ -29,7 +29,7 @@ ClientMenuTextTexture::~ClientMenuTextTexture() {
 
 //Loads image at specified path
 void ClientMenuTextTexture::menuTextureLoadFromFile(const char *filePath) {
-    this->menuTextureFont = TTF_OpenFont(filePath, 28);
+    this->menuTextureFont = TTF_OpenFont(filePath, 38);
     
     if (this->menuTextureFont == NULL) {
         printf("ClientMenuTextTexture.cpp - Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
