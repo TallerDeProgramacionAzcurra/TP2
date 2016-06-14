@@ -18,7 +18,7 @@ ClientMenuImageTexture::~ClientMenuImageTexture() {
     
 }
 
-bool ClientMenuImageTexture::menuTextureLoadFromFile(const char *filePath) {
+void ClientMenuImageTexture::menuTextureLoadFromFile(const char *filePath) {
     //The final texture
     SDL_Texture *newTexture = NULL;
     
@@ -27,7 +27,7 @@ bool ClientMenuImageTexture::menuTextureLoadFromFile(const char *filePath) {
     
     if (loadedSurface == NULL) {
         printf( "Unable to load image %s! SDL_image Error: %s\n", filePath, IMG_GetError());
-        return false;
+        this->menuTextureLoaded = false;
     } else {
         //Color key image
         SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF ));
@@ -37,7 +37,7 @@ bool ClientMenuImageTexture::menuTextureLoadFromFile(const char *filePath) {
         if (newTexture == NULL) {
             printf( "Unable to create texture from %s! SDL Error: %s\n", filePath, SDL_GetError());
             SDL_FreeSurface(loadedSurface);
-            return false;
+            this->menuTextureLoaded = false;
         } else {
             //Get image dimensions
             this->menuTextureWidth = loadedSurface->w;
@@ -51,5 +51,5 @@ bool ClientMenuImageTexture::menuTextureLoadFromFile(const char *filePath) {
     //Return success
     this->menuTexture = newTexture;
     
-    return this->menuTexture != NULL;
+    this->menuTextureLoaded = this->menuTexture != NULL;
 }

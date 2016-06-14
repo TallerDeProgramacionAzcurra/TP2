@@ -35,7 +35,7 @@ private:
 
     // Showing functions.
     void clientMenuClear();
-    void clientMenuShow(ClientMenuTexture *texture);
+    void clientMenuShow();
     
     // Events methods.
     bool clientMenuHandleQuitEvent();

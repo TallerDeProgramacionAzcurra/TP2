@@ -19,7 +19,7 @@ public:
     virtual ~ClientMenuImageTexture();
     
     //Loads image at specified path
-    bool menuTextureLoadFromFile(const char *filePath);
+    void menuTextureLoadFromFile(const char *filePath);
 };
 
 #endif /* ClientMenuImageTexture_hpp */

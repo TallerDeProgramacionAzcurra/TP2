@@ -55,11 +55,7 @@ void ClientMenu::clientMenuClear() {
     SDL_RenderClear(this->clientMenuRender);
 }
 
-void ClientMenu::clientMenuShow(ClientMenuTexture *texture) {
-    
-	// Render texture to screen.
-	SDL_RenderCopy(this->clientMenuRender, texture->menuTextureGetTexture(), NULL, NULL);
-    
+void ClientMenu::clientMenuShow() {    
     // Update screen.
     SDL_RenderPresent(this->clientMenuRender);
 }
@@ -81,11 +77,26 @@ bool ClientMenu::clientMenuHandleQuitEvent() {
 
 // Main function.
 void ClientMenu::clientMenuRun() {
-    ClientMenuImageTexture backgrounImage = ClientMenuImageTexture(this->clientMenuRender);
+    std::list<ClientMenuTexture *> textures = std::list<ClientMenuTexture *>();
     
-    if (backgrounImage.menuTextureLoadFromFile("TP2/Cliente/Menu/Bomber.JPG") == true) {
+    ClientMenuImageTexture backgrounImage = ClientMenuImageTexture(this->clientMenuRender);
+    backgrounImage.menuTextureLoadFromFile("TP2/Cliente/Menu/Bomber.JPG");
+    textures.push_back(&backgrounImage);
+    
+    bool loadingTextureOK = true;
+    
+    std::list<ClientMenuTexture *>::iterator iterator = textures.begin();
+    for (*iterator; iterator != textures.end(); ++iterator) {
+        if ((*iterator)->menuTextureGetLoaded() == false) {
+            loadingTextureOK = false;
+            break;
+        }
+    }
+    
+    if (loadingTextureOK == true) {
         while (this->clientMenuHandleQuitEvent() == false) {
-            this->clientMenuShow(&backgrounImage);
+            backgrounImage.menuTextureRender(0, 0);
+            this->clientMenuShow();
         }
     }
 }

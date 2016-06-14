@@ -18,18 +18,25 @@ public:
     virtual ~ClientMenuTexture();
     
     //Renders texture at given point.
-    void menuTextureRender( int x, int y );
+    void menuTextureRender(int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
     
     //Gets image dimensions.
     int menuTextureGetWidth();
     int menuTextureGetHeight();
     
+    bool menuTextureGetLoaded();
+    
     SDL_Texture *menuTextureGetTexture();
+    
+    //Loads image at specified path
+    virtual void menuTextureLoadFromFile(const char *filePath);
     
 protected:
     //Image dimensions.
     int menuTextureWidth;
     int menuTextureHeight;
+    
+    bool menuTextureLoaded;
     
     //The actual hardware texture.
     SDL_Texture *menuTexture;
