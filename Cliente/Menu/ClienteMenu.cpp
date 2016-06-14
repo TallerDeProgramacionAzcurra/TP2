@@ -7,6 +7,7 @@
 //
 
 #include "ClientMenuImageTexture.hpp"
+#include "ClientMenuTextTexture.hpp"
 #include "ClientMenuTexture.hpp"
 #include "ClienteMenu.hpp"
 
@@ -44,7 +45,6 @@ ClientMenu::~ClientMenu() {
     SDL_DestroyWindow(this->clientMenuWindow);
     
     //Quit SDL subsystems
-    IMG_Quit();
     SDL_Quit();
 }
 
@@ -77,17 +77,22 @@ bool ClientMenu::clientMenuHandleQuitEvent() {
 
 // Main function.
 void ClientMenu::clientMenuRun() {
-    std::list<ClientMenuTexture *> textures = std::list<ClientMenuTexture *>();
+    std::list<ClientMenuTexture> textures = std::list<ClientMenuTexture>();
     
     ClientMenuImageTexture backgrounImage = ClientMenuImageTexture(this->clientMenuRender);
     backgrounImage.menuTextureLoadFromFile("TP2/Cliente/Menu/Bomber.JPG");
-    textures.push_back(&backgrounImage);
+    textures.push_back(backgrounImage);
+    
+    ClientMenuTextTexture firstText = ClientMenuTextTexture(this->clientMenuRender);
+    firstText.menuTextureLoadFromFile("TP2/Cliente/Menu/Arcade.ttf");
+    firstText.menuTextureSetTextProperties("Texto 1", { 200, 0, 100 });
+    textures.push_back(firstText);
     
     bool loadingTextureOK = true;
     
-    std::list<ClientMenuTexture *>::iterator iterator = textures.begin();
+    std::list<ClientMenuTexture>::iterator iterator = textures.begin();
     for (*iterator; iterator != textures.end(); ++iterator) {
-        if ((*iterator)->menuTextureGetLoaded() == false) {
+        if (iterator->menuTextureGetLoaded() == false) {
             loadingTextureOK = false;
             break;
         }
@@ -96,6 +101,7 @@ void ClientMenu::clientMenuRun() {
     if (loadingTextureOK == true) {
         while (this->clientMenuHandleQuitEvent() == false) {
             backgrounImage.menuTextureRender(0, 0);
+            firstText.menuTextureRender((640 - firstText.menuTextureGetWidth()) / 2, (480 - firstText.menuTextureGetHeight()) / 2);
             this->clientMenuShow();
         }
     }

@@ -11,11 +11,14 @@
 #include "ClientMenuImageTexture.hpp"
 
 ClientMenuImageTexture::ClientMenuImageTexture(SDL_Renderer *menuTextureRenderer)  : ClientMenuTexture(menuTextureRenderer) {
-    
+    if (!(IMG_Init(IMG_INIT_PNG))) {
+        printf("ClientMenuImageTexture.cpp - SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        this->menuTextureLoaded = false;
+    }
 }
 
 ClientMenuImageTexture::~ClientMenuImageTexture() {
-    
+    IMG_Quit();
 }
 
 void ClientMenuImageTexture::menuTextureLoadFromFile(const char *filePath) {
@@ -26,7 +29,7 @@ void ClientMenuImageTexture::menuTextureLoadFromFile(const char *filePath) {
     SDL_Surface *loadedSurface = IMG_Load(filePath);
     
     if (loadedSurface == NULL) {
-        printf( "Unable to load image %s! SDL_image Error: %s\n", filePath, IMG_GetError());
+        printf("ClientMenuImageTexture.cpp - Unable to load image %s! SDL_image Error: %s\n", filePath, IMG_GetError());
         this->menuTextureLoaded = false;
     } else {
         //Color key image
@@ -35,7 +38,7 @@ void ClientMenuImageTexture::menuTextureLoadFromFile(const char *filePath) {
         //Create texture from surface pixels
         newTexture = SDL_CreateTextureFromSurface(this->menuTextureRenderer, loadedSurface);
         if (newTexture == NULL) {
-            printf( "Unable to create texture from %s! SDL Error: %s\n", filePath, SDL_GetError());
+            printf("ClientMenuImageTexture.cpp - Unable to create texture from %s! SDL Error: %s\n", filePath, SDL_GetError());
             SDL_FreeSurface(loadedSurface);
             this->menuTextureLoaded = false;
         } else {

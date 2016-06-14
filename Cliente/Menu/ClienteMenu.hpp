@@ -9,13 +9,10 @@
 #ifndef ClienteMenu_hpp
 #define ClienteMenu_hpp
 
-#include <SDL2_image/SDL_image.h>
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <list>
-
-#include "ClientMenuTexture.hpp"
 
 class ClientMenu {
 public:

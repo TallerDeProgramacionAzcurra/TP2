@@ -9,6 +9,7 @@
 #ifndef ClientMenuTextTexture_hpp
 #define ClientMenuTextTexture_hpp
 
+#include <SDL2_ttf/SDL_ttf.h>
 #include <stdio.h>
 
 #include "ClientMenuTexture.hpp"
@@ -20,6 +21,10 @@ public:
     
     //Loads image at specified path
     void menuTextureLoadFromFile(const char *filePath);
+    void menuTextureSetTextProperties(const char *textureText, SDL_Color textColor);
+    
+private:
+    TTF_Font *menuTextureFont = NULL;
 };
 
 #endif /* ClientMenuTextTexture_hpp */
