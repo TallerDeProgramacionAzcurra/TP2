@@ -12,6 +12,7 @@
 #include "../Weapons/Bullet.h"
 #include "../GameObject.h"
 #include "../Game.h"
+#include "math.h"
 
 CollitionHandler* CollitionHandler::s_pInstance;
 
@@ -151,12 +152,46 @@ void CollitionHandler::handleEnemyCollitions()
 				continue;
 			}
 
-			if (areColliding((*enemiesIterator), (*it).get()))
+			//chekea que las balas no salteen la colision
+			Vector2D savedPosition = (*it)->getPosition();
+			Vector2D startFramePosition;
+			startFramePosition.setX((*it)->getPosition().getX() - ((*it)->getDirection().getX() * (*it)->getSpeed().getX()));
+			startFramePosition.setY((*it)->getPosition().getY() - ((*it)->getDirection().getY() * (*it)->getSpeed().getY()));
+			(*it)->setPosition(startFramePosition);
+			float deltaX = savedPosition.getX() - startFramePosition.getX();
+			float deltaY = savedPosition.getY() - startFramePosition.getY();
+			bool collitionDetected = false;
+			while ((startFramePosition.m_x != savedPosition.m_x) || (startFramePosition.m_y != savedPosition.m_y))
+			{
+				float incrementX = ((*it)->getDirection().getX() * ((*it)->getSpeed().getX()/100));
+				float incrementY = ((*it)->getDirection().getY() * ((*it)->getSpeed().getY()/100));
+				startFramePosition.m_x = startFramePosition.m_x + incrementX;
+				startFramePosition.m_y = startFramePosition.m_y + incrementY;
+				if ((startFramePosition.m_x - savedPosition.m_x) < 0.1f)
+				{
+					startFramePosition.m_x = savedPosition.m_x;
+				}
+				if ((startFramePosition.m_y - savedPosition.m_y) < 0.1f)
+				{
+					startFramePosition.m_y = savedPosition.m_y;
+				}
+				(*it)->setPosition(startFramePosition);
+
+				if (areColliding((*enemiesIterator), (*it).get()))
+				{
+					collitionDetected = true;
+					break;
+				}
+
+				deltaX -= incrementX;
+				deltaY -= incrementY;
+			}
+			(*it)->setPosition(savedPosition);
+			if (collitionDetected)
 			{
 				printf("Colision de bala con enemigo\n");
 				(*enemiesIterator)->damage((*it)->getDamage(), true, Game::Instance()->getPlayer((*it)->getOwnerID()));
 				(*it)->kill(); //mata la bala
-
 				//elimina bala del chekeo de colisiones
 				it = m_playersBullets.erase(it);
 			}

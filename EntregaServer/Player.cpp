@@ -342,10 +342,17 @@ void Player::sendDrawMessage(bool isAlive)
 	drawMsg.connectionStatus = m_connected;
 	drawMsg.unused1 = false;
 	drawMsg.alive = isAlive;
-	if(m_soundDirty){
-	drawMsg.hasSound = true;
-	m_soundDirty = false;
-	}else{drawMsg.hasSound = false;}
+
+	if(m_soundDirty)
+	{
+		drawMsg.hasSound = true;
+		m_soundDirty = false;
+
+	}else
+	{
+		drawMsg.hasSound = false;
+	}
+
 	drawMsg.objectID = m_objectId;
 	drawMsg.layer = m_layer;
 	drawMsg.soundID = m_soundSendId;

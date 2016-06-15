@@ -127,10 +127,15 @@ void Enemy::sendDrawMessage(bool isAlive)
 	drawMsg.connectionStatus = true;
 	drawMsg.alive = isAlive;
 
-	if(m_soundDirty){
+	if(m_soundDirty)
+	{
 		drawMsg.hasSound = true;
 		m_soundDirty = false;
-		}else{drawMsg.hasSound = false;}
+
+	}else
+	{
+		drawMsg.hasSound = false;
+	}
 
 	drawMsg.objectID = m_objectId;
 	drawMsg.layer = m_layer;

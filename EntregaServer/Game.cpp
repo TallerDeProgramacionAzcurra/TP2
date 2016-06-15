@@ -77,9 +77,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     powerUp->load(m_gameWidth/2, m_gameHeight/4,48,48,71,1);
     CollitionHandler::Instance()->addPowerUp(powerUp);
 
-    enemy = new BossMati();
-    enemy->load(m_gameWidth/2,0,48,48,666,4);
-    CollitionHandler::Instance()->addEnemy(enemy);
+   // enemy = new BossMati();
+    //enemy->load(m_gameWidth/2,0,48,48,666,4);
+    //CollitionHandler::Instance()->addEnemy(enemy);
 
     loadCurrentStage();
 
@@ -269,7 +269,7 @@ void Game::update()
 	updateSpawners();
 
 	BulletsHandler::Instance()->updateBullets();
-	enemy->update();
+	//enemy->update();
 	m_level->update();
 
 	powerUp->update();
@@ -306,6 +306,13 @@ void Game::update()
 
 	cleanDeadObjects();
 
+}
+
+void Game::updateBackground(int scrollSpeed)
+{
+ 	BackgroundInfo bgInfo;
+ 	bgInfo.backgroundOffset = scrollSpeed;
+ 	sendBackgroundInfo(bgInfo);
 }
 
 void Game::checkPracticeMode()
@@ -664,13 +671,6 @@ void Game::updateSpawners()
 {
 	m_enemiesSpawner->update(m_level->getVirtualPosition());
 	m_powerUpsSpawner->update(m_level->getVirtualPosition());
-}
-
-void Game::updateBackground(int scrollSpeed)
-{
-	BackgroundInfo bgInfo;
-	bgInfo.backgroundOffset = scrollSpeed;
-	sendBackgroundInfo(bgInfo);
 }
 
 void Game::loadCurrentStage()

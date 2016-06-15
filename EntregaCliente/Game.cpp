@@ -459,6 +459,7 @@ void Game::paintbackground(int backgroundTextureID)
 {
 	int bgWidth = TextureManager::Instance()->getTextureInfo(backgroundTextureID).width;
 	int bgHeight = TextureManager::Instance()->getTextureInfo(backgroundTextureID).height;
+
 	TextureManager::Instance()->drawOffset(backgroundTextureID, 0, 0, bgWidth, bgHeight/2 , m_gameWidth, m_gameHeight, 0, m_bgOff, m_pRenderer, 0, SDL_FLIP_NONE);
 
 }
@@ -475,6 +476,7 @@ void Game::createPlayer(int objectID, int textureID)
 	m_player = new Player();
 	m_player->setObjectID(objectID);
 	m_player->setTextureID(textureID);
+
 }
 
 bool Game::canContinue()
@@ -667,6 +669,7 @@ void Game::addTexture(TextureInfo textureInfo)
 		m_bgOffInicial = (TextureManager::Instance()->getTextureInfo(10).height)/2;
 		m_bgOff = m_bgOffInicial;
 		printf("Se agregaron todas las texturas\n");
+
 	}
 }
 
