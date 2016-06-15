@@ -21,6 +21,7 @@ Player::Player() :  MoveableObject(),
 					m_dead(false),
 					m_dying(false),
 					m_exploting(false),
+					m_invulnerable(false),
 					m_health(100),
 					m_collisionDamage(100),
 					m_movedByPlayer(false),
@@ -40,6 +41,10 @@ void Player::collision()
 
 void Player::damage(int damageReceived)
 {
+	if (m_invulnerable)
+	{
+		return;
+	}
 	m_health -= damageReceived;
 	if (m_health <= 0)
 	{
@@ -64,6 +69,14 @@ void Player::setShootingCooldown(int cooldown)
 	}
 }
 
+void Player::setWeapon(Weapon* weapon)
+{
+	if (!weapon)
+		return;
+	delete m_currentWeapon;
+	m_currentWeapon = weapon;
+}
+
 void Player::setWeaponStats(int shootingSpeed, int shootingCooldown, int ownerID, int teamID)
 {
 	if (m_currentWeapon)
@@ -80,6 +93,7 @@ void Player::StopFlipAnimation()
 {
 	//m_doingFlip = false;
 	m_flipRemainingTime = 0;
+	m_invulnerable = false;
 }
 
 void Player::load(int x, int y, int width, int height, int textureID, int numFrames)
@@ -171,6 +185,7 @@ void Player::updateFlipAnimation()
 	{
 		m_currentFrame = 0;
 		m_doingFlip = false;
+		m_invulnerable = false;
 	}
 
 	if (lastFrame != m_currentFrame)
@@ -293,6 +308,7 @@ void Player::handleInput(InputMessage inputMsg)
         	{
         		m_flipRemainingTime = m_flipAnimationTime;
         		m_doingFlip = true;
+        		m_invulnerable = true;
         	}
             m_dirty = true;
         }

@@ -388,6 +388,20 @@ void Game::setPlayersDirty()
 	}
 }
 
+void Game::changePlayerWeapon(Weapon* weapon, Player* player)
+{
+	player->setWeapon(weapon);
+
+	if (m_parserNivel)
+	{
+		int playerSpeed = m_parserNivel->getAvion().velDespl;
+		int shootingCooldown = m_parserNivel->getAvion().cdDisp;
+		int bulletsSpeed = m_parserNivel->getAvion().velDisp;
+		player->setWeaponStats(bulletsSpeed, shootingCooldown, player->getObjectId(), player->getTeamNumber());
+	}
+
+}
+
 void Game::handleEvents()
 {
 }

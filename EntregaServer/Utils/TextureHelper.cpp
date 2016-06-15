@@ -50,10 +50,12 @@ void TextureHelper::initialize()
 	//Disparos
 	m_textureIDMap["disparo"] = 50;
 	m_textureIDMap["disparoRedondo"] = 51;
+	m_textureIDMap["dobledisparo"] = 52;
 
 	//PowerUps
 	m_textureIDMap["ExtraPoints"] = 70;
 	m_textureIDMap["BombPU"] = 71;
+	m_textureIDMap["DualWeaponPU"] = 72;
 
 	//Otros
 	m_textureIDMap["MagicAppearance"] = 90;

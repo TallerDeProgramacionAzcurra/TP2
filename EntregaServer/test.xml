@@ -60,6 +60,13 @@
 		<alto>32</alto>
 	</sprite>
 	<sprite>
+		<id>dobledisparo</id>
+		<path>Assets/Sprites/doblebullet.png</path>
+		<cantidad>1</cantidad>
+		<ancho>48</ancho>
+		<alto>32</alto>
+	</sprite>
+	<sprite>
 		<id>disparoRedondo</id>
 		<path>Assets/Sprites/roundBullet.png</path>
 		<cantidad>1</cantidad>
@@ -90,6 +97,13 @@
 	<sprite>
 		<id>ExtraPoints</id>
 		<path>Assets/Sprites/ExtraPoints.png</path>
+		<cantidad>1</cantidad>
+		<ancho>48</ancho>
+		<alto>48</alto>
+	</sprite>
+	<sprite>
+		<id>DualWeaponPU</id>
+		<path>Assets/Sprites/Metralladora.png</path>
 		<cantidad>1</cantidad>
 		<ancho>48</ancho>
 		<alto>48</alto>

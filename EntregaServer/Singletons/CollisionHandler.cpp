@@ -43,6 +43,11 @@ void CollitionHandler::handlePlayerCollitions()
 		//Compara cada jugador contra cada bala enemiga
 		for(vector<std::shared_ptr<Bullet>>::iterator it = m_enemiesBullets.begin(); it != m_enemiesBullets.end(); )
 		{
+			if ((*playersIterator)->isDoingFlip())
+			{
+				break;
+			}
+
 			if (m_practiceMode)
 				break;
 
@@ -100,6 +105,11 @@ void CollitionHandler::handlePlayerCollitions()
 		{
 			if (m_practiceMode)
 				break;
+
+			if ((*playersIterator)->isDoingFlip())
+			{
+				break;
+			}
 
 			if ((*it)->isDead() || (*it)->isDying())
 			{

@@ -10,11 +10,11 @@
 #include "Singletons/GameTimeHelper.h"
 #include "Utils/TiposDefinidos.h"
 #include "Weapons/PlayerWeapons/BasicWeapon.h"
-#include "Weapons/PlayerWeapons/FiveBulletsWeapon.h"
+#include "Weapons/PlayerWeapons/DualWeapon.h"
 class Weapon;
 
 #define EXPLOTION_ANIMATION_TIME 1000
-#define FLIP_ANIMATION_TIME 1000
+#define FLIP_ANIMATION_TIME 1500
 
 
 class Player : public MoveableObject
@@ -44,6 +44,7 @@ public:
     void setShootingSpeed(int speed);
     void setShootingCooldown(int cooldown);
     void setCollisionDamage(int collisionDamage) { m_collisionDamage = collisionDamage; }
+    void setWeapon(Weapon* weapon);
 
     void setTeamNumber(int number) { m_teamNumber = number; }
     void refreshDirty() { m_movedByPlayer = false; m_dirty = true;}
@@ -53,9 +54,11 @@ public:
     //Getters
     bool isDead() { return m_dead; }
     bool isDying() { return m_dying; }
+    bool isDoingFlip() { return m_doingFlip; }
     bool isConnected() { return m_connected; }
     int getTeamNumber() { return m_teamNumber; }
     int getCollisionDamage() { return m_collisionDamage; }
+
 
     void damage(int damageReceived);
 
@@ -93,6 +96,8 @@ private:
     bool m_dead;
     bool m_dying;
     bool m_exploting;
+
+    bool m_invulnerable;
 
     /*******************/
     int m_health;

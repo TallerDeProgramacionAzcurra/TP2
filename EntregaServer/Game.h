@@ -31,6 +31,7 @@ class Enemy;
 class SmallEnemy;
 class Player;
 class Level;
+class Weapon;
 class PowerUp;
 class server;
 class DrawMessagesPacker;
@@ -95,6 +96,7 @@ public:
 
     void initializeTexturesInfo();
     void setPlayersDirty();
+    void changePlayerWeapon(Weapon* weapon, Player* player);
 
    	void* koreaMethod(void);
    	void readFromKorea();
