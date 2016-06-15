@@ -31,8 +31,8 @@ int FontManager::textSize(const char* text,int *h,int* w)
 SDL_Texture* FontManager::drawtext(char fgR, char fgG, char fgB, char fgA,
 	char bgR, char bgG, char bgB, char bgA, const char text[], textquality quality)
 {
-  SDL_Color tmpfontcolor = {fgR,fgG,fgB,fgA};
-  SDL_Color tmpfontbgcolor = {bgR, bgG, bgB, bgA};
+  SDL_Color tmpfontcolor = {static_cast<Uint8>(fgR),static_cast<Uint8>(fgG),static_cast<Uint8>(fgB),static_cast<Uint8>(fgA)};
+  SDL_Color tmpfontbgcolor = {static_cast<Uint8>(bgR), static_cast<Uint8>(bgG), static_cast<Uint8>(bgB), static_cast<Uint8>(bgA)};
   SDL_Surface* resulting_text;
 
   if (quality == solid) {

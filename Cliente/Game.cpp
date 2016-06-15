@@ -649,7 +649,7 @@ void Game::addTexture(TextureInfo textureInfo)
 void Game::loadTextures()
 {
 	//printf("Se cargaron todas las texturas\n");
-	Logger::Instance()->LOG("Cliente: Se recibieron y cargaron todas las texturas satisfactoriamente.", DEBUG);
+	Logger::Instance()->LOG("Cliente: Se recibieron y cargaron todas las texturas satisfactoriamente.", LogTypeDebug);
 	TextureManager::Instance()->loadTextures(m_pRenderer);
 }
 void Game::mrMusculo(){
@@ -848,4 +848,5 @@ int Game::createGame(int DELAY_TIME){
 					std::cout << "game init failure - " << SDL_GetError() << "\n";
 					return -1;
 				}
+    return 0;
 }

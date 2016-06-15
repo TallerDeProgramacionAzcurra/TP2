@@ -16,7 +16,7 @@
 
 using namespace std;
 
-enum LogType { DEBUG, WARN, ERROR };
+enum LogType { LogTypeDebug, LogTypeWarn, LogTypeError };
 
 class Logger
 {

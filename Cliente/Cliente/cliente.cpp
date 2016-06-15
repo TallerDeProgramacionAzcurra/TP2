@@ -4,7 +4,7 @@ using namespace std;
 
 void cliente::error(const char *msg)
 {
-	Logger::Instance()->LOG(msg, ERROR);
+	Logger::Instance()->LOG(msg, LogTypeError);
 	Logger::Instance()->Close();
     exit(0);
 }
@@ -17,7 +17,7 @@ bool cliente::conectar()
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
     {
-    	Logger::Instance()->LOG("Cliente: Error en la creación del socket", ERROR);
+    	Logger::Instance()->LOG("Cliente: Error en la creación del socket", LogTypeError);
     	m_connecting = false;
     	return false;
     }
@@ -26,7 +26,7 @@ bool cliente::conectar()
     {
     	if (!disableNagelAlgorithm(sockfd))
     	{
-    		Logger::Instance()->LOG("Cliente: Error al deshabilitar el algoritmo de Nagel.", ERROR);
+    		Logger::Instance()->LOG("Cliente: Error al deshabilitar el algoritmo de Nagel.", LogTypeError);
     		m_connecting = false;
     		return false;
     	}
@@ -35,7 +35,7 @@ bool cliente::conectar()
     setTimeOut();
     if (connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
     {
-    	Logger::Instance()->LOG("Cliente: El cliente no se pudo conectar satisfactoriamente", WARN);
+    	Logger::Instance()->LOG("Cliente: El cliente no se pudo conectar satisfactoriamente", LogTypeWarn);
     	m_connecting = false;
        return false;
     }
@@ -83,7 +83,7 @@ void cliente::desconectar()
 	serverTimeOut->Stop();
 	cerrarSoket();
 	printf("Has sido desconectado del servidor \n");
-	Logger::Instance()->LOG("Cliente: El cliente se ha desconectado satisfactoriamente", DEBUG);
+	Logger::Instance()->LOG("Cliente: El cliente se ha desconectado satisfactoriamente", LogTypeDebug);
 }
 
 cliente::cliente(int argc, string ip, int port, std::string name){
@@ -148,7 +148,7 @@ void cliente::sendMsg(Mensaje msg)
         int bytesEnviados = send(sockfd, ptr, msgLength, 0);
         if (bytesEnviados < 1)
         {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
         	return;
         }
         ptr += bytesEnviados;
@@ -160,7 +160,7 @@ void cliente::sendMsg(Mensaje msg)
     {
 		std::stringstream ss;
 		ss << "Cliente: Se ha enviado con éxito el mensaje con ID: " << msg.id.c_str() << ".";
-		Logger::Instance()->LOG(ss.str(), DEBUG);
+		Logger::Instance()->LOG(ss.str(), LogTypeDebug);
     }
 }
 
@@ -178,7 +178,7 @@ void cliente::sendNetworkMsg(NetworkMessage netMsg)
         int bytesEnviados = send(sockfd, ptr, msgLength, 0);
         if (bytesEnviados < 1)
         {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
         	return;
         }
         ptr += bytesEnviados;
@@ -200,7 +200,7 @@ void cliente::sendInputMsg(InputMessage msg)
         int bytesEnviados = send(sockfd, ptr, msgLength, 0);
         if (bytesEnviados < 1)
         {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
         	return;
         }
         ptr += bytesEnviados;
@@ -222,7 +222,7 @@ void cliente::sendConnectionInfoMsg(ConnectionInfo msg)
         int bytesEnviados = send(sockfd, ptr, msgLength, 0);
         if (bytesEnviados < 1)
         {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
         	return;
         }
         ptr += bytesEnviados;
@@ -348,12 +348,12 @@ void cliente::setTimeOut()
 
     if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
     {
-    	Logger::Instance()->LOG("Cliente: No se pudo setear un timeout en la conexion con el servidor.", WARN);
+    	Logger::Instance()->LOG("Cliente: No se pudo setear un timeout en la conexion con el servidor.", LogTypeWarn);
     }
 
     if (setsockopt (sockfd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
     {
-    	Logger::Instance()->LOG("Cliente: No se pudo setear un timeout en la conexion con el servidor.", WARN);
+    	Logger::Instance()->LOG("Cliente: No se pudo setear un timeout en la conexion con el servidor.", LogTypeWarn);
     }
 }
 
@@ -416,7 +416,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 			Game::Instance()->createPlayer(connectedMessage.objectID, connectedMessage.textureID);
 			//El cliente se conecto con exito.
 			printf("Conección con el server exitosa. \n");
-			Logger::Instance()->LOG("Cliente: Conección al servidor exitosa.\n", DEBUG);
+			Logger::Instance()->LOG("Cliente: Conección al servidor exitosa.\n", LogTypeDebug);
 		}
 
 		if (!connectedMessage.connected && !connectedMessage.requestData)
@@ -434,7 +434,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		//El cliente fue pateado
 		desconectar();
 		printf("El cliente ha sido desconectado del server.\n");
-		Logger::Instance()->LOG("Cliente: El cliente ha sido desconectado del server.", DEBUG);
+		Logger::Instance()->LOG("Cliente: El cliente ha sido desconectado del server.", LogTypeDebug);
 
 		return;
 	}
@@ -444,7 +444,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		//El server esta lleno. Patear
 
 		printf("El servidor está lleno.\n");
-		Logger::Instance()->LOG("Cliente: No se pudo conectar al servidor. El servidor está lleno.", DEBUG);
+		Logger::Instance()->LOG("Cliente: No se pudo conectar al servidor. El servidor está lleno.", LogTypeDebug);
 
 		desconectar();
 		m_connected = false;
@@ -454,7 +454,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 	//Player Reconnection
 	if ((networkMessage.msg_Code[0] == 'p') && (networkMessage.msg_Code[1] == 'r') && (networkMessage.msg_Code[2] == 'i'))
 	{
-		Logger::Instance()->LOG("Cliente: Se ha reconectado un Cliente.", DEBUG);
+		Logger::Instance()->LOG("Cliente: Se ha reconectado un Cliente.", LogTypeDebug);
 		PlayerReconnectionInfo playerReconnectionInfo = m_alanTuring->decodePlayerReconnectionInfo(networkMessage);
 		Game::Instance()->resetTextureColor(playerReconnectionInfo.playerID, FOREGROUND);
 		return;
@@ -504,7 +504,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		ResetInfo resetInfo = m_alanTuring->decodeResetInfo(networkMessage);
 		Game::Instance()->setWindowSize(static_cast<int>(resetInfo.windowWidth), static_cast<int>(resetInfo.windowHeight));
 		Game::Instance()->resetGame();
-		Logger::Instance()->LOG("Juego: El juego ha sido reiniciado.", DEBUG);
+		Logger::Instance()->LOG("Juego: El juego ha sido reiniciado.", LogTypeDebug);
 
 		return;
 	}
@@ -518,7 +518,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		printf ("El jugador %s se ha desconectado. \n", playerDiscMsg.name);
 		std::stringstream ss;
 		ss <<"Cliente: El jguador " << playerDiscMsg.name << " se ha desconectado.";
-		Logger::Instance()->LOG(ss.str(), DEBUG);
+		Logger::Instance()->LOG(ss.str(), LogTypeDebug);
 
 		return;
 	}
@@ -560,7 +560,7 @@ bool cliente::validarMensaje(DataMessage dataMsg)
 		mensajeValido = false;
 		ss.clear();
 		ss << "El Mensaje con ID: " << messageID.c_str() << " fue rechazado.";
-		Logger::Instance()->LOG(ss.str(), DEBUG);
+		Logger::Instance()->LOG(ss.str(), LogTypeDebug);
 		ss << "\n";
 		printf("%s", ss.str().c_str());
 
@@ -570,7 +570,7 @@ bool cliente::validarMensaje(DataMessage dataMsg)
 		mensajeValido = true;
 		ss.clear();
 		ss << "El Mensaje con ID: " << messageID.c_str() << " fue procesado correctamente.";
-		Logger::Instance()->LOG(ss.str(), DEBUG);
+		Logger::Instance()->LOG(ss.str(), LogTypeDebug);
 		ss << "\n";
 		printf("%s", ss.str().c_str());
 	}
