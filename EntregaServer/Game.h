@@ -179,6 +179,7 @@ private:
     int m_gameHeight;
     float m_scrollSpeed;
 
+
     pthread_mutex_t m_resetMutex;
     pthread_mutex_t m_updatePlayerMutex;
     pthread_mutex_t m_createPlayerMutex;
@@ -187,6 +188,8 @@ private:
     ~Game();
     Game(const Game&);
 	Game& operator=(const Game&);
+
+	void updateBackground(int scrollSpeed);
 
 	void updateSpawners();
 	void initializeTeamScores();

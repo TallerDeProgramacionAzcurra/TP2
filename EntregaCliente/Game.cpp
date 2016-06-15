@@ -16,6 +16,7 @@ m_waitingTextures(false),
 m_continueLooping(false),
 m_scrollSpeed(0.8),
 m_bgOff(0),
+m_bgOffInicial(0),
 m_gameWidth(0),
 m_gameHeight(0)
 {
@@ -119,7 +120,7 @@ void Game::render()
 {
     SDL_RenderClear(m_pRenderer);
 
-    paintbackground(10, 1); //Sacar el scroll speed hardcodeado
+    paintbackground(10); //Sacar el scroll speed hardcodeado
 
     for (std::map<int, std::shared_ptr<DrawObject>>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
     {
@@ -454,20 +455,19 @@ void Game::addPointsToScore(ScoreMessage scoreMsg)
 	pthread_mutex_unlock(&m_scoreMutex);
 }
 
-void Game::paintbackground(int backgroundTextureID,int scrollSpeed)
+void Game::paintbackground(int backgroundTextureID)
 {
 	int bgWidth = TextureManager::Instance()->getTextureInfo(backgroundTextureID).width;
 	int bgHeight = TextureManager::Instance()->getTextureInfo(backgroundTextureID).height;
-	m_bgOff += scrollSpeed;
-	if (m_bgOff > bgHeight/2)
-		m_bgOff = 0;
 	TextureManager::Instance()->drawOffset(backgroundTextureID, 0, 0, bgWidth, bgHeight/2 , m_gameWidth, m_gameHeight, 0, m_bgOff, m_pRenderer, 0, SDL_FLIP_NONE);
 
 }
 
 void Game::updateBackground(BackgroundInfo backgroundInfo)
 {
-
+	m_bgOff -= backgroundInfo.backgroundOffset;
+	if (m_bgOff < 0)
+		m_bgOff = m_bgOffInicial;
 }
 
 void Game::createPlayer(int objectID, int textureID)
@@ -664,6 +664,8 @@ void Game::addTexture(TextureInfo textureInfo)
 	if (textureInfo.lastTexture)
 	{
 		m_waitingTextures = false;
+		m_bgOffInicial = (TextureManager::Instance()->getTextureInfo(10).height)/2;
+		m_bgOff = m_bgOffInicial;
 		printf("Se agregaron todas las texturas\n");
 	}
 }
