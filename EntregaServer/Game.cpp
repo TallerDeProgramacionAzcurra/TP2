@@ -274,6 +274,8 @@ void Game::update()
 
 	powerUp->update();
 
+	updateBackground(m_level->getScrollSpeed());
+
 	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
 	{
 		//printf("objectID = %d \n", it->second.getObjectId());
@@ -662,6 +664,13 @@ void Game::updateSpawners()
 {
 	m_enemiesSpawner->update(m_level->getVirtualPosition());
 	m_powerUpsSpawner->update(m_level->getVirtualPosition());
+}
+
+void Game::updateBackground(int scrollSpeed)
+{
+	BackgroundInfo bgInfo;
+	bgInfo.backgroundOffset = scrollSpeed;
+	sendBackgroundInfo(bgInfo);
 }
 
 void Game::loadCurrentStage()

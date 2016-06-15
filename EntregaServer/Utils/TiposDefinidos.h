@@ -111,7 +111,7 @@ struct PlayerDisconnection
 
 struct BackgroundInfo
 {
-	int backgroundOffser;
+	int backgroundOffset;
 };
 
 struct DrawMessage

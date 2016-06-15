@@ -34,6 +34,7 @@ public:
 
 	int getVirtualPosition() { return m_virtualPosition; }
 	int getLevelHeight() { return m_levelHeight; }
+	int getScrollSpeed() { return m_scrollSpeed; }
 
 private:
 
