@@ -63,13 +63,11 @@ void ClientMenu::clientMenuShow() {
 }
 
 // Events methods.
-bool ClientMenu::clientMenuHandleQuitEvent() {
+bool ClientMenu::clientMenuHandleQuitEvent(SDL_Event *e) {
     //Event handler
-    SDL_Event e;
-    
-    while(SDL_PollEvent(&e) != 0) {
+    while(SDL_PollEvent(e) != 0) {
         //User requests quit
-        if (e.type == SDL_QUIT) {
+        if (e->type == SDL_QUIT) {
             return true;
         }
     }
@@ -86,8 +84,13 @@ void ClientMenu::clientMenuRun() {
     backgrounImage.menuTextureSetModulation(ClientMenuUtils::clientMenuModulationColor());
     textures.push_back(backgrounImage);
     
-    ClientMenuTextFieldTexture promptText = ClientMenuTextFieldTexture(this->clientMenuWindow);
-    textures.push_back(promptText);
+    ClientMenuTextTexture promptPlayerText = ClientMenuTextTexture(this->clientMenuWindow);
+    promptPlayerText.menuTextureSetTextFont("bummer3d.ttf", 2);
+    textures.push_back(promptPlayerText);
+    
+    ClientMenuTextFieldTexture inputPlayerText = ClientMenuTextFieldTexture(this->clientMenuWindow);
+    inputPlayerText.menuTextureSetTextFont("bummer3d.ttf", 2);
+    textures.push_back(inputPlayerText);
     
     bool loadingTextureOK = true;
     
@@ -100,17 +103,35 @@ void ClientMenu::clientMenuRun() {
     }
     
     if (loadingTextureOK == true) {
-        while (this->clientMenuHandleQuitEvent() == false) {
+        SDL_Event event;
+        while (this->clientMenuHandleQuitEvent(&event) == false) {
+            this->clientMenuClear();
+            
             SDL_Rect imageRect;
+            imageRect.x = 0;
+            imageRect.y = 0;
             SDL_GetWindowSize(this->clientMenuWindow, &imageRect.w, &imageRect.h);
             
             // Background Image.
             backgrounImage.menuTextureRender(0, 0, &imageRect);
             
             // Prompt text.
-            promptText.menuTextureSetTextFont("bummer3d.ttf", imageRect.w / 20);
-            promptText.menuTextureSetTextProperties("Nombre del jugador:", ClientMenuUtils::clientMenuTextColor());
-            promptText.menuTextureRender((imageRect.w - promptText.menuTextureGetWidth()) / 2, (imageRect.h - promptText.menuTextureGetHeight()) / 2);
+            promptPlayerText.menuTextureSetTextFont("bummer3d.ttf", imageRect.w / 20);
+            promptPlayerText.menuTextureSetText("Nombre del jugador:");
+            promptPlayerText.menuTextureRender((imageRect.w - promptPlayerText.menuTextureGetWidth()) / 2,
+                                               imageRect.h / 2 - promptPlayerText.menuTextureGetHeight());
+            
+            // Prompt text.
+            inputPlayerText.menuTextureSetTextFont("bummer3d.ttf", imageRect.w / 20);
+            inputPlayerText.menuTextureSetText("Jugador #");
+            inputPlayerText.menuTextureRender((imageRect.w - inputPlayerText.menuTextureGetWidth()) / 2,
+                                              imageRect.h / 2);
+            
+            // Handler mouse touch up event.
+            if (event.type == SDL_MOUSEBUTTONUP) {
+                inputPlayerText.menuTextureTextFieldHandlerMourEvent(&event);
+            }
+
             
             this->clientMenuShow();
         }

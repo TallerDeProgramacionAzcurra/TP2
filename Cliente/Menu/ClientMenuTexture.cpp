@@ -26,18 +26,20 @@ ClientMenuTexture::~ClientMenuTexture() {
 }
 
 void ClientMenuTexture::menuTextureRender(int x, int y, SDL_Rect *clip, double angle, SDL_Point *center, SDL_RendererFlip flip) {
+    this->menuTextureX = x;
+    this->menuTextureY = y;
+    
     //Set rendering space and render to screen
     SDL_Rect renderQuad = { x, y, this->menuTextureWidth, this->menuTextureHeight };
     
     //Set clip rendering dimensions
-    if( clip != NULL )
-    {
+    if (clip != NULL) {
         renderQuad.w = clip->w;
         renderQuad.h = clip->h;
     }
     
     //Render to screen
-    SDL_RenderCopyEx(this->menuTextureRenderer, this->menuTexture, clip, &renderQuad, angle, center, flip );
+    SDL_RenderCopyEx(this->menuTextureRenderer, this->menuTexture, clip, &renderQuad, angle, center, flip);
 }
 
 int ClientMenuTexture::menuTextureGetWidth()

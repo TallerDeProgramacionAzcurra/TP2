@@ -7,9 +7,12 @@
 //
 
 #include "ClientMenuTextTexture.hpp"
+#include "ClientMenuUtil.hpp"
 
 ClientMenuTextTexture::ClientMenuTextTexture(SDL_Window *menuWindow) : ClientMenuTexture(menuWindow) {
     this->menuTextureLoaded = true;
+    this->menuTextureSelected = false;
+    this->menuTextureFont = NULL;
     
     if (TTF_Init() == -1) {
         printf("ClientMenuTextTexture.cpp - SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
@@ -37,8 +40,9 @@ void ClientMenuTextTexture::menuTextureSetTextFont(const char *filePath, int fon
     }
 }
 
-void ClientMenuTextTexture::menuTextureSetTextProperties(const char *textureText, SDL_Color textColor) {
+void ClientMenuTextTexture::menuTextureSetText(const char *textureText) {
     //Render text surface
+    SDL_Color textColor = this->menuTextureSelected? ClientMenuUtils::clientMenuTextColorSelected() : ClientMenuUtils::clientMenuTextColor();
     SDL_Surface *textSurface = TTF_RenderText_Solid(this->menuTextureFont, textureText, textColor);
     if (textSurface == NULL) {
         printf("ClientMenuTextTexture.cpp - Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());

@@ -35,7 +35,7 @@ private:
     void clientMenuShow();
     
     // Events methods.
-    bool clientMenuHandleQuitEvent();
+    bool clientMenuHandleQuitEvent(SDL_Event *e);
 };
 
 #endif /* ClienteMenu_hpp */

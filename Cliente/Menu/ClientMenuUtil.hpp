@@ -16,6 +16,7 @@ class ClientMenuUtils {
 public:
     static SDL_Color clientMenuModulationColor();
     static SDL_Color clientMenuTextColor();
+    static SDL_Color clientMenuTextColorSelected();
 };
 
 #endif /* ClientMenuUtil_hpp */

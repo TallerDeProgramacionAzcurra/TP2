@@ -15,3 +15,7 @@ SDL_Color ClientMenuUtils::clientMenuModulationColor() {
 SDL_Color ClientMenuUtils::clientMenuTextColor() {
     return { 98, 174, 50 };
 }
+
+SDL_Color ClientMenuUtils::clientMenuTextColorSelected() {
+    return { 255, 255, 255 };
+}

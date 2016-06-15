@@ -21,10 +21,13 @@ public:
     
     //Loads image at specified path
     void menuTextureSetTextFont(const char *filePath, int fontSize);
-    void menuTextureSetTextProperties(const char *textureText, SDL_Color textColor);
+    void menuTextureSetText(const char *textureText);
+    
+protected:
+    bool menuTextureSelected;
     
 private:
-    TTF_Font *menuTextureFont = NULL;
+    TTF_Font *menuTextureFont;
 };
 
 #endif /* ClientMenuTextTexture_hpp */
