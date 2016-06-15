@@ -37,6 +37,7 @@ MediumPlane::MediumPlane() :Enemy(),
 	generateBorderReturnOffset();
 
 	m_health= 500;
+	m_pointsOnCombo = 500;
 	m_pointOnKill = 500;
 	m_pointOnHit = 100;
 	m_enemyWeapon = new EnemyBaseGun();

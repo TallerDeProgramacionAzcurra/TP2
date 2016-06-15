@@ -71,6 +71,7 @@ public:
     int getLayer() { return m_layer; }
     int getTextureID() { return m_textureID; }
     int getHitRadius() { return m_hitRadius; }
+    bool isObsolet(){ return m_obsolet; }
 
     void setNumFrames(int numFrames) { m_numFrames = numFrames; }
     void setObjectID(int objectId) {m_objectId = objectId;}
@@ -79,6 +80,7 @@ public:
     double getAngle() {return m_angle;}
     void setDirty( bool dirty ) { m_dirty = true; }
     void setHitRadius( int hitRadius ) { m_hitRadius = hitRadius; }
+    void setObsolet( bool obsolet ) { m_obsolet = obsolet; }
 
     bool canRecycle() { return m_canRecycle; }
 
@@ -124,6 +126,9 @@ protected:
     bool m_canRecycle;
     int m_soundSendId;
     bool m_soundDirty;
+
+    //Hardcode
+    bool m_obsolet;
 };
 
 

@@ -70,15 +70,26 @@ void Level::loadFromXML(const std::string& xmlFileName)
 
 void Level::loadLevel(int level)
 {
-	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end(); ++it)
+	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end();)
 	 {
 		 if ((*it))
+		 {
+			 (*it)->setObsolet(true);
+		 }
+		 if ((*it) && ((*it)->canRecycle()))
+		 {
 			 delete (*it);
+			 it = m_levelObjects.erase(it);
+		 }
+		 else
+		 {
+			 ++it;
+		 }
 	 }
-	 m_levelObjects.clear();
 	std::stringstream ss;
 	ss << "test" << level << ".xml";
 	loadFromXML(ss.str());
+	printf("Cargando el nivel %d de %s \n", level, ss.str().c_str());
 }
 
 void Level::scrollToNextStage()

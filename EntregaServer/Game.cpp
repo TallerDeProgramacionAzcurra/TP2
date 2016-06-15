@@ -361,6 +361,7 @@ void Game::checkStartingStage()
 		{
 			m_startingStage = false;
 			m_waitingToScroll = false;
+			m_level->loadLevel(m_currentStage);
 		}
 	}
 }

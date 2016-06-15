@@ -15,6 +15,7 @@ Uint32 Portaviones_TimerCallback(Uint32 interval, void *island) {
 Portaviones::Portaviones() : RecurrentObject()
 {
 	m_tag = "Portaviones";
+	m_layer = BACKGROUND;
 }
 
 Portaviones::~Portaviones()
@@ -69,7 +70,7 @@ void Portaviones::update()
 
 	//if (m_dirty)
 	//{
-		sendDrawMessage(true);
+		sendDrawMessage(!m_obsolet);
 		//m_dirty = false;
 	//}
 }
@@ -99,6 +100,11 @@ void Portaviones::sendDrawMessage(bool isAlive)
 	drawMsg.connectionStatus = true;
 	drawMsg.alive = isAlive;
 	drawMsg.hasSound = false;
+
+	if (!isAlive)
+	{
+		m_canRecycle = true;
+	}
 
 	drawMsg.objectID = m_objectId;
 	drawMsg.layer = m_layer;

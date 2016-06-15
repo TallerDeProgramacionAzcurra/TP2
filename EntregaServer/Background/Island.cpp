@@ -15,6 +15,7 @@ Uint32 Island_TimerCallback(Uint32 interval, void *island) {
 Island::Island() : RecurrentObject()
 {
 	m_tag = "island";
+	m_layer = BACKGROUND;
 }
 
 Island::~Island()
@@ -69,7 +70,7 @@ void Island::update()
 
 	//if (m_dirty)
 	//{
-		sendDrawMessage(true);
+		sendDrawMessage(!m_obsolet);
 		//m_dirty = false;
 	//}
 }
@@ -99,6 +100,11 @@ void Island::sendDrawMessage(bool isAlive)
 	drawMsg.connectionStatus = true;
 	drawMsg.alive = isAlive;
 	drawMsg.hasSound = false;
+
+	if (!isAlive)
+	{
+		m_canRecycle = true;
+	}
 
 	drawMsg.objectID = m_objectId;
 	drawMsg.layer = m_layer;
