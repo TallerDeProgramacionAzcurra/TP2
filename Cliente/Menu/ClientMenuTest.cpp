@@ -10,8 +10,8 @@
 
 #include "ClienteMenu.hpp"
 
-static int const kScreenWidth = 640;
-static int const kScreenheight = 480;
+static int const kScreenWidth = 600;
+static int const kScreenheight = 600;
 
 int main(int argc, char **argv) {
     ClientMenu clientMenu = ClientMenu("Menú", kScreenWidth, kScreenheight);

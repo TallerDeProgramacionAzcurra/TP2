@@ -15,7 +15,7 @@
 
 class ClientMenuImageTexture : public ClientMenuTexture {
 public:
-    ClientMenuImageTexture(SDL_Renderer *menuTextureRenderer);
+    ClientMenuImageTexture(SDL_Window *menuWindow);
     virtual ~ClientMenuImageTexture();
     
     //Loads image at specified path

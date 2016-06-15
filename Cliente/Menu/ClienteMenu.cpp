@@ -80,14 +80,13 @@ bool ClientMenu::clientMenuHandleQuitEvent() {
 void ClientMenu::clientMenuRun() {
     std::list<ClientMenuTexture> textures = std::list<ClientMenuTexture>();
     
-    ClientMenuImageTexture backgrounImage = ClientMenuImageTexture(this->clientMenuRender);
-    backgrounImage.menuTextureLoadFromFile("TP2/Cliente/Menu/Bomber.JPG");
+    ClientMenuImageTexture backgrounImage = ClientMenuImageTexture(this->clientMenuWindow);
+    backgrounImage.menuTextureLoadFromFile("Bomber.JPG");
     backgrounImage.menuTextureSetModulation(ClientMenuUtils::clientMenuModulationColor());
     textures.push_back(backgrounImage);
     
-    ClientMenuTextTexture firstText = ClientMenuTextTexture(this->clientMenuRender);
-    firstText.menuTextureLoadFromFile("TP2/Cliente/Menu/bummer3d.ttf");
-    firstText.menuTextureSetTextProperties("TEXTO 1", ClientMenuUtils::clientMenuTextColor());
+    ClientMenuTextTexture firstText = ClientMenuTextTexture(this->clientMenuWindow);
+    firstText.menuTextureLoadFromFile("bummer3d.ttf");
     textures.push_back(firstText);
     
     bool loadingTextureOK = true;
@@ -102,8 +101,13 @@ void ClientMenu::clientMenuRun() {
     
     if (loadingTextureOK == true) {
         while (this->clientMenuHandleQuitEvent() == false) {
-            backgrounImage.menuTextureRender(0, 0);
-            firstText.menuTextureRender((640 - firstText.menuTextureGetWidth()) / 2, (480 - firstText.menuTextureGetHeight()) / 2);
+            // Background Image.
+            SDL_Rect imageRect;
+            SDL_GetWindowSize(this->clientMenuWindow, &imageRect.w, &imageRect.h);
+            backgrounImage.menuTextureRender(0, 0, &imageRect);
+            
+            firstText.menuTextureSetTextProperties("Nombre del jugador:", ClientMenuUtils::clientMenuTextColor());
+            firstText.menuTextureRender((imageRect.w - firstText.menuTextureGetWidth()) / 2, (imageRect.h - firstText.menuTextureGetHeight()) / 2);
             this->clientMenuShow();
         }
     }

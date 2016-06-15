@@ -10,10 +10,10 @@
 
 #include "ClientMenuTexture.hpp"
 
-ClientMenuTexture::ClientMenuTexture(SDL_Renderer *menuTextureRenderer) {
+ClientMenuTexture::ClientMenuTexture(SDL_Window *menuWindow) {
     //Initialize
     this->menuTexture = NULL;
-    this->menuTextureRenderer = menuTextureRenderer;
+    this->menuTextureRenderer = SDL_GetRenderer(menuWindow);
     this->menuTextureWidth = 0;
     this->menuTextureHeight = 0;
     this->menuTextureLoaded = false;
@@ -25,7 +25,7 @@ ClientMenuTexture::~ClientMenuTexture() {
     }
 }
 
-void ClientMenuTexture::menuTextureRender(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip) {
+void ClientMenuTexture::menuTextureRender(int x, int y, SDL_Rect *clip, double angle, SDL_Point *center, SDL_RendererFlip flip) {
     //Set rendering space and render to screen
     SDL_Rect renderQuad = { x, y, this->menuTextureWidth, this->menuTextureHeight };
     

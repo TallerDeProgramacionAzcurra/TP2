@@ -14,7 +14,7 @@
 
 class ClientMenuTexture {
 public:
-    ClientMenuTexture(SDL_Renderer *menuTextureRenderer);
+    ClientMenuTexture(SDL_Window *menuWindow);
     virtual ~ClientMenuTexture();
     
     //Renders texture at given point.

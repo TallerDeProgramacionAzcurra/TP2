@@ -10,7 +10,7 @@
 
 #include "ClientMenuImageTexture.hpp"
 
-ClientMenuImageTexture::ClientMenuImageTexture(SDL_Renderer *menuTextureRenderer)  : ClientMenuTexture(menuTextureRenderer) {
+ClientMenuImageTexture::ClientMenuImageTexture(SDL_Window *menuWindow)  : ClientMenuTexture(menuWindow) {
     if (!(IMG_Init(IMG_INIT_PNG))) {
         printf("ClientMenuImageTexture.cpp - SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
         this->menuTextureLoaded = false;
@@ -47,7 +47,6 @@ void ClientMenuImageTexture::menuTextureLoadFromFile(const char *filePath) {
             this->menuTextureHeight = loadedSurface->h;
         }
         
-        //Get rid of old loaded surface
         SDL_FreeSurface(loadedSurface);
     }
     
