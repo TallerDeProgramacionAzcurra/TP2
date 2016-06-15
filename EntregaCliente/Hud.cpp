@@ -1,7 +1,7 @@
 #include "Hud.h"
 using namespace std;
 
-Hud::Hud(int gameWidth, int gameHeight): m_playerScore(0),
+Hud::Hud(int gameWidth, int gameHeight, int id, int cantHuds, bool m_teamMode): m_playerScore(0),
 										 m_newScore(0),
 										 m_lerping(false)
 {
@@ -12,7 +12,7 @@ Hud::Hud(int gameWidth, int gameHeight): m_playerScore(0),
 	FontManager::Instance()->textSize(m_title.text,&h,&w);
 	m_title.height = h*TEXT_SIZE_FACTOR;
 	m_title.width = w*TEXT_SIZE_FACTOR;
-	m_title.x = (gameWidth-m_title.width)/2;
+	m_title.x = id*(gameWidth-m_title.width)/cantHuds;
 	m_title.y = 0;
 
 
@@ -20,7 +20,7 @@ Hud::Hud(int gameWidth, int gameHeight): m_playerScore(0),
 	FontManager::Instance()->textSize(m_score.text,&h,&w);
 	m_score.height = h*TEXT_SIZE_FACTOR;
 	m_score.width = w*TEXT_SIZE_FACTOR;
-	m_score.x = (gameWidth-m_score.width)/2;
+	m_score.x = id*(gameWidth-m_score.width)/cantHuds;
 	m_score.y = m_title.height;
 
 	updateScoreTexture(m_playerScore);

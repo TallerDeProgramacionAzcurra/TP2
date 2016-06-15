@@ -90,6 +90,8 @@ struct ConnectedMessage
 	int textureID;
 	short windowWidth;
 	short windowHeight;
+	bool teamMode;
+	short cantPlayers;
 };
 
 struct ConnectionInfo

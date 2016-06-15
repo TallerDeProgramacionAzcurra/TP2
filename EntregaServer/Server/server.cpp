@@ -140,6 +140,9 @@ bool server::crearCliente (int clientSocket)
 	//Tamaño de ventana
 	connectedMsg.windowWidth = Game::Instance()->getGameWidth();
 	connectedMsg.windowHeight = Game::Instance()->getGameHeight();
+	//Info de modo de juego
+	connectedMsg.teamMode = Game::Instance()->isTeamMode();
+	connectedMsg.cantPlayers = MAX_CLIENTES;
 	sendConnectedMsg(clientSocket, connectedMsg);
 
 	if (!leerBloqueando(m_lastID))

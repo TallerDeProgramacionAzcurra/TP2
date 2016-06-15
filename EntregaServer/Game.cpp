@@ -413,6 +413,11 @@ bool Game::isPracticeMode()
 	return m_practiceMode;
 }
 
+bool Game::isTeamMode()
+{
+	return (m_currentMode == GAMEMODE_COMPETITION);
+}
+
 void Game::initializeTexturesInfo()
 {
 	std::vector<Sprite> sprites = m_parserNivel->getListaSprites();

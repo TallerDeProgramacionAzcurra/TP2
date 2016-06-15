@@ -22,7 +22,7 @@ m_bgOffInicial(0),
 m_gameWidth(0),
 m_gameHeight(0)
 {
-	m_playerScore = Score();
+	//m_playerScore = Score();
 	pthread_mutex_init(&m_removeMutex, NULL);
 	pthread_mutex_init(&m_drawMsgMutex, NULL);
 	pthread_mutex_init(&m_cleanMutex, NULL);
@@ -100,7 +100,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
     //TextureManager::Instance()->init(m_pRenderer);
     FontManager::Instance()->init();
 
-    m_hud = new Hud(m_gameWidth,m_gameHeight);
+    //m_hud = new Hud(m_gameWidth,m_gameHeight);
 
     m_backgroundTextureID = 10;
 
@@ -153,7 +153,15 @@ void Game::render()
     {
     	foregroundObjects[foundOwnPlayer]->draw();
     }
-    m_hud->draw(m_pRenderer);
+    for (std::map<int, Hud*>::iterator it = huds.begin(); it != huds.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->draw(m_pRenderer);
+		}
+	}
+
+    //m_hud->draw(m_pRenderer);
     if (m_showingStatistics)
     	m_stats->draw(m_pRenderer);
 
@@ -375,7 +383,14 @@ bool Game::existDrawObject(int objectID, int layer)
 
 void Game::update()
 {
-	m_hud->update();
+	for (std::map<int, Hud*>::iterator it = huds.begin(); it != huds.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->update();
+		}
+	}
+	//m_hud->update();
 	updateStatistics();
 	/*m_background->update(); //Provisorio
 	m_island->update(); //Provisorio
@@ -447,16 +462,20 @@ void Game::addPointsToScore(ScoreMessage scoreMsg)
 	//todo Habria que contemplar equipos.
 	//todo Por ahora hago que se envie a todos y que descarte si no es un score propio, para poder agregar lo otro despues
 
-	if (static_cast<int>(scoreMsg.playerID) != m_player->getObjectId()) //posiblemente provisorio
-	{
-		pthread_mutex_unlock(&m_scoreMutex);
-		return;
-	}
-
+	//if (static_cast<int>(scoreMsg.playerID) != m_player->getObjectId()) //posiblemente provisorio
+	//{
+	//	pthread_mutex_unlock(&m_scoreMutex);
+	//	return;
+	//}
+	short id;
+	if (m_teamMode)
+		id = scoreMsg.teamID;
+	else
+		id = scoreMsg.playerID;
 	//actualiza el score del jugador
-	m_playerScore.addPoints(static_cast<int>(scoreMsg.pointsacquire));
+	scores[id]->addPoints(static_cast<int>(scoreMsg.pointsacquire));
 	//actualiza el hud
-	m_hud->actualizarScore(m_playerScore.getScore());
+	huds[id]->actualizarScore(m_playerScore.getScore());
 
 	pthread_mutex_unlock(&m_scoreMutex);
 }
@@ -505,6 +524,16 @@ void Game::createPlayer(int objectID, int textureID)
 	m_player = new Player();
 	m_player->setObjectID(objectID);
 	m_player->setTextureID(textureID);
+
+}
+
+void Game::createHuds(short cantHuds)
+{
+	for (int id = 0; id< cantHuds; id++)
+	{
+		scores[id] = new Score();
+		huds[id] = new Hud(m_gameWidth, m_gameHeight, id, cantHuds, m_teamMode);
+	}
 
 }
 
@@ -742,7 +771,15 @@ void Game::mrMusculo(){
 	    middlegroundObjects.clear();
 	    foregroundObjects.clear();
 	 	InputHandler::Instance()->reset();
-	 	m_playerScore.reset();
+
+	 	for (std::map<int, Score*>::iterator it = scores.begin(); it != scores.end(); ++it)
+	 	    {
+	 	    	if (it->second)
+	 	    	{
+	 				it->second->reset();
+	 	    	}
+	 	    }
+
 
 	    TTF_Quit();
 	 	SDL_DestroyRenderer(m_pRenderer);
@@ -841,7 +878,15 @@ void Game::resetGame()
 
 	 setRunning(false);
 	 setRestart(true);
-	 m_playerScore.reset();
+
+	 for (std::map<int, Score*>::iterator it = scores.begin(); it != scores.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->reset();
+		}
+	}
+
 	 //TextureManager::Instance()->init(m_pRenderer);
 
 	 cout << "Finish reseting game\n";

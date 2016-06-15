@@ -94,10 +94,13 @@ public:
     SDL_Window* getWindow() const { return m_pWindow; }
     void mrMusculo();
     void setRunning(bool loco){m_running = loco;}
+    void setTeamMode(bool teamMode){m_teamMode = teamMode;}
     bool isRunning() { return m_running; }
     bool isReseting() { return m_reseting; }
     bool isInitializingSDL(){ return m_initializingSDL;}
     bool isWaitingForTextures() {return m_waitingTextures; }
+
+    void createHuds(short cantHuds);
 
     void quit() { m_running = false; }
 
@@ -125,6 +128,11 @@ private:
     std::map<int, std::shared_ptr<DrawObject>> backgroundObjects;
     std::map<int, std::shared_ptr<DrawObject>> middlegroundObjects;
     std::map<int, std::shared_ptr<DrawObject>> foregroundObjects;
+
+
+    std::map<int, Hud*> huds;
+    std::map<int, Score*> scores;
+
 
     void addDrawObject(int objectID, int layer, std::shared_ptr<DrawObject> newDrawObject);
     void removeDrawObject(int objectID, int layer);
@@ -169,6 +177,8 @@ private:
 
     int m_bgOff;
     int m_bgOffInicial;
+
+    bool m_teamMode;
 
     Score m_playerScore;
 
