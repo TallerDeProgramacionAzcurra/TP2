@@ -32,7 +32,7 @@ void Portaviones::load(int x, int y, int width, int height, int textureID, int n
     m_textureID = textureID;
     m_numFrames = numFrames;
 
-    TextureManager::Instance()->load("Assets/Sprites/Portaviones.png", m_textureID, Game::Instance()->getRenderer());
+    TextureManager::Instance()->load("Assets/Sprites/aircraftCarrier.png", m_textureID, Game::Instance()->getRenderer());
 }
 
 void Portaviones::draw()

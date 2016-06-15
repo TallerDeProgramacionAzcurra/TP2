@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "Hud.h"
+#include "Statistics.h"
 #include "Score.h"
 #include "Cliente/cliente.h"
 #include "Utils/Parser/ParserCliente.h"
@@ -29,6 +30,7 @@ class Island;
 class Background;
 class Player;
 class Hud;
+class Statistics;
 class cliente;
 class DrawObject;
 
@@ -140,6 +142,7 @@ private:
     Background* m_background;
     cliente* m_client;
     Hud* m_hud;
+    Statistics* m_stats;
     int m_backgroundTextureID;
     bool m_running;
 

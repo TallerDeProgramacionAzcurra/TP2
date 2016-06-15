@@ -54,10 +54,10 @@
 	</sprite>
 	<sprite>
 		<id>Portaviones</id>
-		<path>Assets/Sprites/Portaviones.png</path>
+		<path>Assets/Sprites/aircraftCarrier.png</path>
 		<cantidad>1</cantidad>
-		<ancho>150</ancho>
-		<alto>600</alto>
+		<ancho>177</ancho>
+		<alto>300</alto>
 	</sprite>
 	<sprite>
 		<id>disparo</id>
