@@ -10,7 +10,7 @@
 
 #include "../Game.h"
 #include "../GameObject.h"
-#include "../Background/Island.h"
+#include "Portaviones.h"
 #include "Background.h"
 #include "Island.h"
 #include "../Utils/Parser/ParserNivel.h"
@@ -32,13 +32,19 @@ public:
 	void update();
 	void clean();
 
+	void resetPositions();
+
+	void scrollToNextStage();
+	bool isScrollingToNextStage() { return m_scrollingToNextStage; }
+
 	int getVirtualPosition() { return m_virtualPosition; }
 	int getLevelHeight() { return m_levelHeight; }
 	int getScrollSpeed() { return m_scrollSpeed; }
 
 private:
 
-	void resetPositions();
+	bool m_scrollingToNextStage;
+	int m_nextStageScrollAmount;
 
 	int m_virtualPosition; // Posicion en Y virtual, tiene el cero en la esquina de abajo e incrementa hacia arriba
 

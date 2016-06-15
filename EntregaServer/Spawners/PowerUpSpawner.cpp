@@ -52,6 +52,9 @@ void PowerUpSpawner::feed(std::vector<Powerup> powerUps, int stageSize)
 
 void PowerUpSpawner::update(int stagePosition)
 {
+	if (!Game::Instance()->isLevelStarted() || (Game::Instance()->isFinishingLevel()))
+		return;
+
 	for (std::vector<PowerUpSpawnInfo>::iterator it = m_powerUpsToSpawn.begin() ; it != m_powerUpsToSpawn.end();)
 	{
 		  if((*it).stagePosition <= (m_stageSize - stagePosition))

@@ -56,6 +56,7 @@ class server
         void sendResetMsgToAll(ResetInfo resetMsg);
         void sendScoreMsgToAll(ScoreMessage scoreMsg);
         void sendBackgroundInfoToAll(BackgroundInfo backgroundInfo);
+        void sendStageStatistics(StageStatistics stageStatistics, int clientID);
 
         void sendDisconnectionMsg(int socketReceptor, PlayerDisconnection msg);
 

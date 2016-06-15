@@ -135,10 +135,12 @@ bool MediumPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 
 	//Daña al avion
 	m_health -= damageReceived;
+
 	m_soundSendId = true;
 	m_soundSendId = 52;
 	if (damager && wasShoot)
 	{
+		damager->incrementHitsStats(1);
 		Game::Instance()->addPointsToScore(m_pointOnHit, damager->getObjectId(), damager->getTeamNumber());
 	}
 	updateKillerStats(damager->getObjectId(), damageReceived);
@@ -153,10 +155,18 @@ bool MediumPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 		{
 			int points = retrievePoints();
 			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getTeamNumber());
+			damager->incrementEnemiesKilledStats(1);
 		}
 	}
 
 	return killed;
+}
+
+void MediumPlane::kill()
+{
+	m_soundSendId = 53;
+	m_dying = true;
+	explote();
 }
 
 void MediumPlane::dropLoot()
@@ -262,11 +272,11 @@ void MediumPlane::explote()
 {
 	m_exploting = true;
 	m_explotionRemainingTime = m_explotionAnimationTime;
-	//hardcodeado por ahora
-	/*m_numFrames = 12;
+	m_numFrames = 14;
 	m_currentFrame = 0;
 	m_currentRow = 0;
-	m_textureID = 31;*/
+	m_textureID = 41;
+	m_soundDirty = true;
 }
 
 void MediumPlane::updateExplotionAnimation()

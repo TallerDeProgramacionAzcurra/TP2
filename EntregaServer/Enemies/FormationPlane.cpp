@@ -84,22 +84,33 @@ bool FormationPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 {
 	bool killed = false;
 	m_health -= damageReceived;
+	if (damager && wasShoot)
+		damager->incrementHitsStats(1);
+
 	m_soundSendId = true;
 	m_soundSendId = 52;
 	if (m_health <= 0)
 	{
-		 m_soundSendId = 53;
+		m_soundSendId = 53;
 		m_dying = true;
 		explote();
 		if (canRetrievePoints() && damager)
 		{
 			int points = retrievePoints();
 			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getTeamNumber());
+			damager->incrementEnemiesKilledStats(1);
 		}
-		if (m_formationParent)
+		if (m_formationParent && damager)
 			m_formationParent->updateKillerStats(damager->getObjectId());
 	}
 	return killed;
+}
+
+void FormationPlane::kill()
+{
+	m_soundSendId = 53;
+	m_dying = true;
+	explote();
 }
 
 void FormationPlane::shoot()

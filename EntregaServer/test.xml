@@ -46,6 +46,13 @@
 		<alto>200</alto>
 	</sprite>
 	<sprite>
+		<id>Portaviones</id>
+		<path>Assets/Sprites/Portaviones.png</path>
+		<cantidad>1</cantidad>
+		<ancho>150</ancho>
+		<alto>300</alto>
+	</sprite>
+	<sprite>
 		<id>piedra</id>
 		<path>Assets/Sprites/Piedra.png</path>
 		<cantidad>1</cantidad>
@@ -160,6 +167,7 @@
 </sprites>
 <escenario>
 	<cantidadMaximaJugadores>1</cantidadMaximaJugadores>
+	<cantidadStages>4</cantidadStages>
 	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>
 	<alto>2000</alto>
@@ -169,6 +177,20 @@
 		<alto>10</alto>
 	</fondo>
 	<elementos>
+		<elemento>
+			<spriteId>Portaviones</spriteId>
+			<posicion>
+				<x>225</x>
+				<y>300</y>
+			</posicion>
+		</elemento>
+		<elemento>
+			<spriteId>Portaviones</spriteId>
+			<posicion>
+				<x>225</x>
+				<y>2000</y>
+			</posicion>
+		</elemento>
 		<elemento>
 			<spriteId>isla</spriteId>
 			<posicion>

@@ -14,10 +14,12 @@ PowerUp::PowerUp(): MoveableObject(),
 		m_animatingPickUp(false),
 		m_dead(false),
 		m_appearing(true),
+		m_dissappearing(false),
 		m_savedTextureID(70),
 		m_savedNumFrames(1),
 		m_appearenceAnimationTime(1000),
-		m_appearenceRemainingTime(1000)
+		m_appearenceRemainingTime(1000),
+	    m_disappearenceRemainingTime(5000)
 {
 	m_tag = "PowerUp";
 }
@@ -42,6 +44,11 @@ void PowerUp::update()
 	if (m_appearing)
 	{
 		updateAppearingAnimation();
+	}
+
+	if (m_dissappearing)
+	{
+		updateDissapeareanceTimer();
 	}
 
 	if ((!m_pickedUp) && (!m_dead))
@@ -87,6 +94,22 @@ void PowerUp::doAppearAnimation()
 	m_appearenceRemainingTime = m_appearenceAnimationTime;
 }
 
+void PowerUp::startDissapeareanceTimer()
+{
+	m_dissappearing = true;
+	m_disappearenceRemainingTime = 5000;
+}
+
+void PowerUp::updateDissapeareanceTimer()
+{
+	m_disappearenceRemainingTime -= GameTimeHelper::Instance()->deltaTime();
+	if (m_disappearenceRemainingTime <= 0)
+	{
+		m_pickedUp = true;
+		m_dead = true;
+	}
+}
+
 void PowerUp::updateAppearingAnimation()
 {
 	m_appearenceRemainingTime -= GameTimeHelper::Instance()->deltaTime();
@@ -105,6 +128,7 @@ void PowerUp::updateAppearingAnimation()
 		m_currentRow = 0;
 		m_numFrames = m_savedNumFrames;
 		m_dirty = true;
+		startDissapeareanceTimer();
 	}
 
 	if ((lastFrame != m_currentFrame) || (lastRow != m_currentRow))

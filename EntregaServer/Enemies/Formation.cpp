@@ -13,6 +13,8 @@
 #include "../Player.h"
 #include "FormationPlane.h"
 #include "../Singletons/GameTimeHelper.h"
+#include "../PowerUps/DualWeaponPU.h"
+#include "../PowerUps/PowerUp.h"
 
 
 Formation::Formation(bool goingRight) :Enemy(),
@@ -359,6 +361,16 @@ bool Formation::damage(int damageReceived, bool wasShoot,  Player* damager)
 	return false;
 }
 
+void Formation::kill()
+{
+	for (int i = 0; i < m_kFormationSize; ++i)
+	{
+		m_planes[i]->kill();
+	}
+	m_dead = true;
+}
+
+
 void Formation::updateAliveTime()
 {
 	m_aliveTime += GameTimeHelper::Instance()->deltaTime();
@@ -417,8 +429,8 @@ void Formation::calculateRewards()
 			{
 				Game::Instance()->addPointsToScore(m_pointsOnCombo, playerKillerID, teamKillerID);
 			}
-			//dropea loot con un 75% de chance
-			dropLoot(75);
+			//dropea loot con un 50% de chance
+			dropLoot(50);
 			loot = true;
 		}
 	}
@@ -455,6 +467,14 @@ void Formation::retire()
 
 void Formation::dropLoot(int probability)
 {
-
+	if (probability < Random::getRange(0, 100))
+	{
+		PowerUp* drop = new DualWeaponPU();
+		int posX = m_position.m_x + (m_width/2) - 24;
+		int posY = m_position.m_y + (m_height/2) - 24;
+		drop->load(posX, posY, 48, 48, 72, 1);
+		CollitionHandler::Instance()->addPowerUp(drop);
+		Game::Instance()->addPowerUp(drop);
+	}
 }
 

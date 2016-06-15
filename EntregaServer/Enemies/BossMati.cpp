@@ -87,6 +87,7 @@ void BossMati::update()
 void BossMati::damage(int damageReceived)
 {
 	m_health -= damageReceived;
+
 	if (m_health <= 0)
 	{
 		//Hacer explosion, setear dying en true, etc

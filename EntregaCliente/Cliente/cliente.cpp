@@ -531,6 +531,15 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 
 		return;
 	}
+	//Recibe Estadisticas del Nivel
+	if ((networkMessage.msg_Code[0] == 's') && (networkMessage.msg_Code[1] == 't') && (networkMessage.msg_Code[2] == 't'))
+	{
+		StageStatistics stageStatistics = m_alanTuring->decodeStageStatistics(networkMessage);
+		Game::Instance()->showStageStatistics(stageStatistics);
+
+		return;
+	}
+
 	//Recibe Background Info (offset)
 	if ((networkMessage.msg_Code[0] == 'b') && (networkMessage.msg_Code[1] == 'g') && (networkMessage.msg_Code[2] == 'i'))
 	{

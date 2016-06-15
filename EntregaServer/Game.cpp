@@ -19,11 +19,18 @@ Game* Game::s_pInstance = 0;
 Game::Game():
 m_pWindow(0),
 m_pRenderer(0),
+m_stagesAmount(1),
 m_currentStage(1),
 m_practiceMode(false),
 m_practiceHoldTimer(0),
+m_startingWaitTime(500),
+m_waitEndStageTimer(END_STAGE_TIMER),
 m_running(false),
 m_reseting(false),
+m_startingStage(true),
+m_endingStage(false),
+m_scrollingToNextStage(false),
+m_waitingToScroll(false),
 m_scrollSpeed(2)
 {
 	m_powerUpsSpawner = new PowerUpSpawner();
@@ -51,6 +58,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
 
     m_parserNivel = new ParserNivel();
     m_parserNivel->parsearDocumento(XML_PATH);
+    m_stagesAmount = m_parserNivel->getEscenario().cantidadStages;
 
     m_textureHelper = new TextureHelper();
 
@@ -72,10 +80,6 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
 
     m_level = new Level();
     m_level->loadFromXML();
-
-    powerUp = new BombPU();
-    powerUp->load(m_gameWidth/2, m_gameHeight/4,48,48,71,1);
-    CollitionHandler::Instance()->addPowerUp(powerUp);
 
    // enemy = new BossMati();
     //enemy->load(m_gameWidth/2,0,48,48,666,4);
@@ -161,7 +165,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 	int playerTextureID = m_textureHelper->stringToInt(playerStringID);
 
 	//14 HARDCODEADO
-	newPlayer->load(m_gameWidth/2, m_gameHeight/2, 38, 64, playerTextureID, 14);
+	newPlayer->load(m_gameWidth/2 - 32, m_gameHeight - m_gameHeight/5, 38, 64, playerTextureID, 14);
 	newPlayer->setConnected(true);
 
 	m_listOfPlayer[newPlayer->getObjectId()]= newPlayer;
@@ -264,15 +268,17 @@ void Game::render()
 
 void Game::update()
 {
+	checkStartingStage(); // espera la animacion de vuelta
+	checkEndingStage(); // si esta terminando el nivel, espera un tiempo y carga el siguiente
+
 	checkPracticeMode();
 
 	updateSpawners();
 
 	BulletsHandler::Instance()->updateBullets();
 	//enemy->update();
-	m_level->update();
 
-	powerUp->update();
+	m_level->update();
 
 	updateBackground(m_level->getScrollSpeed());
 
@@ -308,10 +314,68 @@ void Game::update()
 
 }
 
+void Game::checkEndingStage()
+{
+	if (m_endingStage)
+	{
+		m_waitEndStageTimer -= GameTimeHelper::Instance()->deltaTime();
+		if (m_waitEndStageTimer <= 0)
+		{
+			m_endingStage = false;
+			loadNextStage();
+		}
+	}
+}
+
+void Game::checkStartingStage()
+{
+	if (m_startingStage)
+	{
+		bool animationDone = false;
+		for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+		{
+			//printf("objectID = %d \n", it->second.getObjectId());
+			if ((it->second) && (it->second->isDoingFlip() == false))
+			{
+				animationDone = true;
+				break;
+			}
+		}
+		if (animationDone)
+		{
+			if ((m_startingWaitTime <= 0) && (!m_waitingToScroll))
+			{
+				m_startingStage = false;
+			}
+		}
+		else
+		{
+			m_startingWaitTime -= GameTimeHelper::Instance()->deltaTime();
+		}
+
+	}
+
+	if (m_waitingToScroll)
+	{
+		if (!m_level->isScrollingToNextStage())
+		{
+			m_startingStage = false;
+			m_waitingToScroll = false;
+		}
+	}
+}
+
 void Game::updateBackground(int scrollSpeed)
 {
  	BackgroundInfo bgInfo;
- 	bgInfo.backgroundOffset = scrollSpeed;
+ 	if ((Game::Instance()->isLevelStarted() && (!Game::Instance()->isFinishingLevel())) || (m_scrollingToNextStage))
+	{
+		bgInfo.backgroundOffset = scrollSpeed;
+	}
+	else
+	{
+		bgInfo.backgroundOffset = 0;
+	}
  	sendBackgroundInfo(bgInfo);
 }
 
@@ -453,6 +517,10 @@ void Game::sendScoreToClients(ScoreMessage scoreMsg)
 void Game::sendBackgroundInfo(BackgroundInfo backgroundInfo)
 {
 	m_server->sendBackgroundInfoToAll(backgroundInfo);
+}
+void Game::sendStageStatistics(StageStatistics stageStatistics, int clientID)
+{
+	m_server->sendStageStatistics(stageStatistics, clientID);
 }
 
 void Game::addToPackage(DrawMessage drawMsg)
@@ -629,7 +697,7 @@ void Game::resetGame()
 			it->second->setShootingSpeed(newBulletsSpeed);
 			it->second->refreshDirty();
 			it->second->StopFlipAnimation();
-			it->second->setPosition(Vector2D(Game::Instance()->getGameWidth()/2, Game::Instance()->getGameHeight()/2));
+			it->second->setPosition(Vector2D(Game::Instance()->getGameWidth()/2 - 32,  m_gameHeight - m_gameHeight/5 ));
 		}
 	}
 
@@ -646,6 +714,17 @@ void  Game::killAllEnemies(Player* killer)
 		 if((*it) && ((*it)->isDying() == false) && ((*it)->isDead() == false))
 		 {
 			 (*it)->damage(50000, false, killer);
+		 }
+	 }
+}
+
+void Game::killAllEnemiesNoRewards()
+{
+	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end();++it)
+	 {
+		 if((*it) && ((*it)->isDying() == false) && ((*it)->isDead() == false))
+		 {
+			 (*it)->kill();
 		 }
 	 }
 }
@@ -706,4 +785,65 @@ void Game::loadCurrentStage()
 
 	printf("Se cargó el Stage %d \n", m_currentStage);
 
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->resetStageStatistics();
+			it->second->startFlipAnimation();
+		}
+	}
+
+	m_startingStage = true;
+	m_startingWaitTime = 500;
+
+
+}
+
+void Game::loadNextStage()
+{
+	if (m_currentStage >= m_stagesAmount)
+	{
+		return;
+	}
+
+	m_scrollingToNextStage = true;
+	m_waitingToScroll = true;
+	m_level->scrollToNextStage();
+
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->moveAutomatic(Vector2D(Game::Instance()->getGameWidth()/2 - 32, m_gameHeight - m_gameHeight/5), m_scrollSpeed);
+		}
+	}
+
+	++m_currentStage;
+	loadCurrentStage();
+}
+
+void Game::finishStage()
+{
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->moveAutomatic(Vector2D(Game::Instance()->getGameWidth()/2 - 32, m_gameHeight/5), 4);
+
+			StageStatistics stageStatistics;
+			stageStatistics.accuracy = static_cast<short>((it->second->getStageStatistics().getAccuracy() * 100));
+			stageStatistics.enemiesKilled = static_cast<short>(it->second->getStageStatistics().getEnemiesKilled());
+			stageStatistics.points = static_cast<short>(it->second->getStageStatistics().getPoints());
+			stageStatistics.something = 0;
+
+			sendStageStatistics(stageStatistics, it->second->getObjectId());
+
+		}
+	}
+	killAllEnemiesNoRewards();
+	m_endingStage = true;
+
+	m_waitEndStageTimer = END_STAGE_TIMER;
+	//Mostrar sesion informativa
 }

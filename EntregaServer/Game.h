@@ -44,6 +44,7 @@ class CollitionHandler;
 
 #define DRAG_PLAYER 0
 
+#define END_STAGE_TIMER 5000
 #define XML_PATH "test.xml"
 
 enum GameMode
@@ -90,6 +91,7 @@ public:
     void sendPackages();
     void sendScoreToClients(ScoreMessage scoreMsg);
    	void sendBackgroundInfo(BackgroundInfo backgroundInfo);
+   	void sendStageStatistics(StageStatistics stageStatistics, int clientID);
 
     void addPointsToScore(int points, int playerID, int teamID);
     void addPointsToTeam(int points, int teamID);
@@ -124,9 +126,14 @@ public:
     void setReseting(bool state) { m_reseting = state; }
     bool isPracticeMode();
 	void setPracticeMode(bool practiceMode);
+	bool isLevelStarted() { return !m_startingStage; }
+	bool isFinishingLevel() { return  m_endingStage; }
 
 	void killAllEnemies(Player* killer);
+	void killAllEnemiesNoRewards();
 	void loadCurrentStage();
+	void loadNextStage();
+	void finishStage();
 
     pthread_t listenThread;
     float getScrollSpeed() { return m_scrollSpeed; }
@@ -152,15 +159,11 @@ private:
     Level* m_level;
     TextureHelper* m_textureHelper;
 
-    /*******Sacar********/
-    PowerUp* powerUp;
-    Enemy* enemy;
-    /***********************/
-
     server* m_server;
     DrawMessagesPacker* m_drawMessagePacker;
 
     /********Stages Info*********/
+    int m_stagesAmount;
     int m_currentStage;
 
     PowerUpSpawner* m_powerUpsSpawner;
@@ -170,10 +173,16 @@ private:
     GameMode m_currentMode;
     bool m_practiceMode;
     int m_practiceHoldTimer;
+    int m_startingWaitTime;
+    int m_waitEndStageTimer;
 
 
     bool m_running;
     bool m_reseting;
+    bool m_startingStage;
+    bool m_endingStage;
+    bool m_scrollingToNextStage;
+    bool m_waitingToScroll;
 
     static Game* s_pInstance;
 
@@ -195,6 +204,8 @@ private:
 	void updateSpawners();
 	void initializeTeamScores();
 	void checkPracticeMode();
+	void checkStartingStage();
+	void checkEndingStage();
 
 	void cleanDeadObjects();
 };

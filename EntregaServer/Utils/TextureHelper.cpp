@@ -46,6 +46,7 @@ void TextureHelper::initialize()
 	//ELEMENTOS DE BACKGROUND
 	m_textureIDMap["isla"] = 20;
 	m_textureIDMap["piedra"] = 21;
+	m_textureIDMap["Portaviones"] = 25;
 
 	//Disparos
 	m_textureIDMap["disparo"] = 50;

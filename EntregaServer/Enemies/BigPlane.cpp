@@ -135,6 +135,7 @@ bool BigPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 
 	//Daña al avion
 	m_health -= damageReceived;
+
 	m_soundDirty = true;
 
 	m_soundSendId = 52;
@@ -142,6 +143,7 @@ bool BigPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 	if (damager && wasShoot)
 	{
 		Game::Instance()->addPointsToScore(m_pointOnHit, damager->getObjectId(), damager->getTeamNumber());
+		damager->incrementHitsStats(1);
 	}
 	updateKillerStats(damager->getObjectId(), damageReceived);
 
@@ -155,10 +157,21 @@ bool BigPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 		{
 			int points = retrievePoints();
 			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getTeamNumber());
+			damager->incrementEnemiesKilledStats(1);
 		}
+
+		//Todos los aviones han sido matados
+		calculateRewards();
 	}
 
 	return killed;
+}
+
+void BigPlane::kill()
+{
+	m_soundSendId = 53;
+	m_dying = true;
+	explote();
 }
 
 void BigPlane::dropLoot()
@@ -198,12 +211,6 @@ void BigPlane::updateKillerStats(int playerID, int damageDone)
 	{
 		//ya habia matado a algun avion del a formacion
 		m_playerIDDamageDone[playerID] = m_playerIDDamageDone[playerID] + damageDone;
-	}
-
-	if (m_health <= 0)
-	{
-		//Todos los aviones han sido matados
-		calculateRewards();
 	}
 }
 

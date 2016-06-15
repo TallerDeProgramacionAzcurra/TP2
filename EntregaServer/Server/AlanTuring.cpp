@@ -210,6 +210,13 @@ BackgroundInfo AlanTuring::decodeBackgroundInfo(NetworkMessage netMsg)
 	return backgroundInfo;
 }
 
+StageStatistics AlanTuring::decodeStageStatistics(NetworkMessage netMsg)
+{
+	StageStatistics stageStatistics;
+	memcpy(&stageStatistics, netMsg.msg_Data, sizeof(StageStatistics));
+	return stageStatistics;
+}
+
 PlayerDisconnection AlanTuring::decodePlayerDisconnectionMessage(NetworkMessage netMsg)
 {
 	PlayerDisconnection playerDiscMsg;
@@ -348,6 +355,19 @@ NetworkMessage AlanTuring::BackgroundInfoToNetwork(BackgroundInfo backgroundMess
 
 	memcpy(networkMessage.msg_Data, &backgroundMessage, sizeof(BackgroundInfo));
 	networkMessage.msg_Length = sizeof(BackgroundInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+NetworkMessage AlanTuring::StageStatisticsToNetwork(StageStatistics stageStatisticsMessage)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 's';
+	networkMessage.msg_Code[1] = 't';
+	networkMessage.msg_Code[2] = 't';
+
+	memcpy(networkMessage.msg_Data, &stageStatisticsMessage, sizeof(StageStatistics));
+	networkMessage.msg_Length = sizeof(StageStatistics) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	return networkMessage;
 }

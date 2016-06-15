@@ -41,12 +41,17 @@ protected:
     bool m_animatingPickUp;
     bool m_dead;
     bool m_appearing;
+    bool m_dissappearing;
 
     int m_savedTextureID;
     int m_savedNumFrames;
     int m_appearenceAnimationTime;
     int m_appearenceRemainingTime;
+
+    int m_disappearenceRemainingTime;
     void updateAppearingAnimation();
+    void startDissapeareanceTimer();
+    void updateDissapeareanceTimer();
 
 };
 

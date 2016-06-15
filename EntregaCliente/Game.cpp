@@ -14,6 +14,8 @@ m_reseting(false),
 m_initializingSDL(false),
 m_waitingTextures(false),
 m_continueLooping(false),
+m_showingStatistics(false),
+m_showingStatisticsTimer(0),
 m_scrollSpeed(0.8),
 m_bgOff(0),
 m_bgOffInicial(0),
@@ -371,6 +373,7 @@ bool Game::existDrawObject(int objectID, int layer)
 void Game::update()
 {
 	m_hud->update();
+	updateStatistics();
 	/*m_background->update(); //Provisorio
 	m_island->update(); //Provisorio
 	m_player->update(); // Provisorio*/
@@ -436,7 +439,7 @@ void Game::askForName()
 
 void Game::addPointsToScore(ScoreMessage scoreMsg)
 {
-	pthread_mutex_unlock(&m_scoreMutex);
+	pthread_mutex_lock(&m_scoreMutex);
 
 	//todo Habria que contemplar equipos.
 	//todo Por ahora hago que se envie a todos y que descarte si no es un score propio, para poder agregar lo otro despues
@@ -470,6 +473,29 @@ void Game::updateBackground(BackgroundInfo backgroundInfo)
 	if (m_bgOff < 0)
 		m_bgOff = m_bgOffInicial;
 }
+
+/********************ESTADISTICAS******************************/
+void Game::showStageStatistics(StageStatistics stageStatistics)
+{
+	m_showingStatistics = true;
+	m_showingStatisticsTimer = SHOW_STATISTICS_TIME;
+	//MOSTRAR ESTADISTICAS
+
+}
+
+void Game::updateStatistics()
+{
+	if (m_showingStatistics)
+	{
+		m_showingStatisticsTimer -= GameTimeHelper::Instance()->deltaTime();
+		if (m_showingStatisticsTimer <= 0)
+		{
+			m_showingStatistics = false;
+			//QUITAR ESTADISTICAS
+		}
+	}
+}
+/****************************************************************************/
 
 void Game::createPlayer(int objectID, int textureID)
 {

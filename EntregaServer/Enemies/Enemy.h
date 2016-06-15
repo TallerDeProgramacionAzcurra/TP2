@@ -26,6 +26,7 @@ public:
     virtual void clean();
 
     virtual bool damage(int damageReceived, bool wasShoot, Player* damager);
+    virtual void kill();
 
     virtual void shoot();
 

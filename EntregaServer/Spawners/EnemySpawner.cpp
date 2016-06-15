@@ -53,6 +53,9 @@ void EnemySpawner::feed(std::vector<Enemigo> enemies, int stageSize)
 
 void EnemySpawner::update(int stagePosition)
 {
+	if (!Game::Instance()->isLevelStarted() || (Game::Instance()->isFinishingLevel()))
+		return;
+
 	for (std::vector<EnemySpawnInfo>::iterator it = m_enemiesToSpawn.begin() ; it != m_enemiesToSpawn.end();)
 	{
 		  if((*it).stagePosition <= (m_stageSize - stagePosition))

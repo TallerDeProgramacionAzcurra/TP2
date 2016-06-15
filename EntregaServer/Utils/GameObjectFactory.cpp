@@ -21,6 +21,11 @@ GameObject* GameObjectFactory::createGameObject(const std::string& gameObjectID)
 		return go;
 	}
 
+	if (gameObjectID.compare("Portaviones") == 0)
+	{
+		go = new Portaviones();
+		return go;
+	}
 	if (gameObjectID.compare("default") == 0)
 	{
 		go = new Island();

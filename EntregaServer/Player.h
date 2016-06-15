@@ -5,6 +5,7 @@
 #include "MoveableObject.h"
 #include "Vector2D.h"
 #include "Score.h"
+#include "Statistics.h"
 #include "Singletons/InputHandler.h"
 #include "Singletons/TextureManager.h"
 #include "Singletons/GameTimeHelper.h"
@@ -50,6 +51,7 @@ public:
     void refreshDirty() { m_movedByPlayer = false; m_dirty = true;}
 
     void StopFlipAnimation();
+    void startFlipAnimation();
 
     //Getters
     bool isDead() { return m_dead; }
@@ -58,13 +60,22 @@ public:
     bool isConnected() { return m_connected; }
     int getTeamNumber() { return m_teamNumber; }
     int getCollisionDamage() { return m_collisionDamage; }
+    Statistics getStageStatistics() { return m_stageStats; }
+    void resetStageStatistics() { return m_stageStats.reset(); }
 
+    void moveAutomatic(const Vector2D& destination, int speed);
 
     void damage(int damageReceived);
+
 
     void addPoints(int points);
     const int getScore();
     void reset();
+
+	void incrementEnemiesKilledStats (int amount) { m_stageStats.incrementEnemiesKilled(amount); }
+	void incrementShootsStats (int amount) { m_stageStats.incrementShoots(amount); }
+	void incrementHitsStats(int amount) { m_stageStats.incrementHits(amount); }
+	void incrementPointsStats (int amount) { m_stageStats.incrementPoints(amount); }
 
 
 private:
@@ -92,10 +103,13 @@ private:
     void explote();
     void updateExplotionAnimation();
 
+    void moveTo(const Vector2D& destination);
+
     // variables de control de estado
     bool m_dead;
     bool m_dying;
     bool m_exploting;
+    bool m_automaticMoving;
 
     bool m_invulnerable;
 
@@ -106,6 +120,10 @@ private:
     int m_teamNumber;
 
     Score m_score;
+    Statistics m_stageStats;
+
+    Vector2D m_destination;
+    int m_autoMoveSpeed;
 
     //Modifica el estado del juego de acuerdo al input del jugador
 };

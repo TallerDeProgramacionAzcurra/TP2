@@ -81,6 +81,12 @@ bool Enemy::damage(int damageReceived, bool wasShoot, Player* damager)
 	return killed;
 }
 
+void Enemy::kill()
+{
+	m_health = 0;
+	m_dead = true;
+}
+
 void Enemy::setWeaponStats(int shootingSpeed, int shootingCooldown, int ownerID, int teamID)
 {
 	if (m_enemyWeapon)

@@ -21,17 +21,21 @@ Player::Player() :  MoveableObject(),
 					m_dead(false),
 					m_dying(false),
 					m_exploting(false),
+					m_automaticMoving(false),
 					m_invulnerable(false),
 					m_health(100),
 					m_collisionDamage(100),
 					m_movedByPlayer(false),
-					m_teamNumber(1)
+					m_teamNumber(1),
+					m_autoMoveSpeed(1)
 {
 	m_score = Score();
+	m_stageStats = Statistics();
 	m_tag = "Player";
 	m_layer = FOREGROUND;
 	m_currentWeapon = new BasicWeapon();
 	m_shootOffset = Vector2D(15, -5);
+	m_destination = Vector2D (0, 0);
 }
 
 void Player::collision()
@@ -88,7 +92,6 @@ void Player::setWeaponStats(int shootingSpeed, int shootingCooldown, int ownerID
 	}
 }
 
-
 void Player::StopFlipAnimation()
 {
 	//m_doingFlip = false;
@@ -135,8 +138,14 @@ void Player::update()
 		updateFlipAnimation();
 	}
 
+
+	if (m_automaticMoving)
+	{
+		moveTo(m_destination);
+	}
+
 	//Si esta girando no actualiza posicion
-	if (!m_doingFlip)
+	if ((!m_doingFlip) || (m_automaticMoving))
 	{
 		MoveableObject::update();
 
@@ -162,7 +171,6 @@ void Player::update()
 	}
 
 	m_currentWeapon->update();
-
 
 	if (m_dirty)
 	{
@@ -240,6 +248,9 @@ void Player::clean()
 
 void Player::handleInput(InputMessage inputMsg)
 {
+	if (!Game::Instance()->isLevelStarted() || (Game::Instance()->isFinishingLevel()))
+		return;
+
 	if (!m_movedByPlayer)
 	{
 		m_movedByPlayer = true;
@@ -294,6 +305,7 @@ void Player::handleInput(InputMessage inputMsg)
 
         if (inputMsg.buttonShoot)
         {
+        	m_stageStats.incrementShoots(1);
         	m_soundDirty = true;
 
         	m_soundSendId = 51;
@@ -306,18 +318,24 @@ void Player::handleInput(InputMessage inputMsg)
         {
         	if (!m_doingFlip)
         	{
-        		m_flipRemainingTime = m_flipAnimationTime;
-        		m_doingFlip = true;
-        		m_invulnerable = true;
+        		startFlipAnimation();
         	}
             m_dirty = true;
         }
     }
 }
 
+void Player::startFlipAnimation()
+{
+		m_flipRemainingTime = m_flipAnimationTime;
+		m_doingFlip = true;
+		m_invulnerable = true;
+}
+
 void Player::addPoints(int points)
 {
 	m_score.addPoints(points);
+	m_stageStats.incrementPoints(points);
 
 	ScoreMessage scoreMsg;
 	scoreMsg.playerID = m_objectId;
@@ -349,6 +367,45 @@ void Player::reset()
 	m_movedByPlayer = false;
 
 	m_score.reset();
+}
+
+void Player::moveAutomatic(const Vector2D& destination, int speed)
+{
+	m_automaticMoving = true;
+	m_destination = destination;
+	m_autoMoveSpeed = speed;
+}
+
+void Player::moveTo(const Vector2D& destination)
+{
+	m_direction.setX(m_destination.m_x - m_position.m_x);
+	m_direction.setY(m_destination.m_y - m_position.m_y);
+	m_direction.normalize();
+	float nextPositionX = m_position.m_x + (m_direction.getX() * m_autoMoveSpeed);
+	float nextPositionY = m_position.m_y + (m_direction.getY() * m_autoMoveSpeed);
+	if ((((m_position.m_x < m_destination.m_x) && (nextPositionX >= m_destination.m_x )) ||
+		((m_position.m_x > m_destination.m_x) && (nextPositionX <= m_destination.m_x ))) &&
+		(((m_position.m_y < m_destination.m_y) && (nextPositionY >= m_destination.m_y )) ||
+		((m_position.m_y > m_destination.m_y) && (nextPositionY <= m_destination.m_y ))))
+	{
+		m_position.m_x = m_destination.m_x;
+		m_position.m_y = m_destination.m_y;
+		m_automaticMoving = false;
+	}
+	else
+	{
+		//mueve al personaje
+		m_position.m_x += (m_direction.getX() * m_autoMoveSpeed);
+		m_position.m_y += (m_direction.getY() * m_autoMoveSpeed);
+	}
+	if ((m_position.m_x == m_destination.m_x) && (m_position.m_y == m_destination.m_y))
+	{
+		m_automaticMoving = false;
+	}
+	//Hardcodeado para que se mueva automaticamente sin direccion
+	m_dirty = true;
+	m_direction.setX(0);
+	m_direction.setY(0);
 }
 
 

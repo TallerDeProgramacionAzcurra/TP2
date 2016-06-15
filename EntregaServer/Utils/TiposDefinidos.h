@@ -27,6 +27,7 @@
 #define DRAW_MESSAGE_SIZE 32
 #define INPUT_MESSAGE_SIZE 20
 #define SCORE_MESSAGE_SIZE 8
+#define STAGE_STATISTICS_SIZE 8
 #define CONNECTED_MESSAGE_SIZE 16
 #define CONNECTIONINFO_MESSAGE_SIZE 24
 #define PLAYER_DISCONNECTION_MESSAGE_SIZE 32
@@ -112,6 +113,13 @@ struct PlayerDisconnection
 struct BackgroundInfo
 {
 	int backgroundOffset;
+};
+struct StageStatistics
+{
+	short accuracy;
+	short enemiesKilled;
+	short points;
+	short something;
 };
 
 struct DrawMessage
@@ -278,6 +286,7 @@ struct Escenario
 {
 	int velScroll;
 	int cantidadJugadores;
+	int cantidadStages;
 	int ancho;
 	int alto;
 	struct Fondo fondo;

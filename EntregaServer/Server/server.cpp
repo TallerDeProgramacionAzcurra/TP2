@@ -265,6 +265,15 @@ void server::sendBackgroundInfoToAll(BackgroundInfo backgroundInfo)
 	     }
 	 }
 }
+void server::sendStageStatistics(StageStatistics stageStatistics, int clientID)
+{
+
+	 NetworkMessage netMsg = m_alanTuring->StageStatisticsToNetwork(stageStatistics);
+	 if ( m_listaDeClientes.isAvailable(clientID))
+	 {
+	    	 m_queuePost[clientID].add(netMsg);
+	 }
+}
 
 void server::informTextureInfos(int clientID)
 {

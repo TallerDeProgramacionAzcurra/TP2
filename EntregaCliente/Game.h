@@ -33,7 +33,7 @@ class cliente;
 class DrawObject;
 
 #define TiMEOUT_MESSAGE_RATE 3000
-
+#define SHOW_STATISTICS_TIME 5000
 
 class Game
 {
@@ -84,6 +84,7 @@ public:
    	void interpretarDrawMsg(DrawMessage drwMsg);
 
    	void updateBackground(BackgroundInfo backgroundInfo);
+   	void showStageStatistics(StageStatistics stageStatistics);
 
    	bool updateTimeOut();
 
@@ -148,6 +149,10 @@ private:
     bool m_waitingTextures;
     bool m_continueLooping;
 
+    bool m_showingStatistics;
+    int m_showingStatisticsTimer;
+
+    void updateStatistics();
     void stopLooping();
     void continueLooping();
 
@@ -169,6 +174,7 @@ private:
 	pthread_mutex_t m_cleanMutex;
 	pthread_mutex_t m_resetMutex;
 	pthread_mutex_t m_scoreMutex;
+
 
     Game();
     ~Game();
