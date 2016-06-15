@@ -9,6 +9,8 @@
 #include "ClientMenuTextTexture.hpp"
 
 ClientMenuTextTexture::ClientMenuTextTexture(SDL_Window *menuWindow) : ClientMenuTexture(menuWindow) {
+    this->menuTextureLoaded = true;
+    
     if (TTF_Init() == -1) {
         printf("ClientMenuTextTexture.cpp - SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
         this->menuTextureLoaded = false;
@@ -16,20 +18,17 @@ ClientMenuTextTexture::ClientMenuTextTexture(SDL_Window *menuWindow) : ClientMen
 }
 
 ClientMenuTextTexture::~ClientMenuTextTexture() {
-    if (this->menuTextureFont != NULL) {
-        TTF_CloseFont(this->menuTextureFont);
-    }
+    TTF_CloseFont(this->menuTextureFont);
     
-    if (this->menuTexture != NULL) {
-        SDL_DestroyTexture(this->menuTexture);
-    }
+    SDL_DestroyTexture(this->menuTexture);
     
     TTF_Quit();
 }
 
 //Loads image at specified path
-void ClientMenuTextTexture::menuTextureLoadFromFile(const char *filePath) {
-    this->menuTextureFont = TTF_OpenFont(filePath, 28);
+void ClientMenuTextTexture::menuTextureSetTextFont(const char *filePath, int fontSize) {
+    TTF_CloseFont(this->menuTextureFont);
+    this->menuTextureFont = TTF_OpenFont(filePath, fontSize);
     this->menuTextureLoaded = true;
     
     if (this->menuTextureFont == NULL) {

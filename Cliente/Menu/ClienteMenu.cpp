@@ -6,6 +6,7 @@
 //  Copyright © 2016 Gaston Montes. All rights reserved.
 //
 
+#include "ClientMenuTextFieldTexture.hpp"
 #include "ClientMenuImageTexture.hpp"
 #include "ClientMenuTextTexture.hpp"
 #include "ClientMenuTexture.hpp"
@@ -85,9 +86,8 @@ void ClientMenu::clientMenuRun() {
     backgrounImage.menuTextureSetModulation(ClientMenuUtils::clientMenuModulationColor());
     textures.push_back(backgrounImage);
     
-    ClientMenuTextTexture firstText = ClientMenuTextTexture(this->clientMenuWindow);
-    firstText.menuTextureLoadFromFile("bummer3d.ttf");
-    textures.push_back(firstText);
+    ClientMenuTextFieldTexture promptText = ClientMenuTextFieldTexture(this->clientMenuWindow);
+    textures.push_back(promptText);
     
     bool loadingTextureOK = true;
     
@@ -101,13 +101,17 @@ void ClientMenu::clientMenuRun() {
     
     if (loadingTextureOK == true) {
         while (this->clientMenuHandleQuitEvent() == false) {
-            // Background Image.
             SDL_Rect imageRect;
             SDL_GetWindowSize(this->clientMenuWindow, &imageRect.w, &imageRect.h);
+            
+            // Background Image.
             backgrounImage.menuTextureRender(0, 0, &imageRect);
             
-            firstText.menuTextureSetTextProperties("Nombre del jugador:", ClientMenuUtils::clientMenuTextColor());
-            firstText.menuTextureRender((imageRect.w - firstText.menuTextureGetWidth()) / 2, (imageRect.h - firstText.menuTextureGetHeight()) / 2);
+            // Prompt text.
+            promptText.menuTextureSetTextFont("bummer3d.ttf", imageRect.w / 20);
+            promptText.menuTextureSetTextProperties("Nombre del jugador:", ClientMenuUtils::clientMenuTextColor());
+            promptText.menuTextureRender((imageRect.w - promptText.menuTextureGetWidth()) / 2, (imageRect.h - promptText.menuTextureGetHeight()) / 2);
+            
             this->clientMenuShow();
         }
     }

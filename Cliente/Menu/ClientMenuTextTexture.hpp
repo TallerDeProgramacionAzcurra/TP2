@@ -20,7 +20,7 @@ public:
     virtual ~ClientMenuTextTexture();
     
     //Loads image at specified path
-    void menuTextureLoadFromFile(const char *filePath);
+    void menuTextureSetTextFont(const char *filePath, int fontSize);
     void menuTextureSetTextProperties(const char *textureText, SDL_Color textColor);
     
 private:

@@ -28,9 +28,6 @@ public:
     
     SDL_Texture *menuTextureGetTexture();
     
-    //Loads image at specified path
-    virtual void menuTextureLoadFromFile(const char *filePath);
-    
     void menuTextureSetModulation(SDL_Color modulationColor);
     
 protected:

@@ -58,10 +58,6 @@ SDL_Texture *ClientMenuTexture::menuTextureGetTexture() {
     return this->menuTexture;
 }
 
-void ClientMenuTexture::menuTextureLoadFromFile(const char *filePath) {
-    this->menuTextureLoaded = false;
-}
-
 void ClientMenuTexture::menuTextureSetModulation(SDL_Color modulationColor) {
     SDL_SetTextureColorMod(this->menuTexture, modulationColor.r, modulationColor.g, modulationColor.b);
 }
