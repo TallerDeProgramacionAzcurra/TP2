@@ -29,16 +29,16 @@ bool ParserNivel::parsearDocumento(const std::string& nombreArchivoXML){
 	{
 		std::stringstream ss;
 		ss << "No se pudo parsear con éxito el archivo XML: " << nombreArchivoXML.c_str() << ".";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 		ss.clear();
 		ss << "Se cargará el archivo default: " << XML_NIVEL_DEFAULT_PATH << ".";
-		Logger::Instance()->LOG(ss.str(), WARN);
+		Logger::Instance()->LOG(ss.str(), LogTypeWarn);
 
 		exito = parsearDoc(XML_NIVEL_DEFAULT_PATH, true);
 		if (!exito)
 		{
 			//El archivo XML default también tiene errores. No se pudo parsear.
-			Logger::Instance()->LOG("No se pudieron parsear ninguno de los archivos XML nivel.", ERROR);
+			Logger::Instance()->LOG("No se pudieron parsear ninguno de los archivos XML nivel.", LogTypeError);
 			//cout << "No se pudieron parsear ninguno delos archivos XML nivel";
 		}
 	}
@@ -62,7 +62,7 @@ bool ParserNivel::parsearDoc(const std::string& nombreArchivoXML, bool isDefault
 		//No se pudo abrir el archivo XML
 		//LOGUEO DE ERRORES EN CASO DE QUE NO SE PUEDA CARGAR EL ARCHIVO XML
 		ss << "Archivo " << nombreArchivoXML.c_str() <<  " dañado. Error Description: " << result.description() << ".";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 
 		return parseadoExitoso;
 	}
@@ -90,22 +90,22 @@ bool ParserNivel::extraerSprites(const pugi::xml_document* doc)
 	   std::string alto = spr.child("alto").first_child().value();
 	   if (!validarNumero(cantidad))
 			{
-		   	   Logger::Instance()->LOG("Se cargo el valor cantidad del sprite por default", WARN);
+		   	   Logger::Instance()->LOG("Se cargo el valor cantidad del sprite por default", LogTypeWarn);
 				cantidad = "2";
 			}
 	   if (!validarNumero(ancho))
 	   			{
-		   	   	   Logger::Instance()->LOG("Se cargo el valor ancho del sprite por default", WARN);
+		   	   	   Logger::Instance()->LOG("Se cargo el valor ancho del sprite por default", LogTypeWarn);
 	   				ancho = "11";
 	   			}
 	   if (!validarNumero(alto))
 	  	   			{
-		   	   	   	   Logger::Instance()->LOG("Se cargo el valor alto del por default", WARN);
+		   	   	   	   Logger::Instance()->LOG("Se cargo el valor alto del por default", LogTypeWarn);
 	  	   				alto = "11";
 	  	   			}
 		if (!validarPath(path))
 			{
-				Logger::Instance()->LOG("Se cargo el path del sprite por default", WARN);
+				Logger::Instance()->LOG("Se cargo el path del sprite por default", LogTypeWarn);
 				path = "Assets/Sprites/missing.jpg";
 				//id = "default";
 
@@ -130,12 +130,12 @@ bool ParserNivel::extraerVentana(const pugi::xml_document* doc, bool isLoadingDe
 
 	if (!validarNumero(anchoString))
 		{
-			Logger::Instance()->LOG("Se cargo el ancho de la ventana por default", WARN);
+			Logger::Instance()->LOG("Se cargo el ancho de la ventana por default", LogTypeWarn);
 			anchoString = "810";
 		}
 	if (!validarNumero(altoString))
 		{
-			Logger::Instance()->LOG("Se cargo el alto de la ventana por default", WARN);
+			Logger::Instance()->LOG("Se cargo el alto de la ventana por default", LogTypeWarn);
 			altoString = "610";
 		}
 
@@ -155,7 +155,7 @@ bool ParserNivel::extraerEscenario(const pugi::xml_document* doc, bool isLoading
 	std::string cantJugadoresStr = escenarioNode.child("cantidadMaximaJugadores").first_child().value();
 	if (!validarNumero(cantJugadoresStr))
 			{
-				Logger::Instance()->LOG("Se cargo la cantidad de jugadores del escenario por default", WARN);
+				Logger::Instance()->LOG("Se cargo la cantidad de jugadores del escenario por default", LogTypeWarn);
 				cantJugadoresStr = "2";
 			}
 
@@ -163,19 +163,19 @@ bool ParserNivel::extraerEscenario(const pugi::xml_document* doc, bool isLoading
 
 	if (!validarNumero(anchoString))
 		{
-			Logger::Instance()->LOG("Se cargo el ancho del escenario por default", WARN);
+			Logger::Instance()->LOG("Se cargo el ancho del escenario por default", LogTypeWarn);
 			anchoString = "110";
 		}
 	std::string altoString = escenarioNode.child("alto").first_child().value();
 	if (!validarNumero(altoString))
 		{
-			Logger::Instance()->LOG("Se cargo el alto del escenario por default", WARN);
+			Logger::Instance()->LOG("Se cargo el alto del escenario por default", LogTypeWarn);
 			altoString = "1100";
 		}
 	std::string velScrollString = escenarioNode.child("velocidadScroll").first_child().value();
 	if (!validarNumero(velScrollString))
 	{
-		Logger::Instance()->LOG("Se cargo velocidad de scrolling del escenario por default", WARN);
+		Logger::Instance()->LOG("Se cargo velocidad de scrolling del escenario por default", LogTypeWarn);
 		velScrollString = "5";
 	}
 
@@ -216,7 +216,7 @@ bool ParserNivel::extraerElementos(const pugi::xml_document* doc, bool isLoading
 	   }
 	   else
 	   {
-		   Logger::Instance()->LOG("Al no tener un id existente entre los sprites, se asignará un sprte default", WARN);
+		   Logger::Instance()->LOG("Al no tener un id existente entre los sprites, se asignará un sprte default", LogTypeWarn);
 		   elem.spriteId = "default";
 	   }
 	   std::string posx = eleme.child("posicion").child("x").first_child().value();
@@ -224,12 +224,12 @@ bool ParserNivel::extraerElementos(const pugi::xml_document* doc, bool isLoading
 	   Posicion pos;
 	   if (!validarNumero(posx))
 	   {
-		   Logger::Instance()->LOG("Se cargo la posx del elemento por default", WARN);
+		   Logger::Instance()->LOG("Se cargo la posx del elemento por default", LogTypeWarn);
 		   posx = "1";
 	   }
 	   if (!validarNumero(posy))
 	   {
-		   Logger::Instance()->LOG("Se cargo la posy del elemento por default", WARN);
+		   Logger::Instance()->LOG("Se cargo la posy del elemento por default", LogTypeWarn);
 		   posy = "1";
 	   }
 	   pos.x = stoi(posx);
@@ -251,12 +251,12 @@ bool ParserNivel::extraerFondo(const pugi::xml_document* doc, bool isLoadingDefa
 
 	if(! validarNumero(anchoString))
 	{
-		Logger::Instance()->LOG("Se cargo el ancho del fondo por default", WARN);
+		Logger::Instance()->LOG("Se cargo el ancho del fondo por default", LogTypeWarn);
 		anchoString = "12";
 	}
 	if(! validarNumero(altoString))
 	{
-		Logger::Instance()->LOG("Se cargo el alto del fondo por default", WARN);
+		Logger::Instance()->LOG("Se cargo el alto del fondo por default", LogTypeWarn);
 		altoString = "12";
 	}
 
@@ -281,17 +281,17 @@ bool ParserNivel::extraerAvion(const pugi::xml_document* doc, bool isLoadingDefa
 
 	if(! validarNumero(velDesplStr))
 	{
-		Logger::Instance()->LOG("Se cargo la velocidad del avion por default", WARN);
+		Logger::Instance()->LOG("Se cargo la velocidad del avion por default", LogTypeWarn);
 		velDesplStr = "10";
 	}
 	if(! validarNumero(velDispStr))
 	{
-		Logger::Instance()->LOG("Se cargo la velocidad del disparo por default", WARN);
+		Logger::Instance()->LOG("Se cargo la velocidad del disparo por default", LogTypeWarn);
 		velDispStr = "12";
 	}
 	if(! validarNumero(cdDispStr))
 		{
-			Logger::Instance()->LOG("Se cargo el cd del disparo por default", WARN);
+			Logger::Instance()->LOG("Se cargo el cd del disparo por default", LogTypeWarn);
 			cdDispStr = "300";
 		}
 	bool found = false;
@@ -305,7 +305,7 @@ bool ParserNivel::extraerAvion(const pugi::xml_document* doc, bool isLoadingDefa
 	}
 	if(!found)
 	{
-		Logger::Instance()->LOG("Al no tener un id existente entre los sprites, se asignará un sprte default", WARN);
+		Logger::Instance()->LOG("Al no tener un id existente entre los sprites, se asignará un sprte default", LogTypeWarn);
 		avionSprId = "default";
 	}
 	found = false;
@@ -319,7 +319,7 @@ bool ParserNivel::extraerAvion(const pugi::xml_document* doc, bool isLoadingDefa
 	}
 	if(!found)
 	{
-		Logger::Instance()->LOG("Al no tener un id existente entre los sprites, se asignará un sprte default", WARN);
+		Logger::Instance()->LOG("Al no tener un id existente entre los sprites, se asignará un sprte default", LogTypeWarn);
 		vueltaSprId = "default";
 	}
 	found = false;
@@ -333,7 +333,7 @@ bool ParserNivel::extraerAvion(const pugi::xml_document* doc, bool isLoadingDefa
 	}
 	if(!found)
 	{
-		Logger::Instance()->LOG("Al no tener un id existente entre los sprites, se asignará un sprte default", WARN);
+		Logger::Instance()->LOG("Al no tener un id existente entre los sprites, se asignará un sprte default", LogTypeWarn);
 		disparpSprId = "default";
 	}
 
@@ -364,26 +364,23 @@ bool ParserNivel::validarPath(std::string& path)
 
 bool validarRoot(const pugi::xml_document* doc)
 {
-
-
+    return false;
 }
 
 bool validarSprite(Sprite* sprite)
 {
-
-
+    return false;
 }
 
 bool validarVentana(Ventana* ventana)
 {
-
-
+    return false;
 }
 bool validarEscenario(Escenario *escenario)
 {
-
-
+    return false;
 }
+
 bool ParserNivel::validarNumero(std::string& intString)
 {
 	if (intString.empty())
@@ -400,6 +397,5 @@ bool ParserNivel::validarNumero(std::string& intString)
 
 bool validarTipoDeDato(std::string& tipoDatoString)
 {
-
-
+    return false;
 }

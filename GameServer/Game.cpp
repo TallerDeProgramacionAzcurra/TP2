@@ -108,7 +108,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 		if (player->isConnected()) //El jugador con ese nombre ya esta conectado
 		{
 			ss <<"Server: El jugador con nombre" << playerName << " ya se encuentra conectado.";
-			Logger::Instance()->LOG(ss.str(), WARN);
+			Logger::Instance()->LOG(ss.str(), LogTypeWarn);
 			printf("%s \n", ss.str().c_str());
 			player->refreshDirty();
 			pthread_mutex_unlock(&m_createPlayerMutex);
@@ -133,7 +133,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 	if (m_listOfPlayer.size() == m_parserNivel->getEscenario().cantidadJugadores)
 	{
 		ss <<"Server: El jugador con nombre" << playerName << " no se pudo conectar, ya está llena la partida.";
-		Logger::Instance()->LOG(ss.str(), WARN);
+		Logger::Instance()->LOG(ss.str(), LogTypeWarn);
 		printf("%s \n", ss.str().c_str());
 		pthread_mutex_unlock(&m_createPlayerMutex);
 		return false;

@@ -25,16 +25,16 @@ bool ParserCliente::parsearDocumento(const std::string& nombreArchivoXML)
 		//exito = false;
 		std::stringstream ss;
 		ss << "No se pudo parsear con éxito el archivo XML: " << nombreArchivoXML.c_str() << ".";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 		ss.clear();
 		ss << "Se cargará el archivo default: " << XML_CLIENTE_DEFAULT_PATH << ".";
-		Logger::Instance()->LOG(ss.str(), WARN);
+		Logger::Instance()->LOG(ss.str(), LogTypeWarn);
 
 		exito = parsearDoc(XML_CLIENTE_DEFAULT_PATH, true);
 		if (!exito)
 		{
 			//El archivo XML default también tiene errores. No se pudo parsear.
-			Logger::Instance()->LOG("No se pudieron parsear ninguno de los archivos XML cliente.", ERROR);
+			Logger::Instance()->LOG("No se pudieron parsear ninguno de los archivos XML cliente.", LogTypeError);
 		}
 	}
 	return exito;
@@ -56,7 +56,7 @@ bool ParserCliente::parsearDoc(const std::string& nombreArchivoXML, bool isDefau
 		//No se pudo abrir el archivo XML
 		//LOGUEO DE ERRORES EN CASO DE QUE NO SE PUEDA CARGAR EL ARCHIVO XML
 		ss << "Archivo " << nombreArchivoXML.c_str() <<  " dañado. Error Description: " << result.description() << ".";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 
 		return parseadoExitoso;
 
@@ -65,12 +65,12 @@ bool ParserCliente::parsearDoc(const std::string& nombreArchivoXML, bool isDefau
 	if (!validarRoot(&doc))
 	{
 		parseadoExitoso = false;
-		Logger::Instance()->LOG("Formato del nodo raiz inválido o vacío.", ERROR);
+		Logger::Instance()->LOG("Formato del nodo raiz inválido o vacío.", LogTypeError);
 		//Root Inválido
 		return parseadoExitoso;
 	}
 	if (!extraerConexionInfo(&doc, isDefault))
-		Logger::Instance()->LOG("No se pudo cargar la información de conexión del cliente.", ERROR);
+		Logger::Instance()->LOG("No se pudo cargar la información de conexión del cliente.", LogTypeError);
 
 	if (!extraerMensajes(&doc))
 		parseadoExitoso = false;
@@ -110,7 +110,7 @@ bool ParserCliente::extraerMensajes(const pugi::xml_document* doc)
 	   std::string id = msj.child("id").first_child().value();
 	   if (!validarMensajeID(id))
 	   {
-		   Logger::Instance()->LOG("Error en el parseo de mensajes. ID vacío", DEBUG);
+		   Logger::Instance()->LOG("Error en el parseo de mensajes. ID vacío", LogTypeDebug);
 		   exito = false;
 		   break;
 	   }
@@ -119,14 +119,14 @@ bool ParserCliente::extraerMensajes(const pugi::xml_document* doc)
 	   {
 		   std::stringstream ss;
 		   ss << "Error en parseo de mensajes, en el mensaje con id " << id << ". Tipo de dato inválido: " << tipo;
-		   Logger::Instance()->LOG(ss.str(), DEBUG);
+		   Logger::Instance()->LOG(ss.str(), LogTypeDebug);
 		   exito = false;
 		   break;
 	   }
 	   std::string valor = msj.child("valor").first_child().value();
 	   if (!validarValorMensaje(valor))
 	   {
-		   Logger::Instance()->LOG("Error en el parseo de mensajes. Los valores no pueden ser vacío", DEBUG);
+		   Logger::Instance()->LOG("Error en el parseo de mensajes. Los valores no pueden ser vacío", LogTypeDebug);
 		   exito = false;
 		   break;
 	   }
@@ -149,13 +149,13 @@ bool ParserCliente::extraerConexionInfo(const pugi::xml_document* doc, bool isLo
 	if (!validarIP(ipString))
 	{
 		exito = false;
-		Logger::Instance()->LOG("Información de IP con errores. Se cargará información de conexión desde archivo default.", WARN);
+		Logger::Instance()->LOG("Información de IP con errores. Se cargará información de conexión desde archivo default.", LogTypeWarn);
 	}
 	std::string puertoString = conexionNode.child("puerto").first_child().value();
 	if (!validarPuerto(puertoString))
 	{
 		exito = false;
-		Logger::Instance()->LOG("Información del Puerto con errores. Se cargará información de conexión desde archivo default.", WARN);
+		Logger::Instance()->LOG("Información del Puerto con errores. Se cargará información de conexión desde archivo default.", LogTypeWarn);
 	}
 
 

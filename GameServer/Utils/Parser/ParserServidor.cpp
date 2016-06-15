@@ -23,16 +23,16 @@ bool ParserServidor::parsearDocumento(const std::string& nombreArchivoXML)
 	{
 		std::stringstream ss;
 		ss << "No se pudo parsear el archivo XML: " << nombreArchivoXML.c_str() << ". ";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 		ss.clear();
 		ss << "Se cargará el archivo default: " << XML_SERVIDOR_DEFAULT_PATH << ".";
-		Logger::Instance()->LOG(ss.str(), WARN);
+		Logger::Instance()->LOG(ss.str(), LogTypeWarn);
 
 		exito = parsearDoc(XML_SERVIDOR_DEFAULT_PATH, true);
 		if (!exito)
 		{
 			//El archivo XML default también tiene errores. No se pudo parsear.
-			Logger::Instance()->LOG("No se pudieron parsear ninguno de los archivos XML servidor.", ERROR);
+			Logger::Instance()->LOG("No se pudieron parsear ninguno de los archivos XML servidor.", LogTypeError);
 		}
 	}
 	return exito;
@@ -52,7 +52,7 @@ bool ParserServidor::parsearDoc(const std::string& nombreArchivoXML, bool isDefa
 		//No se pudo abrir el archivo XML
 		//LOGUEO DE ERRORES EN CASO DE QUE NO SE PUEDA CARGAR EL ARCHIVO XML
 		ss << "Archivo " << nombreArchivoXML.c_str() <<  " dañado. Error Description: " << result.description() << ".";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 
 		return parseadoExitoso;
 	}
@@ -60,7 +60,7 @@ bool ParserServidor::parsearDoc(const std::string& nombreArchivoXML, bool isDefa
 	if (!validarRoot(&doc))
 	{
 		parseadoExitoso = false;
-		Logger::Instance()->LOG("Formato del nodo raiz inválido o vacío.", ERROR);
+		Logger::Instance()->LOG("Formato del nodo raiz inválido o vacío.", LogTypeError);
 		//Root Inválido
 		return parseadoExitoso;
 	}
@@ -69,7 +69,7 @@ bool ParserServidor::parsearDoc(const std::string& nombreArchivoXML, bool isDefa
 		parseadoExitoso = false;
 	}
 	if (!extraerLoggerInfo(&doc, isDefault))
-		Logger::Instance()->LOG("No se pudo cargar la información de logger del servidor.", ERROR);
+		Logger::Instance()->LOG("No se pudo cargar la información de logger del servidor.", LogTypeError);
 
 	return parseadoExitoso;
 }
@@ -107,13 +107,13 @@ bool ParserServidor::extraerServidorInfo(const pugi::xml_document* doc)
 	if (!validarCantMaximaClientes(cantMaximaClientesString))
 	{
 		exito = false;
-		Logger::Instance()->LOG("Información Cantidad Maxima de Clientes con errores en el archivo xml del servidor.", WARN);
+		Logger::Instance()->LOG("Información Cantidad Maxima de Clientes con errores en el archivo xml del servidor.", LogTypeWarn);
 	}
 	std::string puertoString = servidorNode.child("puerto").first_child().value();
 	if (!validarPuerto(puertoString))
 	{
 		exito = false;
-		Logger::Instance()->LOG("Información del Puerto con errores en el archivo xml del servidor.", WARN);
+		Logger::Instance()->LOG("Información del Puerto con errores en el archivo xml del servidor.", LogTypeWarn);
 	}
 
 	if (exito)
@@ -137,19 +137,19 @@ bool ParserServidor::extraerLoggerInfo(const pugi::xml_document* doc, bool isLoa
 	if (!validarLoggerInfo(debugString))
 	{
 		exito = false;
-		Logger::Instance()->LOG("Información de Logger con errores. Se cargará información de logger desde archivo default.", WARN);
+		Logger::Instance()->LOG("Información de Logger con errores. Se cargará información de logger desde archivo default.", LogTypeWarn);
 	}
 	std::string warningsString = loggerNode.child("warning").first_child().value();
 	if (!validarLoggerInfo(warningsString))
 	{
 		exito = false;
-		Logger::Instance()->LOG("Información de Logger con errores. Se cargará el archivo", WARN);
+		Logger::Instance()->LOG("Información de Logger con errores. Se cargará el archivo", LogTypeWarn);
 	}
 	std::string errorString = loggerNode.child("error").first_child().value();
 	if (!validarLoggerInfo(errorString))
 	{
 		exito = false;
-		Logger::Instance()->LOG("Información de Logger con errores. Se cargará información de logger desde archivo default.", WARN);
+		Logger::Instance()->LOG("Información de Logger con errores. Se cargará información de logger desde archivo default.", LogTypeWarn);
 	}
 
 	if (!exito)
