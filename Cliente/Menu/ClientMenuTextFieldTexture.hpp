@@ -10,6 +10,7 @@
 #define ClientMenuTextFieldTexture_hpp
 
 #include <stdio.h>
+#include <string>
 #include <time.h>
 
 #include "ClientMenuTextTexture.hpp"
@@ -20,13 +21,20 @@ public:
     virtual ~ClientMenuTextFieldTexture();
     
     void menuTextureRender(int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
-    void menuTextureTextFieldHandlerMourEvent(SDL_Event *mouseEvent);
+    
+    // Events handlers.
+    void menuTextureTextFieldHandlerMouseEvent(SDL_Event *mouseEvent);
+    void menuTextureTextFieldHanldlerInputEvent(SDL_Event *inputEvent, std::string *inputText);
+    
+    bool menuTextureTextFieldIsSelected();
     
 private:
     clock_t startTime;
     bool drawLine;
     
     bool menuTextureTextFieldEventInside(SDL_Event *mouseEvent);
+    bool menuTextureTextFieldInputIsBackSpace(SDL_Event *inputEvent);
+    bool menuTextureTextFieldInputIsReturn(SDL_Event *inputEvent);
 };
 
 #endif /* ClientMenuTextFieldTexture_hpp */

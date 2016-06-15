@@ -65,6 +65,7 @@ void ClientMenuTextTexture::menuTextureSetText(const char *textureText) {
         SDL_FreeSurface(textSurface);
     }
     
+    
     //Return success
     this->menuTextureLoaded =  this->menuTexture != NULL;
 }

@@ -6,6 +6,8 @@
 //  Copyright © 2016 Gaston Montes. All rights reserved.
 //
 
+#include <string>
+
 #include "ClientMenuTextFieldTexture.hpp"
 #include "ClientMenuImageTexture.hpp"
 #include "ClientMenuTextTexture.hpp"
@@ -57,17 +59,17 @@ void ClientMenu::clientMenuClear() {
     SDL_RenderClear(this->clientMenuRender);
 }
 
-void ClientMenu::clientMenuShow() {    
+void ClientMenu::clientMenuShow() {
     // Update screen.
     SDL_RenderPresent(this->clientMenuRender);
 }
 
 // Events methods.
-bool ClientMenu::clientMenuHandleQuitEvent(SDL_Event *e) {
+bool ClientMenu::clientMenuHandleQuitEvent(SDL_Event *event) {
     //Event handler
-    while(SDL_PollEvent(e) != 0) {
+    while (SDL_PollEvent(event) != 0) {
         //User requests quit
-        if (e->type == SDL_QUIT) {
+        if (event->type == SDL_QUIT) {
             return true;
         }
     }
@@ -86,10 +88,13 @@ void ClientMenu::clientMenuRun() {
     
     ClientMenuTextTexture promptPlayerText = ClientMenuTextTexture(this->clientMenuWindow);
     promptPlayerText.menuTextureSetTextFont("bummer3d.ttf", 2);
+    promptPlayerText.menuTextureSetText("Nombre del jugador:");
     textures.push_back(promptPlayerText);
     
+    std::string inputText = "Jugador #";
     ClientMenuTextFieldTexture inputPlayerText = ClientMenuTextFieldTexture(this->clientMenuWindow);
     inputPlayerText.menuTextureSetTextFont("bummer3d.ttf", 2);
+    inputPlayerText.menuTextureSetText(inputText.c_str());
     textures.push_back(inputPlayerText);
     
     bool loadingTextureOK = true;
@@ -104,8 +109,20 @@ void ClientMenu::clientMenuRun() {
     
     if (loadingTextureOK == true) {
         SDL_Event event;
+        
         while (this->clientMenuHandleQuitEvent(&event) == false) {
             this->clientMenuClear();
+            
+            // Handler mouse touch up event.
+            if (event.type == SDL_MOUSEBUTTONUP) {
+                inputPlayerText.menuTextureTextFieldHandlerMouseEvent(&event);
+                while (SDL_PollEvent(&event) == 0) {}
+            }
+            
+            if (inputPlayerText.menuTextureTextFieldIsSelected() == true && (event.type == SDL_KEYDOWN || event.type == SDL_TEXTINPUT)) {
+                inputPlayerText.menuTextureTextFieldHanldlerInputEvent(&event, &inputText);
+                while (SDL_PollEvent(&event) == 0) {}
+            }
             
             SDL_Rect imageRect;
             imageRect.x = 0;
@@ -123,17 +140,12 @@ void ClientMenu::clientMenuRun() {
             
             // Prompt text.
             inputPlayerText.menuTextureSetTextFont("bummer3d.ttf", imageRect.w / 20);
-            inputPlayerText.menuTextureSetText("Jugador #");
+            inputPlayerText.menuTextureSetText(inputText.c_str());
             inputPlayerText.menuTextureRender((imageRect.w - inputPlayerText.menuTextureGetWidth()) / 2,
                                               imageRect.h / 2);
             
-            // Handler mouse touch up event.
-            if (event.type == SDL_MOUSEBUTTONUP) {
-                inputPlayerText.menuTextureTextFieldHandlerMourEvent(&event);
-            }
-
-            
             this->clientMenuShow();
+            
         }
     }
 }

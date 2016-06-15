@@ -11,12 +11,15 @@
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
+#include <string>
+#include <list>
 
 class ClientMenuUtils {
 public:
     static SDL_Color clientMenuModulationColor();
     static SDL_Color clientMenuTextColor();
     static SDL_Color clientMenuTextColorSelected();
+    static std::list<std::string> clientMenuAllowedCharacters();
 };
 
 #endif /* ClientMenuUtil_hpp */

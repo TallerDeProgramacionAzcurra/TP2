@@ -6,6 +6,12 @@
 //  Copyright © 2016 Gaston Montes. All rights reserved.
 //
 
+#include <algorithm>
+#include <unistd.h>
+#include <sstream>
+#include <string>
+#include <list>
+
 #include "ClientMenuTextFieldTexture.hpp"
 #include "ClientMenuUtil.hpp"
 
@@ -22,7 +28,7 @@ void ClientMenuTextFieldTexture::menuTextureRender(int x, int y, SDL_Rect *clip,
     clock_t clockTicksTaken = endTime - this->startTime;
     double timeInSeconds = clockTicksTaken / (double) CLOCKS_PER_SEC;
     
-    if (timeInSeconds > 0.5) {
+    if (timeInSeconds > 0.30) {
         this->startTime = endTime;
         this->drawLine = !this->drawLine;
     }
@@ -68,7 +74,7 @@ bool ClientMenuTextFieldTexture::menuTextureTextFieldEventInside(SDL_Event *mous
     return false;
 }
 
-void ClientMenuTextFieldTexture::menuTextureTextFieldHandlerMourEvent(SDL_Event *mouseEvent) {
+void ClientMenuTextFieldTexture::menuTextureTextFieldHandlerMouseEvent(SDL_Event *mouseEvent) {
     bool mouseEventInside = this->menuTextureTextFieldEventInside(mouseEvent);
     
     if (mouseEventInside == true && this->menuTextureSelected == false) {
@@ -76,4 +82,55 @@ void ClientMenuTextFieldTexture::menuTextureTextFieldHandlerMourEvent(SDL_Event 
     } else {
         this->menuTextureSelected = false;
     }
+}
+
+bool ClientMenuTextFieldTexture::menuTextureTextFieldInputIsBackSpace(SDL_Event *inputEvent) {
+    if (inputEvent->type == SDL_KEYDOWN && inputEvent->key.keysym.sym == SDLK_BACKSPACE) {
+        return true;
+    }
+    
+    return false;
+}
+
+bool ClientMenuTextFieldTexture::menuTextureTextFieldInputIsReturn(SDL_Event *inputEvent) {
+    if (inputEvent->type == SDL_KEYDOWN && inputEvent->key.keysym.sym == SDLK_RETURN) {
+        return true;
+    }
+    
+    return false;
+}
+
+void ClientMenuTextFieldTexture::menuTextureTextFieldHanldlerInputEvent(SDL_Event *inputEvent, std::string *inputText) {
+    bool isBackSpace = this->menuTextureTextFieldInputIsBackSpace(inputEvent);
+    bool isReturn = this->menuTextureTextFieldInputIsReturn(inputEvent);
+    
+    if (isReturn == true) {
+        this->menuTextureSelected = false;
+        return;
+    }
+    
+    if (isBackSpace && inputText->length() > 0) {
+        inputText->pop_back();
+        
+        if (inputText->length() == 0) {
+            inputText->append(" ");
+        }
+    } else {
+        // An alphanumeric key pressed.
+        std::string newString = std::string(inputEvent->text.text);
+        std::list<std::string> allowedCharacters = ClientMenuUtils::clientMenuAllowedCharacters();
+        bool allowedCharacter = (std::find(allowedCharacters.begin(), allowedCharacters.end(), newString) != allowedCharacters.end());
+
+        if (allowedCharacter == true && inputText->length() < 23) {
+            if (*inputText == " ") {
+                *inputText = "";
+            }
+            
+            inputText->append(inputEvent->text.text);
+        }
+    }
+}
+
+bool ClientMenuTextFieldTexture::menuTextureTextFieldIsSelected() {
+    return this->menuTextureSelected;
 }
