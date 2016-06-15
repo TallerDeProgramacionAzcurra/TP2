@@ -19,9 +19,9 @@ Level::~Level()
 {
 }
 
-void Level::loadFromXML()
+void Level::loadFromXML(const std::string& xmlFileName)
 {
-	m_parserNivel->parsearDocumento(XML_PATH);
+	m_parserNivel->parsearDocumento(xmlFileName);
 	Escenario scene = m_parserNivel->getEscenario();
 	m_levelHeight = scene.alto - Game::Instance()->getGameHeight();
 	m_levelWidth = scene.ancho;
@@ -66,6 +66,19 @@ void Level::loadFromXML()
 	gameObject->setHeight(150);
 	addObject(gameObject, 0, 0);*/
 
+}
+
+void Level::loadLevel(int level)
+{
+	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end(); ++it)
+	 {
+		 if ((*it))
+			 delete (*it);
+	 }
+	 m_levelObjects.clear();
+	std::stringstream ss;
+	ss << "test" << level << ".xml";
+	loadFromXML(ss.str());
 }
 
 void Level::scrollToNextStage()

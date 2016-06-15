@@ -154,6 +154,9 @@ void Game::render()
     	foregroundObjects[foundOwnPlayer]->draw();
     }
     m_hud->draw(m_pRenderer);
+    if (m_showingStatistics)
+    	m_stats->draw(m_pRenderer);
+
     SDL_RenderPresent(m_pRenderer);
 }
 
@@ -477,9 +480,9 @@ void Game::updateBackground(BackgroundInfo backgroundInfo)
 /********************ESTADISTICAS******************************/
 void Game::showStageStatistics(StageStatistics stageStatistics)
 {
-	m_showingStatistics = true;
+	m_stats = new Statistics(m_gameWidth, m_gameHeight, stageStatistics);
 	m_showingStatisticsTimer = SHOW_STATISTICS_TIME;
-	//MOSTRAR ESTADISTICAS
+	m_showingStatistics = true;
 
 }
 
@@ -491,7 +494,7 @@ void Game::updateStatistics()
 		if (m_showingStatisticsTimer <= 0)
 		{
 			m_showingStatistics = false;
-			//QUITAR ESTADISTICAS
+			delete m_stats;
 		}
 	}
 }

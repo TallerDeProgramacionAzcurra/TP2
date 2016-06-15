@@ -99,7 +99,7 @@ void PowerUpSpawner::addPowerUp(Powerup powerUpInfo)
 			powerUpSpawnInfo.posX = posX;
 			powerUpSpawnInfo.posY = posY;
 
-			printf("Extra Points Power Up en posicion %d \n", randomStagePosition);
+			//printf("Extra Points Power Up en posicion %d \n", randomStagePosition);
 			m_powerUpsToSpawn.push_back(powerUpSpawnInfo);
 		}
 	}
@@ -129,7 +129,7 @@ void PowerUpSpawner::addPowerUp(Powerup powerUpInfo)
 			powerUpSpawnInfo.posX = posX;
 			powerUpSpawnInfo.posY = posY;
 
-			printf("Bomb Power Up en posicion %d \n", randomStagePosition);
+			//printf("Bomb Power Up en posicion %d \n", randomStagePosition);
 			m_powerUpsToSpawn.push_back(powerUpSpawnInfo);
 		}
 	}
@@ -158,7 +158,7 @@ void PowerUpSpawner::addPowerUp(Powerup powerUpInfo)
 			powerUpSpawnInfo.posX = posX;
 			powerUpSpawnInfo.posY = posY;
 
-			printf("Bomb Power Up en posicion %d \n", randomStagePosition);
+			//printf("Bomb Power Up en posicion %d \n", randomStagePosition);
 			m_powerUpsToSpawn.push_back(powerUpSpawnInfo);
 		}
 	}

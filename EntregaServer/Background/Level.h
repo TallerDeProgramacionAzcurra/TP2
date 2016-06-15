@@ -18,6 +18,7 @@
 #include "../Utils/GameObjectFactory.h"
 #include <vector>
 #include <sstream>
+#include <string>
 
 class Level
 {
@@ -25,7 +26,7 @@ public:
 	Level();
 	~Level();
 
-	void loadFromXML();
+	void loadFromXML(const std::string& xmlFileName);
 	void initialize(int backgroundTextureID, int levelWidth, int levelHeigth, float scrollSpeed);
 	void addObject(GameObject* gameObject, int x, int y);
 	//void paintBackground();
@@ -33,6 +34,7 @@ public:
 	void clean();
 
 	void resetPositions();
+	void loadLevel(int level);
 
 	void scrollToNextStage();
 	bool isScrollingToNextStage() { return m_scrollingToNextStage; }

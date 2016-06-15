@@ -105,7 +105,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			enemySpawnInfo.posX = posX;
 			enemySpawnInfo.posY = posY;
 
-			printf("Enemigo Pequeño en posicion %d \n", randomStagePosition);
+		//	printf("Enemigo Pequeño en posicion %d \n", randomStagePosition);
 			m_enemiesToSpawn.push_back(enemySpawnInfo);
 		}
 	}
@@ -206,7 +206,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			enemySpawnInfo.stagePosition = randomStagePosition;
 			enemySpawnInfo.posX = posX;
 			enemySpawnInfo.posY = posY;
-			printf("Enemigo Grande en posicion %d \n", randomStagePosition);
+		//	printf("Enemigo Grande en posicion %d \n", randomStagePosition);
 			m_enemiesToSpawn.push_back(enemySpawnInfo);
 		}
 	}

@@ -3628,3 +3628,454 @@
   WARNING: Se cargo el path del sprite por default
   WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
   DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 14:51 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:18 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:22 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:22 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:22 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:23 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:23 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:23 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:24 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:27 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:31 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:34 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:40 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:42 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: aa ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:46 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:48 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:52 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:54 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:55 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:55 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  ===============================================
+    Comienzo del Log ( 15-06-2016 a las 15:57 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: a ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 236, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.

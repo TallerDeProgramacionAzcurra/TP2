@@ -29,13 +29,18 @@ public:
 	int getEnemiesKilled() { return m_enemiesKilled; }
 	int getShoots() { return m_shoots; }
 	int getHits() { return m_hits; }
-	float getAccuracy() { return ((float)m_shoots/ (float)m_hits); }
+	float getAccuracy()
+	{
+		if (m_shoots == 0)
+			m_shoots = 1;
+		return (((float)m_hits)/ ((float)m_shoots));
+	}
 	int getPoints() { return m_points; }
 
 	void incrementEnemiesKilled (int amount) { m_enemiesKilled += amount; }
-	void incrementShoots (int amount) { m_shoots += amount; }
-	void incrementHits(int amount) { m_enemiesKilled += m_hits; }
-	void incrementPoints (int amount) { m_enemiesKilled += m_points; }
+	void incrementShoots (int amount) { m_shoots += amount;}
+	void incrementHits(int amount) { m_hits += amount;}
+	void incrementPoints (int amount) { m_points += amount;}
 
 private:
 	int m_enemiesKilled;

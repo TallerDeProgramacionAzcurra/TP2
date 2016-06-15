@@ -79,7 +79,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     inicializarServer();
 
     m_level = new Level();
-    m_level->loadFromXML();
+    m_level->loadFromXML(XML_PATH);
 
    // enemy = new BossMati();
     //enemy->load(m_gameWidth/2,0,48,48,666,4);
@@ -682,7 +682,7 @@ void Game::resetGame()
 	 m_gameHeight = m_parserNivel->getVentana().alto;
 
 	 m_level = new Level();
-	 m_level->loadFromXML();
+	 m_level->loadFromXML(XML_PATH);
 
 	int newPlayerSpeed = m_parserNivel->getAvion().velDespl;
 	int newShootingCooldown = m_parserNivel->getAvion().cdDisp;
@@ -832,10 +832,12 @@ void Game::finishStage()
 			it->second->moveAutomatic(Vector2D(Game::Instance()->getGameWidth()/2 - 32, m_gameHeight/5), 4);
 
 			StageStatistics stageStatistics;
-			stageStatistics.accuracy = static_cast<short>((it->second->getStageStatistics().getAccuracy() * 100));
+			stageStatistics.accuracy = static_cast<short>(it->second->getStageStatistics().getAccuracy() * 100);
+			//stageStatistics.accuracy = stageStatistics.accuracy % 100;
 			stageStatistics.enemiesKilled = static_cast<short>(it->second->getStageStatistics().getEnemiesKilled());
 			stageStatistics.points = static_cast<short>(it->second->getStageStatistics().getPoints());
 			stageStatistics.something = 0;
+			//printf("acc %d - points %d, enemyKilled %d", stageStatistics.accuracy, 	stageStatistics.points, stageStatistics.enemiesKilled);
 
 			sendStageStatistics(stageStatistics, it->second->getObjectId());
 

@@ -305,12 +305,14 @@ void Player::handleInput(InputMessage inputMsg)
 
         if (inputMsg.buttonShoot)
         {
-        	m_stageStats.incrementShoots(1);
+
         	m_soundDirty = true;
 
         	m_soundSendId = 51;
-        	m_currentWeapon->shoot(Vector2D(m_position.getX() + m_shootOffset.getX(), m_position.getY() + m_shootOffset.getY()),
+        	bool didShoot = m_currentWeapon->shoot(Vector2D(m_position.getX() + m_shootOffset.getX(), m_position.getY() + m_shootOffset.getY()),
         							Vector2D(0, DIRECTION_UP));
+        	if (didShoot)
+               	m_stageStats.incrementShoots(1);
             m_dirty = true;
         }
 

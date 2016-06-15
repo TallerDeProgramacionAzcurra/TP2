@@ -13,6 +13,7 @@
 #include "Singletons/TextureManager.h"
 #include "Singletons/SoundManager.h"
 #include "Singletons/GameTimeHelper.h"
+#include "Statistics.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
@@ -28,6 +29,7 @@ using namespace std;
 class Island;
 class Background;
 class Player;
+class Statistics;
 class Hud;
 class cliente;
 class DrawObject;
@@ -140,6 +142,7 @@ private:
     Background* m_background;
     cliente* m_client;
     Hud* m_hud;
+    Statistics* m_stats;
     int m_backgroundTextureID;
     bool m_running;
 
