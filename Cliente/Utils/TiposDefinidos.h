@@ -24,16 +24,19 @@
 #define MAX_NAME_LENGTH 24
 #define PATH_MAX_LENGTH 36
 
-#define DRAW_MESSAGE_SIZE 24
-#define INPUT_MESSAGE_SIZE 16
+#define DRAW_MESSAGE_SIZE 32
+#define INPUT_MESSAGE_SIZE 20
+#define SCORE_MESSAGE_SIZE 8
+#define STAGE_STATISTICS_SIZE 8
 #define CONNECTED_MESSAGE_SIZE 16
 #define CONNECTIONINFO_MESSAGE_SIZE 24
 #define PLAYER_DISCONNECTION_MESSAGE_SIZE 32
 #define RESET_MESSAGE_SIZE 4
+#define BACKGROUNDINFO_MESSAGE_SIZE 4
 #define TEXTUREINFO_MESSAGE_SIZE (PATH_MAX_LENGTH + 12)
 #define PLAYER_RECONNECTION_MEESAGE 4
 
-#define DRAW_MESSAGE_PACK_SIZE  20
+#define DRAW_MESSAGE_PACK_SIZE  10
 
 #define BACKGROUND 1
 #define MIDDLEGROUND 10
@@ -41,6 +44,9 @@
 
 #include <string>
 #include <vector>
+#include <SDL2/SDL.h>
+class Enemy;
+class PowerUp;
 
 // TIPOS RELACIONADOS A ARCHIVOS XML
 
@@ -104,6 +110,17 @@ struct PlayerDisconnection
 	char name[24];
 };
 
+struct BackgroundInfo
+{
+	int backgroundOffset;
+};
+struct StageStatistics
+{
+	short accuracy;
+	short enemiesKilled;
+	short points;
+	short something;
+};
 
 struct DrawMessage
 {
@@ -119,6 +136,17 @@ struct DrawMessage
 	short posY;
 	short row;
 	short column;
+	float angle;
+	short alpha;
+	short vacio;
+};
+
+struct ScoreMessage
+{
+	short playerID;
+	short teamID;
+	short pointsacquire;
+	short somethingElse;
 };
 
 struct InputMessage
@@ -130,6 +158,8 @@ struct InputMessage
 	short buttonLeft;
 	short buttonShoot;
 	short buttonRoll;
+	short togglePracticeMode;
+	short something;
 };
 
 
@@ -161,6 +191,31 @@ struct DrawMessagePack
 	DrawMessage drawMessages[DRAW_MESSAGE_PACK_SIZE];
 };
 
+struct FontTexture
+{
+	const char* text;
+	SDL_Texture* texture;
+	short width;
+	short height;
+	short x;
+	short y;
+};
+
+struct EnemySpawnInfo
+{
+	Enemy* enemyToSpawn;
+	int stagePosition;
+	int posX;
+	int posY;
+};
+struct PowerUpSpawnInfo
+{
+	PowerUp* powerUpToSpawn;
+	int stagePosition;
+	int posX;
+	int posY;
+};
+
 struct Ventana
 {
 	int ancho;
@@ -168,6 +223,35 @@ struct Ventana
 
 };
 
+struct Enemigo
+{
+	std::string id;
+	int cantidad;
+	int frames;
+	int ancho;
+	int alto;
+
+};
+
+struct Jefe
+{
+	std::string id;
+	int posicion;
+	int frames;
+	int ancho;
+	int alto;
+
+};
+
+struct Powerup
+{
+	std::string id;
+	int cantidad;
+	int frames;
+	int ancho;
+	int alto;
+
+};
 struct Sprite
 {
 	std::string id;
@@ -202,6 +286,7 @@ struct Escenario
 {
 	int velScroll;
 	int cantidadJugadores;
+	int cantidadStages;
 	int ancho;
 	int alto;
 	struct Fondo fondo;

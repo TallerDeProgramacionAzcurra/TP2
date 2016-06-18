@@ -118,6 +118,18 @@ void Player::handleInput()
 		inputMsg.buttonRoll = 1;
 		dirty = true;
 	}
+
+	//Toggle Practice Mode
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_F1))
+	{
+		inputMsg.togglePracticeMode = 1;
+		dirty = true;
+	}
+	//Toggle AllSounds Mode
+		if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_F2))
+		{
+			Game::Instance()->setAlltalk(!Game::Instance()->getAlltalk());
+		}
 	//RESET GAME
 	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_R))
 	{

@@ -11,6 +11,7 @@
 #include "../Game.h"
 #include "../Utils/Parser/ParserNivel.h"
 #include "../Utils/TextureHelper.h"
+#include "../Utils/TiposDefinidos.h"
 
 #include <stdio.h>
 #include <queue>
@@ -53,6 +54,9 @@ class server
         void sendDrawMsg(int socketReceptor, DrawMessage msg);
         void sendConnectedMsg(int socketReceptor, ConnectedMessage msg);
         void sendResetMsgToAll(ResetInfo resetMsg);
+        void sendScoreMsgToAll(ScoreMessage scoreMsg);
+        void sendBackgroundInfoToAll(BackgroundInfo backgroundInfo);
+        void sendStageStatistics(StageStatistics stageStatistics, int clientID);
 
         void sendDisconnectionMsg(int socketReceptor, PlayerDisconnection msg);
 

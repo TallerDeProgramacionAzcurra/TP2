@@ -196,6 +196,26 @@ PlayerReconnectionInfo AlanTuring::decodePlayerReconnectionInfo(NetworkMessage n
 	return playerReconnectionInfo;
 }
 
+ScoreMessage AlanTuring::decodeScoreMessage(NetworkMessage netMsg)
+{
+	ScoreMessage scoreMessage;
+	memcpy(&scoreMessage, netMsg.msg_Data, sizeof(ScoreMessage));
+	return scoreMessage;
+}
+
+BackgroundInfo AlanTuring::decodeBackgroundInfo(NetworkMessage netMsg)
+{
+	BackgroundInfo backgroundInfo;
+	memcpy(&backgroundInfo, netMsg.msg_Data, sizeof(BackgroundInfo));
+	return backgroundInfo;
+}
+
+StageStatistics AlanTuring::decodeStageStatistics(NetworkMessage netMsg)
+{
+	StageStatistics stageStatistics;
+	memcpy(&stageStatistics, netMsg.msg_Data, sizeof(StageStatistics));
+	return stageStatistics;
+}
 
 PlayerDisconnection AlanTuring::decodePlayerDisconnectionMessage(NetworkMessage netMsg)
 {
@@ -307,6 +327,47 @@ NetworkMessage AlanTuring::ResetMsgToNetwork(ResetInfo resetMessage)
 
 	memcpy(networkMessage.msg_Data, &resetMessage, sizeof(ResetInfo));
 	networkMessage.msg_Length = sizeof(ResetInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+
+NetworkMessage AlanTuring::ScoreMessageToNetwork(ScoreMessage scoreMessage)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 's';
+	networkMessage.msg_Code[1] = 'c';
+	networkMessage.msg_Code[2] = 'm';
+
+	memcpy(networkMessage.msg_Data, &scoreMessage, sizeof(ScoreMessage));
+	networkMessage.msg_Length = sizeof(ScoreMessage) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+
+NetworkMessage AlanTuring::BackgroundInfoToNetwork(BackgroundInfo backgroundMessage)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 'b';
+	networkMessage.msg_Code[1] = 'g';
+	networkMessage.msg_Code[2] = 'i';
+
+	memcpy(networkMessage.msg_Data, &backgroundMessage, sizeof(BackgroundInfo));
+	networkMessage.msg_Length = sizeof(BackgroundInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+NetworkMessage AlanTuring::StageStatisticsToNetwork(StageStatistics stageStatisticsMessage)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 's';
+	networkMessage.msg_Code[1] = 't';
+	networkMessage.msg_Code[2] = 't';
+
+	memcpy(networkMessage.msg_Data, &stageStatisticsMessage, sizeof(StageStatistics));
+	networkMessage.msg_Length = sizeof(StageStatistics) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	return networkMessage;
 }

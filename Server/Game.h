@@ -6,34 +6,52 @@
 #include "Server/DrawMessagesPacker.h"
 #include "Utils/Parser/ParserServidor.h"
 #include "Background/Level.h"
-#include "Background/Island.h"
-#include "Background/Background.h"
+
+
+
 #include "Singletons/InputHandler.h"
 #include "Singletons/TextureManager.h"
-#include "Weapons/BulletsHandler.h"
+
 #include "Utils/TextureHelper.h"
 #include "Utils/Parser/ParserNivel.h"
-#include "Player.h"
+#include "Utils/Parser/ParserStage.h"
+
+
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <sstream>
 #include <map>
 #include <string>
 #include <pthread.h>
+
 using namespace std;
 
-class Island;
-class Background;
+class GameObject;
+class Enemy;
+class SmallEnemy;
 class Player;
 class Level;
+class Weapon;
+class PowerUp;
 class server;
 class DrawMessagesPacker;
+class PowerUpSpawner;
+class EnemySpawner;
+class BulletsHandler;
+class CollitionHandler;
 
 #define USE_DRAWMESSAGE_PACKAGING 0
 
 #define DRAG_PLAYER 0
 
-#define XML_PATH "test.xml"
+#define END_STAGE_TIMER 5000
+#define XML_PATH "test1.xml"
+
+enum GameMode
+{
+    GAMEMODE_COOPERATIVE,
+    GAMEMODE_COMPETITION
+};
 
 class Game
 {
@@ -59,6 +77,7 @@ public:
     void clean();
     void resetGame();
     void refreshPlayersDirty();
+    Vector2D getRandomPLayerCenter();
 
     bool createPlayer(int clientID, const std::string& playerName);
     bool validatePlayerName(const std::string& playerName);
@@ -66,18 +85,29 @@ public:
     void disconnectPlayer(int playerId);
     void inicializarServer();
     void conectToKorea();
+
     void sendToAllClients(DrawMessage drawMsg);
     void addToPackage(DrawMessage drawMsg);
     void sendPackages();
+    void sendScoreToClients(ScoreMessage scoreMsg);
+   	void sendBackgroundInfo(BackgroundInfo backgroundInfo);
+   	void sendStageStatistics(StageStatistics stageStatistics, int clientID);
+
+    void addPointsToScore(int points, int playerID, int teamID);
+    void addPointsToTeam(int points, int teamID);
 
     void initializeTexturesInfo();
     void setPlayersDirty();
+    void changePlayerWeapon(Weapon* weapon, Player* player);
 
    	void* koreaMethod(void);
    	void readFromKorea();
    	void keepListening();
 
    	void actualizarEstado(int id,InputMessage dataMsg);
+
+    void addPowerUp(PowerUp* powerUp);
+    void addEnemy(Enemy* enemy);
 
 
     SDL_Renderer* getRenderer() const { return m_pRenderer; }
@@ -91,37 +121,68 @@ public:
     //Alto y Ancho de la ventana de juego
     int getGameWidth() const { return m_gameWidth; }
     int getGameHeight() const { return m_gameHeight; }
+    Player* getPlayer(int playerID);
+    int getPlayerTeam(int playerID);
     void setReseting(bool state) { m_reseting = state; }
+    bool isPracticeMode();
+	void setPracticeMode(bool practiceMode);
+	bool isLevelStarted() { return !m_startingStage; }
+	bool isFinishingLevel() { return  m_endingStage; }
+
+	void killAllEnemies(Player* killer);
+	void killAllEnemiesNoRewards();
+	void loadCurrentStage();
+	void loadNextStage();
+	void finishStage();
 
     pthread_t listenThread;
     float getScrollSpeed() { return m_scrollSpeed; }
     static void *thread_method(void *context);
 
 private:
-
-    std::map<int,Player*> m_listOfPlayer;
+    std::map<int, Player*> m_listOfPlayer;
     std::map<int,std::string> m_playerNames;
+    std::map<int, int> m_teamScores; //id de equipos por ahora son 0 y 1
 
     std::map<int,GameObject*> m_listOfGameObjects;
+
+    /***************Contenedores de Objetos del Stage********************/
+    std::vector<PowerUp*> m_powerUps;
+    std::vector<Enemy*> m_enemies;
+    /*******************************************************************/
 
     SDL_Window* m_pWindow;
     SDL_Renderer* m_pRenderer;
 
     ParserNivel* m_parserNivel;
+    ParserStage* m_parserStages;
     Level* m_level;
     TextureHelper* m_textureHelper;
-
-    //Provisorio
-    Player* m_player;
-    Background* m_background;
-    Island* m_island;
 
     server* m_server;
     DrawMessagesPacker* m_drawMessagePacker;
 
+    /********Stages Info*********/
+    int m_stagesAmount;
+    int m_currentStage;
+
+    PowerUpSpawner* m_powerUpsSpawner;
+    EnemySpawner* m_enemiesSpawner;
+    /****************************/
+
+    GameMode m_currentMode;
+    bool m_practiceMode;
+    int m_practiceHoldTimer;
+    int m_startingWaitTime;
+    int m_waitEndStageTimer;
+
 
     bool m_running;
     bool m_reseting;
+    bool m_startingStage;
+    bool m_endingStage;
+    bool m_scrollingToNextStage;
+    bool m_waitingToScroll;
 
     static Game* s_pInstance;
 
@@ -129,12 +190,24 @@ private:
     int m_gameHeight;
     float m_scrollSpeed;
 
-    pthread_mutex_t  m_resetMutex;
+    pthread_mutex_t m_resetMutex;
+    pthread_mutex_t m_updatePlayerMutex;
+    pthread_mutex_t m_createPlayerMutex;
+
+    void updateBackground(int scrollSpeed);
 
     Game();
     ~Game();
     Game(const Game&);
 	Game& operator=(const Game&);
+
+	void updateSpawners();
+	void initializeTeamScores();
+	void checkPracticeMode();
+	void checkStartingStage();
+	void checkEndingStage();
+
+	void cleanDeadObjects();
 };
 
 

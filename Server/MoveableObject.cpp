@@ -17,6 +17,7 @@ void MoveableObject::load(int x, int y, int width, int height, int textureID, in
     m_height = height;
     m_textureID = textureID;
     m_numFrames = numFrames;
+    m_hitRadius = m_width/2;
 }
 
 void MoveableObject::draw()

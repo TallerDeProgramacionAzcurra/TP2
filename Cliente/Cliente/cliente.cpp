@@ -21,6 +21,17 @@ bool cliente::conectar()
     	m_connecting = false;
     	return false;
     }
+
+    if (DISABLE_NAGEL_ALGORITHM)
+    {
+    	if (!disableNagelAlgorithm(sockfd))
+    	{
+    		Logger::Instance()->LOG("Cliente: Error al deshabilitar el algoritmo de Nagel.", ERROR);
+    		m_connecting = false;
+    		return false;
+    	}
+    }
+
     setTimeOut();
     if (connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
     {
@@ -47,6 +58,22 @@ bool cliente::conectar()
 
     return m_connected;
 }
+
+bool cliente::disableNagelAlgorithm(int socketID)
+{
+  int flag = 1;
+  int result = setsockopt(socketID,            /* socket affected */
+						  IPPROTO_TCP,     /* set option at TCP level */
+						  TCP_NODELAY,     /* name of option */
+						  (char *) &flag,  /* the cast is historical
+						  			  	  	  cruft */
+						  sizeof(int));    /* length of option value */
+  if (result < 0)
+	  return false;
+
+  return true;
+}
+
 void cliente::desconectar()
 {
 	if (!m_connected)
@@ -97,9 +124,10 @@ cliente::~cliente()
     pthread_mutex_destroy(&m_readingMutex);
     pthread_mutex_destroy(&m_writingMutex);
     pthread_cond_destroy(&m_condv);
+    if (serverTimeOut)
 	delete serverTimeOut;
 	//delete sendTimeOutTimer;
-
+    if (m_alanTuring)
 	delete m_alanTuring;
 }
 
@@ -163,8 +191,9 @@ void cliente::sendInputMsg(InputMessage msg)
 {
 	pthread_mutex_lock(&m_writingMutex);
 	char bufferEscritura[MESSAGE_BUFFER_SIZE];
-	int msgLength = m_alanTuring->encodeInputMessage(msg, bufferEscritura);
 	char *ptr = (char*) bufferEscritura;
+	int msgLength = m_alanTuring->encodeInputMessage(msg, bufferEscritura);
+
 
     while (msgLength > 0)
     {
@@ -330,10 +359,6 @@ void cliente::setTimeOut()
 
 void cliente::procesarMensaje(NetworkMessage networkMessage)
 {
-	if (Game::Instance()->isResseting() == true) {
-		return;
-	}
-
 	//Timeout
 	if ((networkMessage.msg_Code[0] == 't') && (networkMessage.msg_Code[1] == 'm') && (networkMessage.msg_Code[2] == 'o'))
 	{
@@ -385,7 +410,8 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 					continue;
 				}
 			}
-			delete initializingTimer;
+			if (initializingTimer)
+				delete initializingTimer;
 			//aca estaba setWindowSize tambien
 			Game::Instance()->createPlayer(connectedMessage.objectID, connectedMessage.textureID);
 			//El cliente se conecto con exito.
@@ -473,11 +499,12 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 	}
 
 	//Reinicio de Juego
-	if ((networkMessage.msg_Code[0] == 'r') && (networkMessage.msg_Code[1] == 's') && (networkMessage.msg_Code[2] == 't')) {
+	if ((networkMessage.msg_Code[0] == 'r') && (networkMessage.msg_Code[1] == 's') && (networkMessage.msg_Code[2] == 't'))
+	{
 		ResetInfo resetInfo = m_alanTuring->decodeResetInfo(networkMessage);
 		Game::Instance()->setWindowSize(static_cast<int>(resetInfo.windowWidth), static_cast<int>(resetInfo.windowHeight));
-
 		Game::Instance()->resetGame();
+		Logger::Instance()->LOG("Juego: El juego ha sido reiniciado.", DEBUG);
 
 		return;
 	}
@@ -496,6 +523,32 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		return;
 	}
 
+	//Recibe Suma de Puntaje
+	if ((networkMessage.msg_Code[0] == 's') && (networkMessage.msg_Code[1] == 'c') && (networkMessage.msg_Code[2] == 'm'))
+	{
+		ScoreMessage scoreMsg = m_alanTuring->decodeScoreMessage(networkMessage);
+		Game::Instance()->addPointsToScore(scoreMsg);
+
+		return;
+	}
+	//Recibe Estadisticas del Nivel
+	if ((networkMessage.msg_Code[0] == 's') && (networkMessage.msg_Code[1] == 't') && (networkMessage.msg_Code[2] == 't'))
+	{
+		StageStatistics stageStatistics = m_alanTuring->decodeStageStatistics(networkMessage);
+		Game::Instance()->showStageStatistics(stageStatistics);
+
+		return;
+	}
+
+	//Recibe Background Info (offset)
+	if ((networkMessage.msg_Code[0] == 'b') && (networkMessage.msg_Code[1] == 'g') && (networkMessage.msg_Code[2] == 'i'))
+	{
+		BackgroundInfo backgroundInfo = m_alanTuring->decodeBackgroundInfo(networkMessage);
+		Game::Instance()->updateBackground(backgroundInfo);
+
+		return;
+	}
+
 
 	//Game Beginning
 	if ((networkMessage.msg_Code[0] == 'g') && (networkMessage.msg_Code[1] == 'b') && (networkMessage.msg_Code[2] == 'g'))
@@ -503,6 +556,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		Game::Instance()->setGameStarted(true);
 		return;
 	}
+
 }
 
 bool cliente::validarMensaje(DataMessage dataMsg)

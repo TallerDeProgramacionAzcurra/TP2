@@ -228,7 +228,8 @@ void server::sendDrawMsgToAll(DrawMessage drawMsg){
 	 }
 }
 
-void server::sendResetMsgToAll(ResetInfo resetMsg){
+void server::sendResetMsgToAll(ResetInfo resetMsg)
+{
 
 	 NetworkMessage netMsg = m_alanTuring->ResetMsgToNetwork(resetMsg);
 	 for (int i = 0; i < m_listaDeClientes.size(); i++)
@@ -237,6 +238,40 @@ void server::sendResetMsgToAll(ResetInfo resetMsg){
 	     {
 	    	 m_queuePost[i].add(netMsg);
 	     }
+	 }
+}
+
+void server::sendScoreMsgToAll(ScoreMessage scoreMsg)
+{
+
+	 NetworkMessage netMsg = m_alanTuring->ScoreMessageToNetwork(scoreMsg);
+	 for (int i = 0; i < m_listaDeClientes.size(); i++)
+	 {
+	     if ( m_listaDeClientes.isAvailable(i))
+	     {
+	    	 m_queuePost[i].add(netMsg);
+	     }
+	 }
+}
+void server::sendBackgroundInfoToAll(BackgroundInfo backgroundInfo)
+{
+
+	 NetworkMessage netMsg = m_alanTuring->BackgroundInfoToNetwork(backgroundInfo);
+	 for (int i = 0; i < m_listaDeClientes.size(); i++)
+	 {
+	     if ( m_listaDeClientes.isAvailable(i))
+	     {
+	    	 m_queuePost[i].add(netMsg);
+	     }
+	 }
+}
+void server::sendStageStatistics(StageStatistics stageStatistics, int clientID)
+{
+
+	 NetworkMessage netMsg = m_alanTuring->StageStatisticsToNetwork(stageStatistics);
+	 if ( m_listaDeClientes.isAvailable(clientID))
+	 {
+	    	 m_queuePost[clientID].add(netMsg);
 	 }
 }
 
@@ -459,13 +494,14 @@ void server::sendMsg(int socketReceptor, Mensaje msg)
 bool server::leer(int id)
 {
     //Reseteo el buffer que se va a completar con nuevos mensajes
-    bzero(buffer,256);
+    bzero(buffer, MESSAGE_BUFFER_SIZE);
     char *p = (char*)buffer;
     int messageLength = 0;
 
     int readLimit = (DRAW_MESSAGE_PACK_SIZE * sizeof(DrawMessage)) + MESSAGE_CODE_BYTES + MESSAGE_LENGTH_BYTES + MESSAGE_LENGTH_BYTES;
 
     int n = recv(m_listaDeClientes.getElemAt(id), buffer, MESSAGE_LENGTH_BYTES, 0);
+
     if (!lecturaExitosa(n, id))
     	return false;
 
@@ -481,6 +517,7 @@ bool server::leer(int id)
 
     }
     messageLength = m_alanTuring->decodeLength(buffer);
+    //printf("Longitud Mensaje: %d \n", messageLength);
 
     p += n;
     messageLength -= acum;
@@ -488,7 +525,7 @@ bool server::leer(int id)
     //loopea hasta haber leido la totalidad de los bytes necarios
     while (messageLength > 0)
     {
-    	//printf("Leyó %d. Faltan leer %d \n", acum, messageLength);
+    	//printf("Faltan leer %d \n", messageLength);
     	n = recv(m_listaDeClientes.getElemAt(id), p, messageLength, 0);
 
     	 if(messageLength >readLimit)
@@ -712,9 +749,6 @@ bool server::lecturaExitosa(int bytesLeidos, int clientID)
 
 bool server::procesarMensaje(ServerMessage* serverMsg)
 {
-	if (Game::Instance()->isResseting() == true) {
-		return false;
-	}
 
 	NetworkMessage netMsg = serverMsg->networkMessage;
 
@@ -756,14 +790,20 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 	{
 		if (!Game::Instance()->isResseting())
 		{
+			Game::Instance()->setReseting(true);
+			Logger::Instance()->LOG("Server: Se reiniciará el juego.", DEBUG);
 			//Resetea el juego
 			Game::Instance()->resetGame();
-
 			//Envia la nueva informacion al cliente
 			ResetInfo resetInfo;
 			resetInfo.windowHeight = Game::Instance()->getGameHeight();
 			resetInfo.windowWidth = Game::Instance()->getGameWidth();
+
 			sendResetMsgToAll(resetInfo);
+
+			Game::Instance()->refreshPlayersDirty();
+			Game::Instance()->setReseting(false);
+			Logger::Instance()->LOG("Server: Se ha reiniciado el juego.", DEBUG);
 		}
 
 		return true;
@@ -793,7 +833,7 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 bool server::leerBloqueando(int id)
 {
     //Reseteo el buffer que se va a completar con nuevos mensajes
-    bzero(buffer,256);
+    bzero(buffer, MESSAGE_BUFFER_SIZE);
     char *p = (char*)buffer;
     int messageLength = 0;
 

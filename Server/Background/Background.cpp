@@ -87,6 +87,9 @@ void Background::sendDrawMessage(bool isAlive)
 	drawMsg.posX = m_position.getX();
 	drawMsg.posY = m_position.getY();
 	drawMsg.textureID = m_textureID;
+	drawMsg.angle = static_cast<float>(m_angle);
+	drawMsg.alpha = m_alpha;
+	drawMsg.vacio = 0;
 
 	if (USE_DRAWMESSAGE_PACKAGING)
 	{

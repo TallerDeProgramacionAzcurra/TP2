@@ -56,6 +56,8 @@ public:
     //Funcion para dibujar el objeto en pantalla mas completa, tomando en cuenta las variables de animación y transparencia
     void drawFrame(int id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* renderer, double angle, int alpha, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
+    void drawOffset(int id, int x, int y, int srcWidth, int srcHeight, int width, int height, int xOff, int yOff, SDL_Renderer* renderer, double angle, SDL_RendererFlip flip = SDL_FLIP_NONE);
+
     std::map<int, SDL_Texture*> getTextureMap() { return m_textureMap; }
 
 private:

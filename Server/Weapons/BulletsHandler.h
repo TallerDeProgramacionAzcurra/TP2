@@ -8,9 +8,9 @@
 #ifndef WEAPONS_BULLETSHANDLER_H_
 #define WEAPONS_BULLETSHANDLER_H_
 
-#include "Bullet.h"
 #include <vector>
 #include <pthread.h>
+#include <memory>
 class Bullet;
 
 class BulletsHandler
@@ -27,13 +27,13 @@ public:
         return s_pInstance;
     }
 
-    void addBullet(Bullet* bullet);
+    void addBullet(std::shared_ptr<Bullet> bullet);
 
     void updateBullets();
 
     void clearBullets();
 
-    const std::vector<Bullet*> getPlayerBullets() { return m_bullets; }
+    const std::vector<std::shared_ptr<Bullet>> getPlayerBullets() { return m_bullets; }
 
 private:
 
@@ -46,7 +46,10 @@ private:
     static BulletsHandler* s_pInstance;
 
     // in play bullets
-	std::vector<Bullet*> m_bullets;
+	std::vector<std::shared_ptr<Bullet>> m_bullets;
+
+	std::vector<std::shared_ptr<Bullet>> m_newBulletsToAdd;
+	void addNewBullets();
 
 	pthread_mutex_t  m_bulletsMutex;
 };

@@ -12,6 +12,7 @@
 #include "../Singletons/GameTimeHelper.h"
 #include "../Vector2D.h"
 #include <vector>
+#include <memory>
 
 //Abstacta
 class Weapon
@@ -20,7 +21,7 @@ public:
     virtual ~Weapon() {}
 
     //devuelve true si se realizo el disparo.
-	virtual bool shoot(const Vector2D& bulletPosition) = 0;
+	virtual bool shoot(const Vector2D& bulletPosition, const Vector2D& direction) = 0;
 
 	virtual void update()
 	{
@@ -37,17 +38,26 @@ public:
     void setBulletSpeed(int speed) { m_bulletSpeed = speed; }
     void setShootingCooldown(int cooldown) { m_shootCooldown = cooldown; }
 
+    void setOwnerID(int ID) { m_ownerID = ID; }
+    void setOwnerTeam(int teamNumber) { m_ownerTeamNumber = teamNumber; }
+
 protected:
 
 	Weapon(): m_shootCooldown(0.5f),
 			  m_waitTime(0),
-			  m_canShoot(true)
+			  m_canShoot(true),
+			  m_ownerID(0),
+			  m_ownerTeamNumber(0),
+			  m_bulletSpeed(10)
 	{}
 
 	//Cooldown de disparo en segundos
 	int m_shootCooldown;
 	int m_waitTime;
 	bool m_canShoot;
+
+	int m_ownerID;
+	int m_ownerTeamNumber;
 
 	//Por Obligacion
 	int m_bulletSpeed;

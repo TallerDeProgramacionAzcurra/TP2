@@ -10,6 +10,7 @@
 
 #include "../GameObject.h"
 #include "../Background/Island.h"
+#include "../Background/Portaviones.h"
 
 #include <string>
 

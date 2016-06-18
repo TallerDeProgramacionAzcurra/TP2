@@ -7,8 +7,9 @@
 
 #include "Level.h"
 
-Level::Level():
-m_scrollSpeed(5)
+Level::Level():m_scrollingToNextStage(false),
+			   m_nextStageScrollAmount(600),
+			   m_scrollSpeed(5)
 {
 	m_parserNivel = new ParserNivel();
 	m_textureHelper = new TextureHelper();
@@ -18,11 +19,11 @@ Level::~Level()
 {
 }
 
-void Level::loadFromXML()
+void Level::loadFromXML(const std::string& xmlFileName)
 {
-	m_parserNivel->parsearDocumento(XML_PATH);
+	m_parserNivel->parsearDocumento(xmlFileName);
 	Escenario scene = m_parserNivel->getEscenario();
-	m_levelHeight = scene.alto;
+	m_levelHeight = scene.alto - Game::Instance()->getGameHeight();
 	m_levelWidth = scene.ancho;
 
 	if (m_levelWidth < Game::Instance()->getGameWidth())
@@ -48,7 +49,7 @@ void Level::loadFromXML()
 		TextureInfo texInfo = TextureManager::Instance()->getTextureInfo(textureID);
 		//printf("texture int = %d \n", texInfo.textureID);
 		GameObject* gameObject = GameObjectFactory::createGameObject((*it).spriteId);
-		gameObject->setLayer(MIDDLEGROUND);
+		gameObject->setLayer(BACKGROUND);
 		gameObject->setHeight(static_cast<int>(texInfo.height));
 		gameObject->setTextureID((texInfo.textureID));
 
@@ -67,21 +68,75 @@ void Level::loadFromXML()
 
 }
 
+void Level::loadLevel(int level)
+{
+	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end();)
+	 {
+		 if ((*it))
+		 {
+			 (*it)->setObsolet(true);
+		 }
+		 if ((*it) && ((*it)->canRecycle()))
+		 {
+			 delete (*it);
+			 it = m_levelObjects.erase(it);
+		 }
+		 else
+		 {
+			 ++it;
+		 }
+	 }
+	std::stringstream ss;
+	ss << "test" << level << ".xml";
+	loadFromXML(ss.str());
+	printf("Cargando el nivel %d de %s \n", level, ss.str().c_str());
+}
+
+void Level::scrollToNextStage()
+{
+	m_virtualPosition = m_levelHeight;
+	m_scrollingToNextStage = true;
+	m_nextStageScrollAmount = Game::Instance()->getGameHeight();
+}
+
 void Level::update()
 {
 	//printf("offset %d \n", m_virtualPosition);
-	 if (m_virtualPosition <= 0)
+	 if ((m_virtualPosition <= 0) && (!m_scrollingToNextStage) && (!Game::Instance()->isFinishingLevel()))
 	 {
-		 resetPositions();
+		 Game::Instance()->finishStage();
+		 //resetPositions();
+	 }
+
+	 if (m_scrollingToNextStage)
+	 {
+		 //printf("%d\n", m_nextStageScrollAmount);
+		 if (m_nextStageScrollAmount <= 0)
+		 {
+			 m_virtualPosition = m_levelHeight;
+			 m_scrollingToNextStage = false;
+			 m_virtualPosition = m_levelHeight + Game::Instance()->getGameHeight();
+		 }
+		 else
+		 {
+			 m_nextStageScrollAmount -= m_scrollSpeed;
+		 }
 	 }
 
 	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end(); ++it)
 	 {
+		if ((Game::Instance()->isLevelStarted() && (!Game::Instance()->isFinishingLevel())) || (m_scrollingToNextStage))
+		{
 		 (*it)->scroll(m_scrollSpeed);
-		 (*it)->update();
+		}
+		(*it)->update();
 	 }
 
-	m_virtualPosition -= m_scrollSpeed;
+	 if ((Game::Instance()->isLevelStarted() && (!Game::Instance()->isFinishingLevel())) || (m_scrollingToNextStage))
+	{
+		m_virtualPosition -= m_scrollSpeed;
+	}
+
 
 }
 
@@ -116,9 +171,11 @@ void Level::clean()
 {
 	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end(); ++it)
 	 {
-		 delete (*it);
+		 if ((*it))
+			 delete (*it);
 	 }
 	 m_levelObjects.clear();
+
 
 	 delete m_parserNivel;
 	 delete m_textureHelper;

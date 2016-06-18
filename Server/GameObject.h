@@ -23,12 +23,17 @@ public:
     				m_position(0,0),
                     m_width(0),
                     m_height(0),
+					m_hitRadius(0),
 					m_numFrames(0),
                     m_angle(0),
                     m_alpha(255),
                     m_currentRow(0),
                     m_currentFrame(0),
-					m_dirty(true)
+					m_dirty(true),
+					m_canRecycle(false),
+					m_soundSendId(0),
+					m_soundDirty(false)
+
     {
     	m_objectId = ObjectIdGenerator::Instance()->generateId();
     }
@@ -65,10 +70,19 @@ public:
     int getObjectId() { return m_objectId; }
     int getLayer() { return m_layer; }
     int getTextureID() { return m_textureID; }
+    int getHitRadius() { return m_hitRadius; }
+    bool isObsolet(){ return m_obsolet; }
+
+    void setNumFrames(int numFrames) { m_numFrames = numFrames; }
     void setObjectID(int objectId) {m_objectId = objectId;}
     void setTextureID(int textureID) {m_textureID = textureID;}
     void setLayer(int layer) {m_layer = layer;}
+    double getAngle() {return m_angle;}
     void setDirty( bool dirty ) { m_dirty = true; }
+    void setHitRadius( int hitRadius ) { m_hitRadius = hitRadius; }
+    void setObsolet( bool obsolet ) { m_obsolet = obsolet; }
+
+    bool canRecycle() { return m_canRecycle; }
 
     // En este ejemplo de scroll, scrollea to do menos los objetos con tag player
    void scroll(float scrollSpeed)
@@ -91,7 +105,9 @@ protected:
     int m_width;
     //Alto del sprite
     int m_height;
-    //ID del sprite que tomará en el map de lTextureManager
+
+    //radio de colision
+    int m_hitRadius;
 
     //numero de frames del sprite en el archivo de imagen
     int m_numFrames;
@@ -107,7 +123,12 @@ protected:
     int m_currentFrame;
 
     bool m_dirty;
+    bool m_canRecycle;
+    int m_soundSendId;
+    bool m_soundDirty;
 
+    //Hardcode
+    bool m_obsolet;
 };
 
 

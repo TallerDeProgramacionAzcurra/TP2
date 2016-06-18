@@ -2,30 +2,40 @@
 #define GAME_H_
 
 #include "Player.h"
+#include "Hud.h"
+#include "Score.h"
 #include "Cliente/cliente.h"
 #include "Utils/Parser/ParserCliente.h"
 #include "Background/Island.h"
 #include "Background/Background.h"
 #include "Singletons/InputHandler.h"
+#include "Singletons/FontManager.h"
 #include "Singletons/TextureManager.h"
+#include "Singletons/SoundManager.h"
 #include "Singletons/GameTimeHelper.h"
+#include "Statistics.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include <sstream>
 #include "DrawObject.h"
 #include <map>
 #include <string>
+#include <pthread.h>
 #include <math.h>
+#include <memory>
 
 using namespace std;
 class Island;
 class Background;
 class Player;
+class Statistics;
+class Hud;
 class cliente;
 class DrawObject;
 
 #define TiMEOUT_MESSAGE_RATE 3000
-
+#define SHOW_STATISTICS_TIME 5000
 
 class Game
 {
@@ -61,6 +71,8 @@ public:
     void loadTextures();
     void resetTextureColor(int objectID, int layer);
 
+    void loadSoundAndMusic();
+
     void createPlayer(int objectID, int textureID);
     void disconnectObject(int objectID, int layer);
     void disconnect();
@@ -73,6 +85,9 @@ public:
    	void readFromKorea();
    	void interpretarDrawMsg(DrawMessage drwMsg);
 
+   	void updateBackground(BackgroundInfo backgroundInfo);
+   	void showStageStatistics(StageStatistics stageStatistics);
+
    	bool updateTimeOut();
 
     SDL_Renderer* getRenderer() const { return m_pRenderer; }
@@ -81,11 +96,12 @@ public:
     void setRunning(bool loco){m_running = loco;}
     bool isRunning() { return m_running; }
     bool isReseting() { return m_reseting; }
-    bool isResseting() { return m_reseting; }
     bool isInitializingSDL(){ return m_initializingSDL;}
     bool isWaitingForTextures() {return m_waitingTextures; }
 
     void quit() { m_running = false; }
+
+    void addPointsToScore(ScoreMessage scoreMsg);
 
     //Alto y Ancho de la ventana de juego
     int getGameWidth() const { return m_gameWidth; }
@@ -96,6 +112,8 @@ public:
     void setWindowSize(int width, int heigth);
     void setRestart(bool loco){m_restart = loco;}
     bool getRestart(){return m_restart;}
+    void setAlltalk(bool loco){m_alltalk = loco;}
+    bool getAlltalk(){return m_alltalk;}
     int createGame(int DELAY_TIME);
     static void *thread_method(void *context);
     pthread_t listenThread;
@@ -104,15 +122,16 @@ public:
 private:
 
     //Layers
-    std::map<int,DrawObject*> backgroundObjects;
-    std::map<int,DrawObject*> middlegroundObjects;
-    std::map<int,DrawObject*> foregroundObjects;
+    std::map<int, std::shared_ptr<DrawObject>> backgroundObjects;
+    std::map<int, std::shared_ptr<DrawObject>> middlegroundObjects;
+    std::map<int, std::shared_ptr<DrawObject>> foregroundObjects;
 
-    void addDrawObject(int objectID, int layer, DrawObject* newDrawObject);
+    void addDrawObject(int objectID, int layer, std::shared_ptr<DrawObject> newDrawObject);
     void removeDrawObject(int objectID, int layer);
     void updateGameObject(const DrawMessage drawMessage);
     bool existDrawObject(int objectID, int layer);
     bool m_restart;
+    bool m_alltalk;
     SDL_Window* m_pWindow;
     SDL_Renderer* m_pRenderer;
 
@@ -121,8 +140,9 @@ private:
     //Provisorio
     Player* m_player;
     Background* m_background;
-    Island* m_island;
     cliente* m_client;
+    Hud* m_hud;
+    Statistics* m_stats;
     int m_backgroundTextureID;
     bool m_running;
 
@@ -132,6 +152,10 @@ private:
     bool m_waitingTextures;
     bool m_continueLooping;
 
+    bool m_showingStatistics;
+    int m_showingStatisticsTimer;
+
+    void updateStatistics();
     void stopLooping();
     void continueLooping();
 
@@ -142,6 +166,18 @@ private:
     int m_gameWidth;
     int m_gameHeight;
     float m_scrollSpeed;
+
+    int m_bgOff;
+    int m_bgOffInicial;
+
+    Score m_playerScore;
+
+	pthread_mutex_t  m_removeMutex;
+	pthread_mutex_t  m_drawMsgMutex;
+	pthread_mutex_t m_cleanMutex;
+	pthread_mutex_t m_resetMutex;
+	pthread_mutex_t m_scoreMutex;
+
 
     Game();
     ~Game();

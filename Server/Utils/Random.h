@@ -26,7 +26,7 @@ public:
 
 	static int getRange (int base, int top)
 	{
-		return ((rand() % ( top + 1 - base )) + base);
+		return (base + (rand() % ((top - base) + 1)));
 	}
 
 	static float getFloatRange (float base, float top)

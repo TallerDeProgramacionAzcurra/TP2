@@ -4,7 +4,8 @@ TextureManager* TextureManager::s_pInstance = 0;
 
 bool TextureManager::load(std::string fileName, int id, SDL_Renderer* renderer)
 {
-
+	if (m_textureMap.find(id) != m_textureMap.end())
+		return true;
 
     SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
 
@@ -96,6 +97,22 @@ void TextureManager::drawFrame(int id, int x, int y, int width, int height, int 
     destRect.y = y;
 
     SDL_SetTextureAlphaMod(m_textureMap[id], alpha);
+    SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, angle, 0, flip);
+}
+
+void TextureManager::drawOffset(int id, int x, int y, int srcWidth, int srcHeight, int width, int height, int xOff, int yOff, SDL_Renderer *pRenderer, double angle, SDL_RendererFlip flip)
+{
+    SDL_Rect srcRect;
+    SDL_Rect destRect;
+    srcRect.x = xOff;
+    srcRect.y = yOff;
+    srcRect.w = srcWidth;
+    srcRect.h = srcHeight;
+    destRect.w = width;
+    destRect.h = height;
+    destRect.x = x;
+    destRect.y = y;
+
     SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, angle, 0, flip);
 }
 
