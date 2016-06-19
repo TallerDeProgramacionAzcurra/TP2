@@ -88,6 +88,9 @@ void Player::respawn()
 	m_currentFrame = 0;
 	m_currentRow = 0;
 	m_health = STARTING_HEALTH;
+	if (m_currentWeapon)
+		delete m_currentWeapon;
+	m_currentWeapon = new BasicWeapon();
 
 	m_currentRespawningTime = m_respawningTimer;
 	m_invulnerable = true;

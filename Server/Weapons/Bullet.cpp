@@ -10,6 +10,9 @@
 
 Bullet::Bullet(): MoveableObject(),
 			m_dead(false),
+			m_exploting(false),
+		    m_explotionAnimationTime(750),
+		    m_explotionRemainingTime(0),
 			m_damage(100),
 			m_ownerID(0),
 			m_ownerTeamNumber(0)
@@ -28,7 +31,12 @@ Bullet::~Bullet() {}
 
 void Bullet::update()
 {
-	if(!m_dead)
+	if (m_exploting)
+	{
+		updateExplotionAnimation();
+	}
+
+	if((!m_dead) && (!m_exploting))
 	{
 		MoveableObject::update();
 		m_dyingTime -= GameTimeHelper::Instance()->deltaTime();
@@ -54,6 +62,52 @@ void Bullet::update()
 bool Bullet::isDead()
 {
 	return m_dead;
+}
+
+void Bullet::kill()
+{
+	if (EXPLOTE)
+	{
+		explote();
+	}
+	else
+	{
+		m_dead = true;
+	}
+
+}
+
+void Bullet::explote()
+{
+	m_position.m_y -= 10;
+	m_exploting = true;
+	m_explotionRemainingTime = m_explotionAnimationTime;
+	m_numFrames = 6;
+	m_currentFrame = 0;
+	m_currentRow = 0;
+	m_textureID = 45;
+}
+
+void Bullet::updateExplotionAnimation()
+{
+	m_explotionRemainingTime -= GameTimeHelper::Instance()->deltaTime();
+	int step = m_explotionAnimationTime / m_numFrames;
+	int lastFrame = m_currentFrame;
+	int lastRow = m_currentRow;
+
+	m_currentFrame = ((m_explotionAnimationTime - m_explotionRemainingTime) / step) % 6;
+	m_currentRow = ((m_explotionAnimationTime - m_explotionRemainingTime) / step) / 6;
+
+	if (m_explotionRemainingTime <= 0)
+	{
+		m_dead = true;
+		m_exploting = false;
+	}
+
+	if ((lastFrame != m_currentFrame) || (lastRow != m_currentRow))
+	{
+		m_dirty = true;
+	}
 }
 
 void Bullet::clean()

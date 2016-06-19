@@ -137,6 +137,13 @@
 		<alto>48</alto>
 	</sprite>
 	<sprite>
+		<id>ExplosionBala</id>
+		<path>Assets/Sprites/BulletExplotion.png</path>
+		<cantidad>6</cantidad>
+		<ancho>18</ancho>
+		<alto>16</alto>
+	</sprite>
+	<sprite>
 		<id>ExplosionJugador</id>
 		<path>Assets/Sprites/explosionPlayer.png</path>
 		<cantidad>14</cantidad>

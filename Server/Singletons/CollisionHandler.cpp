@@ -51,7 +51,7 @@ void CollitionHandler::handlePlayerCollitions()
 			if (m_practiceMode)
 				break;
 
-			if ((*it)->isDead())
+			if ((*it)->isDead() || (*it)->isExploting())
 			{
 				it = m_enemiesBullets.erase(it);
 				continue;
@@ -156,7 +156,7 @@ void CollitionHandler::handleEnemyCollitions()
 		//Compara cada Enemigo contra cada bala del jugador
 		for(vector<std::shared_ptr<Bullet>>::iterator it = m_playersBullets.begin(); it != m_playersBullets.end(); )
 		{
-			if ((*it)->isDead())
+			if ((*it)->isDead() || (*it)->isExploting())
 			{
 				it = m_playersBullets.erase(it);
 				continue;
