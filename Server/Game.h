@@ -125,6 +125,7 @@ public:
     int getPlayerTeam(int playerID);
     void setReseting(bool state) { m_reseting = state; }
     bool isPracticeMode();
+    bool isTeamMode();
 	void setPracticeMode(bool practiceMode);
 	bool isLevelStarted() { return !m_startingStage; }
 	bool isFinishingLevel() { return  m_endingStage; }

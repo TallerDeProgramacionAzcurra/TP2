@@ -1,18 +1,28 @@
 #include "Hud.h"
 using namespace std;
 
-Hud::Hud(int gameWidth, int gameHeight): m_playerScore(0),
+Hud::Hud(int gameWidth, int gameHeight, int id, int cantHuds, bool teamMode): m_playerScore(0),
 										 m_newScore(0),
 										 m_lerping(false)
 {
+	const char *title;
+	if (teamMode)
+		title = "TEAM ";
+	else
+		title = "PLAYER ";
+	stringstream ss;
+	ss << title << id+1;
+	string s = ss.str();
+	const char *pchar = s.c_str();
+
 	int h,w;
 
-	m_title.text = "SCORE";
+	m_title.text = pchar;
 	m_title.texture = FontManager::Instance()->drawtext(206,220,9,0,0,0,0,0,m_title.text,blended);
 	FontManager::Instance()->textSize(m_title.text,&h,&w);
 	m_title.height = h*TEXT_SIZE_FACTOR;
 	m_title.width = w*TEXT_SIZE_FACTOR;
-	m_title.x = (gameWidth-m_title.width)/2;
+	m_title.x = (id+1)*(gameWidth-m_title.width)/(cantHuds+1);
 	m_title.y = 0;
 
 
@@ -20,7 +30,7 @@ Hud::Hud(int gameWidth, int gameHeight): m_playerScore(0),
 	FontManager::Instance()->textSize(m_score.text,&h,&w);
 	m_score.height = h*TEXT_SIZE_FACTOR;
 	m_score.width = w*TEXT_SIZE_FACTOR;
-	m_score.x = (gameWidth-m_score.width)/2;
+	m_score.x = (id+1)*(gameWidth-m_score.width)/(cantHuds+1);
 	m_score.y = m_title.height;
 
 	updateScoreTexture(m_playerScore);

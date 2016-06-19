@@ -35,7 +35,7 @@ m_scrollSpeed(2)
 {
 	m_powerUpsSpawner = new PowerUpSpawner();
 	m_enemiesSpawner = new EnemySpawner();
-	m_currentMode = GAMEMODE_COMPETITION;
+	m_currentMode = GAMEMODE_COOPERATIVE;
 	pthread_mutex_init(&m_resetMutex, NULL);
 	pthread_mutex_init(&m_updatePlayerMutex, NULL);
 	pthread_mutex_init(&m_createPlayerMutex, NULL);
@@ -413,6 +413,12 @@ bool Game::isPracticeMode()
 {
 	return m_practiceMode;
 }
+
+bool Game::isTeamMode()
+{
+ 	return (m_currentMode == GAMEMODE_COMPETITION);
+}
+
 
 void Game::initializeTexturesInfo()
 {

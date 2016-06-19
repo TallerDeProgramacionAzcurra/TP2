@@ -389,6 +389,13 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 				m_connected = false;
 			}
 			Game::Instance()->setWindowSize(static_cast<int>(connectedMessage.windowWidth), static_cast<int>(connectedMessage.windowHeight));
+			Game::Instance()->setTeamMode(connectedMessage.teamMode);
+			short cantHuds;
+			if (!connectedMessage.teamMode)
+				cantHuds = connectedMessage.cantPlayers;
+			else
+				cantHuds = 2;
+			Game::Instance()->setCantHuds(cantHuds);
 		}
 
 		if (connectedMessage.connected && !connectedMessage.requestData)

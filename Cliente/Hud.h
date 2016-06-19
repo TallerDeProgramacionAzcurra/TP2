@@ -16,8 +16,7 @@ class Hud
 {
 public:
 
-	//constructor sin argumento: setea m_controllable siempre en true
-    Hud(int gameWidth,int gameHeight);
+	Hud(int gameWidth,int gameHeight, int id, int cantHuds, bool teamMode);
     ~Hud();
     void actualizarScore(int score);
     void draw(SDL_Renderer* renderer);
