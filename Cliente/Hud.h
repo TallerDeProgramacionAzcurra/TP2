@@ -32,6 +32,7 @@ private:
     bool m_lerping;
 
     void updateScoreTexture(int score);
+    void getColorById(int id, char* r, char* g, char* b);
 
 };
 

@@ -14,15 +14,15 @@ Hud::Hud(int gameWidth, int gameHeight, int id, int cantHuds, bool teamMode): m_
 	ss << title << id+1;
 	string s = ss.str();
 	const char *pchar = s.c_str();
-
-	int h,w;
-
 	m_title.text = pchar;
-	m_title.texture = FontManager::Instance()->drawtext(206,220,9,0,0,0,0,0,m_title.text,blended);
+	char r,g,b;
+	getColorById(id,&r,&g,&b);
+	m_title.texture = FontManager::Instance()->drawtext(r,g,b,0,0,0,0,0,m_title.text,blended);
+	int h,w;
 	FontManager::Instance()->textSize(m_title.text,&h,&w);
 	m_title.height = h*TEXT_SIZE_FACTOR;
 	m_title.width = w*TEXT_SIZE_FACTOR;
-	m_title.x = (id+1)*(gameWidth-m_title.width)/(cantHuds+1);
+	m_title.x = (id)*(gameWidth/cantHuds) +((gameWidth/cantHuds) - m_title.width)/2;
 	m_title.y = 0;
 
 
@@ -30,10 +30,46 @@ Hud::Hud(int gameWidth, int gameHeight, int id, int cantHuds, bool teamMode): m_
 	FontManager::Instance()->textSize(m_score.text,&h,&w);
 	m_score.height = h*TEXT_SIZE_FACTOR;
 	m_score.width = w*TEXT_SIZE_FACTOR;
-	m_score.x = (id+1)*(gameWidth-m_score.width)/(cantHuds+1);
+	m_score.x = (id)*(gameWidth/cantHuds) +((gameWidth/cantHuds) - m_score.width)/2;
 	m_score.y = m_title.height;
 
 	updateScoreTexture(m_playerScore);
+}
+
+void Hud::getColorById(int id, char* r, char* g, char* b)
+{
+	switch (id)
+	{
+		case 1: //Red
+			*r = 195;
+			*g = 16;
+			*b = 16;
+			break;
+		case 2: //Green
+			*r = 17;
+			*g = 202;
+			*b = 17;
+			break;
+		case 3: //Purple
+			*r = 186;
+			*g = 0;
+			*b = 215;
+			break;
+		case 4: //Dark Blue
+			*r = 10;
+			*g = 10;
+			*b = 110;
+			break;
+		case 5: //Orange
+			*r = 255;
+			*g = 120;
+			*b = 20;
+			break;
+		default: //Yellow
+			*r = 206;
+			*g = 220;
+			*b = 9;
+	}
 }
 
 void Hud::actualizarScore(int score)
