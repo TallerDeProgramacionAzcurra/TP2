@@ -59,7 +59,7 @@ void CollitionHandler::handlePlayerCollitions()
 
 			if (areColliding((*playersIterator), (*it).get()))
 			{
-				printf("Colision de player con bala\n");
+				//printf("Colision de player con bala\n");
 				//Hay colision del jugador con una bala enemiga
 				//todo setea la bala en muerta, deberia tal vez hacer una explosion primero y dsp de la animacion matarla
 				(*playersIterator)->damage((*it)->getDamage());
@@ -85,7 +85,7 @@ void CollitionHandler::handlePlayerCollitions()
 
 			if ((areColliding((*playersIterator), (*it))) && (((*it)->canPickUp())))
 			{
-				printf("Colision de player con powerUp\n");
+				//printf("Colision de player con powerUp\n");
 				//Hay colision del jugador con un power up
 
 				if ((*playersIterator))
@@ -120,7 +120,7 @@ void CollitionHandler::handlePlayerCollitions()
 			if (areColliding((*playersIterator), (*it)))
 			{
 				//Hay colision del enemigo con una bala de un jugador
-				printf("Colision de player con enemigo\n");
+				//printf("Colision de player con enemigo\n");
 
 				//daña al jugador
 				(*playersIterator)->damage((*it)->getCollisionDamage());
@@ -199,7 +199,7 @@ void CollitionHandler::handleEnemyCollitions()
 			(*it)->setPosition(savedPosition);
 			if (collitionDetected)
 			{
-				printf("Colision de bala con enemigo\n");
+				//printf("Colision de bala con enemigo\n");
 				(*enemiesIterator)->damage((*it)->getDamage(), true, Game::Instance()->getPlayer((*it)->getOwnerID()));
 				(*it)->kill(); //mata la bala
 				//elimina bala del chekeo de colisiones

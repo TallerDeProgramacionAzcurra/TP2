@@ -14,7 +14,6 @@
 
 class Portaviones: public RecurrentObject
 {
-
 public:
 	Portaviones();
 	~Portaviones();

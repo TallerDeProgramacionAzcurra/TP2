@@ -181,6 +181,13 @@
 			<spriteId>Portaviones</spriteId>
 			<posicion>
 				<x>225</x>
+				<y>300</y>
+			</posicion>
+		</elemento>
+		<elemento>
+			<spriteId>Portaviones</spriteId>
+			<posicion>
+				<x>225</x>
 				<y>2000</y>
 			</posicion>
 		</elemento>

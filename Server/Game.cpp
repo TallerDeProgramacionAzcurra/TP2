@@ -7,6 +7,7 @@
 #include "Enemies/Formation.h"
 #include "PowerUps/ExtraPointsPU.h"
 #include "PowerUps/BombPU.h"
+#include "PopUps/PopUp.h"
 #include "Player.h"
 #include "Weapons/BulletsHandler.h"
 #include "Singletons/CollisionHandler.h"
@@ -188,6 +189,11 @@ void Game::addEnemy(Enemy* enemy)
 	m_enemies.push_back(enemy);
 }
 
+void Game::addPopUp(PopUp* popUp)
+{
+	m_popUps.push_back(popUp);
+}
+
 int Game::getFromNameID(const std::string& playerName)
 {
 	for (std::map<int, std::string>::iterator it = m_playerNames.begin(); it != m_playerNames.end(); ++it )
@@ -308,6 +314,11 @@ void Game::update()
 		}
 	}
 
+	 for (std::vector<PopUp*>::iterator it = m_popUps.begin() ; it != m_popUps.end(); ++it)
+	 {
+			(*it)->update();
+	 }
+
 	CollitionHandler::Instance()->handleCollitions();
 
 	cleanDeadObjects();
@@ -418,7 +429,6 @@ bool Game::isTeamMode()
 {
  	return (m_currentMode == GAMEMODE_COMPETITION);
 }
-
 
 void Game::initializeTexturesInfo()
 {
@@ -616,6 +626,18 @@ void Game::clean()
 			 delete  it->second;
 		}
 	}
+	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end(); ++it)
+	 {
+		 (*it)->clean();
+		 delete (*it);
+	 }
+
+	 for (std::vector<PopUp*>::iterator it = m_popUps.begin() ; it != m_popUps.end(); ++it)
+	 {
+		 (*it)->clean();
+		 delete (*it);
+	 }
+
 	for (std::map<int,GameObject*>::iterator it=m_listOfGameObjects.begin(); it != m_listOfGameObjects.end(); ++it)
 	{
 		if (it->second)
@@ -758,6 +780,20 @@ void Game::cleanDeadObjects()
 			 (*it)->clean();
 			 delete (*it);
 			 it = m_powerUps.erase(it);
+		 }
+		 else
+		 {
+			 ++it;
+		 }
+	 }
+
+	 for (std::vector<PopUp*>::iterator it = m_popUps.begin() ; it != m_popUps.end();)
+	 {
+		 if((*it) && ((*it)->canRecycle()) && ((*it)->isDead()))
+		 {
+			 (*it)->clean();
+			 delete (*it);
+			 it = m_popUps.erase(it);
 		 }
 		 else
 		 {

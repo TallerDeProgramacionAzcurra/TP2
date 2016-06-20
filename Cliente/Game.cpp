@@ -12,7 +12,7 @@ m_running(false),
 m_gameStarted(false),
 m_reseting(false),
 m_initializingSDL(false),
-m_waitingTextures(false),
+m_waitingTextures(true),
 m_continueLooping(false),
 m_showingStatistics(false),
 m_showingStatisticsTimer(0),
@@ -22,6 +22,7 @@ m_bgOffInicial(0),
 m_gameWidth(0),
 m_gameHeight(0)
 {
+	m_playerScore = Score();
 	pthread_mutex_init(&m_removeMutex, NULL);
 	pthread_mutex_init(&m_drawMsgMutex, NULL);
 	pthread_mutex_init(&m_cleanMutex, NULL);
@@ -152,15 +153,18 @@ void Game::render()
     {
     	foregroundObjects[foundOwnPlayer]->draw();
     }
+
     for (std::map<int, Hud*>::iterator it = huds.begin(); it != huds.end(); ++it)
     {
 		if (it->second)
 		{
 			it->second->draw(m_pRenderer);
 		}
-    }
+	}
     if (m_showingStatistics)
+    {
     	m_stats->draw(m_pRenderer);
+    }
 
     SDL_RenderPresent(m_pRenderer);
 }
@@ -380,6 +384,7 @@ bool Game::existDrawObject(int objectID, int layer)
 
 void Game::update()
 {
+
 	for (std::map<int, Hud*>::iterator it = huds.begin(); it != huds.end(); ++it)
 	{
 		if (it->second)
@@ -458,21 +463,20 @@ void Game::addPointsToScore(ScoreMessage scoreMsg)
 	//todo Habria que contemplar equipos.
 	//todo Por ahora hago que se envie a todos y que descarte si no es un score propio, para poder agregar lo otro despues
 
-	//if (static_cast<int>(scoreMsg.playerID) != m_player->getObjectId()) //posiblemente provisorio
-	//{
-	//	pthread_mutex_unlock(&m_scoreMutex);
-	//	return;
-	//}
 	short id;
-	if (m_teamMode)
-		id = scoreMsg.teamID;
-	else
-		id = scoreMsg.playerID;
+ 	if (m_teamMode)
+ 	{
+ 		id = scoreMsg.teamID;
+ 	}
+ 	else
+ 	{
+ 		id = scoreMsg.playerID;
+ 	}
 
 	//actualiza los scores de los jugadores
-	scores[id]->addPoints(static_cast<int>(scoreMsg.pointsacquire));
-	//actualiza los hud
-	huds[id]->actualizarScore(scores[id]->getScore());
+ 	scores[id]->addPoints(static_cast<int>(scoreMsg.pointsacquire));
+ 	//actualiza los hud
+ 	huds[id]->actualizarScore(scores[id]->getScore());
 
 	pthread_mutex_unlock(&m_scoreMutex);
 }
@@ -526,13 +530,13 @@ void Game::createPlayer(int objectID, int textureID)
 
 void Game::createHuds(short cantHuds)
 {
-	for (int id = 0; id< cantHuds; id++)
-	{
-		Score* sc = new Score();
-		scores[id] = sc;
-		Hud* hd = new Hud(m_gameWidth, m_gameHeight, id, cantHuds, m_teamMode);
-		huds[id] = hd;
-	}
+ 	for (int id = 0; id < cantHuds; id++)
+ 	{
+ 		Score* sc = new Score();
+ 		scores[id] = sc;
+ 		Hud* hd = new Hud(m_gameWidth, m_gameHeight, id, cantHuds, m_teamMode);
+ 		huds[id] = hd;
+ 	}
 }
 
 bool Game::canContinue()
@@ -611,6 +615,7 @@ void Game::resetTextureColor(int objectID, int layer)
 		TextureManager::Instance()->changeTextureColor(foregroundObjects[objectID]->getTextureId(), r, g, b);
 	}
 }
+
 
 void Game::disconnect()
 {
@@ -768,13 +773,14 @@ void Game::mrMusculo(){
 	    middlegroundObjects.clear();
 	    foregroundObjects.clear();
 	 	InputHandler::Instance()->reset();
+
 	 	for (std::map<int, Score*>::iterator it = scores.begin(); it != scores.end(); ++it)
-	 	{
+	  	{
 			if (it->second)
 			{
 				it->second->reset();
 			}
-	 	}
+		}
 
 	    TTF_Quit();
 	 	SDL_DestroyRenderer(m_pRenderer);
@@ -944,6 +950,6 @@ int Game::createGame(int DELAY_TIME){
 				}
 }
 
-void Game::gameSetPlayerName(std::string playerName) {
-    this->m_playerName = playerName;
+void Game::gameSetPlayerName(std::string& playerName) {
+   this->m_playerName = playerName;
 }

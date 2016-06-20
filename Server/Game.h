@@ -32,6 +32,7 @@ class SmallEnemy;
 class Player;
 class Level;
 class Weapon;
+class PopUp;
 class PowerUp;
 class server;
 class DrawMessagesPacker;
@@ -108,6 +109,7 @@ public:
 
     void addPowerUp(PowerUp* powerUp);
     void addEnemy(Enemy* enemy);
+    void addPopUp(PopUp* popUp);
 
 
     SDL_Renderer* getRenderer() const { return m_pRenderer; }
@@ -150,6 +152,7 @@ private:
     /***************Contenedores de Objetos del Stage********************/
     std::vector<PowerUp*> m_powerUps;
     std::vector<Enemy*> m_enemies;
+    std::vector<PopUp*> m_popUps;
     /*******************************************************************/
 
     SDL_Window* m_pWindow;

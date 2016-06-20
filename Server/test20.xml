@@ -4,6 +4,13 @@
 </ventana>
 <sprites>
 	<sprite>
+		<id>Portaviones</id>
+		<path>Assets/Sprites/aircraftCarrier.png</path>
+		<cantidad>1</cantidad>
+		<ancho>177</ancho>
+		<alto>300</alto>
+	</sprite>
+	<sprite>
 		<id>player1</id>
 		<path>Assets/Sprites/player3.png</path>
 		<cantidad>14</cantidad>
@@ -44,13 +51,6 @@
 		<cantidad>1</cantidad>
 		<ancho>200</ancho>
 		<alto>200</alto>
-	</sprite>
-	<sprite>
-		<id>Portaviones</id>
-		<path>Assets/Sprites/aircraftCarrier.png</path>
-		<cantidad>1</cantidad>
-		<ancho>177</ancho>
-		<alto>300</alto>
 	</sprite>
 	<sprite>
 		<id>piedra</id>
@@ -137,6 +137,13 @@
 		<alto>48</alto>
 	</sprite>
 	<sprite>
+		<id>ExplosionBala</id>
+		<path>Assets/Sprites/BulletExplotion.png</path>
+		<cantidad>6</cantidad>
+		<ancho>18</ancho>
+		<alto>16</alto>
+	</sprite>
+	<sprite>
 		<id>ExplosionJugador</id>
 		<path>Assets/Sprites/explosionPlayer.png</path>
 		<cantidad>14</cantidad>
@@ -172,10 +179,66 @@
 		<alto>16</alto>
 	</sprite>
 	<sprite>
+		<id>Points100</id>
+		<path>Assets/Sprites/Points/100pts.png</path>
+		<cantidad>1</cantidad>
+		<ancho>74</ancho>
+		<alto>16</alto>
+	</sprite>
+	<sprite>
+		<id>Points250</id>
+		<path>Assets/Sprites/Points/250pts.png</path>
+		<cantidad>1</cantidad>
+		<ancho>74</ancho>
+		<alto>16</alto>
+	</sprite>
+	<sprite>
 		<id>Points500</id>
 		<path>Assets/Sprites/Points/500pts.png</path>
 		<cantidad>1</cantidad>
 		<ancho>74</ancho>
+		<alto>16</alto>
+	</sprite>
+	<sprite>
+		<id>Points750</id>
+		<path>Assets/Sprites/Points/750pts.png</path>
+		<cantidad>1</cantidad>
+		<ancho>74</ancho>
+		<alto>16</alto>
+	</sprite>
+	<sprite>
+		<id>Points1000</id>
+		<path>Assets/Sprites/Points/1000pts.png</path>
+		<cantidad>1</cantidad>
+		<ancho>84</ancho>
+		<alto>16</alto>
+	</sprite>
+	<sprite>
+		<id>Points1500</id>
+		<path>Assets/Sprites/Points/1500pts.png</path>
+		<cantidad>1</cantidad>
+		<ancho>84</ancho>
+		<alto>16</alto>
+	</sprite>
+	<sprite>
+		<id>Points3000</id>
+		<path>Assets/Sprites/Points/3000pts.png</path>
+		<cantidad>1</cantidad>
+		<ancho>84</ancho>
+		<alto>16</alto>
+	</sprite>
+	<sprite>
+		<id>Points5000</id>
+		<path>Assets/Sprites/Points/5000pts.png</path>
+		<cantidad>1</cantidad>
+		<ancho>84</ancho>
+		<alto>16</alto>
+	</sprite>
+	<sprite>
+		<id>Points10000</id>
+		<path>Assets/Sprites/Points/10000pts.png</path>
+		<cantidad>1</cantidad>
+		<ancho>96</ancho>
 		<alto>16</alto>
 	</sprite>
 </sprites>

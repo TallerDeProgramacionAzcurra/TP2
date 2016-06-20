@@ -43,13 +43,13 @@ void Level::loadFromXML(const std::string& xmlFileName)
 	for (std::vector<Elemento>::iterator it = scene.listaDeElementos.begin() ; it !=  scene.listaDeElementos.end(); ++it)
 	{
 		//GameObjectFactory::createGameObject((*it).spriteId);
-		//printf("Cargando %s en posicion %d, %d \n",(*it).spriteId.c_str(), (*it).posicion.x, (*it).posicion.y );
+		printf("Cargando %s en posicion %d, %d \n",(*it).spriteId.c_str(), (*it).posicion.x, (*it).posicion.y );
 		int textureID = m_textureHelper->stringToInt((*it).spriteId);
 
 		TextureInfo texInfo = TextureManager::Instance()->getTextureInfo(textureID);
 		//printf("texture int = %d \n", texInfo.textureID);
 		GameObject* gameObject = GameObjectFactory::createGameObject((*it).spriteId);
-		gameObject->setLayer(BACKGROUND);
+		gameObject->setLayer(MIDDLEGROUND);
 		gameObject->setHeight(static_cast<int>(texInfo.height));
 		gameObject->setTextureID((texInfo.textureID));
 

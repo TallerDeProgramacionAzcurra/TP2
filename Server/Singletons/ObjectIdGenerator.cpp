@@ -11,4 +11,3 @@ int	ObjectIdGenerator::generateId(){
 	m_IdCounterStrike++;
 	return m_IdCounterStrike;
 }
-

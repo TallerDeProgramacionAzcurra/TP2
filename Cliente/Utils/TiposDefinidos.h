@@ -245,6 +245,14 @@ struct Jefe
 
 };
 
+struct Color
+{
+	Uint8 value_R;
+	Uint8 value_G;
+	Uint8 value_B;
+	Uint8 value_A;
+};
+
 struct Powerup
 {
 	std::string id;

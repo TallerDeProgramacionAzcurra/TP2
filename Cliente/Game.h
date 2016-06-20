@@ -94,8 +94,8 @@ public:
     SDL_Window* getWindow() const { return m_pWindow; }
     void mrMusculo();
     void setRunning(bool loco){m_running = loco;}
-    void setTeamMode(bool teamMode){m_teamMode = teamMode;}
-    void setCantHuds(short cant){m_cantHuds = cant;}
+    void setTeamMode(bool teamMode){ m_teamMode = teamMode;}
+    void setCantHuds(short cant){ m_cantHuds = cant;}
     bool isRunning() { return m_running; }
     bool isReseting() { return m_reseting; }
     bool isInitializingSDL(){ return m_initializingSDL;}
@@ -121,8 +121,8 @@ public:
     int createGame(int DELAY_TIME);
     static void *thread_method(void *context);
     pthread_t listenThread;
-    
-    void gameSetPlayerName(std::string playerName);
+
+    void gameSetPlayerName(std::string& playerName);
 
 private:
 

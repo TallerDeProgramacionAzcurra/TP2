@@ -43,7 +43,10 @@ void Enemy::update()
 		MoveableObject::update();
 	}
 	if (m_dirty)
+	{
 		sendDrawMessage(!m_dead);
+		m_dirty = false;
+	}
 }
 void Enemy::clean()
 {

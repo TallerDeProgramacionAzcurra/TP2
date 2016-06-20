@@ -10,6 +10,7 @@
 #include "../Vector2D.h"
 #include "../Weapons/EnemyWeapons/EnemyBaseGun.h"
 #include "../Player.h"
+#include "../PopUps/PointsPopUp.h"
 
 
 SmallEnemy::SmallEnemy() :Enemy(),
@@ -134,6 +135,12 @@ bool SmallEnemy::damage(int damageReceived, bool wasShoot,  Player* damager)
 		{
 			int points = retrievePoints();
 			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getTeamNumber());
+
+			PopUp* pointsPopUp = new PointsPopUp(damager->getObjectId(), points);
+			pointsPopUp->load(m_position.m_x + m_width/2, m_position.m_y + m_height/2, 72, 16, 104, 1);
+			Game::Instance()->addPopUp(pointsPopUp);
+
+
 			damager->incrementEnemiesKilledStats(1);
 		}
 	}

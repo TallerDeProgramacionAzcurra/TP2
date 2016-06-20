@@ -27,7 +27,7 @@ ClientMenu::ClientMenu(const char *menuTitle, const int menuWidth, const int men
     this->clientMenuWindow = NULL;
     
     //Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         printf("ClienteMenu.cpp - SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
     } else {
         //Create window.
@@ -37,7 +37,7 @@ ClientMenu::ClientMenu(const char *menuTitle, const int menuWidth, const int men
             printf("ClienteMenu.cpp - SDL Window could not be created! SDL_Error: %s\n", SDL_GetError());
         } else {
             //Create renderer for window
-            this->clientMenuRender = SDL_CreateRenderer(this->clientMenuWindow, -1, SDL_RENDERER_ACCELERATED);
+            this->clientMenuRender = SDL_CreateRenderer(this->clientMenuWindow, -1, SDL_RENDERER_SOFTWARE);
             if (this->clientMenuRender == NULL) {
                 printf("ClienteMenu.cpp - Renderer could not be created! SDL Error: %s\n", SDL_GetError());
             }

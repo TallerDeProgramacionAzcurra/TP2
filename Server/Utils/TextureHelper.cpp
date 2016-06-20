@@ -59,8 +59,21 @@ void TextureHelper::initialize()
 	m_textureIDMap["BombPU"] = 71;
 	m_textureIDMap["DualWeaponPU"] = 72;
 
+	//Pop Ups
+	m_textureIDMap["Points50"] = 101;
+	m_textureIDMap["Points100"] = 102;
+	m_textureIDMap["Points250"] = 103;
+	m_textureIDMap["Points500"] = 104;
+	m_textureIDMap["Points750"] = 105;
+	m_textureIDMap["Points1000"] = 106;
+	m_textureIDMap["Points1500"] = 107;
+	m_textureIDMap["Points3000"] = 108;
+	m_textureIDMap["Points5000"] = 109;
+	m_textureIDMap["Points10000"] = 110;
+
 	//Otros
 	m_textureIDMap["MagicAppearance"] = 90;
+
 	//Boss
 	m_textureIDMap["bossMati"] = 666;
 
