@@ -121,7 +121,8 @@ public:
     int createGame(int DELAY_TIME);
     static void *thread_method(void *context);
     pthread_t listenThread;
-
+    
+    void gameSetPlayerName(std::string playerName);
 
 private:
 

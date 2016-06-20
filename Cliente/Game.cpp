@@ -612,7 +612,6 @@ void Game::resetTextureColor(int objectID, int layer)
 	}
 }
 
-
 void Game::disconnect()
 {
 	m_player->setControllable(false);
@@ -943,4 +942,8 @@ int Game::createGame(int DELAY_TIME){
 					std::cout << "game init failure - " << SDL_GetError() << "\n";
 					return -1;
 				}
+}
+
+void Game::gameSetPlayerName(std::string playerName) {
+    this->m_playerName = playerName;
 }
