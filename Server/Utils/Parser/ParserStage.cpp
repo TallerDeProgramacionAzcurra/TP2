@@ -31,16 +31,16 @@ bool ParserStage::parsearDocumento(const std::string& nombreArchivoXML)
 	{
 		std::stringstream ss;
 		ss << "No se pudo parsear con éxito el archivo XML: " << nombreArchivoXML.c_str() << ".";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 		ss.clear();
 		ss << "Se cargará el archivo default: " << XML_STAGE_DEFAULT_PATH << ".";
-		Logger::Instance()->LOG(ss.str(), WARN);
+		Logger::Instance()->LOG(ss.str(), LogTypeWarn);
 
 		exito = parsearDoc(XML_STAGE_DEFAULT_PATH, true);
 		if (!exito)
 		{
 			//El archivo XML default también tiene errores. No se pudo parsear.
-			Logger::Instance()->LOG("No se pudieron parsear ninguno de los archivos XML nivel.", ERROR);
+			Logger::Instance()->LOG("No se pudieron parsear ninguno de los archivos XML nivel.", LogTypeError);
 			//cout << "No se pudieron parsear ninguno delos archivos XML nivel";
 		}
 	}
@@ -64,7 +64,7 @@ bool ParserStage::parsearDoc(const std::string& nombreArchivoXML, bool isDefault
 		//No se pudo abrir el archivo XML
 		//LOGUEO DE ERRORES EN CASO DE QUE NO SE PUEDA CARGAR EL ARCHIVO XML
 		ss << "Archivo " << nombreArchivoXML.c_str() <<  " dañado. Error Description: " << result.description() << ".";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 
 		return parseadoExitoso;
 	}
@@ -93,17 +93,17 @@ bool ParserStage::extraerEnemigos(const pugi::xml_document* doc)
 	   std::string alto = spr.child("alto").first_child().value();
 	   if (!validarNumero(cantidad))
 			{
-		   	   Logger::Instance()->LOG("Se cargo el valor cantidad del enemigo por default", WARN);
+		   	   Logger::Instance()->LOG("Se cargo el valor cantidad del enemigo por default", LogTypeWarn);
 				cantidad = "2";
 			}
 	   if (!validarNumero(ancho))
 	   			{
-		   	   	   Logger::Instance()->LOG("Se cargo el valor ancho del enemigo por default", WARN);
+		   	   	   Logger::Instance()->LOG("Se cargo el valor ancho del enemigo por default", LogTypeWarn);
 	   				ancho = "11";
 	   			}
 	   if (!validarNumero(alto))
 	  	   			{
-		   	   	   	   Logger::Instance()->LOG("Se cargo el valor alto del enemigo por default", WARN);
+		   	   	   	   Logger::Instance()->LOG("Se cargo el valor alto del enemigo por default", LogTypeWarn);
 	  	   				alto = "11";
 	  	   			}
 	   enemigo.id = id;
@@ -126,12 +126,12 @@ bool ParserStage::extraerVentana(const pugi::xml_document* doc, bool isLoadingDe
 
 	if (!validarNumero(anchoString))
 		{
-			Logger::Instance()->LOG("Se cargo el ancho de la ventana por default", WARN);
+			Logger::Instance()->LOG("Se cargo el ancho de la ventana por default", LogTypeWarn);
 			anchoString = "810";
 		}
 	if (!validarNumero(altoString))
 		{
-			Logger::Instance()->LOG("Se cargo el alto de la ventana por default", WARN);
+			Logger::Instance()->LOG("Se cargo el alto de la ventana por default", LogTypeWarn);
 			altoString = "610";
 		}
 
@@ -157,22 +157,22 @@ bool ParserStage::extraerPowerups(const pugi::xml_document* doc, bool isLoadingD
 	   std::string alto = spr.child("alto").first_child().value();
 	   if (!validarNumero(cantidad))
 			{
-			   Logger::Instance()->LOG("Se cargo el valor cantidad del  por default", WARN);
+			   Logger::Instance()->LOG("Se cargo el valor cantidad del  por default", LogTypeWarn);
 				cantidad = "2";
 			}
 	   if (!validarNumero(ancho))
 				{
-				   Logger::Instance()->LOG("Se cargo el valor ancho del  por default", WARN);
+				   Logger::Instance()->LOG("Se cargo el valor ancho del  por default", LogTypeWarn);
 					ancho = "11";
 				}
 	   if (!validarNumero(alto))
 					{
-					   Logger::Instance()->LOG("Se cargo el valor alto del por default", WARN);
+					   Logger::Instance()->LOG("Se cargo el valor alto del por default", LogTypeWarn);
 						alto = "11";
 					}
 		if (!validarNumero(frames))
 			{
-				Logger::Instance()->LOG("Se cargo el valor de frames del  por default", WARN);
+				Logger::Instance()->LOG("Se cargo el valor de frames del  por default", LogTypeWarn);
 				frames = "30";
 				//id = "default";
 
@@ -205,22 +205,22 @@ bool ParserStage::extraerJefes(const pugi::xml_document* doc, bool isLoadingDefa
 	   std::string alto = spr.child("alto").first_child().value();
 	   if (!validarNumero(posicion))
 			{
-			   Logger::Instance()->LOG("Se cargo el valor posicion del  por default", WARN);
+			   Logger::Instance()->LOG("Se cargo el valor posicion del  por default", LogTypeWarn);
 				posicion = "2";
 			}
 	   if (!validarNumero(ancho))
 				{
-				   Logger::Instance()->LOG("Se cargo el valor ancho del  por default", WARN);
+				   Logger::Instance()->LOG("Se cargo el valor ancho del  por default", LogTypeWarn);
 					ancho = "11";
 				}
 	   if (!validarNumero(alto))
 					{
-					   Logger::Instance()->LOG("Se cargo el valor alto del por default", WARN);
+					   Logger::Instance()->LOG("Se cargo el valor alto del por default", LogTypeWarn);
 						alto = "11";
 					}
 		if (!validarNumero(frames))
 			{
-				Logger::Instance()->LOG("Se cargo el valor de frames del  por default", WARN);
+				Logger::Instance()->LOG("Se cargo el valor de frames del  por default", LogTypeWarn);
 				frames = "30";
 				//id = "default";
 

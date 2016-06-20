@@ -56,7 +56,7 @@ void Level::loadFromXML(const std::string& xmlFileName)
 		addObject(gameObject, (*it).posicion.x, (*it).posicion.y);
 
 		 ss <<"Juego: Se cargó el objeto " << (*it).spriteId.c_str() << " en la posición x = " << (*it).posicion.x << ", y = " << (*it).posicion.y;
-		 Logger::Instance()->LOG(ss.str(), DEBUG);
+		 Logger::Instance()->LOG(ss.str(), LogTypeDebug);
 		 ss.clear();
 	}
 
