@@ -7,7 +7,6 @@ void FontManager::init()
     if (TTF_Init() == -1) {
         printf("FontManager - SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
     }
-    
     m_font = NULL;
     loadfont(DEFAULT_FONT_PATH,DEFAULT_FONT_SIZE);
 }

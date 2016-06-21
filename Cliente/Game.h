@@ -2,7 +2,10 @@
 #define GAME_H_
 
 #include "Player.h"
-#include "Hud.h"
+#include "Text/Hud.h"
+#include "Text/Statistics.h"
+#include "Text/StageMsg.h"
+#include "Text/Results.h"
 #include "Score.h"
 #include "Cliente/cliente.h"
 #include "Utils/Parser/ParserCliente.h"
@@ -13,7 +16,6 @@
 #include "Singletons/TextureManager.h"
 #include "Singletons/SoundManager.h"
 #include "Singletons/GameTimeHelper.h"
-#include "Statistics.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
@@ -31,11 +33,15 @@ class Background;
 class Player;
 class Statistics;
 class Hud;
+class StageMsg;
+class Results;
 class cliente;
 class DrawObject;
 
 #define TiMEOUT_MESSAGE_RATE 3000
 #define SHOW_STATISTICS_TIME 5000
+#define SHOW_STAGE_MSG_TIME 3000
+#define SHOW_RESULTS_TIME 5000
 
 class Game
 {
@@ -153,6 +159,8 @@ private:
     cliente* m_client;
     Hud* m_hud;
     Statistics* m_stats;
+    StageMsg* m_stageMsg;
+    Results* m_results;
     int m_backgroundTextureID;
     bool m_running;
 
@@ -163,9 +171,13 @@ private:
     bool m_continueLooping;
 
     bool m_showingStatistics;
+    bool m_showingStageMsg;
+    bool m_showingResults;
     int m_showingStatisticsTimer;
+    int m_showingStageMsgTimer;
+    int m_showingResultsTimer;
 
-    void updateStatistics();
+    void updateScreenText(bool* showing, int* timer, ScreenText* text);
     void stopLooping();
     void continueLooping();
 
