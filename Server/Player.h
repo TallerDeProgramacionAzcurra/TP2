@@ -57,7 +57,8 @@ public:
 
     //Getters
     int getCurrentLives() { return m_lives; }
-    bool isDead() { return m_dead; }
+    bool isDead() { return (m_dead && (m_lives <= 0)); }
+    bool hasMoreLives() { return (m_lives < 0); }
     bool isDying() { return m_dying; }
     bool isDoingFlip() { return m_doingFlip; }
     bool isInvulnerable() { return m_invulnerable; }
@@ -66,6 +67,7 @@ public:
     int getCollisionDamage() { return m_collisionDamage; }
     Statistics getStageStatistics() { return m_stageStats; }
     void resetStageStatistics() { return m_stageStats.reset(); }
+    int getLives() {return m_lives;}
 
     void moveAutomatic(const Vector2D& destination, int speed);
 

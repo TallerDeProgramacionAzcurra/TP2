@@ -45,7 +45,6 @@ FormationPlane::~FormationPlane()
 
 void FormationPlane::update()
 {
-
 	//Si esta huyendo y ya no es visible, lo elimina
 	if ((m_fleeing) && (!isVisibleFromCamera()))
 	{

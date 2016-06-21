@@ -217,6 +217,21 @@ StageStatistics AlanTuring::decodeStageStatistics(NetworkMessage netMsg)
 	return stageStatistics;
 }
 
+FinishGameInfo AlanTuring::decodeFinishGameInfo(NetworkMessage netMsg)
+{
+	FinishGameInfo finishGameInfo;
+	memcpy(&finishGameInfo, netMsg.msg_Data, sizeof(FinishGameInfo));
+	return finishGameInfo;
+}
+
+StageBeginning AlanTuring::decodeStageBeginning(NetworkMessage netMsg)
+{
+	StageBeginning stageBeginningInfo;
+	memcpy(&stageBeginningInfo, netMsg.msg_Data, sizeof(StageBeginning));
+	return stageBeginningInfo;
+}
+
+
 PlayerDisconnection AlanTuring::decodePlayerDisconnectionMessage(NetworkMessage netMsg)
 {
 	PlayerDisconnection playerDiscMsg;
@@ -368,6 +383,34 @@ NetworkMessage AlanTuring::StageStatisticsToNetwork(StageStatistics stageStatist
 
 	memcpy(networkMessage.msg_Data, &stageStatisticsMessage, sizeof(StageStatistics));
 	networkMessage.msg_Length = sizeof(StageStatistics) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+
+NetworkMessage AlanTuring::FinishGameInfoToNetwork(FinishGameInfo finishGameInfo)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 'f';
+	networkMessage.msg_Code[1] = 'g';
+	networkMessage.msg_Code[2] = 'i';
+
+	memcpy(networkMessage.msg_Data, &finishGameInfo, sizeof(FinishGameInfo));
+	networkMessage.msg_Length = sizeof(FinishGameInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+
+NetworkMessage AlanTuring::StageBeginningToNetwork(StageBeginning stageBeginningMessage)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 's';
+	networkMessage.msg_Code[1] = 'b';
+	networkMessage.msg_Code[2] = 'm';
+
+	memcpy(networkMessage.msg_Data, &stageBeginningMessage, sizeof(StageBeginning));
+	networkMessage.msg_Length = sizeof(StageBeginning) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
 
 	return networkMessage;
 }

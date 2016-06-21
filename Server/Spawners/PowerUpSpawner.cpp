@@ -79,7 +79,7 @@ void PowerUpSpawner::addPowerUp(Powerup powerUpInfo)
 			return;
 
 		int textureID = m_textureHelper->stringToInt(powerUpInfo.id);
-		int step = m_stageSize / powerUpInfo.cantidad;
+		int step = (m_stageSize - Game::Instance()->getGameHeight()) / powerUpInfo.cantidad;
 		for(int i = 0; i < powerUpInfo.cantidad; ++i)
 		{
 			PowerUpSpawnInfo powerUpSpawnInfo;
@@ -90,7 +90,7 @@ void PowerUpSpawner::addPowerUp(Powerup powerUpInfo)
 			powerUp->load(posX, posY, powerUpInfo.ancho, powerUpInfo.alto, textureID, powerUpInfo.frames);
 			powerUpSpawnInfo.powerUpToSpawn = powerUp;
 
-			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
+			int randomStagePosition = Random::getRange((i * step) - (step/50), (i + 1 * step) + (step/50));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -110,7 +110,7 @@ void PowerUpSpawner::addPowerUp(Powerup powerUpInfo)
 			return;
 
 		int textureID = m_textureHelper->stringToInt(powerUpInfo.id);
-		int step = m_stageSize / powerUpInfo.cantidad;
+		int step = (m_stageSize - Game::Instance()->getGameHeight()) / powerUpInfo.cantidad;
 		for(int i = 0; i < powerUpInfo.cantidad; ++i)
 		{
 			PowerUpSpawnInfo powerUpSpawnInfo;
@@ -120,7 +120,7 @@ void PowerUpSpawner::addPowerUp(Powerup powerUpInfo)
 			powerUp->load(posX, posY, powerUpInfo.ancho, powerUpInfo.alto, textureID, powerUpInfo.frames);
 			powerUpSpawnInfo.powerUpToSpawn = powerUp;
 
-			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
+			int randomStagePosition = Random::getRange((i * step) - (step/50), (i + 1 * step) + (step/50));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -139,7 +139,7 @@ void PowerUpSpawner::addPowerUp(Powerup powerUpInfo)
 			return;
 
 		int textureID = m_textureHelper->stringToInt(powerUpInfo.id);
-		int step = m_stageSize / powerUpInfo.cantidad;
+		int step = (m_stageSize - Game::Instance()->getGameHeight()) / powerUpInfo.cantidad;
 		for(int i = 0; i < powerUpInfo.cantidad; ++i)
 		{
 			PowerUpSpawnInfo powerUpSpawnInfo;
@@ -149,7 +149,7 @@ void PowerUpSpawner::addPowerUp(Powerup powerUpInfo)
 			powerUp->load(posX, posY, powerUpInfo.ancho, powerUpInfo.alto, textureID, powerUpInfo.frames);
 			powerUpSpawnInfo.powerUpToSpawn = powerUp;
 
-			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
+			int randomStagePosition = Random::getRange((i * step) - (step/50), (i + 1 * step) + (step/50));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)

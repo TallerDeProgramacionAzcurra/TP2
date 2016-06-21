@@ -32,6 +32,7 @@ public:
     void sendDrawMessage(bool isAlive);
 
     bool isDead() { return m_dead; }
+    void setDead(bool dead) { m_dead = dead; }
     void doAppearAnimation();
 
 protected:

@@ -43,7 +43,7 @@ void Level::loadFromXML(const std::string& xmlFileName)
 	for (std::vector<Elemento>::iterator it = scene.listaDeElementos.begin() ; it !=  scene.listaDeElementos.end(); ++it)
 	{
 		//GameObjectFactory::createGameObject((*it).spriteId);
-		printf("Cargando %s en posicion %d, %d \n",(*it).spriteId.c_str(), (*it).posicion.x, (*it).posicion.y );
+		//printf("Cargando %s en posicion %d, %d \n",(*it).spriteId.c_str(), (*it).posicion.x, (*it).posicion.y );
 		int textureID = m_textureHelper->stringToInt((*it).spriteId);
 
 		TextureInfo texInfo = TextureManager::Instance()->getTextureInfo(textureID);
@@ -96,7 +96,7 @@ void Level::scrollToNextStage()
 {
 	m_virtualPosition = m_levelHeight;
 	m_scrollingToNextStage = true;
-	m_nextStageScrollAmount = Game::Instance()->getGameHeight();
+	m_nextStageScrollAmount = Game::Instance()->getGameHeight() - 300;
 }
 
 void Level::update()
@@ -125,14 +125,16 @@ void Level::update()
 
 	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end(); ++it)
 	 {
-		if ((Game::Instance()->isLevelStarted() && (!Game::Instance()->isFinishingLevel())) || (m_scrollingToNextStage))
+		//if ((Game::Instance()->isLevelStarted() && (!Game::Instance()->isFinishingLevel())) || (m_scrollingToNextStage))
+		if (Game::Instance()->isScrolling())
 		{
 		 (*it)->scroll(m_scrollSpeed);
 		}
 		(*it)->update();
 	 }
 
-	 if ((Game::Instance()->isLevelStarted() && (!Game::Instance()->isFinishingLevel())) || (m_scrollingToNextStage))
+	// if ((Game::Instance()->isLevelStarted() && (!Game::Instance()->isFinishingLevel())) || (m_scrollingToNextStage))
+	 if (Game::Instance()->isScrolling())
 	{
 		m_virtualPosition -= m_scrollSpeed;
 	}

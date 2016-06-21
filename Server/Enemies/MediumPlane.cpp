@@ -60,9 +60,12 @@ void MediumPlane::load(int x, int y, int width, int height, int textureID, int n
 
 void MediumPlane::update()
 {
-	if (m_exploting)
+	if (!m_dead)
 	{
-		updateExplotionAnimation();
+		if (m_exploting)
+		{
+			updateExplotionAnimation();
+		}
 	}
 
 	m_enemyWeapon->update();
@@ -175,12 +178,12 @@ void MediumPlane::kill()
 
 void MediumPlane::dropLoot()
 {
-	PowerUp* drop = new ExtraPointsPU(1500);
+	/*PowerUp* drop = new ExtraPointsPU(1500);
 	int posX = m_position.m_x + (m_width/2) - 24;
 	int posY = m_position.m_y + (m_height/2) - 24;
 	drop->load(posX, posY, 48, 48, 70, 1);
 	CollitionHandler::Instance()->addPowerUp(drop);
-	Game::Instance()->addPowerUp(drop);
+	Game::Instance()->addPowerUp(drop);*/
 }
 
 void MediumPlane::shoot()

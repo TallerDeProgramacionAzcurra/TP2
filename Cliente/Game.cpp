@@ -9,7 +9,7 @@ m_pRenderer(0),
  m_timeOutCounter(0),
  m_backgroundTextureID(10),
 m_running(false),
-m_gameStarted(false),
+m_stageStarted(false),
 m_reseting(false),
 m_initializingSDL(false),
 m_waitingTextures(true),
@@ -506,6 +506,19 @@ void Game::showStageStatistics(StageStatistics stageStatistics)
 
 }
 
+void Game::showFinishGameInfo(FinishGameInfo finishGameInfo)
+{
+	//MOSTRAR VICTORIA Y DERROTA
+	//MOSTRAR PUNTAJES DEL VENCEDOR O DEL JUGADOR QUE SACO MAS PUNTOS
+
+}
+
+void Game::showStageBeginningMessage(StageBeginning stageBeginningInfo)
+{
+	//INFORMAR QUE ETAPA vA A COMENZAR
+
+}
+
 void Game::updateStatistics()
 {
 	if (m_showingStatistics)
@@ -542,7 +555,7 @@ void Game::createHuds(short cantHuds)
 bool Game::canContinue()
 {
 	bool canContinue = true;
-	if (!m_continueLooping || !m_gameStarted || m_reseting || m_initializingSDL || m_waitingTextures)
+	if (!m_continueLooping || !m_stageStarted || m_reseting || m_initializingSDL || m_waitingTextures)
 	{
 		canContinue = false;
 	}
@@ -680,7 +693,7 @@ void Game::readFromKorea()
 
 bool Game::updateTimeOut()
 {
-	if (m_gameStarted)
+	if (m_stageStarted)
 	{
 		 bool conectado= m_client->checkServerConnection();
 		 if (!conectado)
@@ -846,24 +859,24 @@ void Game::resetGame()
 //	m_reseting = true;
 //	 cout << "reseting game\n";
 //
-//	 for (std::map<int,DrawObject*>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
-//	 {
-//		 cout << "destroying background\n";
-//		it->second->clean();
-//		delete it->second;
-//	 }
-//	 for (std::map<int,DrawObject*>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
-//	 {
-//		 cout << "destroying middleground\n";
-//		it->second->clean();
-//		delete it->second;
-//	 }
-//	 for (std::map<int,DrawObject*>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
-//	 {
-//		 cout << "destroying foreground\n";
-//		it->second->clean();
-//		delete it->second;
-//	 }
+	/* for (std::map<int,std::shared_ptr<DrawObject>>::iterator it = backgroundObjects.begin(); it != backgroundObjects.end(); ++it)
+	 {
+		 cout << "destroying background\n";
+		it->second->clean();
+		it->second.reset();
+	 }
+	 for (std::map<int,std::shared_ptr<DrawObject>>::iterator it = middlegroundObjects.begin(); it != middlegroundObjects.end(); ++it)
+	 {
+		 cout << "destroying middleground\n";
+		it->second->clean();
+		it->second.reset();
+	 }
+	 for (std::map<int,std::shared_ptr<DrawObject>>::iterator it = foregroundObjects.begin(); it != foregroundObjects.end(); ++it)
+	 {
+		 cout << "destroying foreground\n";
+		it->second->clean();
+		it->second.reset();
+	 }*/
 //	 printf("GameObjects Destroyed");
 //	 InputHandler::Instance()->reset();
 //	 TextureManager::Instance()->clearTextureMap();
@@ -877,8 +890,8 @@ void Game::resetGame()
 
 	 printf("Se modificó el tamaño de la window\n");
 
-	 setRunning(false);
-	 setRestart(true);
+	 //setRunning(false);
+	 //setRestart(true);
 	 for (std::map<int, Score*>::iterator it = scores.begin(); it != scores.end(); ++it)
 	 {
 		if (it->second)

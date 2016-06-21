@@ -278,6 +278,35 @@ void server::sendStageStatistics(StageStatistics stageStatistics, int clientID)
 	 }
 }
 
+void server::sendStageBeginningInfoToAll(StageBeginning stageBeginningInfo)
+{
+
+	 NetworkMessage netMsg = m_alanTuring->StageBeginningToNetwork(stageBeginningInfo);
+	 for (int i = 0; i < m_listaDeClientes.size(); i++)
+	 {
+	     if ( m_listaDeClientes.isAvailable(i))
+	     {
+	    	 m_queuePost[i].add(netMsg);
+	     }
+	 }
+}
+
+void server::sendFinishGameInfoToAll(FinishGameInfo finishGameInfo)
+{
+
+	 NetworkMessage netMsg = m_alanTuring->FinishGameInfoToNetwork(finishGameInfo);
+	 for (int i = 0; i < m_listaDeClientes.size(); i++)
+	 {
+	     if ( m_listaDeClientes.isAvailable(i))
+	     {
+	    	 m_queuePost[i].add(netMsg);
+	     }
+	 }
+}
+
+void sendStageBeginningInfoToAll(StageBeginning stageBeginningInfo);
+void sendFinishGameInfoToAll(FinishGameInfo finishGameInfo);
+
 void server::informTextureInfos(int clientID)
 {
 	ParserNivel* parserNivel = new ParserNivel();
@@ -796,7 +825,7 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 			Game::Instance()->setReseting(true);
 			Logger::Instance()->LOG("Server: Se reiniciará el juego.", DEBUG);
 			//Resetea el juego
-			Game::Instance()->resetGame();
+			Game::Instance()->restartLevel();
 			//Envia la nueva informacion al cliente
 			ResetInfo resetInfo;
 			resetInfo.windowHeight = Game::Instance()->getGameHeight();
