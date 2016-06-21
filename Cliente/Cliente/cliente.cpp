@@ -375,14 +375,26 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
         ConnectedMessage connectedMessage = m_alanTuring->decodeConnectedMessage(networkMessage);
         if (connectedMessage.requestData && !connectedMessage.connected)
         {
-            // TODO: Gastón - Aca no tendría que ir el menú?
-            ClientMenu clientMenu = ClientMenu("Menú", connectedMessage.windowWidth, connectedMessage.windowHeight, {});
+            std::list<std::string> menuTeamOptionsList = {};
+            
+            if (connectedMessage.teamMode) {
+                std::string teamsStr = connectedMessage.teamsName;
+                std::stringstream teamsStream(teamsStr);
+                std::string teamToken;
+                
+                while (std::getline(teamsStream, teamToken, '|')) {
+                    menuTeamOptionsList.push_back(teamToken);
+                }
+            }
+            
+            ClientMenu clientMenu = ClientMenu("Menú", connectedMessage.windowWidth, connectedMessage.windowHeight, menuTeamOptionsList);
             clientMenu.clientMenuRun();
             
             bool playButtonSelected = clientMenu.clienMenuGetPlayButtonSelected();
             
             if (playButtonSelected == false) {
                 desconectar();
+                m_connected = false;
                 return;
             }
             
@@ -391,7 +403,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
             
             Game::Instance()->gameSetPlayerName(playerNameSelected);
             
-            //El SERVER ESTA SOLICITANDO INFORMACION DE CONECCION
+            //El SERVER ESTA SOLICITANDO INFORMACION DE CONEXIÓN.
             //ENVIAR CONNECTION INFO
             ConnectionInfo connectionInfo;
             std::size_t length = m_playerName.copy(connectionInfo.name, MAX_NAME_LENGTH, 0);

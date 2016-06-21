@@ -46,7 +46,7 @@ class CollitionHandler;
 #define DRAG_PLAYER 0
 
 #define END_STAGE_TIMER 3000
-#define XML_PATH "test1.xml"
+#define XML_PATH "test2.xml"
 
 enum GameMode
 {
