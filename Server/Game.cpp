@@ -929,6 +929,7 @@ void Game::loadCurrentStage()
 	{
 		m_parserStages->clean();
 		delete m_parserStages;
+        m_parserStages = NULL;
 	}
 
 	m_parserStages = new ParserStage();

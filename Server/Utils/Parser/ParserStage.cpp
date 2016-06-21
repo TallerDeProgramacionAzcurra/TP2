@@ -13,9 +13,17 @@ ParserStage::ParserStage() {
 }
 
 ParserStage::~ParserStage() {
-	m_listaDeEnemigos.clear();
-	m_listaDePowerups.clear();
-	m_listaDeJefes.clear();
+    if (m_listaDeEnemigos.size() > 0) {
+        m_listaDeEnemigos.clear();
+    }
+    
+    if (m_listaDePowerups.size() > 0) {
+        m_listaDePowerups.clear();
+    }
+    
+    if (m_listaDeJefes.size() > 0) {
+        m_listaDeJefes.clear();
+    }
 }
 
 void ParserStage::clean() {
