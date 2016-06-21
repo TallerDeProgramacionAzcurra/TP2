@@ -34,10 +34,6 @@ int main(int argc, char **argv)
 {
     Random::initialize();
     
-    if (Game::Instance()->initializeClient() == false) {
-        return 0;
-    }
-    
     ClientMenu clientMenu = ClientMenu("Menú", 800, 600, {});
     clientMenu.clientMenuRun();
     
@@ -47,9 +43,13 @@ int main(int argc, char **argv)
         std::string playerNameSelected = clientMenu.clientMenuGetPlayerName();
         std::string playerTeamSelected = clientMenu.clientMenuGetPlayerTeam();
         
-        // Play the Game.
         Game::Instance()->gameSetPlayerName(playerNameSelected);
         
+        if (Game::Instance()->initializeClient() == false) {
+            return 0;
+        }
+        
+        // Play the Game.
         bool continueLooping = true;
         while (continueLooping == true)
         {
