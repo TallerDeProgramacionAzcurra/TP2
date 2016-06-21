@@ -58,6 +58,8 @@ public:
 	ScoreMessage decodeScoreMessage(NetworkMessage netMsg);
 	BackgroundInfo decodeBackgroundInfo(NetworkMessage netMsg);
 	StageStatistics decodeStageStatistics(NetworkMessage netMsg);
+	FinishGameInfo decodeFinishGameInfo(NetworkMessage netMsg);
+	StageBeginning decodeStageBeginning(NetworkMessage netMsg);
 
 	NetworkMessage drawMessageToNetwork(DrawMessage drawMessage);
 	NetworkMessage playerDisconnectionToNetwork(PlayerDisconnection playerDiscMessage);
@@ -68,6 +70,8 @@ public:
 	NetworkMessage ScoreMessageToNetwork(ScoreMessage scoreMessage);
 	NetworkMessage BackgroundInfoToNetwork(BackgroundInfo backgroundMessage);
 	NetworkMessage StageStatisticsToNetwork(StageStatistics stageStatisticsMessage);
+	NetworkMessage FinishGameInfoToNetwork(FinishGameInfo finishGameInfo);
+	NetworkMessage StageBeginningToNetwork(StageBeginning stageBeginningMessage);
 
 
 	//devuelve un buffer de 256 bytes con el mensaje codificado en binario en buffeSalida y un int con el tamaño Mensaje

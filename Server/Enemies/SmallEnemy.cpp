@@ -111,7 +111,6 @@ void SmallEnemy::update()
 			}
 		}
 	}
-
 	//Actualiza la posición y comunica a los clientes
 	Enemy::update();
 

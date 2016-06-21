@@ -45,7 +45,7 @@ class CollitionHandler;
 
 #define DRAG_PLAYER 0
 
-#define END_STAGE_TIMER 5000
+#define END_STAGE_TIMER 3000
 #define XML_PATH "test1.xml"
 
 enum GameMode
@@ -93,6 +93,8 @@ public:
     void sendScoreToClients(ScoreMessage scoreMsg);
    	void sendBackgroundInfo(BackgroundInfo backgroundInfo);
    	void sendStageStatistics(StageStatistics stageStatistics, int clientID);
+   	void sendStageBeginning(StageBeginning stageBeginningInfo);
+   	void sendFinishGameInfo(FinishGameInfo finishGameInfo);
 
     void addPointsToScore(int points, int playerID, int teamID);
     void addPointsToTeam(int points, int teamID);
@@ -129,14 +131,17 @@ public:
     bool isPracticeMode();
     bool isTeamMode();
 	void setPracticeMode(bool practiceMode);
-	bool isLevelStarted() { return !m_startingStage; }
+	bool isLevelStarted() { return (!m_startingStage && m_stageStarted); }
 	bool isFinishingLevel() { return  m_endingStage; }
+	bool areAllPlayersDead();
+	bool isScrolling() { return m_scrollBackground; }
 
 	void killAllEnemies(Player* killer);
 	void killAllEnemiesNoRewards();
 	void loadCurrentStage();
 	void loadNextStage();
 	void finishStage();
+	void restartLevel();
 
     pthread_t listenThread;
     float getScrollSpeed() { return m_scrollSpeed; }
@@ -181,12 +186,16 @@ private:
     int m_waitEndStageTimer;
 
 
+    bool m_gameOver;
     bool m_running;
     bool m_reseting;
     bool m_startingStage;
     bool m_endingStage;
     bool m_scrollingToNextStage;
     bool m_waitingToScroll;
+
+    bool m_stageStarted;
+    bool m_scrollBackground;
 
     static Game* s_pInstance;
 
@@ -210,6 +219,12 @@ private:
 	void checkPracticeMode();
 	void checkStartingStage();
 	void checkEndingStage();
+	void checkStageTransitioning();
+
+	void informEndGame(bool levelFinished);
+
+	void startStage();
+	void doStageTransition();
 
 	void cleanDeadObjects();
 };

@@ -99,6 +99,19 @@ struct ConnectionInfo
 	char name[24];
 };
 
+struct FinishGameInfo
+{
+	bool isVictory;
+	short winnerID;
+	short points;
+
+};
+
+struct StageBeginning
+{
+	int stageNumber;
+};
+
 struct ResetInfo
 {
 	short windowWidth;

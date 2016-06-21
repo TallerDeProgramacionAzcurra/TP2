@@ -556,6 +556,22 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
 		return;
 	}
 
+	//Finish game message
+	if ((networkMessage.msg_Code[0] == 'f') && (networkMessage.msg_Code[1] == 'g') && (networkMessage.msg_Code[2] == 'i'))
+	{
+		FinishGameInfo finishGameInfo = m_alanTuring->decodeFinishGameInfo(networkMessage);
+		Game::Instance()->showFinishGameInfo(finishGameInfo);
+		return;
+	}
+
+	//Stage Beginning
+	if ((networkMessage.msg_Code[0] == 's') && (networkMessage.msg_Code[1] == 't') && (networkMessage.msg_Code[2] == 'm'))
+	{
+		StageBeginning stageBeginningInfo = m_alanTuring->decodeStageBeginning(networkMessage);
+		Game::Instance()->showStageBeginningMessage(stageBeginningInfo);
+		return;
+	}
+
 
 	//Game Beginning
 	if ((networkMessage.msg_Code[0] == 'g') && (networkMessage.msg_Code[1] == 'b') && (networkMessage.msg_Code[2] == 'g'))

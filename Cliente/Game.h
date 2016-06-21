@@ -87,6 +87,8 @@ public:
 
    	void updateBackground(BackgroundInfo backgroundInfo);
    	void showStageStatistics(StageStatistics stageStatistics);
+   	void showFinishGameInfo(FinishGameInfo finishGameInfo);
+   	void showStageBeginningMessage(StageBeginning stageBeginningInfo);
 
    	bool updateTimeOut();
 
@@ -111,7 +113,7 @@ public:
     int getGameWidth() const { return m_gameWidth; }
     int getGameHeight() const { return m_gameHeight; }
     float getScrollSpeed() { return m_scrollSpeed; }
-    void setGameStarted(bool state) { m_gameStarted = state; }
+    void setGameStarted(bool state) { m_stageStarted = state; }
     void setReseting(bool state) { m_reseting = state; }
     void setWindowSize(int width, int heigth);
     void setRestart(bool loco){m_restart = loco;}
@@ -154,7 +156,7 @@ private:
     int m_backgroundTextureID;
     bool m_running;
 
-    bool m_gameStarted;
+    bool m_stageStarted;
     bool m_reseting;
     bool m_initializingSDL;
     bool m_waitingTextures;

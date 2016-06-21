@@ -79,7 +79,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			return;
 
 		int textureID = m_textureHelper->stringToInt(enemyInfo.id);
-		int step = m_stageSize / enemyInfo.cantidad;
+		int step = (m_stageSize - Game::Instance()->getGameHeight()) / enemyInfo.cantidad;
 		for(int i = 0; i < enemyInfo.cantidad; ++i)
 		{
 			EnemySpawnInfo enemySpawnInfo;
@@ -96,7 +96,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			int posY = Random::getRange(0, Game::Instance()->getGameHeight()/1.5f);
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
+			int randomStagePosition = Random::getRange((i * step) - (step/40), (i + 1 * step) + (step/40));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -116,7 +116,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			return;
 
 		int textureID = m_textureHelper->stringToInt(enemyInfo.id);
-		int step = m_stageSize / enemyInfo.cantidad;
+		int step = (m_stageSize - Game::Instance()->getGameHeight()) / enemyInfo.cantidad;
 		for(int i = 0; i < enemyInfo.cantidad; ++i)
 		{
 			EnemySpawnInfo enemySpawnInfo;
@@ -133,7 +133,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			int posY = Random::getRange(0, Game::Instance()->getGameHeight()/1.5f);
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
+			int randomStagePosition = Random::getRange((i * step) - (step/40), (i + 1 * step) + (step/40));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -152,7 +152,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			return;
 
 		int textureID = m_textureHelper->stringToInt(enemyInfo.id);
-		int step = m_stageSize / enemyInfo.cantidad;
+		int step = (m_stageSize - Game::Instance()->getGameHeight()) / enemyInfo.cantidad;
 		for(int i = 0; i < enemyInfo.cantidad; ++i)
 		{
 			EnemySpawnInfo enemySpawnInfo;
@@ -171,7 +171,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			int posY = Random::getRange(0, Game::Instance()->getGameHeight()/2);
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
+			int randomStagePosition = Random::getRange((i * step) - (step/40), (i + 1 * step) + (step/40));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -189,7 +189,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			return;
 
 		int textureID = m_textureHelper->stringToInt(enemyInfo.id);
-		int step = m_stageSize / enemyInfo.cantidad;
+		int step = (m_stageSize - Game::Instance()->getGameHeight()) / enemyInfo.cantidad;
 		for(int i = 0; i < enemyInfo.cantidad; ++i)
 		{
 			EnemySpawnInfo enemySpawnInfo;

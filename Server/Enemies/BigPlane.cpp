@@ -59,67 +59,70 @@ void BigPlane::load(int x, int y, int width, int height, int textureID, int numF
 
 void BigPlane::update()
 {
-	if (m_exploting)
+	if (!m_dead)
 	{
-		updateExplotionAnimation();
-	}
-
-	m_enemyWeapon->update();
-
-	if (!m_dead && !m_dying)
-	{
-		//Si esta en la parte de abajo de la pantalla, Sube
-		if (m_position.getY() >= (Game::Instance()->getGameHeight()/3) - m_height)
+		if (m_exploting)
 		{
-			m_direction.setX(0);
-			m_direction.setY(DIRECTION_UP);
-			m_goingUp = true;
-		}
-		else
-		{
-			m_goingUp = false;
+			updateExplotionAnimation();
 		}
 
-		//Si llega a un borde, invierta la dirección en X
-		if ((!m_goingRight) && (m_position.getX() <= m_borderReturnOffset))
-		{
-			flip();
-		}
-		if ((m_goingRight) && (m_position.getX() >= m_borderReturnOffset))
-		{
-			flip();
-		}
+		m_enemyWeapon->update();
 
-		//Si no esta subiendo, tiende a moverse hacia la derecha o izquierda, segun corresponda
-		if (!m_goingUp)
+		if (!m_dead && !m_dying)
 		{
-			if (m_goingRight)
+			//Si esta en la parte de abajo de la pantalla, Sube
+			if (m_position.getY() >= (Game::Instance()->getGameHeight()/3) - m_height)
 			{
-				m_direction.setX(DIRECTION_RIGHT);
-				m_direction.m_y += Random::getFloatRange(-0.25f, 0.25f);
-				m_direction.normalize();
+				m_direction.setX(0);
+				m_direction.setY(DIRECTION_UP);
+				m_goingUp = true;
 			}
 			else
 			{
-				m_direction.setX(DIRECTION_LEFT);
-				m_direction.m_y += Random::getFloatRange(-0.25f, 0.25f);
-				m_direction.normalize();
+				m_goingUp = false;
 			}
-		}
 
-		if (m_position.getY() < 50)
-		{
-			m_direction.m_y = DIRECTION_DOWN;
-		}
-
-
-		//Analiza si debe disparar
-		if (!m_goingUp)
-		{
-			int shootLuck = Random::getRange(0, 1000);
-			if (shootLuck <= m_shootChance)
+			//Si llega a un borde, invierta la dirección en X
+			if ((!m_goingRight) && (m_position.getX() <= m_borderReturnOffset))
 			{
-				shoot();
+				flip();
+			}
+			if ((m_goingRight) && (m_position.getX() >= m_borderReturnOffset))
+			{
+				flip();
+			}
+
+			//Si no esta subiendo, tiende a moverse hacia la derecha o izquierda, segun corresponda
+			if (!m_goingUp)
+			{
+				if (m_goingRight)
+				{
+					m_direction.setX(DIRECTION_RIGHT);
+					m_direction.m_y += Random::getFloatRange(-0.25f, 0.25f);
+					m_direction.normalize();
+				}
+				else
+				{
+					m_direction.setX(DIRECTION_LEFT);
+					m_direction.m_y += Random::getFloatRange(-0.25f, 0.25f);
+					m_direction.normalize();
+				}
+			}
+
+			if (m_position.getY() < 50)
+			{
+				m_direction.m_y = DIRECTION_DOWN;
+			}
+
+
+			//Analiza si debe disparar
+			if (!m_goingUp)
+			{
+				int shootLuck = Random::getRange(0, 1000);
+				if (shootLuck <= m_shootChance)
+				{
+					shoot();
+				}
 			}
 		}
 	}

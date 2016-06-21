@@ -26,12 +26,15 @@ m_practiceMode(false),
 m_practiceHoldTimer(0),
 m_startingWaitTime(500),
 m_waitEndStageTimer(END_STAGE_TIMER),
+m_gameOver(false),
 m_running(false),
 m_reseting(false),
 m_startingStage(true),
 m_endingStage(false),
 m_scrollingToNextStage(false),
 m_waitingToScroll(false),
+m_stageStarted(false),
+m_scrollBackground(false),
 m_scrollSpeed(2)
 {
 	m_powerUpsSpawner = new PowerUpSpawner();
@@ -87,6 +90,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     //CollitionHandler::Instance()->addEnemy(enemy);
 
     loadCurrentStage();
+    startStage();
 
     //tudo ben
     m_running = true;
@@ -272,111 +276,6 @@ void Game::render()
 }
 
 
-void Game::update()
-{
-	checkStartingStage(); // espera la animacion de vuelta
-	checkEndingStage(); // si esta terminando el nivel, espera un tiempo y carga el siguiente
-
-	checkPracticeMode();
-
-	updateSpawners();
-
-	BulletsHandler::Instance()->updateBullets();
-	//enemy->update();
-
-	m_level->update();
-
-	updateBackground(m_level->getScrollSpeed());
-
-	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
-	{
-		//printf("objectID = %d \n", it->second.getObjectId());
-		if (it->second)
-		{
-			it->second->update();
-		}
-	}
-	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end(); ++it)
-	 {
-		 (*it)->update();
-	 }
-	 for (std::vector<PowerUp*>::iterator it = m_powerUps.begin() ; it != m_powerUps.end(); ++it)
-	 {
-			(*it)->update();
-	 }
-
-	for (std::map<int,GameObject*>::iterator it=m_listOfGameObjects.begin(); it != m_listOfGameObjects.end(); ++it)
-	{
-		//printf("objectID = %d \n", it->second.getObjectId());
-		if (it->second)
-		{
-			it->second->update();
-		}
-	}
-
-	 for (std::vector<PopUp*>::iterator it = m_popUps.begin() ; it != m_popUps.end(); ++it)
-	 {
-			(*it)->update();
-	 }
-
-	CollitionHandler::Instance()->handleCollitions();
-
-	cleanDeadObjects();
-
-}
-
-void Game::checkEndingStage()
-{
-	if (m_endingStage)
-	{
-		m_waitEndStageTimer -= GameTimeHelper::Instance()->deltaTime();
-		if (m_waitEndStageTimer <= 0)
-		{
-			m_endingStage = false;
-			loadNextStage();
-		}
-	}
-}
-
-void Game::checkStartingStage()
-{
-	if (m_startingStage)
-	{
-		bool animationDone = false;
-		for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
-		{
-			//printf("objectID = %d \n", it->second.getObjectId());
-			if ((it->second) && (it->second->isDoingFlip() == false))
-			{
-				animationDone = true;
-				break;
-			}
-		}
-		if (animationDone)
-		{
-			if ((m_startingWaitTime <= 0) && (!m_waitingToScroll))
-			{
-				m_startingStage = false;
-			}
-		}
-		else
-		{
-			m_startingWaitTime -= GameTimeHelper::Instance()->deltaTime();
-		}
-
-	}
-
-	if (m_waitingToScroll)
-	{
-		if (!m_level->isScrollingToNextStage())
-		{
-			m_startingStage = false;
-			m_waitingToScroll = false;
-			m_level->loadLevel(m_currentStage);
-		}
-	}
-}
-
 void Game::updateBackground(int scrollSpeed)
 {
  	BackgroundInfo bgInfo;
@@ -428,6 +327,21 @@ bool Game::isPracticeMode()
 bool Game::isTeamMode()
 {
  	return (m_currentMode == GAMEMODE_COMPETITION);
+}
+
+bool Game::areAllPlayersDead()
+{
+	bool oneAlive = false;
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		//printf("objectID = %d \n", it->second.getObjectId());
+		if ((it->second) && (it->second->isDead() == false))
+		{
+			oneAlive = true;
+			break;
+		}
+	}
+	return (!oneAlive);
 }
 
 void Game::initializeTexturesInfo()
@@ -535,6 +449,17 @@ void Game::sendBackgroundInfo(BackgroundInfo backgroundInfo)
 {
 	m_server->sendBackgroundInfoToAll(backgroundInfo);
 }
+
+void Game::sendStageBeginning(StageBeginning stageBeginningInfo)
+{
+	m_server->sendStageBeginningInfoToAll(stageBeginningInfo);
+}
+
+void Game::sendFinishGameInfo(FinishGameInfo finishGameInfo)
+{
+	m_server->sendFinishGameInfoToAll(finishGameInfo);
+}
+
 void Game::sendStageStatistics(StageStatistics stageStatistics, int clientID)
 {
 	m_server->sendStageStatistics(stageStatistics, clientID);
@@ -627,6 +552,11 @@ void Game::clean()
 		}
 	}
 	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end(); ++it)
+	 {
+		 (*it)->clean();
+		 delete (*it);
+	 }
+	 for (std::vector<PowerUp*>::iterator it = m_powerUps.begin() ; it != m_powerUps.end(); ++it)
 	 {
 		 (*it)->clean();
 		 delete (*it);
@@ -809,6 +739,188 @@ void Game::updateSpawners()
 	m_powerUpsSpawner->update(m_level->getVirtualPosition());
 }
 
+void Game::update()
+{
+
+	checkStartingStage(); // espera la animacion de vuelta
+	checkEndingStage(); // si esta terminando el nivel, espera un tiempo y carga el siguiente
+	checkStageTransitioning();
+
+	checkPracticeMode();
+
+	/*if (!m_gameStarted)
+		return;
+	 */
+	updateSpawners();
+
+	BulletsHandler::Instance()->updateBullets();
+	//enemy->update();
+
+	m_level->update();
+
+	updateBackground(m_level->getScrollSpeed());
+
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		//printf("objectID = %d \n", it->second.getObjectId());
+		if (it->second)
+		{
+			it->second->update();
+		}
+	}
+	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end(); ++it)
+	 {
+		 (*it)->update();
+	 }
+	 for (std::vector<PowerUp*>::iterator it = m_powerUps.begin() ; it != m_powerUps.end(); ++it)
+	 {
+			(*it)->update();
+	 }
+
+	for (std::map<int,GameObject*>::iterator it=m_listOfGameObjects.begin(); it != m_listOfGameObjects.end(); ++it)
+	{
+		//printf("objectID = %d \n", it->second.getObjectId());
+		if (it->second)
+		{
+			it->second->update();
+		}
+	}
+
+	 for (std::vector<PopUp*>::iterator it = m_popUps.begin() ; it != m_popUps.end(); ++it)
+	 {
+			(*it)->update();
+	 }
+
+	if ((!m_gameOver) && (areAllPlayersDead()))
+	{
+		//INFORMAR DERROTA O JUGADOR GANADOR
+		printf("Game Over \n");
+		informEndGame(false);
+		m_scrollBackground = false;
+		m_gameOver = true;
+
+	}
+
+	CollitionHandler::Instance()->handleCollitions();
+
+	cleanDeadObjects();
+
+}
+
+void Game::informEndGame(bool levelFinished)
+{
+	FinishGameInfo finishGameInfo;
+	if (m_currentMode == GAMEMODE_COOPERATIVE)
+	{
+		int maxScore = -1;
+		int winnerID = 0;
+		finishGameInfo.isVictory = levelFinished;
+		for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+		{
+			if (it->second)
+			{
+				int score = it->second->getScore();
+				if (score >= maxScore)
+				{
+					maxScore = score;
+					winnerID = it->second->getObjectId();
+				}
+			}
+		}
+		finishGameInfo.points = maxScore;
+		finishGameInfo.winnerID = winnerID;
+
+	}
+	if (m_currentMode == GAMEMODE_COMPETITION)
+	{
+		int maxScore = -1;
+		int winnerID = 0;
+		finishGameInfo.isVictory = true;
+		for (std::map<int,int>::iterator it=m_teamScores.begin(); it != m_teamScores.end(); ++it)
+		{
+			int score = it->second;
+			if (score >= maxScore)
+			{
+				maxScore = score;
+				winnerID = it->first;
+			}
+		}
+		finishGameInfo.points = maxScore;
+		finishGameInfo.winnerID = winnerID;
+	}
+
+	sendFinishGameInfo(finishGameInfo);
+}
+
+void Game::checkStageTransitioning()
+{
+	if (m_waitingToScroll)
+	{
+		if (!m_level->isScrollingToNextStage())
+		{
+			for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+			{
+				if (it->second)
+				{
+					it->second->setPosition(Vector2D(Game::Instance()->getGameWidth()/2 - 32, m_gameHeight*0.75f));
+				}
+			}
+			++m_currentStage;
+			loadCurrentStage();
+			m_level->loadLevel(m_currentStage);
+
+			m_waitingToScroll = false;
+
+			startStage();
+		}
+	}
+}
+
+void Game::checkEndingStage()
+{
+	if (m_endingStage)
+	{
+		m_waitEndStageTimer -= GameTimeHelper::Instance()->deltaTime();
+		if (m_waitEndStageTimer <= 0)
+		{
+			//loadNextStage();
+			doStageTransition();
+			m_endingStage = false;
+		}
+	}
+}
+
+void Game::checkStartingStage()
+{
+	if (m_startingStage)
+	{
+		bool animationDone = false;
+		for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+		{
+			//printf("objectID = %d \n", it->second.getObjectId());
+			if ((it->second) && (it->second->isDoingFlip() == false))
+			{
+				animationDone = true;
+				break;
+			}
+		}
+		if (animationDone)
+		{
+			if ((m_startingWaitTime <= 0) && (!m_waitingToScroll))
+			{
+				m_startingStage = false;
+				m_scrollBackground = true;
+
+			}
+		}
+		else
+		{
+			m_startingWaitTime -= GameTimeHelper::Instance()->deltaTime();
+		}
+
+	}
+}
+
 void Game::loadCurrentStage()
 {
 	if (m_parserStages)
@@ -833,13 +945,25 @@ void Game::loadCurrentStage()
 		if (it->second)
 		{
 			it->second->resetStageStatistics();
-			it->second->startFlipAnimation();
+			//it->second->startFlipAnimation();
 		}
 	}
 
-	m_startingStage = true;
-	m_startingWaitTime = 500;
+}
 
+void Game::doStageTransition()
+{
+	m_scrollingToNextStage = true;
+	m_waitingToScroll = true;
+	m_scrollBackground = true;
+	m_level->scrollToNextStage();
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->moveAutomatic(Vector2D(Game::Instance()->getGameWidth()/2 - 32, m_gameHeight*0.75f), m_scrollSpeed);
+		}
+	}
 
 }
 
@@ -849,25 +973,19 @@ void Game::loadNextStage()
 	{
 		return;
 	}
-
-	m_scrollingToNextStage = true;
-	m_waitingToScroll = true;
-	m_level->scrollToNextStage();
-
-	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
-	{
-		if (it->second)
-		{
-			it->second->moveAutomatic(Vector2D(Game::Instance()->getGameWidth()/2 - 32, m_gameHeight*0.75f), m_scrollSpeed);
-		}
-	}
+	printf("Loading stage %d \n", m_currentStage + 1);
 
 	++m_currentStage;
 	loadCurrentStage();
+
+	printf("Stage %d loaded.\n", m_currentStage);
 }
 
 void Game::finishStage()
 {
+	printf("Ending stage %d \n", m_currentStage);
+	killAllEnemiesNoRewards();
+
 	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
 	{
 		if (it->second)
@@ -886,9 +1004,69 @@ void Game::finishStage()
 
 		}
 	}
-	killAllEnemiesNoRewards();
-	m_endingStage = true;
 
+	m_scrollBackground = false;
+	m_endingStage = true;
 	m_waitEndStageTimer = END_STAGE_TIMER;
-	//Mostrar sesion informativa
+
+	if (m_currentStage >= m_stagesAmount)
+	{
+		printf("End of Level \n");
+		informEndGame(true);
+		m_scrollBackground = false;
+		m_gameOver = true;
+	}
+
+	printf("Stage %d ended. \n", m_currentStage);
+}
+
+void Game::startStage()
+{
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->startFlipAnimation();
+		}
+	}
+	m_stageStarted = true;
+	m_scrollBackground = false;
+
+	m_startingStage = true;
+	m_startingWaitTime = 500;
+}
+
+
+
+void Game::restartLevel()
+{
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->reset();
+			it->second->refreshDirty();
+			it->second->setPosition(Vector2D(Game::Instance()->getGameWidth()/2 - 32,  m_gameHeight - m_gameHeight/5 ));
+		}
+	}
+	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end(); ++it)
+	 {
+		 //(*it)->clean();
+		 (*it)->setDead(true);
+	 }
+	 for (std::vector<PowerUp*>::iterator it = m_powerUps.begin() ; it != m_powerUps.end(); ++it)
+	 {
+		 //(*it)->clean();
+		 (*it)->setDead(true);
+	 }
+
+	 for (std::vector<PopUp*>::iterator it = m_popUps.begin() ; it != m_popUps.end(); ++it)
+	 {
+		 //(*it)->clean();
+		 (*it)->setDead(true);
+	 }
+	 m_currentStage = 1;
+	 m_endingStage = false;
+	 m_level->resetPositions();
+	 loadCurrentStage();
 }

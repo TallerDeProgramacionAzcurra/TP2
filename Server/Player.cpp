@@ -439,9 +439,11 @@ void Player::reset()
 	m_dead = false;
 	m_dying = false;
 	m_exploting = false;
-	m_health = 100;
+	m_health = STARTING_HEALTH;
+	m_lives = STARTING_LIVES;
 	m_movedByPlayer = false;
 
+	m_stageStats.reset();
 	m_score.reset();
 }
 

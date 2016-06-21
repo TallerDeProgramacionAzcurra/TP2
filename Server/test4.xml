@@ -49,7 +49,7 @@
 		<id>Portaviones</id>
 		<path>Assets/Sprites/aircraftCarrier.png</path>
 		<cantidad>1</cantidad>
-		<ancho>150</ancho>
+		<ancho>177</ancho>
 		<alto>300</alto>
 	</sprite>
 	<sprite>
@@ -208,7 +208,7 @@
 		<elemento>
 			<spriteId>piedra</spriteId>
 			<posicion>
-				<x>236</x>
+				<x>336</x>
 				<y>1364</y>
 			</posicion>
 		</elemento>

@@ -19,6 +19,7 @@ public:
     void setOwnerID(int ownerID) { m_ownerID = ownerID; }
     int getOwnerID() { return m_ownerID; }
     bool isDead(){ return m_dead; }
+    void setDead(bool dead) { m_dead = dead; }
 
 protected:
 
