@@ -104,7 +104,8 @@ void Level::update()
 	//printf("offset %d \n", m_virtualPosition);
 	 if ((m_virtualPosition <= 0) && (!m_scrollingToNextStage) && (!Game::Instance()->isFinishingLevel()))
 	 {
-		 Game::Instance()->finishStage();
+		 if (!Game::Instance()->isGameOver())
+			 Game::Instance()->finishStage();
 		 //resetPositions();
 	 }
 
