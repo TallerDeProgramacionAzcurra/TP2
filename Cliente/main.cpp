@@ -9,7 +9,6 @@
 #include "Utils/Random.h"
 #include <SDL2/SDL.h>
 #include "Singletons/GameTimeHelper.h"
-#include "Menu/ClienteMenu.hpp"
 #include <iostream>
 
 using namespace std;
@@ -43,21 +42,9 @@ int main(int argc, char **argv)
     while (continueLooping == true)
     {
         continueLooping = mainLoop();
+        
+        //printf("FPS PROMEDIO: %d \n", (fpsCount/ framesCount));
+        std::cout << "game closing...\n";
+        Game::Instance()->clean();
     }
-    
-    //printf("FPS PROMEDIO: %d \n", (fpsCount/ framesCount));
-    std::cout << "game closing...\n";
-    Game::Instance()->clean();
-    
-//    ClientMenu clientMenu = ClientMenu("Menú", 800, 600, {});
-//    clientMenu.clientMenuRun();
-//    
-//    bool playButtonSelected = clientMenu.clienMenuGetPlayButtonSelected();
-//    
-//    if (playButtonSelected == true) {
-//        std::string playerNameSelected = clientMenu.clientMenuGetPlayerName();
-//        std::string playerTeamSelected = clientMenu.clientMenuGetPlayerTeam();
-//        
-//        Game::Instance()->gameSetPlayerName(playerNameSelected);
-//    }
 }
