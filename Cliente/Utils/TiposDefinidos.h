@@ -91,7 +91,7 @@ struct ConnectedMessage
 	short windowWidth;
 	short windowHeight;
 	bool teamMode;
-    char teamsName[240];
+    char teamsName[128];
 	short cantPlayers;
 };
 

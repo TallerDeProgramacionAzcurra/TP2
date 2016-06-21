@@ -140,9 +140,15 @@ bool server::crearCliente (int clientSocket)
 	//Tamaño de ventana
 	connectedMsg.windowWidth = Game::Instance()->getGameWidth();
 	connectedMsg.windowHeight = Game::Instance()->getGameHeight();
-	//Info de modo de juego
-	connectedMsg.teamMode = Game::Instance()->isTeamMode();
-	connectedMsg.cantPlayers = MAX_CLIENTES;
+	
+    //Info de modo de juego
+//	connectedMsg.teamMode = Game::Instance()->isTeamMode();
+    connectedMsg.teamMode = true;
+    std::string teamsName = "Azul|Rojo|Verde|Amarillo";
+    std::size_t teamsNameLenght = teamsName.copy(connectedMsg.teamsName, 240, 0);
+    connectedMsg.teamsName[teamsNameLenght]='\0';
+    
+    connectedMsg.cantPlayers = MAX_CLIENTES;
 	sendConnectedMsg(clientSocket, connectedMsg);
 
 	if (!leerBloqueando(m_lastID))
