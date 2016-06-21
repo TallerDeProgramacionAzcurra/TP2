@@ -98,7 +98,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
     requestTexturesInfo(); // setea waiting textures en true
 
     //TextureManager::Instance()->init(m_pRenderer);
-    FontManager::Instance()->init();
+//    FontManager::Instance()->init();
 
     createHuds(m_cantHuds);
 

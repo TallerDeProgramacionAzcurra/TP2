@@ -29,7 +29,7 @@ server::server(int port, int maxC): MAX_CLIENTES(maxC)
      serv_addr.sin_port = htons(port);
 
      //Por ultimo enlazo el socket
-     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
+    if (::bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
               error("Server: No se enlazo correctamente el socket del server.");
 
     m_clientNum = 0;
@@ -57,7 +57,7 @@ server::~server()
 }
 void server::error(const char *msg)
 {
-	Logger::Instance()->LOG(msg, ERROR);
+	Logger::Instance()->LOG(msg, LogTypeError);
 	Logger::Instance()->Close();
     exit(1);
 }
@@ -68,7 +68,7 @@ void server::escuchar()
     success = listen(sockfd, MAX_CLIENTES);
     if (success < 0)
     {
-    	Logger::Instance()->LOG("Server: El server no se pudo configurar satisfactoriamente", ERROR);
+    	Logger::Instance()->LOG("Server: El server no se pudo configurar satisfactoriamente", LogTypeError);
     	exit(-1);
     }
 }
@@ -82,7 +82,7 @@ void server::aceptar(){
 	{
 		std::stringstream ss;
 		ss <<"Server: No se pudo aceptar al cliente " << inet_ntoa(cli_addr.sin_addr) << ".";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 		return;
 	}
 	 if(getNumClientes() < MAX_CLIENTES)
@@ -95,14 +95,14 @@ void server::aceptar(){
 		 {
 			 std::stringstream ss;
 			 ss <<"Server: No se pudo aceptar al cliente " << inet_ntoa(cli_addr.sin_addr) << " por nombre inválido.";
-			 Logger::Instance()->LOG(ss.str(), WARN);
+			 Logger::Instance()->LOG(ss.str(), LogTypeWarn);
 		 }
 	 }
 	 else
 	 {
 		 std::stringstream ss;
 		 ss <<"Server: No se pudo aceptar al cliente " << inet_ntoa(cli_addr.sin_addr) << " por falta de capacidad.";
-		 Logger::Instance()->LOG(ss.str(), WARN);
+		 Logger::Instance()->LOG(ss.str(), LogTypeWarn);
 
 		 Mensaje serverFullMessage = MessageFactory::Instance()->createMessage("svfull", "", msgServerFull);
 		 sendMsg(newsockfd, serverFullMessage);
@@ -124,7 +124,7 @@ bool server::crearCliente (int clientSocket)
 
 	if (m_lastID < 0)
 	{
-		Logger::Instance()->LOG("Server: Cliente rechazado. El servidor no puede aceptar más clientes.", WARN);
+		Logger::Instance()->LOG("Server: Cliente rechazado. El servidor no puede aceptar más clientes.", LogTypeWarn);
 		pthread_mutex_unlock(&m_serverInitMutex);
 		return false;
 	}
@@ -179,7 +179,7 @@ bool server::crearCliente (int clientSocket)
 	printf("Se ha conectado un cliente\n");
 	std::stringstream ss;
 	ss << "Server: Se acepto el cliente: " << inet_ntoa(cli_addr.sin_addr);
-	Logger::Instance()->LOG(ss.str(), DEBUG);
+	Logger::Instance()->LOG(ss.str(), LogTypeDebug);
 	pthread_mutex_unlock(&m_serverInitMutex);
 
 	return true;
@@ -426,7 +426,7 @@ void server::sendDrawMsg(int socketReceptor, DrawMessage msg)
         int bytesEnviados = send(socketReceptor, ptr, msgLength, 0);
         if (bytesEnviados < 1)
         {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
         	return;
         }
         ptr += bytesEnviados;
@@ -448,7 +448,7 @@ void server::sendNetworkMsg(int socketReceptor, NetworkMessage netMsg)
         int bytesEnviados = send(socketReceptor, ptr, msgLength, 0);
         if (bytesEnviados < 1)
         {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
         	return;
         }
         ptr += bytesEnviados;
@@ -467,7 +467,7 @@ void server::sendConnectedMsg(int socketReceptor, ConnectedMessage msg)
         int bytesEnviados = send(socketReceptor, ptr, msgLength , 0);
         if (bytesEnviados < 1)
         {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
         	return;
         }
         ptr += bytesEnviados;
@@ -485,7 +485,7 @@ void server::sendDisconnectionMsg(int socketReceptor, PlayerDisconnection msg)
         int bytesEnviados = send(socketReceptor, ptr, msgLength , 0);
         if (bytesEnviados < 1)
         {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
         	return;
         }
         ptr += bytesEnviados;
@@ -504,7 +504,7 @@ void server::sendMsg(int socketReceptor, Mensaje msg)
         int bytesEnviados = send(socketReceptor, ptr, msgLength, 0);
         if (bytesEnviados < 1)
         {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
         	return;
         }
         ptr += bytesEnviados;
@@ -513,12 +513,12 @@ void server::sendMsg(int socketReceptor, Mensaje msg)
 
 	/*int bytesEnviados = send(socketReceptor,bufferEscritura , msgLength, 0);
     if (bytesEnviados <= 0)
-    	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+    	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
     while (bytesEnviados < msgLength)
     {
     	bytesEnviados =  send(sockfd, bufferEscritura + bytesEnviados , msgLength, 0);
         if (bytesEnviados <= 0)
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", WARN);
+        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
 
     }*/
 }
@@ -610,6 +610,7 @@ void* server::procesar(void)
 		}
 
 	}
+    return NULL;
 }
 
 void server::checkTimeOuts()
@@ -646,6 +647,7 @@ void* server::postProcesamiento(void)
 				sendNetworkMsg(m_listaDeClientes.getElemAt(id),netMsg);
 			}
 	}
+    return NULL;
 }
 
 
@@ -704,7 +706,7 @@ void server::closeSocket(int id)
 	close(m_listaDeClientes.getElemAt(id));
 	m_listaDeClientes.removeAt(id);
 
-	Logger::Instance()->LOG("Server: Se desconectó un cliente.", DEBUG);
+	Logger::Instance()->LOG("Server: Se desconectó un cliente.", LogTypeDebug);
 	printf("Se desconectó un cliente, hay lugar para %d clientes mas.\n",MAX_CLIENTES - getNumClientes());
 
 }
@@ -750,12 +752,12 @@ bool server::isRunning()
 
     if (setsockopt (socketID, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
     {
-    	Logger::Instance()->LOG("Server: Error seteando timeout.", WARN);
+    	Logger::Instance()->LOG("Server: Error seteando timeout.", LogTypeWarn);
     }
 
     if (setsockopt (socketID, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
     {
-    	Logger::Instance()->LOG("Server: Error seteando timeout.", WARN);
+    	Logger::Instance()->LOG("Server: Error seteando timeout.", LogTypeWarn);
     }
 }*/
 
@@ -810,7 +812,7 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 		{
 			std::stringstream ss;
 			ss <<"Server: " << playerName << " ha ingresado a la partida.";
-			Logger::Instance()->LOG(ss.str(), DEBUG);
+			Logger::Instance()->LOG(ss.str(), LogTypeDebug);
 			printf("%s \n", ss.str().c_str());
 		}
 
@@ -823,7 +825,7 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 		if (!Game::Instance()->isResseting())
 		{
 			Game::Instance()->setReseting(true);
-			Logger::Instance()->LOG("Server: Se reiniciará el juego.", DEBUG);
+			Logger::Instance()->LOG("Server: Se reiniciará el juego.", LogTypeDebug);
 			//Resetea el juego
 			Game::Instance()->restartLevel();
 			//Envia la nueva informacion al cliente
@@ -835,7 +837,7 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 
 			Game::Instance()->refreshPlayersDirty();
 			Game::Instance()->setReseting(false);
-			Logger::Instance()->LOG("Server: Se ha reiniciado el juego.", DEBUG);
+			Logger::Instance()->LOG("Server: Se ha reiniciado el juego.", LogTypeDebug);
 		}
 
 		return true;

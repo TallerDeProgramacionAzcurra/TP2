@@ -31,7 +31,6 @@ public:
         return s_pInstance;
     }
 
-    void init();
     bool loadfont(char* file, int ptsize);
     int textSize(const char* text,int *h,int* w);
     SDL_Texture* drawtext(char fgR, char fgG, char fgB, char fgA,
@@ -42,6 +41,7 @@ private:
     static FontManager* s_pInstance;
     TTF_Font* m_font;
 
+    void init();
     bool validPath(const std::string& filePath);
 
     FontManager() {}
