@@ -147,7 +147,6 @@ public:
 private:
     std::map<int, Player*> m_listOfPlayer;
     std::map<int,std::string> m_playerNames;
-    std::vector<GameTeam> m_gameTeams; // Los equipos seteados para el escenario.
 
     std::map<int,GameObject*> m_listOfGameObjects;
 
@@ -211,7 +210,6 @@ private:
 	Game& operator=(const Game&);
 
 	void updateSpawners();
-	void initializeTeamScores();
 	void checkPracticeMode();
 	void checkStartingStage();
 	void checkEndingStage();

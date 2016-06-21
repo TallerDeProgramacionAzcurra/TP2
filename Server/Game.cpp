@@ -71,9 +71,6 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     //es necesario llamar a initialize Textures despues de haber creado el parser y textureHelper porque los usa
     initializeTexturesInfo();
 
-    //inicializa los mapas de los puntajes de los equipos
-    initializeTeamScores();
-
     //printf("Path isla: %s \n", m_parserNivel->getListaSprites()[5].path.c_str());
    // printf("ID isla: %s \n", m_parserNivel->getListaSprites()[5].id.c_str());
 
@@ -367,23 +364,6 @@ void Game::initializeTexturesInfo()
 		TextureManager::Instance()->addTextureInfo(textureInfo);
 	}
 
-}
-
-void Game::initializeTeamScores()
-{
-    GameTeam team1;
-    GameTeam team2;
-    
-    team1.gameTeamID = 0;
-    team1.gameTeamScore = 0;
-    team2.gameTeamName = "Team 0";
-    
-    team2.gameTeamID = 1;
-    team2.gameTeamScore = 0;
-    team2.gameTeamName = "Team 1";
-    
-	this->m_gameTeams.push_back(team1);
-	this->m_gameTeams.push_back(team2);
 }
 
 void Game::setPlayersDirty()
