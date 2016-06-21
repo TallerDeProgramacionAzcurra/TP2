@@ -34,30 +34,30 @@ int main(int argc, char **argv)
 {
     Random::initialize();
     
-    ClientMenu clientMenu = ClientMenu("Menú", 800, 600, {});
-    clientMenu.clientMenuRun();
-    
-    bool playButtonSelected = clientMenu.clienMenuGetPlayButtonSelected();
-    
-    if (playButtonSelected == true) {
-        std::string playerNameSelected = clientMenu.clientMenuGetPlayerName();
-        std::string playerTeamSelected = clientMenu.clientMenuGetPlayerTeam();
-        
-        Game::Instance()->gameSetPlayerName(playerNameSelected);
-        
-        if (Game::Instance()->initializeClient() == false) {
-            return 0;
-        }
-        
-        // Play the Game.
-        bool continueLooping = true;
-        while (continueLooping == true)
-        {
-            continueLooping = mainLoop();
-        }
-        
-        //printf("FPS PROMEDIO: %d \n", (fpsCount/ framesCount));
-        std::cout << "game closing...\n";
-        Game::Instance()->clean();
+    if (Game::Instance()->initializeClient() == false) {
+        return 0;
     }
+    
+    // Play the Game.
+    bool continueLooping = true;
+    while (continueLooping == true)
+    {
+        continueLooping = mainLoop();
+    }
+    
+    //printf("FPS PROMEDIO: %d \n", (fpsCount/ framesCount));
+    std::cout << "game closing...\n";
+    Game::Instance()->clean();
+    
+//    ClientMenu clientMenu = ClientMenu("Menú", 800, 600, {});
+//    clientMenu.clientMenuRun();
+//    
+//    bool playButtonSelected = clientMenu.clienMenuGetPlayButtonSelected();
+//    
+//    if (playButtonSelected == true) {
+//        std::string playerNameSelected = clientMenu.clientMenuGetPlayerName();
+//        std::string playerTeamSelected = clientMenu.clientMenuGetPlayerTeam();
+//        
+//        Game::Instance()->gameSetPlayerName(playerNameSelected);
+//    }
 }

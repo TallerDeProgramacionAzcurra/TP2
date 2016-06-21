@@ -4,7 +4,7 @@
 #include "Utils/TiposDefinidos.h"
 #include "Singletons/FontManager.h"
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL2_ttf/SDL_ttf.h>
 #include <sstream>
 #include <string>
 #include <iomanip>
