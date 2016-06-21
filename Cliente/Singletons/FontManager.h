@@ -25,6 +25,7 @@ public:
         if(s_pInstance == 0)
         {
             s_pInstance = new FontManager();
+            s_pInstance->init();
             return s_pInstance;
         }
         return s_pInstance;
