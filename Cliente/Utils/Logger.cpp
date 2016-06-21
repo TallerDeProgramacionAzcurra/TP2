@@ -53,17 +53,17 @@ Logger::~Logger()
 	 pthread_mutex_lock(&m_logMutex);
 	 switch(logLevel)
 	 {
-	 case DEBUG:
+	 case LogTypeDebug:
 		 if (!m_debugAvailable)
 			 return;
 		 m_file << "  DEBUG: ";
 		 break;
-	 case WARN:
+	 case LogTypeWarn:
 		 if (!m_warningAvailable)
 			 return;
 		 m_file << "  WARNING: ";
 		 break;
-	 case ERROR:
+	 case LogTypeError:
 		 if (!m_errorAvailable)
 			 return;
 		 m_file << "  ERROR: ";

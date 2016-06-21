@@ -23,16 +23,16 @@ bool ParserServidor::parsearDocumento(const std::string& nombreArchivoXML)
 	{
 		std::stringstream ss;
 		ss << "No se pudo parsear el archivo XML: " << nombreArchivoXML.c_str() << ". ";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 		ss.clear();
 		ss << "Se cargará el archivo default: " << XML_SERVIDOR_DEFAULT_PATH << ".";
-		Logger::Instance()->LOG(ss.str(), WARN);
+		Logger::Instance()->LOG(ss.str(), LogTypeWarn);
 
 		exito = parsearDoc(XML_SERVIDOR_DEFAULT_PATH);
 		if (!exito)
 		{
 			//El archivo XML default también tiene errores. No se pudo parsear.
-			Logger::Instance()->LOG("No se pudieron parsear ninguno de los archivos XML servidor.", ERROR);
+			Logger::Instance()->LOG("No se pudieron parsear ninguno de los archivos XML servidor.", LogTypeError);
 		}
 	}
 	return exito;
@@ -52,7 +52,7 @@ bool ParserServidor::parsearDoc(const std::string& nombreArchivoXML)
 		//No se pudo abrir el archivo XML
 		//LOGUEO DE ERRORES EN CASO DE QUE NO SE PUEDA CARGAR EL ARCHIVO XML
 		ss << "Archivo " << nombreArchivoXML.c_str() <<  " dañado. Error Description: " << result.description() << ".";
-		Logger::Instance()->LOG(ss.str(), ERROR);
+		Logger::Instance()->LOG(ss.str(), LogTypeError);
 
 		return parseadoExitoso;
 	}
@@ -60,7 +60,7 @@ bool ParserServidor::parsearDoc(const std::string& nombreArchivoXML)
 	if (!validarRoot(&doc))
 	{
 		parseadoExitoso = false;
-		Logger::Instance()->LOG("Formato del nodo raiz inválido o vacío.", ERROR);
+		Logger::Instance()->LOG("Formato del nodo raiz inválido o vacío.", LogTypeError);
 		//Root Inválido
 		return parseadoExitoso;
 	}
@@ -105,13 +105,13 @@ bool ParserServidor::extraerServidorInfo(const pugi::xml_document* doc)
 	if (!validarCantMaximaClientes(cantMaximaClientesString))
 	{
 		exito = false;
-		Logger::Instance()->LOG("Información Cantidad Maxima de Clientes con errores en el archivo xml del servidor.", WARN);
+		Logger::Instance()->LOG("Información Cantidad Maxima de Clientes con errores en el archivo xml del servidor.", LogTypeWarn);
 	}
 	std::string puertoString = servidorNode.child("puerto").first_child().value();
 	if (!validarPuerto(puertoString))
 	{
 		exito = false;
-		Logger::Instance()->LOG("Información del Puerto con errores en el archivo xml del servidor.", WARN);
+		Logger::Instance()->LOG("Información del Puerto con errores en el archivo xml del servidor.", LogTypeWarn);
 	}
 
 	if (exito)

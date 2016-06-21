@@ -147,7 +147,7 @@ int Menu::ciclar(std::vector<Mensaje> listaDeMensajes, cliente* client)
 		client->escribir(mensajeAEnviar);
 		if (!client->leer())
 		{
-			Logger::Instance()->LOG("Cliente: Se ha perdido la conexión con el servidor.", WARN);
+			Logger::Instance()->LOG("Cliente: Se ha perdido la conexión con el servidor.", LogTypeWarn);
 	   	   	printf("Se ha perdido la conexión con el servidor.\n");
 			return -1;//Devuelve menos 1 si la conexion falla en algun momento
 		}

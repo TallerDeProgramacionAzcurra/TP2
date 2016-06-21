@@ -255,7 +255,7 @@ void Game::addDrawObject(int objectID, int layer, std::shared_ptr<DrawObject> ne
 	}
 }
 void Game::loadSoundAndMusic(){
-	Logger::Instance()->LOG("Cliente: Se recibieron y cargaron todos los audios satisfactoriamente.", DEBUG);
+	Logger::Instance()->LOG("Cliente: Se recibieron y cargaron todos los audios satisfactoriamente.", LogTypeDebug);
 
 	SoundManager::Instance()->loadAudio();
 }
@@ -736,7 +736,7 @@ void Game::addTexture(TextureInfo textureInfo)
 void Game::loadTextures()
 {
 	//printf("Se cargaron todas las texturas\n");
-	Logger::Instance()->LOG("Cliente: Se recibieron y cargaron todas las texturas satisfactoriamente.", DEBUG);
+	Logger::Instance()->LOG("Cliente: Se recibieron y cargaron todas las texturas satisfactoriamente.", LogTypeDebug);
 	TextureManager::Instance()->loadTextures(m_pRenderer);
 }
 void Game::mrMusculo(){
@@ -948,6 +948,7 @@ int Game::createGame(int DELAY_TIME){
 					std::cout << "game init failure - " << SDL_GetError() << "\n";
 					return -1;
 				}
+    return 0;
 }
 
 void Game::gameSetPlayerName(std::string& playerName) {
