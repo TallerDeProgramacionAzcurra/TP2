@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 
-#include <SDL2_mixer/SDL_mixer.h>
+#include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_audio.h>
 
 enum sound_type

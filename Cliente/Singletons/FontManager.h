@@ -2,7 +2,7 @@
 #define SINGLETONS_FONTMANAGER_H_
 
 #include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 #include "../Utils/TiposDefinidos.h"
 #include "../Game.h"
 #include <fstream>

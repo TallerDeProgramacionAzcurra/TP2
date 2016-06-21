@@ -9,7 +9,7 @@
 #ifndef ClientMenuComboBoxOptionTexture_hpp
 #define ClientMenuComboBoxOptionTexture_hpp
 
-#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
