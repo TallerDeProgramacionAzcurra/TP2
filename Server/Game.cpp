@@ -798,6 +798,8 @@ void Game::update()
 		informEndGame(false);
 		m_scrollBackground = false;
 		m_gameOver = true;
+		m_endingStage = false;
+		m_level->setScrollSpeed(0);
 
 	}
 
@@ -1009,15 +1011,17 @@ void Game::finishStage()
 	m_endingStage = true;
 	m_waitEndStageTimer = END_STAGE_TIMER;
 
+	printf("Stage %d ended. \n", m_currentStage);
+
 	if (m_currentStage >= m_stagesAmount)
 	{
 		printf("End of Level \n");
 		informEndGame(true);
 		m_scrollBackground = false;
 		m_gameOver = true;
+		m_endingStage = false;
+		m_level->setScrollSpeed(0);
 	}
-
-	printf("Stage %d ended. \n", m_currentStage);
 }
 
 void Game::startStage()

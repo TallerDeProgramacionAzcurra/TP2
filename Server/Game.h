@@ -135,6 +135,7 @@ public:
 	bool isFinishingLevel() { return  m_endingStage; }
 	bool areAllPlayersDead();
 	bool isScrolling() { return m_scrollBackground; }
+	bool isGameOver() { return m_gameOver; }
 
 	void killAllEnemies(Player* killer);
 	void killAllEnemiesNoRewards();

@@ -39,6 +39,7 @@ public:
 	void scrollToNextStage();
 	bool isScrollingToNextStage() { return m_scrollingToNextStage; }
 
+	void setScrollSpeed(int speed) { m_scrollSpeed = speed; }
 	int getVirtualPosition() { return m_virtualPosition; }
 	int getLevelHeight() { return m_levelHeight; }
 	int getScrollSpeed() { return m_scrollSpeed; }
