@@ -213,6 +213,27 @@
 			</posicion>
 		</elemento>
 	</elementos>
+    <GameModes>
+        <GameMode>1</GameMode>
+        <GameModeTeams>
+            <GameModeTeam>
+                <TeamID>0</TeamID>
+                <TeamName>Equipo Azul</TeamName>
+            </GameModeTeam>
+            <GameModeTeam>
+                <TeamID>1</TeamID>
+                <TeamName>Equipo Amarillo</TeamName>
+            </GameModeTeam>
+            <GameModeTeam>
+                <TeamID>2</TeamID>
+                <TeamName>Equipo Rojo</TeamName>
+            </GameModeTeam>
+            <GameModeTeam>
+                <TeamID>3</TeamID>
+                <TeamName>Equipo Verde</TeamName>
+            </GameModeTeam>
+        </GameModeTeams>
+    </GameModes>
 </escenario>
 <avion>
 	<velocidadDesplazamiento>10</velocidadDesplazamiento>

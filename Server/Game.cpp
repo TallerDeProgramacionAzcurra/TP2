@@ -39,7 +39,6 @@ m_scrollSpeed(2)
 {
 	m_powerUpsSpawner = new PowerUpSpawner();
 	m_enemiesSpawner = new EnemySpawner();
-	m_currentMode = GAMEMODE_COOPERATIVE;
 	pthread_mutex_init(&m_resetMutex, NULL);
 	pthread_mutex_init(&m_updatePlayerMutex, NULL);
 	pthread_mutex_init(&m_createPlayerMutex, NULL);
@@ -78,7 +77,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     //printf("Path isla: %s \n", m_parserNivel->getListaSprites()[5].path.c_str());
    // printf("ID isla: %s \n", m_parserNivel->getListaSprites()[5].id.c_str());
 
-    printf("Se cargo el escenario con ancho %d y alto %d\n",m_gameWidth, m_gameHeight );
+    printf("Se cargo el escenario con ancho %d y alto %d\n", m_gameWidth, m_gameHeight);
 
     inicializarServer();
 
@@ -326,7 +325,11 @@ bool Game::isPracticeMode()
 
 bool Game::isTeamMode()
 {
- 	return (m_currentMode == GAMEMODE_COMPETITION);
+ 	return (m_parserNivel->getEscenario().gameMode == GameModeCompetition);
+}
+
+std::vector<GameTeam> Game::gameTeams() {
+    return m_parserNivel->getEscenario().teamsList;
 }
 
 bool Game::areAllPlayersDead()
@@ -368,8 +371,19 @@ void Game::initializeTexturesInfo()
 
 void Game::initializeTeamScores()
 {
-	m_teamScores[0] = 0;
-	m_teamScores[1] = 0;
+    GameTeam team1;
+    GameTeam team2;
+    
+    team1.gameTeamID = 0;
+    team1.gameTeamScore = 0;
+    team2.gameTeamName = "Team 0";
+    
+    team2.gameTeamID = 1;
+    team2.gameTeamScore = 0;
+    team2.gameTeamName = "Team 1";
+    
+	this->m_gameTeams.push_back(team1);
+	this->m_gameTeams.push_back(team2);
 }
 
 void Game::setPlayersDirty()
@@ -502,10 +516,11 @@ void Game::addPointsToScore(int points, int playerID, int teamID)
 
 void Game::addPointsToTeam(int points, int teamID)
 {
-	m_teamScores[teamID] = m_teamScores[teamID] + points;
-	if (m_teamScores[teamID] < 0)
-	{
-		m_teamScores[teamID] = 0;
+    GameTeam playerTeam = this->m_gameTeams[teamID];
+    playerTeam.gameTeamScore = playerTeam.gameTeamScore + points;
+    
+	if (playerTeam.gameTeamScore < 0) {
+		playerTeam.gameTeamScore = 0;
 	}
 }
 
@@ -812,7 +827,7 @@ void Game::update()
 void Game::informEndGame(bool levelFinished)
 {
 	FinishGameInfo finishGameInfo;
-	if (m_currentMode == GAMEMODE_COOPERATIVE)
+	if (m_parserNivel->getEscenario().gameMode == GameModeCooperative)
 	{
 		int maxScore = -1;
 		int winnerID = 0;
@@ -833,20 +848,20 @@ void Game::informEndGame(bool levelFinished)
 		finishGameInfo.winnerID = winnerID;
 
 	}
-	if (m_currentMode == GAMEMODE_COMPETITION)
+	if (m_parserNivel->getEscenario().gameMode == GameModeCompetition)
 	{
 		int maxScore = -1;
 		int winnerID = 0;
 		finishGameInfo.isVictory = true;
-		for (std::map<int,int>::iterator it=m_teamScores.begin(); it != m_teamScores.end(); ++it)
-		{
-			int score = it->second;
-			if (score >= maxScore)
-			{
-				maxScore = score;
-				winnerID = it->first;
+        
+        for (std::vector<GameTeam>::iterator iterator = m_gameTeams.begin(); iterator != m_gameTeams.end(); ++iterator) {
+			GameTeam team = *iterator;
+			if (team.gameTeamScore >= maxScore) {
+				maxScore = team.gameTeamScore;
+				winnerID = team.gameTeamID;
 			}
 		}
+        
 		finishGameInfo.points = maxScore;
 		finishGameInfo.winnerID = winnerID;
 	}

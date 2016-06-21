@@ -48,12 +48,6 @@ class CollitionHandler;
 #define END_STAGE_TIMER 3000
 #define XML_PATH "test2.xml"
 
-enum GameMode
-{
-    GAMEMODE_COOPERATIVE,
-    GAMEMODE_COMPETITION
-};
-
 class Game
 {
 public:
@@ -136,6 +130,8 @@ public:
 	bool areAllPlayersDead();
 	bool isScrolling() { return m_scrollBackground; }
 	bool isGameOver() { return m_gameOver; }
+    
+    std::vector<GameTeam> gameTeams();
 
 	void killAllEnemies(Player* killer);
 	void killAllEnemiesNoRewards();
@@ -151,7 +147,7 @@ public:
 private:
     std::map<int, Player*> m_listOfPlayer;
     std::map<int,std::string> m_playerNames;
-    std::map<int, int> m_teamScores; //id de equipos por ahora son 0 y 1
+    std::vector<GameTeam> m_gameTeams; // Los equipos seteados para el escenario.
 
     std::map<int,GameObject*> m_listOfGameObjects;
 
@@ -179,8 +175,7 @@ private:
     PowerUpSpawner* m_powerUpsSpawner;
     EnemySpawner* m_enemiesSpawner;
     /****************************/
-
-    GameMode m_currentMode;
+    
     bool m_practiceMode;
     int m_practiceHoldTimer;
     int m_startingWaitTime;
