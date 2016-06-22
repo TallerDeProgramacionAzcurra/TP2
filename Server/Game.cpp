@@ -94,7 +94,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     return true;
 }
 
-bool Game::createPlayer(int clientID,  const std::string& playerName)
+bool Game::createPlayer(int clientID,  const std::string& playerName, int playerTeam)
 {
 	pthread_mutex_lock(&m_createPlayerMutex);
 
@@ -103,14 +103,25 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 
 	//Se fija si existe un jugador con el nombre ingresado
 	nameExists = !validatePlayerName(playerName);
+    
+    // Setea el equipo.
+    GameTeam selectedTeam;
+    std::vector<GameTeam> teamsList = this->m_parserNivel->getEscenario().teamsList;
+    std::vector<GameTeam>::iterator iterator = teamsList.begin();
+    for (*iterator; iterator != teamsList.end(); ++iterator) {
+        GameTeam newGameTeam = *iterator;
+        
+        if (newGameTeam.gameTeamID == playerTeam) {
+            selectedTeam = newGameTeam;
+        }
+    }
 
 	if (nameExists)
 	{
 		int actualPlayerID = getFromNameID(playerName);
 		Player* player = m_listOfPlayer[actualPlayerID];
-
-		//setea numero de equipo
-		player->setTeamNumber(actualPlayerID);
+        
+        player->setPlayerTeam(selectedTeam);
 
 		//agrega jugador al manejador de colisiones
 		CollitionHandler::Instance()->addPlayer(player);
@@ -157,7 +168,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName)
 	newPlayer->setObjectID(clientID);
 	newPlayer->setSpeed(Vector2D(playerSpeed, playerSpeed));
 
-	newPlayer->setWeaponStats(bulletsSpeed, shootingCooldown, newPlayer->getObjectId(), newPlayer->getTeamNumber());
+	newPlayer->setWeaponStats(bulletsSpeed, shootingCooldown, newPlayer->getObjectId(), newPlayer->getPlayerTeam().gameTeamID);
 
 	m_playerNames[clientID] = playerName;
 
@@ -386,7 +397,7 @@ void Game::changePlayerWeapon(Weapon* weapon, Player* player)
 		int playerSpeed = m_parserNivel->getAvion().velDespl;
 		int shootingCooldown = m_parserNivel->getAvion().cdDisp;
 		int bulletsSpeed = m_parserNivel->getAvion().velDisp;
-		player->setWeaponStats(bulletsSpeed, shootingCooldown, player->getObjectId(), player->getTeamNumber());
+		player->setWeaponStats(bulletsSpeed, shootingCooldown, player->getObjectId(), player->getPlayerTeam().gameTeamID);
 	}
 
 }
@@ -529,7 +540,7 @@ int Game::getPlayerTeam(int playerID)
 		return -1;
 	}
 
-	return (m_listOfPlayer[playerID]->getTeamNumber());
+	return (m_listOfPlayer[playerID]->getPlayerTeam().gameTeamID);
 }
 
 void Game::actualizarEstado(int id, InputMessage inputMsg){

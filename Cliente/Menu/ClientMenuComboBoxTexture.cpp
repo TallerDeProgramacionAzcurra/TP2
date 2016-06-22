@@ -12,7 +12,7 @@
 // Constructor and destructor.
 ClientMenuComboBoxTexture::ClientMenuComboBoxTexture(SDL_Window *menuWindow, std::string textureText, std::list<std::string> *optionsList) : ClientMenuTextFieldTexture(menuWindow, textureText) {
     this->menuComboBoxWindow = menuWindow;
-    this->menuComboBoxSelectedOption = "";
+    this->menuComboBoxSelectedIndex = -1;
     this->menuComboBoxEnabled = false;
     
     if (optionsList->size() > 0) {
@@ -112,7 +112,7 @@ void ClientMenuComboBoxTexture::menuTextureTextFieldHandlerMouseEvent(SDL_Event 
     }
     
     if (this->menuTextureSelected == true) {
-        int selectedIndex = -1;
+        this->menuComboBoxSelectedIndex = -1;
         int indexIterator = 0;
         
         std::list<ClientMenuComboBoxOptionTexture *>::iterator iterator = this->menuComboBoxOptionsList->begin();
@@ -120,15 +120,9 @@ void ClientMenuComboBoxTexture::menuTextureTextFieldHandlerMouseEvent(SDL_Event 
             ClientMenuComboBoxOptionTexture *teamOption = *iterator;
             
             if (teamOption->menuTextureTextFieldEventInside(mouseEvent) == true) {
-                selectedIndex = indexIterator;
+                this->menuComboBoxSelectedIndex = indexIterator;
                 break;
             }
-        }
-        
-        if (selectedIndex > -1) {
-            std::list<std::string>::iterator iter = this->menuComboBoxTextList->begin();
-            std::advance(iter, selectedIndex);
-            this->menuComboBoxSelectedOption = *iter;
         }
     }
     
@@ -136,12 +130,24 @@ void ClientMenuComboBoxTexture::menuTextureTextFieldHandlerMouseEvent(SDL_Event 
 }
 
 std::string ClientMenuComboBoxTexture::menuComboBoxSelection() {
-    return this->menuComboBoxSelectedOption;
+    if (this->menuComboBoxSelectedIndex >= 0) {
+        std::list<std::string>::iterator iter = this->menuComboBoxTextList->begin();
+        std::advance(iter, this->menuComboBoxSelectedIndex);
+        return *iter;
+    }
+
+    return "";
+}
+
+int ClientMenuComboBoxTexture::menucomboBoxSelectionIndex() {
+    return this->menuComboBoxSelectedIndex;
 }
 
 std::string ClientMenuComboBoxTexture::menuTextGetTextString() {
-    if (this->menuComboBoxSelectedOption.length() > 0) {
-        return this->menuComboBoxSelectedOption;
+    if (this->menuComboBoxSelectedIndex >= 0) {
+        std::list<std::string>::iterator iter = this->menuComboBoxTextList->begin();
+        std::advance(iter, this->menuComboBoxSelectedIndex);
+        return *iter;
     }
     
     return ClientMenuTextTexture::menuTextGetTextString();

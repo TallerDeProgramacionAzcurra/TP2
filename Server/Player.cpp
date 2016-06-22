@@ -30,7 +30,6 @@ Player::Player() :  MoveableObject(),
 					m_health(STARTING_HEALTH),
 					m_collisionDamage(100),
 					m_movedByPlayer(false),
-					m_teamNumber(1),
 					m_autoMoveSpeed(1)
 {
 	m_score = Score();
@@ -416,7 +415,7 @@ void Player::addPoints(int points)
 	ScoreMessage scoreMsg;
 	scoreMsg.playerID = m_objectId;
 	scoreMsg.pointsacquire = points;
-	scoreMsg.teamID = m_teamNumber;
+	scoreMsg.teamID = playerGameTeam.gameTeamID;
 	scoreMsg.somethingElse = 0;
 
 	Game::Instance()->sendScoreToClients(scoreMsg);

@@ -17,9 +17,8 @@
 #include "ClienteMenu.hpp"
 
 // Constructor and Destructor.
-ClientMenu::ClientMenu(const char *menuTitle, const int menuWidth, const int menuHeight, std::list<std::string> teamOptionsList) {
+ClientMenu::ClientMenu(const char *menuTitle, const int menuWidth, const int menuHeight, std::vector<GameTeam> teamOptionsList) {
     this->clientMenuPlayerNameSelected = "";
-    this->clientMenuPlayerTeamSelected = "";
     this->clientMenuPlayButtonSelected = false;
     this->clientMenuPlayerTeamOptionsList = teamOptionsList;
     
@@ -98,7 +97,15 @@ void ClientMenu::clientMenuRun() {
     
     ClientMenuTextFieldTexture inputPlayerText = ClientMenuTextFieldTexture(this->clientMenuWindow, "Jugador #");
     
-    ClientMenuComboBoxTexture teamCombo = ClientMenuComboBoxTexture(this->clientMenuWindow, "Seleccione equipo", &this->clientMenuPlayerTeamOptionsList);
+    std::list<std::string> teamNamesList;
+    std::vector<GameTeam>::iterator iterator = this->clientMenuPlayerTeamOptionsList.begin();
+    
+    for (*iterator; iterator != this->clientMenuPlayerTeamOptionsList.end(); ++iterator) {
+        GameTeam newGameTeam = *iterator;
+        teamNamesList.push_back(newGameTeam.gameTeamName);
+    }
+    
+    ClientMenuComboBoxTexture teamCombo = ClientMenuComboBoxTexture(this->clientMenuWindow, "Seleccione equipo", &teamNamesList);
     
     ClientMenuButtonTexture playButton = ClientMenuButtonTexture(this->clientMenuWindow, "Jugar", this);
     
@@ -154,12 +161,19 @@ void ClientMenu::clientMenuRun() {
         
         if (inputPlayerText.menuTextGetTextString().length() > 2 && (teamCombo.menuComboBoxGetEnabled() == false || teamCombo.menuComboBoxSelection().length() > 0)) {
             this->clientMenuPlayerNameSelected = inputPlayerText.menuTextGetTextString();
-            this->clientMenuPlayerTeamSelected = teamCombo.menuComboBoxSelection();
+            
+            std::string selectedTeam = teamCombo.menuComboBoxSelection();
+            int selectedTeamIndex = teamCombo.menucomboBoxSelectionIndex();
+            
+            if (selectedTeamIndex >= 0) {
+                std::vector<GameTeam>::iterator iterator = this->clientMenuPlayerTeamOptionsList.begin();
+                std::advance(iterator, selectedTeamIndex);
+                this->clientMenuPlayerTeamSelected = *iterator;
+            }
             
             playButton.menuButtonSetEnabled(true);
         } else {
             this->clientMenuPlayerNameSelected = "";
-            this->clientMenuPlayerTeamSelected = "";
             
             playButton.menuButtonSetEnabled(false);
         }
@@ -172,7 +186,7 @@ std::string ClientMenu::clientMenuGetPlayerName() {
     return this->clientMenuPlayerNameSelected;
 }
 
-std::string ClientMenu::clientMenuGetPlayerTeam() {
+GameTeam ClientMenu::clientMenuGetPlayerTeam() {
     return this->clientMenuPlayerTeamSelected;
 }
 

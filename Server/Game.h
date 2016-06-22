@@ -74,7 +74,7 @@ public:
     void refreshPlayersDirty();
     Vector2D getRandomPLayerCenter();
 
-    bool createPlayer(int clientID, const std::string& playerName);
+    bool createPlayer(int clientID, const std::string& playerName, int playerTeam);
     bool validatePlayerName(const std::string& playerName);
     int  getFromNameID(const std::string& playerName);
     void disconnectPlayer(int playerId);

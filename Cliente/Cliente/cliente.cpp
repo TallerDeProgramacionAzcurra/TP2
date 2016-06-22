@@ -113,8 +113,6 @@ cliente::cliente(int argc, string ip, int port, std::string name){
     bcopy((char *)server->h_addr,(char *)&serv_addr.sin_addr.s_addr,server->h_length);
     serv_addr.sin_port = htons(portno);
     
-    m_playerName = name;
-    
     serverTimeOut = new Timer();
     //sendTimeOutTimer = new Timer();
     
@@ -375,7 +373,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
         ConnectedMessage connectedMessage = m_alanTuring->decodeConnectedMessage(networkMessage);
         if (connectedMessage.requestData && !connectedMessage.connected)
         {
-            std::list<std::string> menuTeamOptionsList = {};
+            std::vector<GameTeam> menuTeamOptionsList = {};
             
             if (connectedMessage.teamMode) {
                 std::string teamsStr = connectedMessage.teamsName;
@@ -383,7 +381,12 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
                 std::string teamToken;
                 
                 while (std::getline(teamsStream, teamToken, '|')) {
-                    menuTeamOptionsList.push_back(teamToken);
+                    GameTeam newGameTeam;
+                    newGameTeam.gameTeamID = std::atoi(&teamToken.back());
+                    newGameTeam.gameTeamName = teamToken.substr(0, teamToken.size() - 1);
+                    newGameTeam.gameTeamScore = 0;
+                    
+                    menuTeamOptionsList.push_back(newGameTeam);
                 }
             }
             
@@ -399,18 +402,19 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
             }
             
             std::string playerNameSelected = clientMenu.clientMenuGetPlayerName();
-            std::string playerTeamSelected = clientMenu.clientMenuGetPlayerTeam();
+            GameTeam playerTeamSelected = clientMenu.clientMenuGetPlayerTeam();
             
             Game::Instance()->gameSetPlayerName(playerNameSelected);
             
             //El SERVER ESTA SOLICITANDO INFORMACION DE CONEXIÓN.
             //ENVIAR CONNECTION INFO
             ConnectionInfo connectionInfo;
-            std::size_t length = m_playerName.copy(connectionInfo.name, MAX_NAME_LENGTH, 0);
-            connectionInfo.name[length]='\0';
+            std::size_t length = playerNameSelected.copy(connectionInfo.playerName, MAX_NAME_LENGTH, 0);
+            connectionInfo.playerName[length]='\0';
+            connectionInfo.playerTeamID = playerTeamSelected.gameTeamID;
             sendConnectionInfoMsg(connectionInfo);
             
-            printf("Envio el nombre: %s \n", connectionInfo.name);
+            printf("Envio el nombre: %s \n", connectionInfo.playerName);
             if (!leer())
             {
                 printf("No se pudo terminar el proceso de conexion\n");

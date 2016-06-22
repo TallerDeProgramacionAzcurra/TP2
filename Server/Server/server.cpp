@@ -145,24 +145,21 @@ bool server::crearCliente (int clientSocket)
 	connectedMsg.teamMode = Game::Instance()->isTeamMode();
 
 	if (connectedMsg.teamMode == true) {
-		printf("Gastón: Team mode es competitivo.\n");
 		std::vector<GameTeam> teamList = Game::Instance()->gameTeams();
 		std::stringstream teamStringStream;
 		std::transform(teamList.begin(),
 				teamList.end(),
 				std::ostream_iterator<std::string>(teamStringStream, "|"),
 				[](const GameTeam &team) {
-			return team.gameTeamName;
+			return team.gameTeamName + std::to_string(team.gameTeamID);
 		});
 
 		std::string teamsName = teamStringStream.str();
 		std::size_t teamsNameLenght = teamsName.copy(connectedMsg.teamsName, 128, 0);
 		connectedMsg.teamsName[teamsNameLenght - 1]='\0';
-
-		printf("Gastón, aca esta el valor de los teams: %s\n", teamsName);
-	} else {
-		printf("Gastón: Team mode es colaborativo.\n");
-	}
+    } else {
+        connectedMsg.teamsName[0] = '\0';
+    }
 
 	connectedMsg.cantPlayers = MAX_CLIENTES;
 	sendConnectedMsg(clientSocket, connectedMsg);
@@ -826,8 +823,9 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 	if ((netMsg.msg_Code[0] == 'c') && (netMsg.msg_Code[1] == 'n') && (netMsg.msg_Code[2] == 'i'))
 	{
 		ConnectionInfo connectionInfoMessage = m_alanTuring->decodeConnectionInfoMessage(netMsg);
-		std::string playerName = std::string(connectionInfoMessage.name);
-		m_successfulPlayerCreation = Game::Instance()->createPlayer(m_lastID, playerName);
+		std::string playerName = std::string(connectionInfoMessage.playerName);
+        int playerTeam = connectionInfoMessage.playerTeamID;
+		m_successfulPlayerCreation = Game::Instance()->createPlayer(m_lastID, playerName, playerTeam);
 
 
 		if (m_successfulPlayerCreation)

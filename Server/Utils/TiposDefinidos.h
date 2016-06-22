@@ -97,7 +97,8 @@ struct ConnectedMessage
 
 struct ConnectionInfo
 {
-	char name[24];
+    char playerName[24];
+    int playerTeamID;
 };
 
 struct FinishGameInfo

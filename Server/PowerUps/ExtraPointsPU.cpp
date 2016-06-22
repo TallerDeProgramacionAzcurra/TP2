@@ -31,7 +31,7 @@ void ExtraPointsPU::update()
 
 void ExtraPointsPU::pickUp(Player* player)
 {
-	Game::Instance()->addPointsToScore(m_pointsToGive, player->getObjectId(), player->getTeamNumber());
+	Game::Instance()->addPointsToScore(m_pointsToGive, player->getObjectId(), player->getPlayerTeam().gameTeamID);
 
 	m_pickedUp = true;
 	m_dead = true;

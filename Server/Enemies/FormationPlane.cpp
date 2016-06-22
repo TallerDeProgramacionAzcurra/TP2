@@ -96,7 +96,7 @@ bool FormationPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 		if (canRetrievePoints() && damager)
 		{
 			int points = retrievePoints();
-			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getTeamNumber());
+			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getPlayerTeam().gameTeamID);
 			damager->incrementEnemiesKilledStats(1);
 		}
 		if (m_formationParent && damager)

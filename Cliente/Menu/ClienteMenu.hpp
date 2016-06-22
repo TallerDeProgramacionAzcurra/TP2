@@ -15,11 +15,12 @@
 #include <list>
 
 #include "ClientMenuButtonTexture.hpp"
+#include "TiposDefinidos.h"
 
 class ClientMenu: public ClientMenuButtonTextureDelegate {
 public:
     // Constructor and Destructor.
-    ClientMenu(const char *menuTitle, const int menuWidth, const int menuHeight, std::list<std::string> teamOptionsList);
+    ClientMenu(const char *menuTitle, const int menuWidth, const int menuHeight, std::vector<GameTeam> teamOptionsList);
     virtual ~ClientMenu();
     
     // Main function.
@@ -30,7 +31,7 @@ public:
     
     // Getters.
     std::string clientMenuGetPlayerName();
-    std::string clientMenuGetPlayerTeam();
+    GameTeam clientMenuGetPlayerTeam();
     bool clienMenuGetPlayButtonSelected();
     
 private:
@@ -38,9 +39,9 @@ private:
     SDL_Renderer *clientMenuRender;
     
     std::string clientMenuPlayerNameSelected;
-    std::string clientMenuPlayerTeamSelected;
+    GameTeam clientMenuPlayerTeamSelected;
     
-    std::list<std::string> clientMenuPlayerTeamOptionsList;
+    std::vector<GameTeam> clientMenuPlayerTeamOptionsList;
     
     bool clientMenuPlayButtonSelected;
     

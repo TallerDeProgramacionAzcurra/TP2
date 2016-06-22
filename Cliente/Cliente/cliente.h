@@ -60,7 +60,6 @@ class cliente
         int sockfd, portno;
         bool m_connected;
         bool m_connecting;
-        std::string m_playerName;
 
         Timer* serverTimeOut;
         Timer* sendTimeOutTimer;

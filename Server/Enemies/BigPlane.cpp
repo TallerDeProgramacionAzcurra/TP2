@@ -145,7 +145,7 @@ bool BigPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 
 	if (damager && wasShoot)
 	{
-		Game::Instance()->addPointsToScore(m_pointOnHit, damager->getObjectId(), damager->getTeamNumber());
+		Game::Instance()->addPointsToScore(m_pointOnHit, damager->getObjectId(), damager->getPlayerTeam().gameTeamID);
 		damager->incrementHitsStats(1);
 	}
 	if (damager)
@@ -163,7 +163,7 @@ bool BigPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 		if (canRetrievePoints() && damager)
 		{
 			int points = retrievePoints();
-			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getTeamNumber());
+			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getPlayerTeam().gameTeamID);
 			damager->incrementEnemiesKilledStats(1);
 		}
 

@@ -33,6 +33,7 @@ public:
     virtual void menuTextureTextFieldHandlerMouseEvent(SDL_Event *mouseEvent);
     
     std::string menuComboBoxSelection();
+    int menucomboBoxSelectionIndex();
     
 private:
     SDL_Window *menuComboBoxWindow;
@@ -40,7 +41,7 @@ private:
     
     bool menuComboBoxEnabled;
     
-    std::string menuComboBoxSelectedOption;
+    int menuComboBoxSelectedIndex;
     
     std::list<std::string> *menuComboBoxTextList;
     std::list<ClientMenuComboBoxOptionTexture *> *menuComboBoxOptionsList;

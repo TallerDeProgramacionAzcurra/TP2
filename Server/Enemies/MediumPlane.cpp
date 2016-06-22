@@ -145,7 +145,7 @@ bool MediumPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 	if (damager && wasShoot)
 	{
 		damager->incrementHitsStats(1);
-		Game::Instance()->addPointsToScore(m_pointOnHit, damager->getObjectId(), damager->getTeamNumber());
+		Game::Instance()->addPointsToScore(m_pointOnHit, damager->getObjectId(), damager->getPlayerTeam().gameTeamID);
 	}
 	if (damager)
 	{
@@ -161,7 +161,7 @@ bool MediumPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 		if (canRetrievePoints() && damager)
 		{
 			int points = retrievePoints();
-			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getTeamNumber());
+			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getPlayerTeam().gameTeamID);
 			damager->incrementEnemiesKilledStats(1);
 		}
 	}

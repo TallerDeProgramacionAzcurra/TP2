@@ -166,7 +166,7 @@
 	</sprite>
 </sprites>
 <escenario>
-	<cantidadMaximaJugadores>1</cantidadMaximaJugadores>
+	<cantidadMaximaJugadores>2</cantidadMaximaJugadores>
 	<cantidadStages>4</cantidadStages>
 	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>
@@ -218,19 +218,11 @@
         <GameModeTeams>
             <GameModeTeam>
                 <TeamID>0</TeamID>
-                <TeamName>Equipo Azul</TeamName>
-            </GameModeTeam>
-            <GameModeTeam>
-                <TeamID>1</TeamID>
-                <TeamName>Equipo Amarillo</TeamName>
-            </GameModeTeam>
-            <GameModeTeam>
-                <TeamID>2</TeamID>
                 <TeamName>Equipo Rojo</TeamName>
             </GameModeTeam>
             <GameModeTeam>
-                <TeamID>3</TeamID>
-                <TeamName>Equipo Verde</TeamName>
+                <TeamID>1</TeamID>
+                <TeamName>Equipo Blanco</TeamName>
             </GameModeTeam>
         </GameModeTeams>
     </GameModes>

@@ -49,7 +49,6 @@ public:
     void setCollisionDamage(int collisionDamage) { m_collisionDamage = collisionDamage; }
     void setWeapon(Weapon* weapon);
 
-    void setTeamNumber(int number) { m_teamNumber = number; }
     void refreshDirty() { m_movedByPlayer = false; m_dirty = true;}
 
     void StopFlipAnimation();
@@ -63,11 +62,13 @@ public:
     bool isDoingFlip() { return m_doingFlip; }
     bool isInvulnerable() { return m_invulnerable; }
     bool isConnected() { return m_connected; }
-    int getTeamNumber() { return m_teamNumber; }
     int getCollisionDamage() { return m_collisionDamage; }
     Statistics getStageStatistics() { return m_stageStats; }
     void resetStageStatistics() { return m_stageStats.reset(); }
     int getLives() {return m_lives;}
+    
+    void setPlayerTeam(GameTeam playerTeam) { playerGameTeam = playerTeam; }
+    GameTeam getPlayerTeam() { return playerGameTeam; }
 
     void moveAutomatic(const Vector2D& destination, int speed);
 
@@ -87,7 +88,6 @@ public:
 
 
 private:
-
     Weapon* m_currentWeapon;
     Vector2D m_shootOffset;
     // Determina si el usuario puede controlar este player o no. Sirve por si hay varias instancias de Player en juego.
@@ -133,7 +133,7 @@ private:
     int m_health;
     int m_collisionDamage;
     bool m_movedByPlayer;
-    int m_teamNumber;
+    GameTeam playerGameTeam;
 
     Score m_score;
     Statistics m_stageStats;

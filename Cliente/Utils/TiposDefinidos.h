@@ -97,7 +97,8 @@ struct ConnectedMessage
 
 struct ConnectionInfo
 {
-	char name[24];
+	char playerName[24];
+    int playerTeamID;
 };
 
 struct FinishGameInfo
@@ -306,6 +307,18 @@ struct Elemento
 
 };
 
+typedef struct {
+    int gameTeamID;
+    int gameTeamScore;
+    std::string gameTeamName;
+} GameTeam;
+
+typedef enum
+{
+    GameModeCooperative = 0,
+    GameModeCompetition
+} GameMode;
+
 struct Escenario
 {
 	int velScroll;
@@ -315,7 +328,8 @@ struct Escenario
 	int alto;
 	struct Fondo fondo;
 	std::vector<struct Elemento> listaDeElementos;
-
+    std::vector<GameTeam> teamsList;
+    GameMode gameMode = GameModeCooperative;
 };
 
 struct Avion
