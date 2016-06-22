@@ -1,0 +1,869 @@
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:07 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Gonzalo ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:10 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Gonzalo ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:10 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:12 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:16 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:19 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:39 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:39 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:40 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:41 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:44 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:45 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:47 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #ad ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:54 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:54 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:54 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Server: El jugador con nombreJugador # ya se encuentra conectado.
+  WARNING: Server: No se pudo aceptar al cliente 127.0.0.1 por nombre inválido.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:55 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #sd ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:58 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 14:59 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:01 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #d ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:01 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #sd ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:04 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #sd ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:05 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Gonzalo ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Player 2 ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:06 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Gonzalo ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Player2 ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:09 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #sd ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:12 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #sd ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  WARNING: Server: El jugador con nombreJugador #sd ya se encuentra conectado.
+  WARNING: Server: No se pudo aceptar al cliente 127.0.0.1 por nombre inválido.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:12 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:13 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #add ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:18 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #s ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #dsad ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:20 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #s ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:22 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #d ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #sad ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se desconectó un cliente.

@@ -39,6 +39,18 @@ m_scrollSpeed(2)
 {
 	m_powerUpsSpawner = new PowerUpSpawner();
 	m_enemiesSpawner = new EnemySpawner();
+
+	/*GameTeam teamOne;
+	teamOne.gameTeamID = 0;
+	teamOne.gameTeamScore = 0;
+	teamOne.gameTeamName = "team 1";
+	m_teamsList.push_back(teamOne);
+	GameTeam teamTwo;
+	teamOne.gameTeamID = 1;
+	teamOne.gameTeamScore = 0;
+	teamOne.gameTeamName = "team 2";
+	m_teamsList.push_back(teamTwo);*/
+
 	pthread_mutex_init(&m_resetMutex, NULL);
 	pthread_mutex_init(&m_updatePlayerMutex, NULL);
 	pthread_mutex_init(&m_createPlayerMutex, NULL);
@@ -62,6 +74,14 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     m_parserNivel = new ParserNivel();
     m_parserNivel->parsearDocumento(XML_PATH);
     m_stagesAmount = m_parserNivel->getEscenario().cantidadStages;
+    for (int i = 0; i < m_parserNivel->getEscenario().teamsList.size();i++)
+    {
+    	GameTeam teamInfo;
+    	teamInfo.gameTeamID = m_parserNivel->getEscenario().teamsList[i].gameTeamID;
+    	teamInfo.gameTeamScore = 0;
+    	teamInfo.gameTeamName = m_parserNivel->getEscenario().teamsList[i].gameTeamName;
+    	m_teamsList.push_back(teamInfo);
+    }
 
     m_textureHelper = new TextureHelper();
 
@@ -105,7 +125,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName, int player
 	nameExists = !validatePlayerName(playerName);
     
     // Setea el equipo.
-    GameTeam selectedTeam;
+    /*GameTeam selectedTeam;
     std::vector<GameTeam> teamsList = this->m_parserNivel->getEscenario().teamsList;
     std::vector<GameTeam>::iterator iterator = teamsList.begin();
     for (*iterator; iterator != teamsList.end(); ++iterator) {
@@ -113,15 +133,16 @@ bool Game::createPlayer(int clientID,  const std::string& playerName, int player
         
         if (newGameTeam.gameTeamID == playerTeam) {
             selectedTeam = newGameTeam;
+        	m_teamsList[newGameTeam.gameTeamID].gameTeamName = newGameTeam.gameTeamName;
         }
-    }
+    }*/
 
 	if (nameExists)
 	{
 		int actualPlayerID = getFromNameID(playerName);
 		Player* player = m_listOfPlayer[actualPlayerID];
         
-        player->setPlayerTeam(selectedTeam);
+        player->setPlayerTeam(m_teamsList[playerTeam]);
 
 		//agrega jugador al manejador de colisiones
 		CollitionHandler::Instance()->addPlayer(player);
@@ -165,6 +186,8 @@ bool Game::createPlayer(int clientID,  const std::string& playerName, int player
 	int bulletsSpeed = m_parserNivel->getAvion().velDisp;
 
 	Player* newPlayer = new Player();
+
+	newPlayer->setPlayerTeam(m_teamsList[playerTeam]);
 	newPlayer->setObjectID(clientID);
 	newPlayer->setSpeed(Vector2D(playerSpeed, playerSpeed));
 
@@ -183,7 +206,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName, int player
 	m_listOfPlayer[newPlayer->getObjectId()]= newPlayer;
 
 	printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[clientID].c_str(), newPlayer->getObjectId(), clientID);
-    printf("Player: %s pertenece al equipo: %s con TeamID: %i.",m_playerNames[clientID].c_str(), selectedTeam.gameTeamName.c_str(), selectedTeam.gameTeamID);
+    printf("Player: %s pertenece al equipo: %s con TeamID: %i.",m_playerNames[clientID].c_str(), m_teamsList[playerTeam].gameTeamName.c_str(), m_teamsList[playerTeam].gameTeamID);
 
 	CollitionHandler::Instance()->addPlayer(newPlayer);
 
@@ -338,7 +361,8 @@ bool Game::isTeamMode()
 }
 
 std::vector<GameTeam> Game::gameTeams() {
-    return m_parserNivel->getEscenario().teamsList;
+	return m_teamsList;
+    //return m_parserNivel->getEscenario().teamsList;
 }
 
 bool Game::areAllPlayersDead()
@@ -511,20 +535,29 @@ void Game::addPointsToScore(int points, int playerID, int teamID)
 
 void Game::addPointsToTeam(int points, int teamID)
 {
-    std::vector<GameTeam> teams = this->m_parserNivel->getEscenario().teamsList;
-    std::vector<GameTeam>::iterator iterator = teams.begin();
+	//printf("sumando %d puntos al equipo %d\n", points, teamID);
+	if ((teamID != 0) && (teamID != 1))
+			return;
+	m_teamsList[teamID].gameTeamScore += points;
+    if (m_teamsList[teamID].gameTeamScore < 0)
+    {
+    	m_teamsList[teamID].gameTeamScore = 0;
+    }
+   // std::vector<GameTeam> teams = this->m_parserNivel->getEscenario().teamsList;
+    /*std::vector<GameTeam>::iterator iterator = m_teamsList.begin();
     
-    for (*iterator; iterator != teams.end(); ++iterator) {
-        GameTeam playerTeam = *iterator;
+    for (*iterator; iterator != m_teamsList.end(); ++iterator) {
+       // GameTeam playerTeam = *iterator;
         
-        if (playerTeam.gameTeamID == teamID) {
-            playerTeam.gameTeamScore = playerTeam.gameTeamScore + points;
-            
-            if (playerTeam.gameTeamScore < 0) {
-                playerTeam.gameTeamScore = 0;
+        if ((*iterator).gameTeamID == teamID)
+        {
+        	(*iterator).gameTeamScore = (*iterator).gameTeamScore + points;
+            if ((*iterator).gameTeamScore < 0)
+            {
+            	(*iterator).gameTeamScore = 0;
             }
         }
-    }
+    }*/
 }
 
 Player* Game::getPlayer(int playerID)
@@ -858,15 +891,25 @@ void Game::informEndGame(bool levelFinished)
 		int winnerID = 0;
 		finishGameInfo.isVictory = true;
         
-        std::vector<GameTeam> teamList = this->m_parserNivel->getEscenario().teamsList;
-        for (std::vector<GameTeam>::iterator iterator = teamList.begin(); iterator != teamList.end(); ++iterator) {
+        //std::vector<GameTeam> teamList = this->m_parserNivel->getEscenario().teamsList;
+       /*for (std::vector<GameTeam>::iterator iterator = m_teamsList.begin(); iterator != m_teamsList.end(); ++iterator)
+        {
 			GameTeam team = *iterator;
 			if (team.gameTeamScore >= maxScore)
 			{
 				maxScore = team.gameTeamScore;
 				winnerID = team.gameTeamID;
 			}
-		}
+		}*/
+        for (unsigned int i = 0; i < m_teamsList.size(); ++i)
+        {
+        	//printf("score Team %d = %d\n",  m_teamsList[i].gameTeamID,  m_teamsList[i].gameTeamScore);
+			if (m_teamsList[i].gameTeamScore >= maxScore)
+			{
+				maxScore = m_teamsList[i].gameTeamScore;
+				winnerID = m_teamsList[i].gameTeamID;
+			}
+        }
         printf("Max Score %d \n", maxScore);
 		finishGameInfo.points = maxScore;
 		finishGameInfo.winnerID = winnerID;

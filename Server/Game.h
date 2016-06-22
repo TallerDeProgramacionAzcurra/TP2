@@ -146,6 +146,7 @@ public:
 
 private:
     std::map<int, Player*> m_listOfPlayer;
+    std::vector<GameTeam> m_teamsList;
     std::map<int,std::string> m_playerNames;
 
     std::map<int,GameObject*> m_listOfGameObjects;

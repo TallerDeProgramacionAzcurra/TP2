@@ -194,8 +194,8 @@
 	</sprite>
 </sprites>
 <escenario>
-	<cantidadMaximaJugadores>1</cantidadMaximaJugadores>
-	<cantidadStages>3</cantidadStages>
+	<cantidadMaximaJugadores>2</cantidadMaximaJugadores>
+	<cantidadStages>1</cantidadStages>
 	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>
 	<alto>2000</alto>
@@ -242,7 +242,7 @@
 		</elemento>
 	</elementos>
     <GameModes>
-        <GameMode>0</GameMode>
+        <GameMode>1</GameMode>
         <GameModeTeams>
             <GameModeTeam>
                 <TeamID>0</TeamID>
