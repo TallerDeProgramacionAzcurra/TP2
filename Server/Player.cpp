@@ -556,10 +556,14 @@ void Player::reset()
 	m_currentHoldQuietTime = 0;
 	m_dead = false;
 	m_dying = false;
+	m_canRecycle = false;
 	m_exploting = false;
 	m_health = STARTING_HEALTH;
 	m_lives = STARTING_LIVES;
 	m_movedByPlayer = false;
+	m_textureID = m_objectId;
+	m_currentFrame = 0;
+	m_currentRow = 0;
 
 	m_stageStats.reset();
 	m_score.reset();
