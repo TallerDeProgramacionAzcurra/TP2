@@ -106,6 +106,7 @@ public:
     void setCantHuds(short cant){ m_cantHuds = cant;}
     bool isRunning() { return m_running; }
     bool isReseting() { return m_reseting; }
+    bool isTeamMode(){return m_teamMode;}
     bool isInitializingSDL(){ return m_initializingSDL;}
     bool isWaitingForTextures() {return m_waitingTextures; }
 

@@ -20,6 +20,9 @@
 
  private:
 
+     void generateTeamWin(int gameWidth, int gameHeight, short winnerID, short points);
+     void generateGeneralWin(int gameWidth, int gameHeight, short winnerID, short points);
+     void generateLoss(int gameWidth, int gameHeight);
      void createFontTexture(short value, const char* text, FontTexture* font);
 
  };
