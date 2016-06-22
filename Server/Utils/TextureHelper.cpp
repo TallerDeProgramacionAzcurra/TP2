@@ -58,6 +58,9 @@ void TextureHelper::initialize()
 	m_textureIDMap["ExtraPoints"] = 70;
 	m_textureIDMap["BombPU"] = 71;
 	m_textureIDMap["DualWeaponPU"] = 72;
+	m_textureIDMap["NaveSecundaria"] = 73;
+	m_textureIDMap["SecondaryPow"] = 74;
+
 
 	//Pop Ups
 	m_textureIDMap["Points50"] = 101;

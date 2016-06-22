@@ -1,39 +1,46 @@
 #include "Hud.h"
 using namespace std;
 
+Hud::~Hud(){
+
+}
+
 Hud::Hud(int gameWidth, int gameHeight, int id, int cantHuds, bool teamMode): m_playerScore(0),
 										 m_newScore(0),
 										 m_lerping(false)
 {
-	const char *title;
+	FontTexture *title = new FontTexture();
+	const char *titleText;
 	if (teamMode)
-		title = "TEAM ";
+		titleText = "TEAM ";
 	else
-		title = "PLAYER ";
+		titleText = "PLAYER ";
 	stringstream ss;
-	ss << title << id+1;
+	ss << titleText << id+1;
 	string s = ss.str();
 	const char *pchar = s.c_str();
-	m_title.text = pchar;
+	title->text = pchar;
 	char r,g,b;
 	getColorById(id,&r,&g,&b);
-	m_title.texture = FontManager::Instance()->drawtext(r,g,b,0,0,0,0,0,m_title.text,blended);
+	title->texture = FontManager::Instance()->drawtext(r,g,b,0,0,0,0,0,title->text,blended);
 	int h,w;
-	FontManager::Instance()->textSize(m_title.text,&h,&w);
-	m_title.height = h*TEXT_SIZE_FACTOR;
-	m_title.width = w*TEXT_SIZE_FACTOR;
-	m_title.x = (id)*(gameWidth/cantHuds) +((gameWidth/cantHuds) - m_title.width)/2;
-	m_title.y = 0;
+	FontManager::Instance()->textSize(title->text,&h,&w);
 
+	title->height = h*TEXT_SIZE_FACTOR;
+	title->width = w*TEXT_SIZE_FACTOR;
+	title->x = (id)*(gameWidth/cantHuds) +((gameWidth/cantHuds) - title->width)/2;
+	title->y = 0;
 
-	actualizarScore(0);
+	m_texts.push_back(title);
+
+	updateScoreTexture(m_playerScore);
 	FontManager::Instance()->textSize(m_score.text,&h,&w);
 	m_score.height = h*TEXT_SIZE_FACTOR;
 	m_score.width = w*TEXT_SIZE_FACTOR;
 	m_score.x = (id)*(gameWidth/cantHuds) +((gameWidth/cantHuds) - m_score.width)/2;
-	m_score.y = m_title.height;
+	m_score.y = title->height;
 
-	updateScoreTexture(m_playerScore);
+	m_texts.push_back(&m_score);
 }
 
 void Hud::getColorById(int id, char* r, char* g, char* b)
@@ -86,25 +93,6 @@ void Hud::updateScoreTexture(int score)
 	const char *pchar = s.c_str();
 	m_score.text = pchar;
 	m_score.texture = FontManager::Instance()->drawtext(255,255,255,0,0,0,0,0, m_score.text, blended);
-}
-
-void Hud::draw(SDL_Renderer* renderer)
-{
-	SDL_Rect destRect;
-
-	//Drawing title
-	destRect.w = m_title.width;
-	destRect.h = m_title.height;
-	destRect.x = m_title.x;
-	destRect.y = m_title.y;
-	SDL_RenderCopy(renderer, m_title.texture, NULL, &destRect);
-
-	//Drawing score
-	destRect.w = m_score.width;
-	destRect.h = m_score.height;
-	destRect.x = m_score.x;
-	destRect.y = m_score.y;
-	SDL_RenderCopy(renderer, m_score.texture, NULL, &destRect);
 }
 
 void Hud::update()

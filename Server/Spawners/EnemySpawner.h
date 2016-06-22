@@ -21,6 +21,7 @@ public:
 	~EnemySpawner();
 	void feed(std::vector<Enemigo> enemies, int stageSize);
 	void update(int stagePosition);
+	void reset();
 	void clean();
 
 private:

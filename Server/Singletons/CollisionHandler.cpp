@@ -9,6 +9,7 @@
 #include "../PowerUps/PowerUp.h"
 #include "../Enemies/Enemy.h"
 #include "../Player.h"
+#include "../SecondaryShip.h"
 #include "../Weapons/Bullet.h"
 #include "../GameObject.h"
 #include "../Game.h"
@@ -31,6 +32,7 @@ void CollitionHandler::handleCollitions()
 {
 	handlePlayerCollitions();
 	handleEnemyCollitions();
+	handleSecondaryCollitions();
 }
 
 void CollitionHandler::handlePlayerCollitions()
@@ -215,6 +217,76 @@ void CollitionHandler::handleEnemyCollitions()
 	}
 }
 
+void CollitionHandler::handleSecondaryCollitions()
+{
+	if (m_secondaryShips.empty())
+		return;
+
+	for( vector<SecondaryShip*>::iterator secondaryiterator = m_secondaryShips.begin(); secondaryiterator != m_secondaryShips.end();)
+	{
+		if ((*secondaryiterator)->isDead())
+		{
+			secondaryiterator = m_secondaryShips.erase(secondaryiterator);
+			continue;
+		}
+
+
+		//Compara cada jugador contra cada bala enemiga
+		for(vector<std::shared_ptr<Bullet>>::iterator it = m_enemiesBullets.begin(); it != m_enemiesBullets.end(); )
+		{
+			if (m_practiceMode)
+				break;
+
+			if ((*it)->isDead() || (*it)->isExploting())
+			{
+				it = m_enemiesBullets.erase(it);
+				continue;
+			}
+
+			if (areColliding((*secondaryiterator), (*it).get()))
+			{
+				(*secondaryiterator)->damage((*it)->getDamage());
+				(*it)->kill(); //mata la bala
+
+				//elimina bala del chekeo de colisiones
+				it = m_enemiesBullets.erase(it);
+			}
+			else
+			{
+			  ++it;
+			}
+		}
+
+		//Compara cada jugador con cada enemigo
+		for(vector<Enemy*>::iterator it = m_enemies.begin(); it != m_enemies.end(); )
+		{
+			if (m_practiceMode)
+				break;
+
+			if ((*it)->isDead() || (*it)->isDying())
+			{
+				it = m_enemies.erase(it);
+				continue;
+			}
+
+			if (areColliding((*secondaryiterator), (*it)))
+			{
+				(*secondaryiterator)->damage((*it)->getCollisionDamage());
+
+				//elimina al enemigo del chekeo de colisiones si el enemigo esta muerto o muriendo
+				if ((*it)->isDead() || (*it)->isDying())
+				{
+					it = m_enemies.erase(it);
+					continue;
+				}
+			}
+			//continua en el siguiente
+			++it;
+		}
+		++secondaryiterator;
+	}
+}
+
 bool CollitionHandler::areColliding(GameObject* gameObjectOne, GameObject* gameObjectTwo)
 {
 	bool collision = false;
@@ -252,6 +324,11 @@ void CollitionHandler::addPlayer(Player* player)
 void CollitionHandler::addEnemy(Enemy* enemy)
 {
 	m_enemies.push_back(enemy);
+}
+
+void CollitionHandler::addSecondaryShip(SecondaryShip* secondaryShip)
+{
+	m_secondaryShips.push_back(secondaryShip);
 }
 
 void CollitionHandler::addPowerUp(PowerUp* powerUp)

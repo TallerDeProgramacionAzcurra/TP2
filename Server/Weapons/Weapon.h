@@ -40,6 +40,7 @@ public:
 
     void setOwnerID(int ID) { m_ownerID = ID; }
     void setOwnerTeam(int teamNumber) { m_ownerTeamNumber = teamNumber; }
+    int getBulletSpeed(){ return m_bulletSpeed; }
 
 protected:
 

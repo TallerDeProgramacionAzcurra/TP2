@@ -824,9 +824,9 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 	{
 		ConnectionInfo connectionInfoMessage = m_alanTuring->decodeConnectionInfoMessage(netMsg);
 		std::string playerName = std::string(connectionInfoMessage.playerName);
+        printf("Se conecto %s \n", connectionInfoMessage.playerName);
         int playerTeam = connectionInfoMessage.playerTeamID;
 		m_successfulPlayerCreation = Game::Instance()->createPlayer(m_lastID, playerName, playerTeam);
-
 
 		if (m_successfulPlayerCreation)
 		{

@@ -11,7 +11,7 @@
 #include <map>
 
 
-#define DEFAULT_FONT_PATH "Assets/Fonts/joystix.ttf"
+#define DEFAULT_FONT_PATH "Assets/Fonts/joystix2.ttf"
 #define DEFAULT_FONT_SIZE 10
 
 enum textquality {solid, shaded, blended};

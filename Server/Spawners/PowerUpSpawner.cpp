@@ -10,6 +10,7 @@
 #include "../PowerUps/ExtraPointsPU.h"
 #include "../PowerUps/BombPU.h"
 #include "../PowerUps/DualWeaponPU.h"
+#include "../PowerUps/SecondaryShipsPU.h"
 #include "../Utils/TextureHelper.h"
 #include "../Utils/Random.h"
 #include "../Game.h"
@@ -68,6 +69,18 @@ void PowerUpSpawner::update(int stagePosition)
 		     ++it;
 		  }
 	}
+}
+
+void PowerUpSpawner::reset()
+{
+	for (std::vector<PowerUpSpawnInfo>::iterator it = m_powerUpsToSpawn.begin() ; it != m_powerUpsToSpawn.end(); ++it)
+	{
+		if ((*it).powerUpToSpawn)
+		{
+			delete (*it).powerUpToSpawn;
+		}
+	}
+	m_powerUpsToSpawn.clear();
 }
 
 
@@ -144,6 +157,35 @@ void PowerUpSpawner::addPowerUp(Powerup powerUpInfo)
 		{
 			PowerUpSpawnInfo powerUpSpawnInfo;
 			PowerUp* powerUp = new DualWeaponPU();
+			int posX = Random::getRange(0, Game::Instance()->getGameWidth() - powerUpInfo.ancho);
+			int posY = Random::getRange(0, (Game::Instance()->getGameHeight() - (Game::Instance()->getGameHeight()/4)));
+			powerUp->load(posX, posY, powerUpInfo.ancho, powerUpInfo.alto, textureID, powerUpInfo.frames);
+			powerUpSpawnInfo.powerUpToSpawn = powerUp;
+
+			int randomStagePosition = Random::getRange((i * step) - (step/50), (i + 1 * step) + (step/50));
+			if (randomStagePosition < 0)
+				randomStagePosition = 0;
+			if (randomStagePosition > m_stageSize)
+				randomStagePosition = m_stageSize;
+			powerUpSpawnInfo.stagePosition = randomStagePosition;
+			powerUpSpawnInfo.posX = posX;
+			powerUpSpawnInfo.posY = posY;
+
+			//printf("Bomb Power Up en posicion %d \n", randomStagePosition);
+			m_powerUpsToSpawn.push_back(powerUpSpawnInfo);
+		}
+	}
+	if (powerUpInfo.id.compare("SecondaryPow") == 0)
+	{
+		if (powerUpInfo.cantidad <= 0)
+			return;
+
+		int textureID = m_textureHelper->stringToInt(powerUpInfo.id);
+		int step = (m_stageSize - Game::Instance()->getGameHeight()) / powerUpInfo.cantidad;
+		for(int i = 0; i < powerUpInfo.cantidad; ++i)
+		{
+			PowerUpSpawnInfo powerUpSpawnInfo;
+			PowerUp* powerUp = new SecondaryShipsPU();
 			int posX = Random::getRange(0, Game::Instance()->getGameWidth() - powerUpInfo.ancho);
 			int posY = Random::getRange(0, (Game::Instance()->getGameHeight() - (Game::Instance()->getGameHeight()/4)));
 			powerUp->load(posX, posY, powerUpInfo.ancho, powerUpInfo.alto, textureID, powerUpInfo.frames);

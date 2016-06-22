@@ -16,6 +16,10 @@ m_waitingTextures(true),
 m_continueLooping(false),
 m_showingStatistics(false),
 m_showingStatisticsTimer(0),
+m_showingStageMsg(false),
+m_showingStageMsgTimer(0),
+m_showingResults(false),
+m_showingResultsTimer(0),
 m_scrollSpeed(0.8),
 m_bgOff(0),
 m_bgOffInicial(0),
@@ -162,9 +166,11 @@ void Game::render()
 		}
 	}
     if (m_showingStatistics)
-    {
     	m_stats->draw(m_pRenderer);
-    }
+    if (m_showingStageMsg)
+    	m_stageMsg->draw(m_pRenderer);
+    if (m_showingResults)
+    	m_results->draw(m_pRenderer);
 
     SDL_RenderPresent(m_pRenderer);
 }
@@ -392,7 +398,10 @@ void Game::update()
 			it->second->update();
 		}
 	}
-	updateStatistics();
+	updateScreenText(&m_showingStatistics, &m_showingStatisticsTimer, m_stats);
+	updateScreenText(&m_showingStageMsg, &m_showingStageMsgTimer, m_stageMsg);
+	updateScreenText(&m_showingResults, &m_showingResultsTimer, m_results);
+
 	/*m_background->update(); //Provisorio
 	m_island->update(); //Provisorio
 	m_player->update(); // Provisorio*/
@@ -418,7 +427,6 @@ bool Game::initializeClient()
 	    string ip = parsersito->getConexionInfo().ip;
 	    int porto = parsersito->getConexionInfo().puerto;
 	    printf("Conectando a %s : %d \n", ip.c_str(), porto);
-
 
 	    loadSoundAndMusic();
 	    SoundManager::Instance()->playMusic(2,0);
@@ -510,24 +518,27 @@ void Game::showFinishGameInfo(FinishGameInfo finishGameInfo)
 {
 	//MOSTRAR VICTORIA Y DERROTA
 	//MOSTRAR PUNTAJES DEL VENCEDOR O DEL JUGADOR QUE SACO MAS PUNTOS
-
+	m_results = new Results(m_gameWidth, m_gameHeight, finishGameInfo);
+	m_showingResultsTimer = SHOW_RESULTS_TIME;
+	m_showingResults = true;
 }
 
 void Game::showStageBeginningMessage(StageBeginning stageBeginningInfo)
 {
-	//INFORMAR QUE ETAPA vA A COMENZAR
-
+	m_stageMsg = new StageMsg(m_gameWidth, m_gameHeight, stageBeginningInfo);
+	m_showingStageMsgTimer = SHOW_STAGE_MSG_TIME;
+	m_showingStageMsg = true;
 }
 
-void Game::updateStatistics()
+void Game::updateScreenText(bool* showing, int* timer, ScreenText* text)
 {
-	if (m_showingStatistics)
+	if (*showing)
 	{
-		m_showingStatisticsTimer -= GameTimeHelper::Instance()->deltaTime();
-		if (m_showingStatisticsTimer <= 0)
+		*timer -= GameTimeHelper::Instance()->deltaTime();
+		if (*timer <= 0)
 		{
-			m_showingStatistics = false;
-			delete m_stats;
+			*showing = false;
+			delete text;
 		}
 	}
 }

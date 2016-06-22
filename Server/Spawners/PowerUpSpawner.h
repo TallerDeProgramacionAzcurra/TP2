@@ -20,6 +20,7 @@ public:
 	~PowerUpSpawner();
 	void feed(std::vector<Powerup> powerUps, int stageSize);
 	void update(int stagePosition);
+	void reset();
 	void clean();
 
 private:

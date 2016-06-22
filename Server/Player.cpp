@@ -6,12 +6,18 @@
  */
 
 #include "Player.h"
+#include "SecondaryShip.h"
+#include "Singletons/CollisionHandler.h"
+#include "Weapons/BulletsHandler.h"
+#include "Weapons/Weapon.h"
+#include "Weapons/PlayerWeapons/BasicWeapon.h"
 
 using namespace std;
 
 Player::Player() :  MoveableObject(),
 					m_connected(true),
 					m_doingFlip(false),
+					m_hasSecondaryWeapons(false),
 					m_flipAnimationTime(FLIP_ANIMATION_TIME),
 					m_flipRemainingTime(0),
 				    m_explotionAnimationTime(EXPLOTION_ANIMATION_TIME),
@@ -39,6 +45,9 @@ Player::Player() :  MoveableObject(),
 	m_currentWeapon = new BasicWeapon();
 	m_shootOffset = Vector2D(15, -5);
 	m_destination = Vector2D (0, 0);
+
+	m_leftSecondaryPlane = NULL;
+	m_rightSecondaryPlane = NULL;
 }
 
 void Player::collision()
@@ -58,6 +67,13 @@ void Player::damage(int damageReceived)
 		//Hacer explosion, setear dying en true, etc
 		m_dying = true;
 		explote();
+		if (m_hasSecondaryWeapons)
+		{
+			if (m_leftSecondaryPlane)
+				m_leftSecondaryPlane->setDead(true);
+			if (m_rightSecondaryPlane)
+				m_rightSecondaryPlane->setDead(true);
+		}
 	}
 }
 
@@ -167,6 +183,8 @@ void Player::draw()
 	//Nave::draw();    	int dy = 0;
 }
 
+
+
 void Player::update()
 {
 	//Workaround para que no aparezca invisible
@@ -223,8 +241,13 @@ void Player::update()
 			}
 		}
 	}
-
 	m_currentWeapon->update();
+
+
+	if (m_hasSecondaryWeapons)
+	{
+		updateSecondaryWeapons();
+	}
 
 	if (m_dirty)
 	{
@@ -234,6 +257,77 @@ void Player::update()
 
 	m_direction.setX(0);
 	m_direction.setY(0);
+}
+
+void Player::updateSecondaryWeapons()
+{
+	if (m_leftSecondaryPlane && m_leftSecondaryPlane->isDead() && m_leftSecondaryPlane->canRecycle() &&
+			m_rightSecondaryPlane && m_rightSecondaryPlane->isDead()  && m_rightSecondaryPlane->canRecycle())
+	{
+		m_hasSecondaryWeapons = false;
+		return;
+	}
+
+	if (m_leftSecondaryPlane)
+	{
+		if (m_leftSecondaryPlane->isDead() && m_leftSecondaryPlane->canRecycle())
+		{
+			delete m_leftSecondaryPlane;
+			m_leftSecondaryPlane = NULL;
+		}
+		else
+		{
+			m_leftSecondaryPlane->setPosition(Vector2D(m_position.m_x - m_width, m_position.m_y + m_height/2));
+			m_leftSecondaryPlane->update();
+		}
+	}
+
+	if (m_rightSecondaryPlane)
+	{
+		if (m_rightSecondaryPlane->isDead() && m_rightSecondaryPlane->canRecycle())
+		{
+			delete m_rightSecondaryPlane;
+			m_rightSecondaryPlane = NULL;
+		}
+		else
+		{
+			m_rightSecondaryPlane->setPosition(Vector2D(m_position.m_x + m_width*1.5f, m_position.m_y + m_height/2));
+			m_rightSecondaryPlane->update();
+		}
+	}
+}
+
+void Player::createSecondaryShips()
+{
+	if (m_hasSecondaryWeapons)
+	{
+		if (!m_leftSecondaryPlane || (m_leftSecondaryPlane && m_leftSecondaryPlane->isDead()))
+		{
+			m_leftSecondaryPlane = new SecondaryShip();
+			m_leftSecondaryPlane->load(m_position.m_x - m_width, m_position.m_y + m_height/2, 48, 48, 73, 1);
+			CollitionHandler::Instance()->addSecondaryShip(m_leftSecondaryPlane);
+		}
+
+		if (!m_rightSecondaryPlane || (m_rightSecondaryPlane && m_rightSecondaryPlane->isDead()))
+		{
+			m_rightSecondaryPlane = new SecondaryShip();
+			m_leftSecondaryPlane->load(m_position.m_x + m_width, m_position.m_y + m_height/2, 48, 48, 73, 1);
+			CollitionHandler::Instance()->addSecondaryShip(m_rightSecondaryPlane);
+		}
+	}
+	else
+	{
+		m_leftSecondaryPlane = new SecondaryShip();
+		m_leftSecondaryPlane->load(m_position.m_x - m_width, m_position.m_y + m_height/2, 48, 48, 73, 1);
+		CollitionHandler::Instance()->addSecondaryShip(m_leftSecondaryPlane);
+
+		m_rightSecondaryPlane = new SecondaryShip();
+		m_leftSecondaryPlane->load(m_position.m_x + m_width, m_position.m_y + m_height/2, 48, 48, 73, 1);
+		CollitionHandler::Instance()->addSecondaryShip(m_rightSecondaryPlane);
+	}
+
+	m_hasSecondaryWeapons = true;
+
 }
 
 void Player::updateFlipAnimation()
@@ -378,14 +472,7 @@ void Player::handleInput(InputMessage inputMsg)
 
         if (inputMsg.buttonShoot)
         {
-        	bool didShoot = m_currentWeapon->shoot(Vector2D(m_position.getX() + m_shootOffset.getX(), m_position.getY() + m_shootOffset.getY()),
-        							Vector2D(0, DIRECTION_UP));
-        	if (didShoot)
-        	{
-               	m_stageStats.incrementShoots(1);
-            	m_soundDirty = true;
-            	m_soundSendId = 51;
-        	}
+        	shoot();
             m_dirty = true;
         }
 
@@ -398,6 +485,38 @@ void Player::handleInput(InputMessage inputMsg)
             m_dirty = true;
         }
     }
+}
+
+void Player::shoot()
+{
+	Vector2D shootPosition;
+	bool didShoot = m_currentWeapon->shoot(Vector2D(m_position.getX() + m_shootOffset.getX(), m_position.getY() + m_shootOffset.getY()),
+							Vector2D(0, DIRECTION_UP));
+	if (didShoot)
+	{
+		shootWithSecondaryWeapons();
+       	m_stageStats.incrementShoots(1);
+    	m_soundDirty = true;
+    	m_soundSendId = 51;
+	}
+}
+
+void Player::shootWithSecondaryWeapons()
+{
+	if (m_hasSecondaryWeapons)
+	{
+		if (m_leftSecondaryPlane && !m_leftSecondaryPlane->isDead())
+		{
+			m_leftSecondaryPlane->shoot(Vector2D(m_leftSecondaryPlane->getPosition().m_x + 16, m_leftSecondaryPlane->getPosition().m_y),
+										Vector2D(0, DIRECTION_UP), m_currentWeapon->getBulletSpeed(), m_objectId, m_teamNumber);
+		}
+
+		if (m_rightSecondaryPlane && !m_rightSecondaryPlane->isDead())
+		{
+			m_rightSecondaryPlane->shoot(Vector2D(m_rightSecondaryPlane->getPosition().m_x + 16, m_rightSecondaryPlane->getPosition().m_y),
+										Vector2D(0, DIRECTION_UP), m_currentWeapon->getBulletSpeed(), m_objectId, m_teamNumber);
+		}
+	}
 }
 
 void Player::startFlipAnimation()

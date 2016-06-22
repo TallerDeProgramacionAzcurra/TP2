@@ -9,6 +9,7 @@
 
 #include "../Player.h"
 #include "../Game.h"
+#include "../Weapons/PlayerWeapons/DualWeapon.h"
 
 DualWeaponPU::DualWeaponPU(): PowerUp()
 {

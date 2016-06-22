@@ -32,6 +32,20 @@
 		<alto>66</alto>
 	</sprite>
 	<sprite>
+		<id>NaveSecundaria</id>
+		<path>Assets/Sprites/SecondaryShip.png</path>
+		<cantidad>1</cantidad>
+		<ancho>48</ancho>
+		<alto>48</alto>
+	</sprite>
+	<sprite>
+		<id>SecondaryPow</id>
+		<path>Assets/Sprites/SecWeapPU.png</path>
+		<cantidad>1</cantidad>
+		<ancho>48</ancho>
+		<alto>48</alto>
+	</sprite>
+	<sprite>
 		<id>agua</id>
 		<path>Assets/Sprites/waterr.png</path>
 		<cantidad>1</cantidad>
@@ -180,7 +194,7 @@
 	</sprite>
 </sprites>
 <escenario>
-	<cantidadMaximaJugadores>1</cantidadMaximaJugadores>
+	<cantidadMaximaJugadores>2</cantidadMaximaJugadores>
 	<cantidadStages>2</cantidadStages>
 	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>

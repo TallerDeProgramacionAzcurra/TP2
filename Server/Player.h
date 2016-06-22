@@ -10,9 +10,9 @@
 #include "Singletons/TextureManager.h"
 #include "Singletons/GameTimeHelper.h"
 #include "Utils/TiposDefinidos.h"
-#include "Weapons/PlayerWeapons/BasicWeapon.h"
-#include "Weapons/PlayerWeapons/DualWeapon.h"
+
 class Weapon;
+class SecondaryShip;
 
 #define EXPLOTION_ANIMATION_TIME 1000
 #define FLIP_ANIMATION_TIME 1500
@@ -76,6 +76,11 @@ public:
     void takeLife();
     void respawn();
 
+    void createSecondaryShips();
+    void shoot();
+
+    void shootWithSecondaryWeapons();
+
 
     void addPoints(int points);
     const int getScore();
@@ -89,11 +94,16 @@ public:
 
 private:
     Weapon* m_currentWeapon;
+    SecondaryShip* m_leftSecondaryPlane;
+    SecondaryShip* m_rightSecondaryPlane;
+
     Vector2D m_shootOffset;
     // Determina si el usuario puede controlar este player o no. Sirve por si hay varias instancias de Player en juego.
     // Si m_controllable es false, el Player no reaccionará a eventos de Input
     bool m_connected;
     bool m_doingFlip;
+
+    bool m_hasSecondaryWeapons;
 
     //Tiempo de animacion de giro
     int m_flipAnimationTime;
@@ -116,6 +126,8 @@ private:
     void updateExplotionAnimation();
     void updateRespawningTimer();
     void doRespawningAnimation();
+
+    void updateSecondaryWeapons();
 
     void moveTo(const Vector2D& destination);
 
@@ -140,6 +152,8 @@ private:
 
     Vector2D m_destination;
     int m_autoMoveSpeed;
+
+
 
     //Modifica el estado del juego de acuerdo al input del jugador
 };
