@@ -172,7 +172,7 @@ bool ParserNivel::extraerEscenario(const pugi::xml_document* doc, bool isLoading
         teamList.push_back(newGameTeam);
     }
 
-    if (gameMode == GameModeCooperative) {
+    if (gameMode == 0) {
         this->m_escenario.gameMode = GameModeCooperative;
     } else {
         this->m_escenario.gameMode = GameModeCompetition;

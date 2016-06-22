@@ -7,40 +7,40 @@ server::server(int port, int maxC): MAX_CLIENTES(maxC)
 	m_alanTuring = new AlanTuring();
 	printf("El puerto es %d \n",port);
 	pthread_mutex_init(&m_serverInitMutex, NULL);
-    pthread_mutex_init(&m_mutex, NULL);
-    pthread_cond_init(&m_condv, NULL);
-    //Creo Socket
-    sockfd =  socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0)
-    	error("Error: No se pudo crear el socket");
+	pthread_mutex_init(&m_mutex, NULL);
+	pthread_cond_init(&m_condv, NULL);
+	//Creo Socket
+	sockfd =  socket(AF_INET, SOCK_STREAM, 0);
+	if (sockfd < 0)
+		error("Error: No se pudo crear el socket");
 
-    int optval = 1;
+	int optval = 1;
 	setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 
-     bzero((char *) &serv_addr, sizeof(serv_addr));
+	bzero((char *) &serv_addr, sizeof(serv_addr));
 
-    /*Seteo la gilada basica del server*/
-     serv_addr.sin_family = AF_INET;
+	/*Seteo la gilada basica del server*/
+	serv_addr.sin_family = AF_INET;
 
-     //Setea el adress del srv
-     serv_addr.sin_addr.s_addr = INADDR_ANY;
+	//Setea el adress del srv
+	serv_addr.sin_addr.s_addr = INADDR_ANY;
 
-     //Transforma el int por el tema del endianness
-     serv_addr.sin_port = htons(port);
+	//Transforma el int por el tema del endianness
+	serv_addr.sin_port = htons(port);
 
-     //Por ultimo enlazo el socket
-    if (::bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-              error("Server: No se enlazo correctamente el socket del server.");
+	//Por ultimo enlazo el socket
+	if (::bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
+		error("Server: No se enlazo correctamente el socket del server.");
 
-    m_clientNum = 0;
-    m_listaDeClientes.resize(MAX_CLIENTES);
-    m_listaTimeOuts.resize(MAX_CLIENTES);
-    m_clientThreads.resize(MAX_CLIENTES);
-    m_queuePost.resize(MAX_CLIENTES);
-    m_clientResponseThreads.resize(MAX_CLIENTES);
-    startProcesarThread();
+	m_clientNum = 0;
+	m_listaDeClientes.resize(MAX_CLIENTES);
+	m_listaTimeOuts.resize(MAX_CLIENTES);
+	m_clientThreads.resize(MAX_CLIENTES);
+	m_queuePost.resize(MAX_CLIENTES);
+	m_clientResponseThreads.resize(MAX_CLIENTES);
+	startProcesarThread();
 
-    printf("Bienvenido a servu\n");
+	printf("Bienvenido a servu\n");
 }
 
 server::~server()
@@ -52,32 +52,32 @@ server::~server()
 
 	delete m_alanTuring;
 	pthread_mutex_destroy(&m_serverInitMutex);
-    pthread_mutex_destroy(&m_mutex);
-    pthread_cond_destroy(&m_condv);
+	pthread_mutex_destroy(&m_mutex);
+	pthread_cond_destroy(&m_condv);
 }
 void server::error(const char *msg)
 {
 	Logger::Instance()->LOG(msg, LogTypeError);
 	Logger::Instance()->Close();
-    exit(1);
+	exit(1);
 }
 
 void server::escuchar()
 {
 	int success = 0;
-    success = listen(sockfd, MAX_CLIENTES);
-    if (success < 0)
-    {
-    	Logger::Instance()->LOG("Server: El server no se pudo configurar satisfactoriamente", LogTypeError);
-    	exit(-1);
-    }
+	success = listen(sockfd, MAX_CLIENTES);
+	if (success < 0)
+	{
+		Logger::Instance()->LOG("Server: El server no se pudo configurar satisfactoriamente", LogTypeError);
+		exit(-1);
+	}
 }
 void server::aceptar(){
-    //Aca el accept va a pisar el cli_addr y este nuevo es el sokete que lo relaciona a ese cliente
-    //Deberia meter el nuevo thread por aca
+	//Aca el accept va a pisar el cli_addr y este nuevo es el sokete que lo relaciona a ese cliente
+	//Deberia meter el nuevo thread por aca
 	socklen_t clilen = sizeof(cli_addr);
 
-	 newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr, &clilen);
+	newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr, &clilen);
 	if (newsockfd < 0)
 	{
 		std::stringstream ss;
@@ -85,37 +85,37 @@ void server::aceptar(){
 		Logger::Instance()->LOG(ss.str(), LogTypeError);
 		return;
 	}
-	 if(getNumClientes() < MAX_CLIENTES)
-	 {
-		 //Mensaje connectedMessage = MessageFactory::Instance()->createMessage("", "", msgConnected);//Deprecated
-		 //sendMsg(newsockfd, connectedMessage);//Deprecated
-		 //Envio del mensaje connected dentro de crear Cliente
-		 bool playerCreated = crearCliente(newsockfd);
-		 if (!playerCreated)
-		 {
-			 std::stringstream ss;
-			 ss <<"Server: No se pudo aceptar al cliente " << inet_ntoa(cli_addr.sin_addr) << " por nombre inválido.";
-			 Logger::Instance()->LOG(ss.str(), LogTypeWarn);
-		 }
-	 }
-	 else
-	 {
-		 std::stringstream ss;
-		 ss <<"Server: No se pudo aceptar al cliente " << inet_ntoa(cli_addr.sin_addr) << " por falta de capacidad.";
-		 Logger::Instance()->LOG(ss.str(), LogTypeWarn);
+	if(getNumClientes() < MAX_CLIENTES)
+	{
+		//Mensaje connectedMessage = MessageFactory::Instance()->createMessage("", "", msgConnected);//Deprecated
+		//sendMsg(newsockfd, connectedMessage);//Deprecated
+		//Envio del mensaje connected dentro de crear Cliente
+		bool playerCreated = crearCliente(newsockfd);
+		if (!playerCreated)
+		{
+			std::stringstream ss;
+			ss <<"Server: No se pudo aceptar al cliente " << inet_ntoa(cli_addr.sin_addr) << " por nombre inválido.";
+			Logger::Instance()->LOG(ss.str(), LogTypeWarn);
+		}
+	}
+	else
+	{
+		std::stringstream ss;
+		ss <<"Server: No se pudo aceptar al cliente " << inet_ntoa(cli_addr.sin_addr) << " por falta de capacidad.";
+		Logger::Instance()->LOG(ss.str(), LogTypeWarn);
 
-		 Mensaje serverFullMessage = MessageFactory::Instance()->createMessage("svfull", "", msgServerFull);
-		 sendMsg(newsockfd, serverFullMessage);
-		 close(newsockfd);
-		 return;
-	 }
+		Mensaje serverFullMessage = MessageFactory::Instance()->createMessage("svfull", "", msgServerFull);
+		sendMsg(newsockfd, serverFullMessage);
+		close(newsockfd);
+		return;
+	}
 
 
 }
 
 bool server::crearCliente (int clientSocket)
 {
-	 pthread_mutex_lock(&m_serverInitMutex);
+	pthread_mutex_lock(&m_serverInitMutex);
 	//m_lastID almacena el indice de la lista Inteligente en el que el cliente fue agregado
 	m_lastID = m_listaDeClientes.add(clientSocket);
 
@@ -140,25 +140,31 @@ bool server::crearCliente (int clientSocket)
 	//Tamaño de ventana
 	connectedMsg.windowWidth = Game::Instance()->getGameWidth();
 	connectedMsg.windowHeight = Game::Instance()->getGameHeight();
-	
-    //Info de modo de juego
+
+	//Info de modo de juego
 	connectedMsg.teamMode = Game::Instance()->isTeamMode();
-    connectedMsg.teamMode = true;
-    
-    std::vector<GameTeam> teamList = Game::Instance()->gameTeams();
-    std::stringstream teamStringStream;
-    std::transform(teamList.begin(),
-                   teamList.end(),
-                   std::ostream_iterator<std::string>(teamStringStream, "|"),
-                   [](const GameTeam &team) {
-                       return team.gameTeamName;
-                   });
-    
-    std::string teamsName = teamStringStream.str();
-    std::size_t teamsNameLenght = teamsName.copy(connectedMsg.teamsName, 128, 0);
-    connectedMsg.teamsName[teamsNameLenght - 1]='\0';
-    
-    connectedMsg.cantPlayers = MAX_CLIENTES;
+
+	if (connectedMsg.teamMode == true) {
+		printf("Gastón: Team mode es competitivo.\n");
+		std::vector<GameTeam> teamList = Game::Instance()->gameTeams();
+		std::stringstream teamStringStream;
+		std::transform(teamList.begin(),
+				teamList.end(),
+				std::ostream_iterator<std::string>(teamStringStream, "|"),
+				[](const GameTeam &team) {
+			return team.gameTeamName;
+		});
+
+		std::string teamsName = teamStringStream.str();
+		std::size_t teamsNameLenght = teamsName.copy(connectedMsg.teamsName, 128, 0);
+		connectedMsg.teamsName[teamsNameLenght - 1]='\0';
+
+		printf("Gastón, aca esta el valor de los teams: %s\n", teamsName);
+	} else {
+		printf("Gastón: Team mode es colaborativo.\n");
+	}
+
+	connectedMsg.cantPlayers = MAX_CLIENTES;
 	sendConnectedMsg(clientSocket, connectedMsg);
 
 	if (!leerBloqueando(m_lastID))
@@ -219,105 +225,105 @@ void server::removeTimeOutTimer(int clientPosition)
 void server::escribir(int id)
 {
 
-    //send(m_listaDeClientes.getElemAt(id), "Llego correctamente!\n", 21, 0);
+	//send(m_listaDeClientes.getElemAt(id), "Llego correctamente!\n", 21, 0);
 }
 
 void server::encolarDrawMessage(DrawMessage drawMsg)
 {
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
-	    	 NetworkMessage netMsg = m_alanTuring->drawMessageToNetwork(drawMsg);
-	    	 m_queuePost[i].add(netMsg);
-	     }
-	 }
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if ( m_listaDeClientes.isAvailable(i))
+		{
+			NetworkMessage netMsg = m_alanTuring->drawMessageToNetwork(drawMsg);
+			m_queuePost[i].add(netMsg);
+		}
+	}
 
 }
 
 void server::sendDrawMsgToAll(DrawMessage drawMsg){
 
-	 NetworkMessage netMsg = m_alanTuring->drawMessageToNetwork(drawMsg);
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
-	    	 m_queuePost[i].add(netMsg);
-	     }
-	 }
+	NetworkMessage netMsg = m_alanTuring->drawMessageToNetwork(drawMsg);
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if ( m_listaDeClientes.isAvailable(i))
+		{
+			m_queuePost[i].add(netMsg);
+		}
+	}
 }
 
 void server::sendResetMsgToAll(ResetInfo resetMsg)
 {
 
-	 NetworkMessage netMsg = m_alanTuring->ResetMsgToNetwork(resetMsg);
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
-	    	 m_queuePost[i].add(netMsg);
-	     }
-	 }
+	NetworkMessage netMsg = m_alanTuring->ResetMsgToNetwork(resetMsg);
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if ( m_listaDeClientes.isAvailable(i))
+		{
+			m_queuePost[i].add(netMsg);
+		}
+	}
 }
 
 void server::sendScoreMsgToAll(ScoreMessage scoreMsg)
 {
 
-	 NetworkMessage netMsg = m_alanTuring->ScoreMessageToNetwork(scoreMsg);
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
-	    	 m_queuePost[i].add(netMsg);
-	     }
-	 }
+	NetworkMessage netMsg = m_alanTuring->ScoreMessageToNetwork(scoreMsg);
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if ( m_listaDeClientes.isAvailable(i))
+		{
+			m_queuePost[i].add(netMsg);
+		}
+	}
 }
 void server::sendBackgroundInfoToAll(BackgroundInfo backgroundInfo)
 {
 
-	 NetworkMessage netMsg = m_alanTuring->BackgroundInfoToNetwork(backgroundInfo);
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
-	    	 m_queuePost[i].add(netMsg);
-	     }
-	 }
+	NetworkMessage netMsg = m_alanTuring->BackgroundInfoToNetwork(backgroundInfo);
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if ( m_listaDeClientes.isAvailable(i))
+		{
+			m_queuePost[i].add(netMsg);
+		}
+	}
 }
 void server::sendStageStatistics(StageStatistics stageStatistics, int clientID)
 {
 
-	 NetworkMessage netMsg = m_alanTuring->StageStatisticsToNetwork(stageStatistics);
-	 if ( m_listaDeClientes.isAvailable(clientID))
-	 {
-	    	 m_queuePost[clientID].add(netMsg);
-	 }
+	NetworkMessage netMsg = m_alanTuring->StageStatisticsToNetwork(stageStatistics);
+	if ( m_listaDeClientes.isAvailable(clientID))
+	{
+		m_queuePost[clientID].add(netMsg);
+	}
 }
 
 void server::sendStageBeginningInfoToAll(StageBeginning stageBeginningInfo)
 {
 
-	 NetworkMessage netMsg = m_alanTuring->StageBeginningToNetwork(stageBeginningInfo);
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
-	    	 m_queuePost[i].add(netMsg);
-	     }
-	 }
+	NetworkMessage netMsg = m_alanTuring->StageBeginningToNetwork(stageBeginningInfo);
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if ( m_listaDeClientes.isAvailable(i))
+		{
+			m_queuePost[i].add(netMsg);
+		}
+	}
 }
 
 void server::sendFinishGameInfoToAll(FinishGameInfo finishGameInfo)
 {
 
-	 NetworkMessage netMsg = m_alanTuring->FinishGameInfoToNetwork(finishGameInfo);
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
-	    	 m_queuePost[i].add(netMsg);
-	     }
-	 }
+	NetworkMessage netMsg = m_alanTuring->FinishGameInfoToNetwork(finishGameInfo);
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if ( m_listaDeClientes.isAvailable(i))
+		{
+			m_queuePost[i].add(netMsg);
+		}
+	}
 }
 
 void sendStageBeginningInfoToAll(StageBeginning stageBeginningInfo);
@@ -357,28 +363,28 @@ void server::informTextureInfos(int clientID)
 }
 
 void server::sendPackToAll(DrawMessagePack drawPackMsg){
-	 NetworkMessage netMsg = m_alanTuring->drawMsgPackToNetwork(drawPackMsg);
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
-	    	 m_queuePost[i].add(netMsg);
-	     }
-	 }
+	NetworkMessage netMsg = m_alanTuring->drawMsgPackToNetwork(drawPackMsg);
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if ( m_listaDeClientes.isAvailable(i))
+		{
+			m_queuePost[i].add(netMsg);
+		}
+	}
 }
 
 void server::informPlayerDisconnection(PlayerDisconnection playerDiscMsg, int playerDiscID){
 
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-		 if (i == playerDiscID)
-			 continue;
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
-	    	 NetworkMessage netMsg = m_alanTuring->playerDisconnectionToNetwork(playerDiscMsg);
-	    	 m_queuePost[i].add(netMsg);
-	     }
-	 }
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if (i == playerDiscID)
+			continue;
+		if ( m_listaDeClientes.isAvailable(i))
+		{
+			NetworkMessage netMsg = m_alanTuring->playerDisconnectionToNetwork(playerDiscMsg);
+			m_queuePost[i].add(netMsg);
+		}
+	}
 }
 
 
@@ -389,14 +395,14 @@ void server::informGameBeginning()
 	gameBeginningMsg.msg_Code[1] = 'b';
 	gameBeginningMsg.msg_Code[2] = 'g';
 	gameBeginningMsg.msg_Length = MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if ( m_listaDeClientes.isAvailable(i))
+		{
 
-	    	 m_queuePost[i].add(gameBeginningMsg);
-	     }
-	 }
+			m_queuePost[i].add(gameBeginningMsg);
+		}
+	}
 }
 
 void server::informPlayerReconnected(int clientID)
@@ -404,16 +410,16 @@ void server::informPlayerReconnected(int clientID)
 	PlayerReconnectionInfo playerRecInfo;
 	playerRecInfo.playerID = clientID;
 	NetworkMessage netWorkMessage = m_alanTuring->PlayerReconnectionInfoToNetwork(playerRecInfo);
-	 for (int i = 0; i < m_listaDeClientes.size(); i++)
-	 {
-		 if (i == clientID)
-			 continue;
-	     if ( m_listaDeClientes.isAvailable(i))
-	     {
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if (i == clientID)
+			continue;
+		if ( m_listaDeClientes.isAvailable(i))
+		{
 
-	    	 m_queuePost[i].add(netWorkMessage);
-	     }
-	 }
+			m_queuePost[i].add(netWorkMessage);
+		}
+	}
 }
 
 void server::informGameBegan(int clientID)
@@ -437,17 +443,17 @@ void server::sendDrawMsg(int socketReceptor, DrawMessage msg)
 
 	char *ptr = (char*) bufferEscritura;
 
-    while (msgLength > 0)
-    {
-        int bytesEnviados = send(socketReceptor, ptr, msgLength, 0);
-        if (bytesEnviados < 1)
-        {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
-        	return;
-        }
-        ptr += bytesEnviados;
-        msgLength -= bytesEnviados;
-    }
+	while (msgLength > 0)
+	{
+		int bytesEnviados = send(socketReceptor, ptr, msgLength, 0);
+		if (bytesEnviados < 1)
+		{
+			Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
+			return;
+		}
+		ptr += bytesEnviados;
+		msgLength -= bytesEnviados;
+	}
 }
 
 void server::sendNetworkMsg(int socketReceptor, NetworkMessage netMsg)
@@ -459,17 +465,17 @@ void server::sendNetworkMsg(int socketReceptor, NetworkMessage netMsg)
 
 	char *ptr = (char*) bufferEscritura;
 
-    while (msgLength > 0)
-    {
-        int bytesEnviados = send(socketReceptor, ptr, msgLength, 0);
-        if (bytesEnviados < 1)
-        {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
-        	return;
-        }
-        ptr += bytesEnviados;
-        msgLength -= bytesEnviados;
-    }
+	while (msgLength > 0)
+	{
+		int bytesEnviados = send(socketReceptor, ptr, msgLength, 0);
+		if (bytesEnviados < 1)
+		{
+			Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
+			return;
+		}
+		ptr += bytesEnviados;
+		msgLength -= bytesEnviados;
+	}
 }
 
 void server::sendConnectedMsg(int socketReceptor, ConnectedMessage msg)
@@ -478,17 +484,17 @@ void server::sendConnectedMsg(int socketReceptor, ConnectedMessage msg)
 	int msgLength = m_alanTuring->encodeConnectedMessage(msg, bufferEscritura);
 	char *ptr = (char*) bufferEscritura;
 
-    while (msgLength > 0)
-    {
-        int bytesEnviados = send(socketReceptor, ptr, msgLength , 0);
-        if (bytesEnviados < 1)
-        {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
-        	return;
-        }
-        ptr += bytesEnviados;
-        msgLength -= bytesEnviados;
-    }
+	while (msgLength > 0)
+	{
+		int bytesEnviados = send(socketReceptor, ptr, msgLength , 0);
+		if (bytesEnviados < 1)
+		{
+			Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
+			return;
+		}
+		ptr += bytesEnviados;
+		msgLength -= bytesEnviados;
+	}
 }
 void server::sendDisconnectionMsg(int socketReceptor, PlayerDisconnection msg)
 {
@@ -496,17 +502,17 @@ void server::sendDisconnectionMsg(int socketReceptor, PlayerDisconnection msg)
 	int msgLength = m_alanTuring->encodePlayerDisconnectionMessage(msg, bufferEscritura);
 	char *ptr = (char*) bufferEscritura;
 
-    while (msgLength > 0)
-    {
-        int bytesEnviados = send(socketReceptor, ptr, msgLength , 0);
-        if (bytesEnviados < 1)
-        {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
-        	return;
-        }
-        ptr += bytesEnviados;
-        msgLength -= bytesEnviados;
-    }
+	while (msgLength > 0)
+	{
+		int bytesEnviados = send(socketReceptor, ptr, msgLength , 0);
+		if (bytesEnviados < 1)
+		{
+			Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
+			return;
+		}
+		ptr += bytesEnviados;
+		msgLength -= bytesEnviados;
+	}
 }
 
 void server::sendMsg(int socketReceptor, Mensaje msg)
@@ -515,17 +521,17 @@ void server::sendMsg(int socketReceptor, Mensaje msg)
 	int msgLength = m_alanTuring->encodeXMLMessage(msg, bufferEscritura);
 	char *ptr = (char*) bufferEscritura;
 
-    while (msgLength > 0)
-    {
-        int bytesEnviados = send(socketReceptor, ptr, msgLength, 0);
-        if (bytesEnviados < 1)
-        {
-        	Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
-        	return;
-        }
-        ptr += bytesEnviados;
-        msgLength -= bytesEnviados;
-    }
+	while (msgLength > 0)
+	{
+		int bytesEnviados = send(socketReceptor, ptr, msgLength, 0);
+		if (bytesEnviados < 1)
+		{
+			Logger::Instance()->LOG("Server: No se pudo enviar el mensaje.", LogTypeWarn);
+			return;
+		}
+		ptr += bytesEnviados;
+		msgLength -= bytesEnviados;
+	}
 
 	/*int bytesEnviados = send(socketReceptor,bufferEscritura , msgLength, 0);
     if (bytesEnviados <= 0)
@@ -541,67 +547,67 @@ void server::sendMsg(int socketReceptor, Mensaje msg)
 
 bool server::leer(int id)
 {
-    //Reseteo el buffer que se va a completar con nuevos mensajes
-    bzero(buffer, MESSAGE_BUFFER_SIZE);
-    char *p = (char*)buffer;
-    int messageLength = 0;
+	//Reseteo el buffer que se va a completar con nuevos mensajes
+	bzero(buffer, MESSAGE_BUFFER_SIZE);
+	char *p = (char*)buffer;
+	int messageLength = 0;
 
-    int readLimit = (DRAW_MESSAGE_PACK_SIZE * sizeof(DrawMessage)) + MESSAGE_CODE_BYTES + MESSAGE_LENGTH_BYTES + MESSAGE_LENGTH_BYTES;
+	int readLimit = (DRAW_MESSAGE_PACK_SIZE * sizeof(DrawMessage)) + MESSAGE_CODE_BYTES + MESSAGE_LENGTH_BYTES + MESSAGE_LENGTH_BYTES;
 
-    int n = recv(m_listaDeClientes.getElemAt(id), buffer, MESSAGE_LENGTH_BYTES, 0);
+	int n = recv(m_listaDeClientes.getElemAt(id), buffer, MESSAGE_LENGTH_BYTES, 0);
 
-    if (!lecturaExitosa(n, id))
-    	return false;
+	if (!lecturaExitosa(n, id))
+		return false;
 
-    int acum = n;
-   // bool bug = false;
-    while (acum < MESSAGE_LENGTH_BYTES)
-    {
- 	   p += n;
- 	   n = recv(m_listaDeClientes.getElemAt(id), p, MESSAGE_LENGTH_BYTES - acum, 0);
-       if (!lecturaExitosa(n, id))
-       	return false;
- 	   acum += n;
+	int acum = n;
+	// bool bug = false;
+	while (acum < MESSAGE_LENGTH_BYTES)
+	{
+		p += n;
+		n = recv(m_listaDeClientes.getElemAt(id), p, MESSAGE_LENGTH_BYTES - acum, 0);
+		if (!lecturaExitosa(n, id))
+			return false;
+		acum += n;
 
-    }
-    messageLength = m_alanTuring->decodeLength(buffer);
-    //printf("Longitud Mensaje: %d \n", messageLength);
+	}
+	messageLength = m_alanTuring->decodeLength(buffer);
+	//printf("Longitud Mensaje: %d \n", messageLength);
 
-    p += n;
-    messageLength -= acum;
+	p += n;
+	messageLength -= acum;
 
-    //loopea hasta haber leido la totalidad de los bytes necarios
-    while (messageLength > 0)
-    {
-    	//printf("Faltan leer %d \n", messageLength);
-    	n = recv(m_listaDeClientes.getElemAt(id), p, messageLength, 0);
+	//loopea hasta haber leido la totalidad de los bytes necarios
+	while (messageLength > 0)
+	{
+		//printf("Faltan leer %d \n", messageLength);
+		n = recv(m_listaDeClientes.getElemAt(id), p, messageLength, 0);
 
-    	 if(messageLength >readLimit)
-    	 {
-    		 return true;
-    	 }
+		if(messageLength >readLimit)
+		{
+			return true;
+		}
 
-        if (!lecturaExitosa(n, id))
-        	return false;
-        p += n;
-        messageLength -= n;
-    }
+		if (!lecturaExitosa(n, id))
+			return false;
+		p += n;
+		messageLength -= n;
+	}
 
-    //resetea el timer de timeout
-    m_listaTimeOuts.getElemAt(id).Reset();
+	//resetea el timer de timeout
+	m_listaTimeOuts.getElemAt(id).Reset();
 
-    NetworkMessage netMsgRecibido = m_alanTuring->decode(buffer);
+	NetworkMessage netMsgRecibido = m_alanTuring->decode(buffer);
 
-    ServerMessage serverMsg;
-    serverMsg.clientID = id;
-    serverMsg.networkMessage = netMsgRecibido;
- /*string my_str2 (buffer);
+	ServerMessage serverMsg;
+	serverMsg.clientID = id;
+	serverMsg.networkMessage = netMsgRecibido;
+	/*string my_str2 (buffer);
     mensije msg;
     msg.id = id;
     msg.texto = my_str2;*/
 
-    m_mensajesAProcesar.add(serverMsg);
-    return true;
+	m_mensajesAProcesar.add(serverMsg);
+	return true;
 }
 
 void* server::procesar(void)
@@ -626,7 +632,7 @@ void* server::procesar(void)
 		}
 
 	}
-    return NULL;
+	return NULL;
 }
 
 void server::checkTimeOuts()
@@ -655,27 +661,27 @@ void* server::postProcesamiento(void)
 	bool ciclar = true;
 	while(ciclar)
 	{
-			if (m_queuePost[id].size() != 0)
-			{
-				NetworkMessage netMsg = m_queuePost[id].remove();
-				//DrawMessage drawMessage =  m_alanTuring->decodeDrawMessage(netMsg);
+		if (m_queuePost[id].size() != 0)
+		{
+			NetworkMessage netMsg = m_queuePost[id].remove();
+			//DrawMessage drawMessage =  m_alanTuring->decodeDrawMessage(netMsg);
 
-				sendNetworkMsg(m_listaDeClientes.getElemAt(id),netMsg);
-			}
+			sendNetworkMsg(m_listaDeClientes.getElemAt(id),netMsg);
+		}
 	}
-    return NULL;
+	return NULL;
 }
 
 
 void *server::newDialog(void)
 {
-    int id = this->m_lastID;
-    while(true)
-    {
-    	if (!this->leer(id))
-    		break;
+	int id = this->m_lastID;
+	while(true)
+	{
+		if (!this->leer(id))
+			break;
 	}
-    pthread_exit(NULL);
+	pthread_exit(NULL);
 
 }
 // nunca deberais desafiar el poder del matimethod...o sera muy tarde...fuera de joda no tokes nada aca gil ah si? ven aqui
@@ -700,13 +706,13 @@ void server::startProcesarThread()
 
 void server::closeAllsockets()
 {
-    //Cuando el Server tenga lista de threads hay q recorrer cerrando
+	//Cuando el Server tenga lista de threads hay q recorrer cerrando
 	for (int i = 0; i < m_listaDeClientes.size(); i++)
 	{
 		closeSocket(i);
 	}
-    //close(newsockfd);
-    close(sockfd);
+	//close(newsockfd);
+	close(sockfd);
 }
 
 void server::closeSocket(int id)
@@ -729,26 +735,26 @@ void server::closeSocket(int id)
 
 void server::aumentarNumeroClientes()
 {
-    pthread_mutex_lock(&m_mutex);
-    if (m_clientNum < MAX_CLIENTES)
-    	m_clientNum++;
-    pthread_cond_signal(&m_condv);
-    pthread_mutex_unlock(&m_mutex);
+	pthread_mutex_lock(&m_mutex);
+	if (m_clientNum < MAX_CLIENTES)
+		m_clientNum++;
+	pthread_cond_signal(&m_condv);
+	pthread_mutex_unlock(&m_mutex);
 }
 void server::reducirNumeroClientes()
 {
-    pthread_mutex_lock(&m_mutex);
-    if (m_clientNum > 0)
-    	m_clientNum--;
-    pthread_cond_signal(&m_condv);
-    pthread_mutex_unlock(&m_mutex);
+	pthread_mutex_lock(&m_mutex);
+	if (m_clientNum > 0)
+		m_clientNum--;
+	pthread_cond_signal(&m_condv);
+	pthread_mutex_unlock(&m_mutex);
 }
 const int server::getNumClientes()
 {
-    pthread_mutex_lock(&m_mutex);
-    int cant = m_clientNum;
-    pthread_mutex_unlock(&m_mutex);
-    return cant;
+	pthread_mutex_lock(&m_mutex);
+	int cant = m_clientNum;
+	pthread_mutex_unlock(&m_mutex);
+	return cant;
 }
 
 const int server::getMaxClientes()
@@ -779,22 +785,22 @@ bool server::isRunning()
 
 bool server::lecturaExitosa(int bytesLeidos, int clientID)
 {
-    if (bytesLeidos < 0)
-    {
-    	//Cliente Desconectado
-    	//printf ("Close lectura -1\n");
-    	closeSocket(clientID);
-    	return false;
+	if (bytesLeidos < 0)
+	{
+		//Cliente Desconectado
+		//printf ("Close lectura -1\n");
+		closeSocket(clientID);
+		return false;
 
-    }
-    if (bytesLeidos == 0)
-    {
-    	//Cliente Desconectado. Hay diferencias con recibir -1? Sino lo ponemos to do junto, hacen lo mismo
-    	//printf ("Close lectura 0\n");
-    	closeSocket(clientID);
-    	return false;
-    }
-    return true;
+	}
+	if (bytesLeidos == 0)
+	{
+		//Cliente Desconectado. Hay diferencias con recibir -1? Sino lo ponemos to do junto, hacen lo mismo
+		//printf ("Close lectura 0\n");
+		closeSocket(clientID);
+		return false;
+	}
+	return true;
 }
 
 bool server::procesarMensaje(ServerMessage* serverMsg)
@@ -882,53 +888,53 @@ bool server::procesarMensaje(ServerMessage* serverMsg)
 
 bool server::leerBloqueando(int id)
 {
-    //Reseteo el buffer que se va a completar con nuevos mensajes
-    bzero(buffer, MESSAGE_BUFFER_SIZE);
-    char *p = (char*)buffer;
-    int messageLength = 0;
+	//Reseteo el buffer que se va a completar con nuevos mensajes
+	bzero(buffer, MESSAGE_BUFFER_SIZE);
+	char *p = (char*)buffer;
+	int messageLength = 0;
 
-    int n = recv(m_listaDeClientes.getElemAt(id), p, MESSAGE_LENGTH_BYTES, 0);
-    if (!lecturaExitosa(n, id))
-    	return false;
+	int n = recv(m_listaDeClientes.getElemAt(id), p, MESSAGE_LENGTH_BYTES, 0);
+	if (!lecturaExitosa(n, id))
+		return false;
 
-    int acum = n;
-    while (n < 4)
-    {
- 	   p += n;
- 	   n = recv(m_listaDeClientes.getElemAt(id), p, MESSAGE_LENGTH_BYTES, 0);
-       if (!lecturaExitosa(n, id))
-       	return false;
- 	   acum += n;
-    }
-    messageLength = m_alanTuring->decodeLength(buffer);
+	int acum = n;
+	while (n < 4)
+	{
+		p += n;
+		n = recv(m_listaDeClientes.getElemAt(id), p, MESSAGE_LENGTH_BYTES, 0);
+		if (!lecturaExitosa(n, id))
+			return false;
+		acum += n;
+	}
+	messageLength = m_alanTuring->decodeLength(buffer);
 
-    p += n;
-    messageLength -= acum;
+	p += n;
+	messageLength -= acum;
 
-    //loopea hasta haber leido la totalidad de los bytes necarios
-    while (messageLength > 0)
-    {
-    	n = recv(m_listaDeClientes.getElemAt(id), p, messageLength, 0);
-        if (!lecturaExitosa(n, id))
-        	return false;
-        p += n;
-        messageLength -= n;
-    }
+	//loopea hasta haber leido la totalidad de los bytes necarios
+	while (messageLength > 0)
+	{
+		n = recv(m_listaDeClientes.getElemAt(id), p, messageLength, 0);
+		if (!lecturaExitosa(n, id))
+			return false;
+		p += n;
+		messageLength -= n;
+	}
 
-    //resetea el timer de timeout
-    m_listaTimeOuts.getElemAt(id).Reset();
+	//resetea el timer de timeout
+	m_listaTimeOuts.getElemAt(id).Reset();
 
-    NetworkMessage netMsgRecibido = m_alanTuring->decode(buffer);
+	NetworkMessage netMsgRecibido = m_alanTuring->decode(buffer);
 
-    ServerMessage serverMsg;
-    serverMsg.clientID = id;
-    serverMsg.networkMessage = netMsgRecibido;
- /*string my_str2 (buffer);
+	ServerMessage serverMsg;
+	serverMsg.clientID = id;
+	serverMsg.networkMessage = netMsgRecibido;
+	/*string my_str2 (buffer);
     mensije msg;
     msg.id = id;
     msg.texto = my_str2;*/
 
-    procesarMensaje(&serverMsg);
-    return true;
+	procesarMensaje(&serverMsg);
+	return true;
 }
 
