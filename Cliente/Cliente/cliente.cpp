@@ -376,14 +376,21 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
             std::vector<GameTeam> menuTeamOptionsList = {};
             
             if (connectedMessage.teamMode) {
-                std::string teamsStr = connectedMessage.teamsName;
-                std::stringstream teamsStream(teamsStr);
-                std::string teamToken;
+                std::string allTeamsStr = connectedMessage.teamsName;
+                std::stringstream allTeamsStream(allTeamsStr);
+                std::string allTeamToken;
                 
-                while (std::getline(teamsStream, teamToken, '|')) {
+                while (std::getline(allTeamsStream, allTeamToken, '|')) {
                     GameTeam newGameTeam;
-                    newGameTeam.gameTeamID = std::atoi(&teamToken.back());
-                    newGameTeam.gameTeamName = teamToken.substr(0, teamToken.size() - 1);
+                    
+                    std::stringstream teamStream = stringstream(allTeamToken);
+                    std::string teamToken;
+                    
+                    std::getline(teamStream, teamToken, '-');
+                    newGameTeam.gameTeamName = teamToken;
+                    
+                    std::getline(teamStream, teamToken, '-');
+                    newGameTeam.gameTeamID = atoi(teamToken.c_str());
                     newGameTeam.gameTeamScore = 0;
                     
                     menuTeamOptionsList.push_back(newGameTeam);

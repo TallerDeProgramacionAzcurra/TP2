@@ -151,7 +151,7 @@ bool server::crearCliente (int clientSocket)
 				teamList.end(),
 				std::ostream_iterator<std::string>(teamStringStream, "|"),
 				[](const GameTeam &team) {
-			return team.gameTeamName + std::to_string(team.gameTeamID);
+			return team.gameTeamName + "-" + std::to_string(team.gameTeamID);
 		});
 
 		std::string teamsName = teamStringStream.str();

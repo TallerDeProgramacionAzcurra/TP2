@@ -217,12 +217,12 @@
         <GameMode>1</GameMode>
         <GameModeTeams>
             <GameModeTeam>
-                <TeamID>0</TeamID>
-                <TeamName>Equipo Rojo</TeamName>
+                <TeamID>44</TeamID>
+                <TeamName>Equipo Bordo</TeamName>
             </GameModeTeam>
             <GameModeTeam>
-                <TeamID>1</TeamID>
-                <TeamName>Equipo Blanco</TeamName>
+                <TeamID>11</TeamID>
+                <TeamName>Equipo Lino</TeamName>
             </GameModeTeam>
         </GameModeTeams>
     </GameModes>
