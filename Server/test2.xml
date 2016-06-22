@@ -1,5 +1,5 @@
 <ventana>
-	<ancho>800</ancho>
+	<ancho>600</ancho>
 	<alto>600</alto>
 </ventana>
 <sprites>
@@ -195,7 +195,7 @@
 </sprites>
 <escenario>
 	<cantidadMaximaJugadores>2</cantidadMaximaJugadores>
-	<cantidadStages>5</cantidadStages>
+	<cantidadStages>2</cantidadStages>
 	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>
 	<alto>2000</alto>
@@ -245,11 +245,11 @@
         <GameMode>1</GameMode>
         <GameModeTeams>
             <GameModeTeam>
-                <TeamID>1</TeamID>
+                <TeamID>0</TeamID>
                 <TeamName>Equipo Bordo</TeamName>
             </GameModeTeam>
             <GameModeTeam>
-                <TeamID>2</TeamID>
+                <TeamID>1</TeamID>
                 <TeamName>Equipo Lino</TeamName>
             </GameModeTeam>
         </GameModeTeams>

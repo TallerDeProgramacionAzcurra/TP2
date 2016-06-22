@@ -383,7 +383,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
                 while (std::getline(allTeamsStream, allTeamToken, '|')) {
                     GameTeam newGameTeam;
                     
-                    std::stringstream teamStream = stringstream(allTeamToken);
+                    std::stringstream teamStream(allTeamToken);//Trae problemas
                     std::string teamToken;
                     
                     std::getline(teamStream, teamToken, '-');
