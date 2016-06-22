@@ -13,7 +13,7 @@ Statistics::Statistics(int gameWidth, int gameHeight, StageStatistics stats)
     title->height = h*TEXT_SIZE_FACTOR;
     title->width = w*TEXT_SIZE_FACTOR;
     title->x = (gameWidth-title->width)/2;
-    title->y = 1*gameHeight/4;
+    title->y = 3*gameHeight/4;
     m_texts.push_back(title);
     
     points = new FontTexture();
@@ -56,5 +56,5 @@ void Statistics::createFontTexture(short value, const char* text, FontTexture* f
     string s = ss.str();
     const char *pchar = s.c_str();
     font->text = pchar;
-    font->texture = FontManager::Instance()->drawtext(190,100,25,0,0,0,0,0, font->text, blended);
+    font->texture = FontManager::Instance()->drawtext(51,0,51,0,0,0,0,0, font->text, blended);
 }

@@ -194,8 +194,8 @@
 	</sprite>
 </sprites>
 <escenario>
-	<cantidadMaximaJugadores>2</cantidadMaximaJugadores>
-	<cantidadStages>2</cantidadStages>
+	<cantidadMaximaJugadores>1</cantidadMaximaJugadores>
+	<cantidadStages>3</cantidadStages>
 	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>
 	<alto>2000</alto>
