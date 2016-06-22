@@ -496,12 +496,20 @@ void Game::addPointsToScore(int points, int playerID, int teamID)
 
 void Game::addPointsToTeam(int points, int teamID)
 {
-    GameTeam playerTeam = this->m_gameTeams[teamID];
-    playerTeam.gameTeamScore = playerTeam.gameTeamScore + points;
+    std::vector<GameTeam> teams = this->m_parserNivel->getEscenario().teamsList;
+    std::vector<GameTeam>::iterator iterator = teams.begin();
     
-	if (playerTeam.gameTeamScore < 0) {
-		playerTeam.gameTeamScore = 0;
-	}
+    for (*iterator; iterator != teams.end(); ++iterator) {
+        GameTeam playerTeam = *iterator;
+        
+        if (playerTeam.gameTeamID == teamID) {
+            playerTeam.gameTeamScore = playerTeam.gameTeamScore + points;
+            
+            if (playerTeam.gameTeamScore < 0) {
+                playerTeam.gameTeamScore = 0;
+            }
+        }
+    }
 }
 
 Player* Game::getPlayer(int playerID)
@@ -834,7 +842,8 @@ void Game::informEndGame(bool levelFinished)
 		int winnerID = 0;
 		finishGameInfo.isVictory = true;
         
-        for (std::vector<GameTeam>::iterator iterator = m_gameTeams.begin(); iterator != m_gameTeams.end(); ++iterator) {
+        std::vector<GameTeam> teamList = this->m_parserNivel->getEscenario().teamsList;
+        for (std::vector<GameTeam>::iterator iterator = teamList.begin(); iterator != teamList.end(); ++iterator) {
 			GameTeam team = *iterator;
 			if (team.gameTeamScore >= maxScore) {
 				maxScore = team.gameTeamScore;
