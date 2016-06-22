@@ -166,6 +166,7 @@ void Level::resetPositions()
 	 m_virtualPosition = m_levelHeight + Game::Instance()->getGameHeight();
 }
 
+
 /*void Level::paintBackground()
 {
 }*/

@@ -15,6 +15,7 @@ class Bullet;
 class Enemy;
 class Player;
 class PowerUp;
+class SecondaryShip;
 class GameObject;
 
 class CollitionHandler
@@ -36,6 +37,7 @@ public:
     void addPlayer(Player* player);
     void addEnemy(Enemy* enemy);
     void addPowerUp(PowerUp* powerUp);
+    void addSecondaryShip(SecondaryShip* secondaryShip);
     void addPlayerBullet(std::shared_ptr<Bullet> playerBullet);
     void addEnemyBullet(std::shared_ptr<Bullet> enemyBullet);
 
@@ -53,6 +55,7 @@ private:
     std::vector<Player*> m_players;
     std::vector<Enemy*> m_enemies;
     std::vector<PowerUp*> m_powerUps;
+    std::vector<SecondaryShip*> m_secondaryShips;
 
     std::vector<std::shared_ptr<Bullet>> m_playersBullets;
     std::vector<std::shared_ptr<Bullet>> m_enemiesBullets;
@@ -65,6 +68,9 @@ private:
 
     //chekea enemigos contra balas de players (contra players ya se chekea en handle player collitions)
     void handleEnemyCollitions();
+
+    //chekea naves secundarias contra enemigos y balas
+    void handleSecondaryCollitions();
 
     //hit box circular
     //Devuelve true si hay colision

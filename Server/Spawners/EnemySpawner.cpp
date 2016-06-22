@@ -40,6 +40,18 @@ void EnemySpawner::clean()
 		delete m_textureHelper;
 }
 
+void EnemySpawner::reset()
+{
+	for (std::vector<EnemySpawnInfo>::iterator it = m_enemiesToSpawn.begin() ; it != m_enemiesToSpawn.end(); ++it)
+	{
+		if ((*it).enemyToSpawn)
+		{
+			delete (*it).enemyToSpawn;
+		}
+	}
+	m_enemiesToSpawn.clear();
+}
+
 
 void EnemySpawner::feed(std::vector<Enemigo> enemies, int stageSize)
 {

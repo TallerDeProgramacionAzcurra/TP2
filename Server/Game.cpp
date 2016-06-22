@@ -426,8 +426,10 @@ void Game::inicializarServer()
 	Logger::Instance()->setLoglevel(loggerInfo.debugAvailable, loggerInfo.warningAvailable, loggerInfo.errorAvailable);
 
 	int porto = servidorParser->getServidorInfo().puerto ;
+
+
 	int maxClientes = m_parserNivel->getEscenario().cantidadJugadores;
-	//printf("Creando enlazamiento\n");
+
 	m_server = new server(porto, maxClientes);
 
     m_drawMessagePacker = new DrawMessagesPacker(m_server);
@@ -440,6 +442,7 @@ void Game::inicializarServer()
 	{
 		auxi++;
 		m_server->aceptar();
+		printf("cant clientes = %d / %d \n", m_server->getNumClientes(), m_server->getMaxClientes());
 	}
 
 	//Informa a los clientes que el juego comenzará
@@ -516,11 +519,11 @@ void Game::addPointsToScore(int points, int playerID, int teamID)
 
 void Game::addPointsToTeam(int points, int teamID)
 {
-    GameTeam playerTeam = this->m_gameTeams[teamID];
-    playerTeam.gameTeamScore = playerTeam.gameTeamScore + points;
+    this->m_gameTeams[teamID].gameTeamScore = this->m_gameTeams[teamID].gameTeamScore + points;
     
-	if (playerTeam.gameTeamScore < 0) {
-		playerTeam.gameTeamScore = 0;
+	if (this->m_gameTeams[teamID].gameTeamScore < 0)
+	{
+		this->m_gameTeams[teamID].gameTeamScore = 0;
 	}
 }
 
@@ -844,6 +847,7 @@ void Game::informEndGame(bool levelFinished)
 				}
 			}
 		}
+		printf("Max Score %d \n", maxScore);
 		finishGameInfo.points = maxScore;
 		finishGameInfo.winnerID = winnerID;
 
@@ -854,14 +858,16 @@ void Game::informEndGame(bool levelFinished)
 		int winnerID = 0;
 		finishGameInfo.isVictory = true;
         
-        for (std::vector<GameTeam>::iterator iterator = m_gameTeams.begin(); iterator != m_gameTeams.end(); ++iterator) {
+        for (std::vector<GameTeam>::iterator iterator = m_gameTeams.begin(); iterator != m_gameTeams.end(); ++iterator)
+        {
 			GameTeam team = *iterator;
-			if (team.gameTeamScore >= maxScore) {
+			if (team.gameTeamScore >= maxScore)
+			{
 				maxScore = team.gameTeamScore;
 				winnerID = team.gameTeamID;
 			}
 		}
-        
+        printf("Max Score %d \n", maxScore);
 		finishGameInfo.points = maxScore;
 		finishGameInfo.winnerID = winnerID;
 	}
@@ -1069,11 +1075,13 @@ void Game::restartLevel()
 			it->second->setPosition(Vector2D(Game::Instance()->getGameWidth()/2 - 32,  m_gameHeight - m_gameHeight/5 ));
 		}
 	}
-	 for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end(); ++it)
+
+	 /*for (std::vector<Enemy*>::iterator it = m_enemies.begin() ; it != m_enemies.end(); ++it)
 	 {
 		 //(*it)->clean();
 		 (*it)->setDead(true);
-	 }
+	 }*/
+	killAllEnemiesNoRewards();
 	 for (std::vector<PowerUp*>::iterator it = m_powerUps.begin() ; it != m_powerUps.end(); ++it)
 	 {
 		 //(*it)->clean();
@@ -1088,5 +1096,7 @@ void Game::restartLevel()
 	 m_currentStage = 1;
 	 m_endingStage = false;
 	 m_level->resetPositions();
+	 m_powerUpsSpawner->reset();
+	 m_enemiesSpawner->reset();
 	 loadCurrentStage();
 }

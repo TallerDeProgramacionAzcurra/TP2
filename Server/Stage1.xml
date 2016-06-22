@@ -55,11 +55,11 @@
 		<alto>48</alto>
 	</powerup>
 	<powerup>
-		<id>*********</id>
-		<cantidad>5</cantidad>
-		<frames>999999</frames>
-		<ancho>999999</ancho>
-		<alto>999999</alto>
+		<id>SecondaryPow</id>
+		<cantidad>10</cantidad>
+		<frames>1</frames>
+		<ancho>48</ancho>
+		<alto>48</alto>
 	</powerup>
 </powerups>
 <bosses>
