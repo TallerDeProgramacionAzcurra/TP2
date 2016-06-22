@@ -15,7 +15,7 @@
 #include <list>
 
 #include "ClientMenuButtonTexture.hpp"
-#include "TiposDefinidos.h"
+#include "../Utils/TiposDefinidos.h"
 
 class ClientMenu: public ClientMenuButtonTextureDelegate {
 public:
