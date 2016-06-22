@@ -508,13 +508,13 @@ void Player::shootWithSecondaryWeapons()
 		if (m_leftSecondaryPlane && !m_leftSecondaryPlane->isDead())
 		{
 			m_leftSecondaryPlane->shoot(Vector2D(m_leftSecondaryPlane->getPosition().m_x + 16, m_leftSecondaryPlane->getPosition().m_y),
-										Vector2D(0, DIRECTION_UP), m_currentWeapon->getBulletSpeed(), m_objectId, m_teamNumber);
+										Vector2D(0, DIRECTION_UP), m_currentWeapon->getBulletSpeed(), m_objectId, playerGameTeam.gameTeamID);
 		}
 
 		if (m_rightSecondaryPlane && !m_rightSecondaryPlane->isDead())
 		{
 			m_rightSecondaryPlane->shoot(Vector2D(m_rightSecondaryPlane->getPosition().m_x + 16, m_rightSecondaryPlane->getPosition().m_y),
-										Vector2D(0, DIRECTION_UP), m_currentWeapon->getBulletSpeed(), m_objectId, m_teamNumber);
+										Vector2D(0, DIRECTION_UP), m_currentWeapon->getBulletSpeed(), m_objectId, playerGameTeam.gameTeamID);
 		}
 	}
 }
