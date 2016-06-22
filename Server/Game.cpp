@@ -183,6 +183,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName, int player
 	m_listOfPlayer[newPlayer->getObjectId()]= newPlayer;
 
 	printf("Player: %s inicializado con objectID: %d y textureID: %d\n",m_playerNames[clientID].c_str(), newPlayer->getObjectId(), clientID);
+    printf("Player: %s pertenece al equipo: %s con TeamID: %i.",m_playerNames[clientID].c_str(), selectedTeam.gameTeamName.c_str(), selectedTeam.gameTeamID);
 
 	CollitionHandler::Instance()->addPlayer(newPlayer);
 
