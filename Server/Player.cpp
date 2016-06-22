@@ -563,6 +563,19 @@ void Player::reset()
 
 	m_stageStats.reset();
 	m_score.reset();
+
+	if (m_hasSecondaryWeapons)
+	{
+		if (m_leftSecondaryPlane)
+		{
+			m_leftSecondaryPlane->setDead(true);
+		}
+		if (m_rightSecondaryPlane)
+		{
+			m_rightSecondaryPlane->setDead(true);
+		}
+		m_hasSecondaryWeapons = false;
+	}
 }
 
 void Player::moveAutomatic(const Vector2D& destination, int speed)

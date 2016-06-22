@@ -159,6 +159,7 @@ bool Game::createPlayer(int clientID,  const std::string& playerName, int player
 		else //Se desconecto y se esta volviendo a conectar
 		{
 			player->setConnected(true);
+			player->setPlayerTeam(m_teamsList[playerTeam]);
 			player->refreshDirty();
 			m_server->informGameBegan(clientID);
 			m_server->informPlayerReconnected(clientID);
@@ -1116,6 +1117,7 @@ void Game::restartLevel()
 			it->second->reset();
 			it->second->refreshDirty();
 			it->second->setPosition(Vector2D(Game::Instance()->getGameWidth()/2 - 32,  m_gameHeight - m_gameHeight/5 ));
+
 		}
 	}
 
@@ -1138,8 +1140,14 @@ void Game::restartLevel()
 	 }
 	 m_currentStage = 1;
 	 m_endingStage = false;
+	 m_gameOver = false;
 	 m_level->resetPositions();
 	 m_powerUpsSpawner->reset();
 	 m_enemiesSpawner->reset();
+     for (unsigned int i = 0; i < m_teamsList.size(); ++i)
+     {
+    	 m_teamsList[i].gameTeamScore = 0;
+     }
+
 	 loadCurrentStage();
 }

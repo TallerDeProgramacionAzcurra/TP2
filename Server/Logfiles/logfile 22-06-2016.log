@@ -867,3 +867,270 @@
   WARNING: Se cargo el path del sprite por default
   WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
   DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:31 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #sd ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:31 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #s ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:34 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #s ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se desconectó un cliente.
+  DEBUG: Server: Se desconectó un cliente.
+  ===============================================
+    Comienzo del Log ( 22-06-2016 a las 15:38 ) 
+  ===============================================
+
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador # ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Jugador #sds ha ingresado a la partida.
+  DEBUG: Server: Se acepto el cliente: 127.0.0.1
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200
+  DEBUG: Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 300Juego: Se cargó el objeto Portaviones en la posición x = 225, y = 2000Juego: Se cargó el objeto isla en la posición x = 0, y = 2000Juego: Se cargó el objeto isla en la posición x = 400, y = 200Juego: Se cargó el objeto piedra en la posición x = 336, y = 1364
+  WARNING: Se cargo el path del sprite por default
+  WARNING: Al no tener un id existente entre los sprites, se asignará un sprte default
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se reiniciará el juego.
+  DEBUG: Server: Se ha reiniciado el juego.
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  DEBUG: Server: Se desconectó un cliente.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
+  WARNING: Server: No se pudo enviar el mensaje.
