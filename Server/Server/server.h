@@ -50,6 +50,7 @@ class server
         /******************************Mensajes***********************************/
         void sendNetworkMsg(int socketReceptor, NetworkMessage netMsg);
         void sendDrawMsgToAll(DrawMessage msg);
+        void sendPlayerNames(PlayerNameUpdateInfo playerNameInfo);
         void sendPackToAll(DrawMessagePack msg);
         void sendDrawMsg(int socketReceptor, DrawMessage msg);
         void sendConnectedMsg(int socketReceptor, ConnectedMessage msg);
@@ -59,6 +60,7 @@ class server
         void sendStageStatistics(StageStatistics stageStatistics, int clientID);
         void sendStageBeginningInfoToAll(StageBeginning stageBeginningInfo);
         void sendFinishGameInfoToAll(FinishGameInfo finishGameInfo);
+        void sendPlayerDataToClient(PlayerDataUpdateInfo playerDataInfo);
 
         void sendDisconnectionMsg(int socketReceptor, PlayerDisconnection msg);
 
@@ -67,7 +69,6 @@ class server
         void informPlayerReconnected(int clientID);
         void informGameBegan(int clientID);
         void informTextureInfos(int clientID);
-
         /**************************************************************************/
 
         bool isRunning();

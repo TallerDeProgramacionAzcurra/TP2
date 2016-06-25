@@ -622,6 +622,27 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
         return;
     }
     
+    //LLego una actualizacion de nombre de un jugador
+    if ((networkMessage.msg_Code[0] == 'p') && (networkMessage.msg_Code[1] == 'n') && (networkMessage.msg_Code[2] == 'u'))
+    {
+    	PlayerNameUpdateInfo playerNameUpdateInfo = m_alanTuring->decodePlayerNameUpdateInfo(networkMessage);
+    	std::string playerName(playerNameUpdateInfo.playerName);
+
+    	Game::Instance()->addPlayerName(playerNameUpdateInfo.playerID, playerName);
+
+        return;
+    }
+
+    //LLego una actualizacion de datos de un jugador
+    if ((networkMessage.msg_Code[0] == 'p') && (networkMessage.msg_Code[1] == 'd') && (networkMessage.msg_Code[2] == 'u'))
+    {
+    	PlayerDataUpdateInfo playerDataUpdateInfo = m_alanTuring->decodePlayerDataUpdateInfo(networkMessage);
+
+    	Game::Instance()->updatePlayerData(playerDataUpdateInfo);
+
+        return;
+    }
+
 }
 
 bool cliente::validarMensaje(DataMessage dataMsg)

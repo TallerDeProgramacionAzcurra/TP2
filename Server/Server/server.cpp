@@ -250,6 +250,18 @@ void server::sendDrawMsgToAll(DrawMessage drawMsg){
 	}
 }
 
+void server::sendPlayerNames(PlayerNameUpdateInfo playerNameInfo)
+{
+	NetworkMessage netMsg = m_alanTuring->playerNameUpdateInfoToNetwork(playerNameInfo);
+	for (int i = 0; i < m_listaDeClientes.size(); i++)
+	{
+		if ( m_listaDeClientes.isAvailable(i))
+		{
+			m_queuePost[i].add(netMsg);
+		}
+	}
+}
+
 void server::sendResetMsgToAll(ResetInfo resetMsg)
 {
 
@@ -291,6 +303,16 @@ void server::sendStageStatistics(StageStatistics stageStatistics, int clientID)
 {
 
 	NetworkMessage netMsg = m_alanTuring->StageStatisticsToNetwork(stageStatistics);
+	if ( m_listaDeClientes.isAvailable(clientID))
+	{
+		m_queuePost[clientID].add(netMsg);
+	}
+}
+
+void server::sendPlayerDataToClient(PlayerDataUpdateInfo playerDataInfo)
+{
+	int clientID = playerDataInfo.playerID;
+	NetworkMessage netMsg = m_alanTuring->playerDataUpdateInfoToNetwork(playerDataInfo);
 	if ( m_listaDeClientes.isAvailable(clientID))
 	{
 		m_queuePost[clientID].add(netMsg);
@@ -401,7 +423,6 @@ void server::informGameBeginning()
 		}
 	}
 }
-
 
 void server::informPlayerReconnected(int clientID)
 {

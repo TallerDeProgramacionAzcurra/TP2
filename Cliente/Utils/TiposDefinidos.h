@@ -67,6 +67,18 @@ struct Conexion{
 	int puerto;
 };
 
+struct PlayerNameUpdateInfo
+{
+	int playerID;
+	char playerName[24];
+};
+
+struct PlayerDataUpdateInfo
+{
+	int playerID;
+	int playerLives;
+};
+
 struct Mensaje{
 	std::string id;
 	std::string tipo;
@@ -97,7 +109,7 @@ struct ConnectedMessage
 
 struct ConnectionInfo
 {
-	char playerName[24];
+    char playerName[24];
     int playerTeamID;
 };
 

@@ -8,7 +8,6 @@
 #include "EnemySpawner.h"
 #include "../Enemies/Enemy.h"
 #include "../Enemies/SmallEnemy.h"
-#include "../Enemies/BossMati.h"
 #include "../Enemies/MediumPlane.h"
 #include "../Enemies/Formation.h"
 #include "../Enemies/BigPlane.h"
@@ -122,6 +121,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			m_enemiesToSpawn.push_back(enemySpawnInfo);
 		}
 	}
+
 	if (enemyInfo.id.compare("MediumPlane") == 0)
 	{
 		if (enemyInfo.cantidad <= 0)
@@ -133,9 +133,21 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 		{
 			EnemySpawnInfo enemySpawnInfo;
 			Enemy* enemy = new MediumPlane();
-			int posX = Random::getRange(0,400);
+			/*int posX = Random::getRange(-1, 1);
+			if (posX <= 0)
+			{
+				posX = 0 - enemyInfo.ancho;
+			}
+			else
+			{
+				posX = Game::Instance()->getGameWidth();
+			}
+			int posY = Random::getRange(0, Game::Instance()->getGameHeight()/1.5f);
+			*/
+			int posX = Random::getRange(0, Game::Instance()->getGameWidth() - enemyInfo.ancho);
 			int posY = 0;
-			enemy->load(posX, 0, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
+
+			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
 			int randomStagePosition = Random::getRange((i * step) - (step/40), (i + 1 * step) + (step/40));
 			if (randomStagePosition < 0)
@@ -214,34 +226,5 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			m_enemiesToSpawn.push_back(enemySpawnInfo);
 		}
 	}
-
-
-	if (enemyInfo.id.compare("bossMati") == 0)
-		{
-			if (enemyInfo.cantidad <= 0)
-				return;
-
-			int textureID = m_textureHelper->stringToInt(enemyInfo.id);
-			int step = (m_stageSize - Game::Instance()->getGameHeight()) / enemyInfo.cantidad;
-			for(int i = 0; i < enemyInfo.cantidad; ++i)
-			{
-				EnemySpawnInfo enemySpawnInfo;
-				Enemy* enemy = new BossMati();
-				int posX = Random::getRange(0, Game::Instance()->getGameWidth() - enemyInfo.ancho);
-				int posY = Random::getRange(0,300);
-				enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
-				enemySpawnInfo.enemyToSpawn = enemy;
-				int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
-				if (randomStagePosition < 0)
-					randomStagePosition = 0;
-				if (randomStagePosition > m_stageSize)
-					randomStagePosition = m_stageSize;
-				enemySpawnInfo.stagePosition = randomStagePosition;
-				enemySpawnInfo.posX = posX;
-				enemySpawnInfo.posY = posY;
-			//	printf("Enemigo Grande en posicion %d \n", randomStagePosition);
-				m_enemiesToSpawn.push_back(enemySpawnInfo);
-			}
-		}
 
 }

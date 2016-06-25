@@ -26,12 +26,22 @@ m_bgOffInicial(0),
 m_gameWidth(0),
 m_gameHeight(0)
 {
+	//Inicializa mapa de nombres, Para que tengan un valor por defecto.
+	for (int i = 0; i < MAX_PLAYERS; ++i)
+	{
+		std::stringstream ss;
+		ss << "Player " << (i + 1);
+		m_playerNames[i] = ss.str();
+	}
+
 	m_playerScore = Score();
 	pthread_mutex_init(&m_removeMutex, NULL);
 	pthread_mutex_init(&m_drawMsgMutex, NULL);
 	pthread_mutex_init(&m_cleanMutex, NULL);
 	pthread_mutex_init(&m_resetMutex, NULL);
 	pthread_mutex_init(&m_scoreMutex, NULL);
+	pthread_mutex_init(&m_playerDataMutex, NULL);
+	pthread_mutex_init(&m_playerNameMutex, NULL);
 }
 
 Game::~Game()
@@ -43,6 +53,8 @@ Game::~Game()
     pthread_mutex_destroy(&m_cleanMutex);
     pthread_mutex_destroy(&m_resetMutex);
     pthread_mutex_destroy(&m_scoreMutex);
+    pthread_mutex_destroy(&m_playerDataMutex);
+    pthread_mutex_destroy(&m_playerNameMutex);
 }
 
 
@@ -246,6 +258,15 @@ void Game::interpretarDrawMsg(DrawMessage drwMsg){
 	pthread_mutex_unlock(&m_drawMsgMutex);
 }
 
+void Game::addPlayerName(int playerID, std::string playerName)
+{
+	pthread_mutex_lock(&m_playerNameMutex);
+
+	m_playerNames[playerID] = playerName;
+
+	pthread_mutex_unlock(&m_playerNameMutex);
+}
+
 void Game::addDrawObject(int objectID, int layer, std::shared_ptr<DrawObject> newDrawObject)
 {
 	switch(layer)
@@ -428,6 +449,8 @@ bool Game::initializeClient()
 	    int porto = parsersito->getConexionInfo().puerto;
 	    printf("Conectando a %s : %d \n", ip.c_str(), porto);
 
+	    loadSoundAndMusic();
+	    SoundManager::Instance()->playMusic(2,0);
 	    m_client = new cliente(3,ip,porto, m_playerName);
 
 	    if (parsersito)
@@ -460,6 +483,25 @@ void Game::askForName()
 			nombreValido = true;
 		}
     }
+}
+
+void Game::setGameStarted(bool state)
+{
+	m_stageStarted = state;
+	if (m_stageStarted)
+	{
+		loadSoundAndMusic();
+		SoundManager::Instance()->playMusic(2,0);
+	}
+}
+
+void Game::updatePlayerData(PlayerDataUpdateInfo playerData)
+{
+	pthread_mutex_lock(&m_playerDataMutex);
+
+	//ACTUALIZAR HUD
+
+	pthread_mutex_unlock(&m_playerDataMutex);
 }
 
 void Game::addPointsToScore(ScoreMessage scoreMsg)
@@ -908,13 +950,13 @@ void Game::resetGame()
 			it->second->reset();
 		}
 	 }
-	 for (std::map<int, Hud*>::iterator it = huds.begin(); it != huds.end(); ++it)
-	 	 {
-	 		if (it->second)
-	 		{
-	 			it->second->reset();
-	 		}
-	 	 }
+	for (std::map<int, Hud*>::iterator it = huds.begin(); it != huds.end(); ++it)
+	{
+		if (it->second)
+		{
+			it->second->reset();
+		}
+	}
 	 //TextureManager::Instance()->init(m_pRenderer);
 
 	 cout << "Finish reseting game\n";

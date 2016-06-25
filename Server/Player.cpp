@@ -88,6 +88,7 @@ void Player::takeLife()
 	{
 		// Take life and respawn
 		--m_lives;
+		Game::Instance()->sendPlayerDataUpdate(m_objectId);
 		respawn();
 	}
 }
@@ -578,6 +579,7 @@ void Player::reset()
 		{
 			m_rightSecondaryPlane->setDead(true);
 		}
+		m_hasSecondaryWeapons = false;
 	}
 }
 

@@ -105,6 +105,8 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height)
     //enemy->load(m_gameWidth/2,0,48,48,666,4);
     //CollitionHandler::Instance()->addEnemy(enemy);
 
+    sendPlayerNames();
+
     loadCurrentStage();
     startStage();
 
@@ -211,6 +213,8 @@ bool Game::createPlayer(int clientID,  const std::string& playerName, int player
 
 	CollitionHandler::Instance()->addPlayer(newPlayer);
 
+	sendPlayerDataUpdate(newPlayer->getObjectId());
+
 	pthread_mutex_unlock(&m_createPlayerMutex);
 	return true;
 }
@@ -282,7 +286,6 @@ Vector2D Game::getRandomPLayerCenter()
 void Game::disconnectPlayer(int playerID)
 {
 	PlayerDisconnection playerDiscMsg;
-	playerDiscMsg.init = false;
 	std::size_t length = m_playerNames[playerID].copy(playerDiscMsg.name, MAX_NAME_LENGTH, 0);
 	playerDiscMsg.name[length]='\0';
 	playerDiscMsg.objectID = m_listOfPlayer[playerID]->getObjectId();
@@ -500,6 +503,21 @@ void Game::sendStageStatistics(StageStatistics stageStatistics, int clientID)
 	m_server->sendStageStatistics(stageStatistics, clientID);
 }
 
+void Game::sendPlayerDataUpdate(int playerID)
+{
+	int playerLives = 0;
+	PlayerDataUpdateInfo playerDataInfo;
+
+	playerDataInfo.playerID = playerID;
+	if (m_listOfPlayer[playerID])
+	{
+		playerLives = m_listOfPlayer[playerID]->getLives();
+	}
+	playerDataInfo.playerLives = playerLives;
+
+	m_server->sendPlayerDataToClient(playerDataInfo);
+}
+
 void Game::addToPackage(DrawMessage drawMsg)
 {
 	m_drawMessagePacker->addDrawMessage(drawMsg);
@@ -507,6 +525,23 @@ void Game::addToPackage(DrawMessage drawMsg)
 void Game::sendPackages()
 {
 	m_drawMessagePacker->sendPackedMessages();
+}
+
+void Game::sendPlayerNames()
+{
+	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
+	{
+		if (it->second)
+		{
+			PlayerNameUpdateInfo playerNameInfo;
+			playerNameInfo.playerID = it->first;
+
+			std::size_t length = m_playerNames[it->first].copy(playerNameInfo.playerName, MAX_NAME_LENGTH, 0);
+			playerNameInfo.playerName[length]='\0';
+
+			m_server->sendPlayerNames(playerNameInfo);
+		}
+	}
 }
 
 void* Game::koreaMethod(void)
@@ -915,9 +950,13 @@ void Game::informEndGame(bool levelFinished)
         printf("Max Score %d \n", maxScore);
 		finishGameInfo.points = maxScore;
 		if (maxScore == 0)
-			finishGameInfo.winnerID = -1;
+		{
+ 			finishGameInfo.winnerID = -1;
+		}
 		else
-			finishGameInfo.winnerID = winnerID;
+		{
+ 			finishGameInfo.winnerID = winnerID;
+		}
 	}
 
 	sendFinishGameInfo(finishGameInfo);

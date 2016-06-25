@@ -81,12 +81,14 @@ public:
     void inicializarServer();
     void conectToKorea();
 
+    void sendPlayerNames();
     void sendToAllClients(DrawMessage drawMsg);
     void addToPackage(DrawMessage drawMsg);
     void sendPackages();
     void sendScoreToClients(ScoreMessage scoreMsg);
    	void sendBackgroundInfo(BackgroundInfo backgroundInfo);
    	void sendStageStatistics(StageStatistics stageStatistics, int clientID);
+    void sendPlayerDataUpdate(int playerID);
    	void sendStageBeginning(StageBeginning stageBeginningInfo);
    	void sendFinishGameInfo(FinishGameInfo finishGameInfo);
 

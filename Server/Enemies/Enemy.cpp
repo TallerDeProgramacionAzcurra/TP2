@@ -19,7 +19,6 @@ Enemy::Enemy(): MoveableObject(),
 		m_pointsRetrieved(false),
 		m_pointOnKill(50),
 		m_pointOnHit(0)
-
 {
 	m_layer = FOREGROUND;
 }

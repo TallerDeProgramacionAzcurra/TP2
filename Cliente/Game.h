@@ -43,6 +43,8 @@ class DrawObject;
 #define SHOW_STAGE_MSG_TIME 3000
 #define SHOW_RESULTS_TIME 5000
 
+#define MAX_PLAYERS 6
+
 class Game
 {
 public:
@@ -114,19 +116,15 @@ public:
 
     void quit() { m_running = false; }
 
+    void addPlayerName(int playerID, std::string playerName);
     void addPointsToScore(ScoreMessage scoreMsg);
+    void updatePlayerData(PlayerDataUpdateInfo playerData);
 
     //Alto y Ancho de la ventana de juego
     int getGameWidth() const { return m_gameWidth; }
     int getGameHeight() const { return m_gameHeight; }
     float getScrollSpeed() { return m_scrollSpeed; }
-    void setGameStarted(bool state) { m_stageStarted = state;
-    			if (m_stageStarted)
-    {
-    			    loadSoundAndMusic();
-    			    SoundManager::Instance()->playMusic(2,0);
-    }
-    }
+    void setGameStarted(bool state);
     void setReseting(bool state) { m_reseting = state; }
     void setWindowSize(int width, int heigth);
     void setRestart(bool loco){m_restart = loco;}
@@ -148,6 +146,7 @@ private:
 
     std::map<int, Hud*> huds;
     std::map<int, Score*> scores;
+    std::map<int, std::string> m_playerNames;
 
     void addDrawObject(int objectID, int layer, std::shared_ptr<DrawObject> newDrawObject);
     void removeDrawObject(int objectID, int layer);
@@ -209,6 +208,8 @@ private:
 	pthread_mutex_t m_cleanMutex;
 	pthread_mutex_t m_resetMutex;
 	pthread_mutex_t m_scoreMutex;
+	pthread_mutex_t m_playerDataMutex;
+	pthread_mutex_t m_playerNameMutex;
 
 
     Game();

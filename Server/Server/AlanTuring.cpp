@@ -231,6 +231,19 @@ StageBeginning AlanTuring::decodeStageBeginning(NetworkMessage netMsg)
 	return stageBeginningInfo;
 }
 
+PlayerNameUpdateInfo AlanTuring::decodePlayerNameUpdateInfo(NetworkMessage netMsg)
+{
+	PlayerNameUpdateInfo playerNameUpdateInfo;
+	memcpy(&playerNameUpdateInfo, netMsg.msg_Data, sizeof(PlayerNameUpdateInfo));
+	return playerNameUpdateInfo;
+}
+PlayerDataUpdateInfo AlanTuring::decodePlayerDataUpdateInfo(NetworkMessage netMsg)
+{
+	PlayerDataUpdateInfo playerDataUpdateInfo;
+	memcpy(&playerDataUpdateInfo, netMsg.msg_Data, sizeof(PlayerDataUpdateInfo));
+	return playerDataUpdateInfo;
+}
+
 
 PlayerDisconnection AlanTuring::decodePlayerDisconnectionMessage(NetworkMessage netMsg)
 {
@@ -414,6 +427,34 @@ NetworkMessage AlanTuring::StageBeginningToNetwork(StageBeginning stageBeginning
 
 	return networkMessage;
 }
+
+NetworkMessage AlanTuring::playerNameUpdateInfoToNetwork(PlayerNameUpdateInfo playerNameUpdateInfo)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 'p';
+	networkMessage.msg_Code[1] = 'n';
+	networkMessage.msg_Code[2] = 'u';
+
+	memcpy(networkMessage.msg_Data, &playerNameUpdateInfo, sizeof(PlayerNameUpdateInfo));
+	networkMessage.msg_Length = sizeof(PlayerNameUpdateInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+NetworkMessage AlanTuring::playerDataUpdateInfoToNetwork(PlayerDataUpdateInfo playerDataUpdateInfo)
+{
+	NetworkMessage networkMessage;
+	bzero(networkMessage.msg_Data, MESSAGE_DATA_SIZE);
+	networkMessage.msg_Code[0] = 'p';
+	networkMessage.msg_Code[1] = 'd';
+	networkMessage.msg_Code[2] = 'u';
+
+	memcpy(networkMessage.msg_Data, &playerDataUpdateInfo, sizeof(PlayerDataUpdateInfo));
+	networkMessage.msg_Length = sizeof(PlayerDataUpdateInfo) + MESSAGE_LENGTH_BYTES + MESSAGE_CODE_BYTES;
+
+	return networkMessage;
+}
+
 /**********************************************************************************************************************************/
 
 int AlanTuring::encodeXMLMessage(Mensaje mensaje, char* bufferSalida)
