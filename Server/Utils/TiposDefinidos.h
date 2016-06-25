@@ -122,6 +122,7 @@ struct ResetInfo
 
 struct PlayerDisconnection
 {
+	bool init;
 	int objectID;
 	int layer;
 	char name[24];

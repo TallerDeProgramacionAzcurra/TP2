@@ -428,8 +428,6 @@ bool Game::initializeClient()
 	    int porto = parsersito->getConexionInfo().puerto;
 	    printf("Conectando a %s : %d \n", ip.c_str(), porto);
 
-	    loadSoundAndMusic();
-	    SoundManager::Instance()->playMusic(2,0);
 	    m_client = new cliente(3,ip,porto, m_playerName);
 
 	    if (parsersito)
@@ -910,6 +908,13 @@ void Game::resetGame()
 			it->second->reset();
 		}
 	 }
+	 for (std::map<int, Hud*>::iterator it = huds.begin(); it != huds.end(); ++it)
+	 	 {
+	 		if (it->second)
+	 		{
+	 			it->second->reset();
+	 		}
+	 	 }
 	 //TextureManager::Instance()->init(m_pRenderer);
 
 	 cout << "Finish reseting game\n";

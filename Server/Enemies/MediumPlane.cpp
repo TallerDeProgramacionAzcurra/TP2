@@ -27,7 +27,7 @@ MediumPlane::MediumPlane() :Enemy(),
 	m_speed = Vector2D(1.4f, 1.75f);
 	m_direction.setX(0);
 	m_direction.setY(DIRECTION_UP);
-
+	frameC = 0;
 	m_width = 80;// hardcodeado como valores iniciales antes de llamar a load
 	m_height = 80;
 
@@ -72,59 +72,18 @@ void MediumPlane::update()
 
 	if (!m_dead && !m_dying)
 	{
-		//Si esta en la parte de abajo de la pantalla, Sube
-		if (m_position.getY() >= (Game::Instance()->getGameHeight()/3) - m_height)
-		{
-			m_direction.setX(0);
-			m_direction.setY(DIRECTION_UP);
-			m_goingUp = true;
+		m_direction.setX(0);
+		m_direction.setY(DIRECTION_DOWN);
+		frameC++;
+		if(frameC>60 and 120>frameC){
+			m_direction.setY(7*sinf((360-frameC*6+270)*0.01745329251f));
+			m_direction.setX(7*cosf((360-frameC*6+270)*0.01745329251f));
 		}
-		else
+		updateAngle();
+		int shootLuck = Random::getRange(0, 1000);
+		if (shootLuck <= m_shootChance*10)
 		{
-			m_goingUp = false;
-		}
-
-		//Si llega a un borde, invierta la dirección en X
-		if ((!m_goingRight) && (m_position.getX() <= m_borderReturnOffset))
-		{
-			flip();
-		}
-		if ((m_goingRight) && (m_position.getX() >= m_borderReturnOffset))
-		{
-			flip();
-		}
-
-		//Si no esta subiendo, tiende a moverse hacia la derecha o izquierda, segun corresponda
-		if (!m_goingUp)
-		{
-			if (m_goingRight)
-			{
-				m_direction.setX(DIRECTION_RIGHT);
-				m_direction.m_y += Random::getFloatRange(-0.25f, 0.25f);
-				m_direction.normalize();
-			}
-			else
-			{
-				m_direction.setX(DIRECTION_LEFT);
-				m_direction.m_y += Random::getFloatRange(-0.25f, 0.25f);
-				m_direction.normalize();
-			}
-		}
-
-		if (m_position.getY() < 50)
-		{
-			m_direction.m_y = DIRECTION_DOWN;
-		}
-
-
-		//Analiza si debe disparar
-		if (!m_goingUp)
-		{
-			int shootLuck = Random::getRange(0, 1000);
-			if (shootLuck <= m_shootChance)
-			{
-				shoot();
-			}
+			shoot();
 		}
 	}
 
@@ -132,7 +91,6 @@ void MediumPlane::update()
 	Enemy::update();
 
 }
-
 bool MediumPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 {
 	bool killed = false;

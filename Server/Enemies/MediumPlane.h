@@ -17,6 +17,11 @@ public:
 	MediumPlane();
     virtual ~MediumPlane();
 
+    void updateAngle()
+    {
+    	m_angle = (atan2f(m_direction.m_y, m_direction.m_x)* 57.295645531f) + 90;
+    }
+
     virtual void update();
     virtual void load(int x, int y, int width, int height, int textureID, int numFrames);
 
@@ -35,7 +40,7 @@ private:
     bool m_goingUp;
     bool m_goingRight;
     int m_pointsOnCombo;
-
+    int frameC;
     int m_borderReturnOffset;
     Vector2D m_shootingOffset;
 

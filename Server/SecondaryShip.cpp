@@ -19,6 +19,7 @@ SecondaryShip::SecondaryShip(): MoveableObject(),
 {
 	m_textureID = 73;
 	m_tag = "Nave Secundaria";
+	m_layer = FOREGROUND;
 }
 
 SecondaryShip::~SecondaryShip()

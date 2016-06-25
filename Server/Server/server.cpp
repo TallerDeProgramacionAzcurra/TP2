@@ -402,6 +402,7 @@ void server::informGameBeginning()
 	}
 }
 
+
 void server::informPlayerReconnected(int clientID)
 {
 	PlayerReconnectionInfo playerRecInfo;

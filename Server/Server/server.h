@@ -67,6 +67,7 @@ class server
         void informPlayerReconnected(int clientID);
         void informGameBegan(int clientID);
         void informTextureInfos(int clientID);
+
         /**************************************************************************/
 
         bool isRunning();

@@ -282,6 +282,7 @@ Vector2D Game::getRandomPLayerCenter()
 void Game::disconnectPlayer(int playerID)
 {
 	PlayerDisconnection playerDiscMsg;
+	playerDiscMsg.init = false;
 	std::size_t length = m_playerNames[playerID].copy(playerDiscMsg.name, MAX_NAME_LENGTH, 0);
 	playerDiscMsg.name[length]='\0';
 	playerDiscMsg.objectID = m_listOfPlayer[playerID]->getObjectId();
@@ -913,7 +914,10 @@ void Game::informEndGame(bool levelFinished)
         }
         printf("Max Score %d \n", maxScore);
 		finishGameInfo.points = maxScore;
-		finishGameInfo.winnerID = winnerID;
+		if (maxScore == 0)
+			finishGameInfo.winnerID = -1;
+		else
+			finishGameInfo.winnerID = winnerID;
 	}
 
 	sendFinishGameInfo(finishGameInfo);

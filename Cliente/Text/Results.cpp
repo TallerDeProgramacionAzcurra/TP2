@@ -3,13 +3,18 @@ using namespace std;
 
 Results::Results(int gameWidth, int gameHeight, FinishGameInfo info)
 {
-    if (info.isVictory)
-    	if(Game::Instance()->isTeamMode())
-    		generateTeamWin(gameWidth, gameHeight, info.winnerID, info.points);
-    	else
-    		generateGeneralWin(gameWidth, gameHeight, info.winnerID, info.points);
+    if (info.winnerID == -1)
+    	generateDraw(gameWidth,gameHeight);
     else
-    	generateLoss(gameWidth, gameHeight);
+    {
+		if (info.isVictory)
+			if(Game::Instance()->isTeamMode())
+				generateTeamWin(gameWidth, gameHeight, info.winnerID, info.points);
+			else
+				generateGeneralWin(gameWidth, gameHeight, info.winnerID, info.points);
+		else
+			generateLoss(gameWidth, gameHeight);
+    }
  }
 
 Results::~Results()
@@ -101,6 +106,23 @@ void Results::generateLoss(int gameWidth, int gameHeight)
 	m_texts.push_back(title);
 
 }
+
+void Results::generateDraw(int gameWidth, int gameHeight)
+{
+	int h,w;
+
+	FontTexture *title = new FontTexture();
+	title->text = "DRAW";
+	title->texture = FontManager::Instance()->drawtext(0,0,0,0,0,0,0,0,title->text,blended);
+	FontManager::Instance()->textSize(title->text,&h,&w);
+	title->height = h*TEXT_SIZE_FACTOR;
+	title->width = w*TEXT_SIZE_FACTOR;
+	title->x = (gameWidth-title->width)/2;
+	title->y = (gameHeight-title->height)/2;
+	m_texts.push_back(title);
+
+}
+
 
 void Results::createFontTexture(short value, const char* text, FontTexture* font)
 {

@@ -120,7 +120,13 @@ public:
     int getGameWidth() const { return m_gameWidth; }
     int getGameHeight() const { return m_gameHeight; }
     float getScrollSpeed() { return m_scrollSpeed; }
-    void setGameStarted(bool state) { m_stageStarted = state;  }
+    void setGameStarted(bool state) { m_stageStarted = state;
+    			if (m_stageStarted)
+    {
+    			    loadSoundAndMusic();
+    			    SoundManager::Instance()->playMusic(2,0);
+    }
+    }
     void setReseting(bool state) { m_reseting = state; }
     void setWindowSize(int width, int heigth);
     void setRestart(bool loco){m_restart = loco;}

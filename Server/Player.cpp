@@ -578,7 +578,6 @@ void Player::reset()
 		{
 			m_rightSecondaryPlane->setDead(true);
 		}
-		m_hasSecondaryWeapons = false;
 	}
 }
 

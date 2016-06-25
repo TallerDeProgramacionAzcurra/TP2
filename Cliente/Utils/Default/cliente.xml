@@ -5,7 +5,7 @@
 		<error>True</error>
 	</logger>
 	<conexion>
-		<IP>127.0.0.1</IP>
+		<IP>157.92.51.250</IP>
 		<puerto>51757</puerto>
 	</conexion>
 	<mensajes>

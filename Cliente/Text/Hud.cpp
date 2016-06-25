@@ -119,3 +119,8 @@ void Hud::update()
 		}
 	}
 }
+
+void Hud::reset()
+{
+	actualizarScore(0);
+}

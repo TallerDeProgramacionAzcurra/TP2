@@ -23,6 +23,7 @@ public:
     void actualizarScore(int score);
     //void draw(SDL_Renderer* renderer);
     void update();
+    void reset();
 
 private:
 
