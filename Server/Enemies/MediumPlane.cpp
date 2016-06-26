@@ -17,13 +17,14 @@
 
 MediumPlane::MediumPlane() :Enemy(),
 					  m_shootChance(10),
-					  m_kMaxHealth(1000),
+					  m_kMaxHealth(500),
 					  m_goingUp(true),
 					  m_goingRight(false),
 					  m_pointsOnCombo(500),
 					  m_explotionAnimationTime(1000),
 					  m_explotionRemainingTime(0)
 {
+	m_tag = "Medium Plane";
 	m_speed = Vector2D(1.4f, 1.75f);
 	m_direction.setX(0);
 	m_direction.setY(DIRECTION_DOWN);
@@ -38,7 +39,7 @@ MediumPlane::MediumPlane() :Enemy(),
 	generateBorderReturnOffset();
 	frameC = 0;
 
-	m_health= 500;
+	m_health= m_kMaxHealth;
 	m_pointsOnCombo = 500;
 	m_pointOnKill = 500;
 	m_pointOnHit = 100;
@@ -162,7 +163,7 @@ void MediumPlane::update()
 		}
 		updateAngle();
 		int shootLuck = Random::getRange(0, 1000);
-		if (shootLuck <= m_shootChance*10)
+		if (shootLuck <= m_shootChance)
 		{
 			shoot();
 		}

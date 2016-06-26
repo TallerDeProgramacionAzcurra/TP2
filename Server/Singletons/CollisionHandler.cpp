@@ -42,6 +42,7 @@ void CollitionHandler::handlePlayerCollitions()
 		if ((*playersIterator)->isDead() || (*playersIterator)->isDying())
 			continue;
 
+
 		//Compara cada jugador contra cada bala enemiga
 		for(vector<std::shared_ptr<Bullet>>::iterator it = m_enemiesBullets.begin(); it != m_enemiesBullets.end(); )
 		{
@@ -50,18 +51,18 @@ void CollitionHandler::handlePlayerCollitions()
 				break;
 			}
 
-			if (m_practiceMode)
-				break;
-
-			if ((*it)->isDead() || (*it)->isExploting())
+			if ((!(*it)) || (*it)->isDead() || (*it)->isExploting())
 			{
 				it = m_enemiesBullets.erase(it);
 				continue;
 			}
 
+			if (m_practiceMode)
+				break;
+
 			if (areColliding((*playersIterator), (*it).get()))
 			{
-				//printf("Colision de player con bala\n");
+				printf("Colision de player con bala\n");
 				//Hay colision del jugador con una bala enemiga
 				//todo setea la bala en muerta, deberia tal vez hacer una explosion primero y dsp de la animacion matarla
 				(*playersIterator)->damage((*it)->getDamage());
@@ -122,7 +123,7 @@ void CollitionHandler::handlePlayerCollitions()
 			if (areColliding((*playersIterator), (*it)))
 			{
 				//Hay colision del enemigo con una bala de un jugador
-				//printf("Colision de player con enemigo\n");
+				printf("Colision de player con enemigo\n");
 
 				//daña al jugador
 				(*playersIterator)->damage((*it)->getCollisionDamage());
@@ -158,7 +159,7 @@ void CollitionHandler::handleEnemyCollitions()
 		//Compara cada Enemigo contra cada bala del jugador
 		for(vector<std::shared_ptr<Bullet>>::iterator it = m_playersBullets.begin(); it != m_playersBullets.end(); )
 		{
-			if ((*it)->isDead() || (*it)->isExploting())
+			if ((!(*it)) || (*it)->isDead() || (*it)->isExploting())
 			{
 				it = m_playersBullets.erase(it);
 				continue;
@@ -201,7 +202,7 @@ void CollitionHandler::handleEnemyCollitions()
 			(*it)->setPosition(savedPosition);
 			if (collitionDetected)
 			{
-				//printf("Colision de bala con enemigo\n");
+				printf("Colision de bala con enemigo\n");
 				(*enemiesIterator)->damage((*it)->getDamage(), true, Game::Instance()->getPlayer((*it)->getOwnerID()));
 				(*it)->kill(); //mata la bala
 				//elimina bala del chekeo de colisiones
@@ -224,7 +225,7 @@ void CollitionHandler::handleSecondaryCollitions()
 
 	for( vector<SecondaryShip*>::iterator secondaryiterator = m_secondaryShips.begin(); secondaryiterator != m_secondaryShips.end();)
 	{
-		if ((*secondaryiterator)->isDead())
+		if ((!(*secondaryiterator)) || (*secondaryiterator)->isDead())
 		{
 			secondaryiterator = m_secondaryShips.erase(secondaryiterator);
 			continue;
@@ -237,7 +238,7 @@ void CollitionHandler::handleSecondaryCollitions()
 			if (m_practiceMode)
 				break;
 
-			if ((*it)->isDead() || (*it)->isExploting())
+			if ((!(*it)) || (*it)->isDead() || (*it)->isExploting())
 			{
 				it = m_enemiesBullets.erase(it);
 				continue;
@@ -245,6 +246,7 @@ void CollitionHandler::handleSecondaryCollitions()
 
 			if (areColliding((*secondaryiterator), (*it).get()))
 			{
+				printf("Colision de Nave Secundaria con bala enemiga\n");
 				(*secondaryiterator)->damage((*it)->getDamage());
 				(*it)->kill(); //mata la bala
 
@@ -271,6 +273,7 @@ void CollitionHandler::handleSecondaryCollitions()
 
 			if (areColliding((*secondaryiterator), (*it)))
 			{
+				printf("Colision de Nave Secundaria con enemigo\n");
 				(*secondaryiterator)->damage((*it)->getCollisionDamage());
 
 				//elimina al enemigo del chekeo de colisiones si el enemigo esta muerto o muriendo
@@ -306,9 +309,13 @@ bool CollitionHandler::areColliding(GameObject* gameObjectOne, GameObject* gameO
 	//calcula la distancia
 	Vector2D distanceVector = gameObjectOneCenter - gameObjectTwoCenter;
 	//calcula la longitud del vector distancia
-	int SquareDistance = (distanceVector.m_x * distanceVector.m_x) + (distanceVector.m_y * distanceVector.m_y);
+	float SquareDistance = (distanceVector.m_x * distanceVector.m_x) + (distanceVector.m_y * distanceVector.m_y);
+
 	if (SquareDistance <= minimumCollisionDistance)
 	{
+		printf("Calculando: %s %f/%f Vs %s %f/%f \n", gameObjectOne->getTag().c_str(), gameObjectOneCenter.m_x, gameObjectOneCenter.m_y,
+				gameObjectTwo->getTag().c_str(), gameObjectTwoCenter.m_x, gameObjectTwoCenter.m_y);
+		printf("Distancia: %d, Distancia Minima de Colision: %d \n", minimumCollisionDistance, SquareDistance);
 		//Hubo colision
 		collision = true;
 	}

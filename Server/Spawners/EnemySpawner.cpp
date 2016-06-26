@@ -73,7 +73,8 @@ void EnemySpawner::update(int stagePosition)
 		  if((*it).stagePosition <= (m_stageSize - stagePosition))
 		  {
 			  Game::Instance()->addEnemy((*it).enemyToSpawn);
-			  CollitionHandler::Instance()->addEnemy((*it).enemyToSpawn);
+			  (*it).enemyToSpawn->activateCollition();
+			  //CollitionHandler::Instance()->addEnemy((*it).enemyToSpawn);
 		      it = m_enemiesToSpawn.erase(it);
 		  }
 		  else
@@ -108,7 +109,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			int posY = Random::getRange(0, Game::Instance()->getGameHeight()/1.5f);
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/40), (i + 1 * step) + (step/40));
+			int randomStagePosition = Random::getRange((i * step) - (step/40), ((i + 1) * step) + (step/40));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -149,7 +150,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/40), (i + 1 * step) + (step/40));
+			int randomStagePosition = Random::getRange((i * step) - (step/40), ((i + 1) * step) + (step/40));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -157,6 +158,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			enemySpawnInfo.stagePosition = randomStagePosition;
 			enemySpawnInfo.posX = posX;
 			enemySpawnInfo.posY = posY;
+			printf("Enemigo Mediano en posicion %d \n", randomStagePosition);
 
 			m_enemiesToSpawn.push_back(enemySpawnInfo);
 		}
@@ -187,7 +189,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			int posY = Random::getRange(0, Game::Instance()->getGameHeight()/2);
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/40), (i + 1 * step) + (step/40));
+			int randomStagePosition = Random::getRange((i * step) - (step/40), ((i + 1) * step) + (step/40));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -195,6 +197,8 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			enemySpawnInfo.stagePosition = randomStagePosition;
 			enemySpawnInfo.posX = posX;
 			enemySpawnInfo.posY = posY;
+
+			printf("Formación en posicion %d \n", randomStagePosition);
 
 			m_enemiesToSpawn.push_back(enemySpawnInfo);
 		}
@@ -214,7 +218,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			int posY = Game::Instance()->getGameHeight();
 			enemy->load(posX, posY, enemyInfo.ancho, enemyInfo.alto, textureID, enemyInfo.frames);
 			enemySpawnInfo.enemyToSpawn = enemy;
-			int randomStagePosition = Random::getRange((i * step) - (step/20), (i + 1 * step) + (step/20));
+			int randomStagePosition = Random::getRange((i * step) - (step/20), ((i + 1) * step) + (step/20));
 			if (randomStagePosition < 0)
 				randomStagePosition = 0;
 			if (randomStagePosition > m_stageSize)
@@ -222,7 +226,7 @@ void EnemySpawner::addEnemy(Enemigo enemyInfo)
 			enemySpawnInfo.stagePosition = randomStagePosition;
 			enemySpawnInfo.posX = posX;
 			enemySpawnInfo.posY = posY;
-		//	printf("Enemigo Grande en posicion %d \n", randomStagePosition);
+			printf("Enemigo Grande en posicion %d \n", randomStagePosition);
 			m_enemiesToSpawn.push_back(enemySpawnInfo);
 		}
 	}

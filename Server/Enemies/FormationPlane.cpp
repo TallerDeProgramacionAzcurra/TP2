@@ -22,6 +22,7 @@ FormationPlane::FormationPlane(Formation* parent) :Enemy(),
 					    m_explotionAnimationTime(1000),
 					    m_explotionRemainingTime(0)
 {
+	m_tag = "Formation Plane";
 	m_formationParent = parent;
 
 	m_speed = Vector2D(1.5f, 1.5f);
@@ -60,7 +61,7 @@ void FormationPlane::update()
 
 	m_enemyWeapon->update();
 
-	if (!m_dead && !m_dying)
+	if (!m_dead && !m_dying && isVisibleFromCamera())
 	{
 		//Analiza si debe disparar
 		int shootLuck = Random::getRange(0, 1000);

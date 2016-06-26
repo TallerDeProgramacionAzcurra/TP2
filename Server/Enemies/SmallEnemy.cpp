@@ -22,6 +22,7 @@ SmallEnemy::SmallEnemy() :Enemy(),
 					    m_explotionAnimationTime(1000),
 					    m_explotionRemainingTime(0)
 {
+	m_tag = "Small Plane";
 	m_speed = Vector2D(2.5f, 2.5f);
 	float randomXDirection = Random::getFloatRange(-0.5f, 0.5f);
 	m_direction.setX(randomXDirection);
@@ -98,7 +99,7 @@ void SmallEnemy::update()
 
 		//Analiza si debe disparar
 		int shootLuck = Random::getRange(0, 1000);
-		if ((shootLuck <= m_shootChance) && (!m_flipping))
+		if ((shootLuck <= m_shootChance) && (!m_flipping) && isVisibleFromCamera())
 		{
 			//dispara
 			shoot();

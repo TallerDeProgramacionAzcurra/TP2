@@ -61,15 +61,13 @@ void BulletsHandler::updateBullets()
     		p_it = m_bullets.erase(p_it);
     		continue;
     	}
-        if((*p_it)->getPosition().getX() < -20 || (*p_it)->getPosition().getX() > Game::Instance()->getGameWidth()
-           || (*p_it)->getPosition().getY() < -20 || (*p_it)->getPosition().getY() > Game::Instance()->getGameHeight() || (*p_it)->isDead())
+        if(((*p_it)->getPosition().getX() < -60 || (*p_it)->getPosition().getX() > Game::Instance()->getGameWidth()
+           || (*p_it)->getPosition().getY() < -60 || (*p_it)->getPosition().getY() > Game::Instance()->getGameHeight()) || (*p_it)->isDead())
         {
-        	if ((*p_it))
-        	{
-				(*p_it)->clean();
-				(*p_it).reset();
-				p_it = m_bullets.erase(p_it);
-        	}
+			(*p_it)->kill();
+			//(*p_it)->clean();
+			(*p_it).reset();
+			p_it = m_bullets.erase(p_it);
         }
         else
         {

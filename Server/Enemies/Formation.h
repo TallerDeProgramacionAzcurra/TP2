@@ -30,6 +30,8 @@ public:
 
     void updateKillerStats(int playerID);
 
+    virtual void activateCollition();
+
     void setGoingRight( bool goingRight ) { m_goingRight = goingRight; }
 
 private:

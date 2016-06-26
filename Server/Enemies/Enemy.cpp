@@ -9,6 +9,7 @@
 #include "../Game.h"
 #include "../Weapons/Weapon.h"
 #include "../Player.h"
+#include "../Singletons/CollisionHandler.h"
 
 Enemy::Enemy(): MoveableObject(),
 		m_health(10),
@@ -56,6 +57,11 @@ void Enemy::clean()
 	{
 		delete m_enemyWeapon;
 	}
+}
+
+void Enemy::activateCollition()
+{
+	CollitionHandler::Instance()->addEnemy(this);
 }
 
 void Enemy::shoot()

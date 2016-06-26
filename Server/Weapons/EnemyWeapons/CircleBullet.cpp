@@ -10,7 +10,7 @@
 CircleBullet::CircleBullet(): Bullet()
 
 {
-	m_tag = "BlueBullet";
+	m_tag = "CircleBullet";
 	m_layer = MIDDLEGROUND;
 	m_textureID = 51;
 

@@ -198,7 +198,7 @@
 	<cantidadStages>2</cantidadStages>
 	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>
-	<alto>2000</alto>
+	<alto>5000</alto>
 	<fondo>
 		<spriteId>agua</spriteId>
 		<ancho>10</ancho>
@@ -216,7 +216,7 @@
 			<spriteId>Portaviones</spriteId>
 			<posicion>
 				<x>225</x>
-				<y>2000</y>
+				<y>5000</y>
 			</posicion>
 		</elemento>
 		<elemento>

@@ -30,6 +30,8 @@ public:
 
     virtual void shoot();
 
+    virtual void activateCollition();
+
     virtual void collision();
 
     void setWeaponStats(int shootingSpeed, int shootingCooldown, int ownerID, int teamID);

@@ -20,6 +20,9 @@ SecondaryShip::SecondaryShip(): MoveableObject(),
 	m_textureID = 73;
 	m_tag = "Nave Secundaria";
 	m_layer = FOREGROUND;
+
+	m_direction.m_x = 0;
+	m_direction.m_y = 0;
 }
 
 SecondaryShip::~SecondaryShip()
@@ -39,6 +42,7 @@ void SecondaryShip::damage(int damage)
 void SecondaryShip::load(int x, int y, int width, int height, int textureID, int numFrames)
 {
 	MoveableObject::load(x, y, width, height, textureID, numFrames);
+	m_hitRadius = m_width;
 }
 
 void SecondaryShip::shoot(const Vector2D& bulletPosition, const Vector2D& direction, int speed, int ownerID, int teamID)

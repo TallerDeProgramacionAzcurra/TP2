@@ -977,7 +977,7 @@ void Game::checkStageTransitioning()
 			}
 			++m_currentStage;
 			loadCurrentStage();
-			m_level->loadLevel(m_currentStage);
+			//m_level->loadLevel(m_currentStage);
 
 			m_waitingToScroll = false;
 
@@ -1088,6 +1088,7 @@ void Game::loadNextStage()
 
 	++m_currentStage;
 	loadCurrentStage();
+	m_level->resetPositions();
 
 	printf("Stage %d loaded.\n", m_currentStage);
 }

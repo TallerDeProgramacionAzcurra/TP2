@@ -31,6 +31,7 @@ Formation::Formation(bool goingRight) :Enemy(),
 						m_fleeing(false),
 						m_joiningScreen(true)
 {
+	m_tag = "Formation";
 	m_speed = Vector2D(2.5f, 2.5f);
 	m_lifeTime = Random::getRange(8500, 12500);
 	m_circleTime = Random::getRange(500, 2000);
@@ -40,7 +41,6 @@ Formation::Formation(bool goingRight) :Enemy(),
 	{
 		FormationPlane* plane = new FormationPlane(this);
 		plane->load(m_position.m_x, m_position.m_y, 48, 48, 32, 1);
-		CollitionHandler::Instance()->addEnemy(plane);
 		plane->setSpeed(m_speed);
 		m_planes.push_back(plane);
 	}
@@ -48,6 +48,7 @@ Formation::Formation(bool goingRight) :Enemy(),
 	m_FormationRadius = m_kFormationSize * 24;
 
 }
+
 
 Formation::~Formation()
 {
@@ -60,6 +61,17 @@ Formation::~Formation()
 	}
 	m_planes.clear();
 	m_playerIDKillsMap.clear();
+}
+
+void Formation::activateCollition()
+{
+	for (int i = 0; i < m_kFormationSize; ++i)
+	{
+		if (m_planes[i] && (!(m_planes[i]->isDead())))
+		{
+			CollitionHandler::Instance()->addEnemy(m_planes[i]);
+		}
+	}
 }
 
 void Formation::load(int x, int y, int width, int height, int textureID, int numFrames)

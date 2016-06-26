@@ -16,7 +16,7 @@ Portaviones::Portaviones() : RecurrentObject()
 {
 	m_textureID = 25;
 	m_tag = "Portaviones";
-	m_layer = BACKGROUND;
+	m_layer = MIDDLEGROUND;
 }
 
 Portaviones::~Portaviones()

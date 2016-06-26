@@ -105,11 +105,25 @@ void Player::respawn()
 	m_currentRow = 0;
 	m_health = STARTING_HEALTH;
 	if (m_currentWeapon)
+	{
 		delete m_currentWeapon;
+	}
 	m_currentWeapon = new BasicWeapon();
 
 	m_currentRespawningTime = m_respawningTimer;
 	m_invulnerable = true;
+
+	if (m_hasSecondaryWeapons)
+	{
+		if (m_leftSecondaryPlane)
+		{
+			m_leftSecondaryPlane->setDead(true);
+		}
+		if (m_rightSecondaryPlane)
+		{
+			m_rightSecondaryPlane->setDead(true);
+		}
+	}
 
 }
 
@@ -278,9 +292,14 @@ void Player::updateSecondaryWeapons()
 		}
 		else
 		{
-			m_leftSecondaryPlane->setPosition(Vector2D(m_position.m_x - m_width, m_position.m_y + m_height/2));
+			if (m_leftSecondaryPlane->isDead() == false)
+			{
+				m_leftSecondaryPlane->setPosition(Vector2D(m_position.m_x - m_width, m_position.m_y + m_height/2));
+
+			}
 			m_leftSecondaryPlane->update();
 		}
+
 	}
 
 	if (m_rightSecondaryPlane)
@@ -292,9 +311,13 @@ void Player::updateSecondaryWeapons()
 		}
 		else
 		{
-			m_rightSecondaryPlane->setPosition(Vector2D(m_position.m_x + m_width*1.5f, m_position.m_y + m_height/2));
+			if (m_rightSecondaryPlane->isDead() == false)
+			{
+				m_rightSecondaryPlane->setPosition(Vector2D(m_position.m_x + m_width*1.5f, m_position.m_y + m_height/2));
+			}
 			m_rightSecondaryPlane->update();
 		}
+
 	}
 }
 
@@ -579,7 +602,6 @@ void Player::reset()
 		{
 			m_rightSecondaryPlane->setDead(true);
 		}
-		m_hasSecondaryWeapons = false;
 	}
 }
 

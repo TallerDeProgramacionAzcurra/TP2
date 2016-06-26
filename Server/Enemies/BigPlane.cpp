@@ -24,6 +24,7 @@ BigPlane::BigPlane() :Enemy(),
 					  m_explotionAnimationTime(1000),
 					  m_explotionRemainingTime(0)
 {
+	m_tag = "Blg PLane";
 	m_speed = Vector2D(1.4f, 1.75f);
 	m_direction.setX(0);
 	m_direction.setY(DIRECTION_UP);
@@ -116,7 +117,7 @@ void BigPlane::update()
 
 
 			//Analiza si debe disparar
-			if (!m_goingUp)
+			if (!m_goingUp && isVisibleFromCamera())
 			{
 				int shootLuck = Random::getRange(0, 1000);
 				if (shootLuck <= m_shootChance)
