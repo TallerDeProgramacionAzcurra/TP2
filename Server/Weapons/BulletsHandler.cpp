@@ -65,7 +65,7 @@ void BulletsHandler::updateBullets()
            || (*p_it)->getPosition().getY() < -60 || (*p_it)->getPosition().getY() > Game::Instance()->getGameHeight()) || (*p_it)->isDead())
         {
 			(*p_it)->kill();
-			//(*p_it)->clean();
+			(*p_it)->clean();
 			(*p_it).reset();
 			p_it = m_bullets.erase(p_it);
         }
