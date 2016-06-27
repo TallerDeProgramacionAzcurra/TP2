@@ -21,21 +21,31 @@ public:
 	Hud(int gameWidth,int gameHeight, int id, int cantHuds, bool teamMode);
     ~Hud();
     void actualizarScore(int score);
-    //void draw(SDL_Renderer* renderer);
+    void actualizarTitle(std::string title);
     void update();
     void reset();
 
 private:
 
+    //COLOR
+    char m_r;
+    char m_g;
+    char m_b;
 
-    //FontTexture m_title;
+    //Textures
+    FontTexture m_title;
     FontTexture m_score;
-    float m_playerScore;
 
+    //Title
+    const char* m_newTitle;
+
+    //Score
+    float m_playerScore;
     float m_newScore;
     bool m_lerping;
 
     void updateScoreTexture(int score);
+    void updateTitleTexture(const char* title);
     void getColorById(int id, char* r, char* g, char* b);
 
 };

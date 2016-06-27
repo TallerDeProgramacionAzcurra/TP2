@@ -117,6 +117,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 //    FontManager::Instance()->init();
 
     createHuds(m_cantHuds);
+    m_lives = new Lives(m_gameWidth, m_gameHeight, 5);
 
     m_backgroundTextureID = 10;
 
@@ -177,6 +178,7 @@ void Game::render()
 			it->second->draw(m_pRenderer);
 		}
 	}
+    m_lives->draw(m_pRenderer);
     if (m_showingStatistics)
     	m_stats->draw(m_pRenderer);
     if (m_showingStageMsg)
@@ -263,6 +265,9 @@ void Game::addPlayerName(int playerID, std::string playerName)
 	pthread_mutex_lock(&m_playerNameMutex);
 
 	m_playerNames[playerID] = playerName;
+
+	if (huds[playerID])
+		huds[playerID]->actualizarTitle(playerName);
 
 	pthread_mutex_unlock(&m_playerNameMutex);
 }
@@ -419,6 +424,7 @@ void Game::update()
 			it->second->update();
 		}
 	}
+	m_lives->update();
 	updateScreenText(&m_showingStatistics, &m_showingStatisticsTimer, m_stats);
 	updateScreenText(&m_showingStageMsg, &m_showingStageMsgTimer, m_stageMsg);
 	updateScreenText(&m_showingResults, &m_showingResultsTimer, m_results);
@@ -499,7 +505,8 @@ void Game::updatePlayerData(PlayerDataUpdateInfo playerData)
 {
 	pthread_mutex_lock(&m_playerDataMutex);
 
-	//ACTUALIZAR HUD
+	if (m_lives)
+		m_lives->actualizarLives(playerData.playerLives);
 
 	pthread_mutex_unlock(&m_playerDataMutex);
 }
@@ -957,6 +964,7 @@ void Game::resetGame()
 			it->second->reset();
 		}
 	}
+	m_lives->reset();
 	 //TextureManager::Instance()->init(m_pRenderer);
 
 	 cout << "Finish reseting game\n";

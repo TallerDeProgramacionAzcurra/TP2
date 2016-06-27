@@ -9,36 +9,37 @@ Hud::Hud(int gameWidth, int gameHeight, int id, int cantHuds, bool teamMode): m_
 										 m_newScore(0),
 										 m_lerping(false)
 {
-	FontTexture *title = new FontTexture();
 	const char *titleText;
-	if (teamMode)
-		titleText = "TEAM ";
-	else
-		titleText = "PLAYER ";
 	stringstream ss;
-	ss << titleText << id+1;
-	string s = ss.str();
+	string s;
+	if (teamMode)
+	{
+		titleText = "TEAM ";
+		ss << titleText << id+1;
+		s = ss.str();
+	}
+	else
+		s = Game::Instance()->getPlayerName(id);
 	const char *pchar = s.c_str();
-	title->text = pchar;
-	char r,g,b;
-	getColorById(id,&r,&g,&b);
-	title->texture = FontManager::Instance()->drawtext(r,g,b,0,0,0,0,0,title->text,blended);
+	getColorById(id,&m_r,&m_g,&m_b);
+	m_newTitle = pchar;
+	updateTitleTexture(pchar);
 	int h,w;
-	FontManager::Instance()->textSize(title->text,&h,&w);
+	FontManager::Instance()->textSize(m_title.text,&h,&w);
 
-	title->height = h*TEXT_SIZE_FACTOR;
-	title->width = w*TEXT_SIZE_FACTOR;
-	title->x = (id)*(gameWidth/cantHuds) +((gameWidth/cantHuds) - title->width)/2;
-	title->y = 0;
+	m_title.height = h*TEXT_SIZE_FACTOR;
+	m_title.width = w*TEXT_SIZE_FACTOR;
+	m_title.x = (id)*(gameWidth/cantHuds) +((gameWidth/cantHuds) - m_title.width)/2;
+	m_title.y = 0;
 
-	m_texts.push_back(title);
+	m_texts.push_back(&m_title);
 
 	updateScoreTexture(m_playerScore);
 	FontManager::Instance()->textSize(m_score.text,&h,&w);
 	m_score.height = h*TEXT_SIZE_FACTOR;
 	m_score.width = w*TEXT_SIZE_FACTOR;
 	m_score.x = (id)*(gameWidth/cantHuds) +((gameWidth/cantHuds) - m_score.width)/2;
-	m_score.y = title->height;
+	m_score.y = m_title.height;
 
 	m_texts.push_back(&m_score);
 }
@@ -85,6 +86,18 @@ void Hud::actualizarScore(int score)
 	m_lerping = true;
 }
 
+void Hud::actualizarTitle(std::string title)
+{
+	const char *pchar = title.c_str();
+	m_newTitle = pchar;
+}
+
+void Hud::updateTitleTexture(const char* title)
+{
+	m_title.text = title;
+	m_title.texture = FontManager::Instance()->drawtext(m_r,m_g,m_b,0,0,0,0,0, m_title.text, blended);
+}
+
 void Hud::updateScoreTexture(int score)
 {
 	ostringstream oss;
@@ -117,6 +130,10 @@ void Hud::update()
 			m_playerScore = m_newScore;
 			updateScoreTexture((int) m_playerScore);
 		}
+	}
+	if (strcmp(m_newTitle,m_title.text) != 0)
+	{
+		updateTitleTexture(m_newTitle);
 	}
 }
 

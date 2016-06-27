@@ -6,6 +6,7 @@
 #include "Text/Statistics.h"
 #include "Text/StageMsg.h"
 #include "Text/Results.h"
+#include "Text/Lives.h"
 #include "Score.h"
 #include "Cliente/cliente.h"
 #include "Utils/Parser/ParserCliente.h"
@@ -32,6 +33,7 @@ class Island;
 class Background;
 class Player;
 class Statistics;
+class Lives;
 class Hud;
 class StageMsg;
 class Results;
@@ -119,6 +121,7 @@ public:
     void addPlayerName(int playerID, std::string playerName);
     void addPointsToScore(ScoreMessage scoreMsg);
     void updatePlayerData(PlayerDataUpdateInfo playerData);
+    std::string getPlayerName(int id){return m_playerNames[id];}
 
     //Alto y Ancho de la ventana de juego
     int getGameWidth() const { return m_gameWidth; }
@@ -136,6 +139,7 @@ public:
     pthread_t listenThread;
 
     void gameSetPlayerName(std::string& playerName);
+
 
 private:
 
@@ -167,6 +171,7 @@ private:
     Statistics* m_stats;
     StageMsg* m_stageMsg;
     Results* m_results;
+    Lives* m_lives;
     int m_backgroundTextureID;
     bool m_running;
 
