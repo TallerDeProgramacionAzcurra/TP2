@@ -1,6 +1,6 @@
 <tamaño>
 	<ancho>600</ancho>
-	<alto>2000</alto>
+	<alto>2500</alto>
 </tamaño>
 <enemigos>
 	<enemigo>
@@ -12,7 +12,7 @@
 	</enemigo>
 	<enemigo>
 		<id>AvionGrande</id>
-		<cantidad>0</cantidad>
+		<cantidad>2</cantidad>
 		<frames>12</frames>
 		<ancho>128</ancho>
 		<alto>96</alto>

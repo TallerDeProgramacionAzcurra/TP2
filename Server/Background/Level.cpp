@@ -13,6 +13,7 @@ Level::Level():m_scrollingToNextStage(false),
 {
 	m_parserNivel = new ParserNivel();
 	m_textureHelper = new TextureHelper();
+	m_virtualPosition = 2000;
 }
 
 Level::~Level()
@@ -23,7 +24,7 @@ void Level::loadFromXML(const std::string& xmlFileName)
 {
 	m_parserNivel->parsearDocumento(xmlFileName);
 	Escenario scene = m_parserNivel->getEscenario();
-	m_levelHeight = scene.alto - Game::Instance()->getGameHeight();
+	m_levelHeight = scene.alto;
 	m_levelWidth = scene.ancho;
 
 	if (m_levelWidth < Game::Instance()->getGameWidth())
@@ -43,19 +44,19 @@ void Level::loadFromXML(const std::string& xmlFileName)
 	for (std::vector<Elemento>::iterator it = scene.listaDeElementos.begin() ; it !=  scene.listaDeElementos.end(); ++it)
 	{
 		//GameObjectFactory::createGameObject((*it).spriteId);
-		//printf("Cargando %s en posicion %d, %d \n",(*it).spriteId.c_str(), (*it).posicion.x, (*it).posicion.y );
+		printf("Cargando %s en posicion %d, %d \n",(*it).spriteId.c_str(), (*it).posicion.x, (*it).posicion.y );
 		int textureID = m_textureHelper->stringToInt((*it).spriteId);
 
 		TextureInfo texInfo = TextureManager::Instance()->getTextureInfo(textureID);
 		//printf("texture int = %d \n", texInfo.textureID);
 		GameObject* gameObject = GameObjectFactory::createGameObject((*it).spriteId);
-		gameObject->setLayer(MIDDLEGROUND);
+		gameObject->setLayer(BACKGROUND);
 		gameObject->setHeight(static_cast<int>(texInfo.height));
 		gameObject->setTextureID((texInfo.textureID));
 
 		addObject(gameObject, (*it).posicion.x, (*it).posicion.y);
 
-		 ss <<"Juego: Se cargó el objeto " << (*it).spriteId.c_str() << " en la posición x = " << (*it).posicion.x << ", y = " << (*it).posicion.y;
+		 ss <<"Juego: Se cargó el objeto " << (*it).spriteId.c_str() << " en la posición x = " << (*it).posicion.x << ", y = " << (*it).posicion.y << "\n";
 		 Logger::Instance()->LOG(ss.str(), LogTypeDebug);
 		 ss.clear();
 	}
@@ -101,12 +102,14 @@ void Level::scrollToNextStage()
 
 void Level::update()
 {
-	//printf("offset %d \n", m_virtualPosition);
+	//printf("scenerio position %d \n", m_virtualPosition);
 	 if ((m_virtualPosition <= 0) && (!m_scrollingToNextStage) && (!Game::Instance()->isFinishingLevel()))
 	 {
 		 if (!Game::Instance()->isGameOver())
+		 {
 			 Game::Instance()->finishStage();
-		 //resetPositions();
+		 }
+
 	 }
 
 	 if (m_scrollingToNextStage)
@@ -114,9 +117,10 @@ void Level::update()
 		 //printf("%d\n", m_nextStageScrollAmount);
 		 if (m_nextStageScrollAmount <= 0)
 		 {
-			 m_virtualPosition = m_levelHeight;
+			 //m_virtualPosition = m_levelHeight;
 			 m_scrollingToNextStage = false;
-			 m_virtualPosition = m_levelHeight + Game::Instance()->getGameHeight();
+			 resetPositions();
+			 //m_virtualPosition = m_levelHeight + Game::Instance()->getGameHeight();
 		 }
 		 else
 		 {
@@ -159,11 +163,27 @@ void Level::resetPositions()
 {
 	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end(); ++it)
 	 {
-		 int newPosY =  (*it)->getPosition().getY() - m_levelHeight - Game::Instance()->getGameHeight();
+		 int returnOffset;
+		 //printf ("current stage %d \n", Game::Instance()->getCurrentStage());
+		 if (Game::Instance()->getCurrentStage() > 2)
+			 returnOffset = m_levelHeight + Game::Instance()->getGameWidth() - 600;
+		 else
+			 returnOffset = m_levelHeight + Game::Instance()->getGameWidth() - (300 * Game::Instance()->getCurrentStage());
+		 if ((*it)->getTag().compare("Portaviones") == 0)
+		 {
+			 //Parche. Portaviones
+			 //printf("%f\n", (*it)->getPosition().getY());
+			 if ((*it)->getPosition().getY() < 1900)
+			 {
+				 returnOffset = m_levelHeight + Game::Instance()->getGameWidth() - 600;// - (300 * (Game::Instance()->getCurrentStage() + 1));
+			 }
+		 }
+		 int newPosY =  (*it)->getPosition().getY() - returnOffset;
 		 int newPosX = (*it)->getPosition().getX();
 		 (*it)->setPosition(Vector2D (newPosX, newPosY));
 	 }
-	 m_virtualPosition = m_levelHeight + Game::Instance()->getGameHeight();
+
+	 //m_virtualPosition = m_levelHeight;// + Game::Instance()->getGameHeight();
 }
 
 

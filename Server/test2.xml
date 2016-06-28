@@ -194,11 +194,11 @@
 	</sprite>
 </sprites>
 <escenario>
-	<cantidadMaximaJugadores>2</cantidadMaximaJugadores>
-	<cantidadStages>2</cantidadStages>
+	<cantidadMaximaJugadores>1</cantidadMaximaJugadores>
+	<cantidadStages>5</cantidadStages>
 	<velocidadScroll>2</velocidadScroll>
 	<ancho>600</ancho>
-	<alto>2000</alto>
+	<alto>2500</alto>
 	<fondo>
 		<spriteId>agua</spriteId>
 		<ancho>10</ancho>
@@ -216,7 +216,7 @@
 			<spriteId>Portaviones</spriteId>
 			<posicion>
 				<x>225</x>
-				<y>2000</y>
+				<y>3100</y>
 			</posicion>
 		</elemento>
 		<elemento>
@@ -229,14 +229,14 @@
 		<elemento>
 			<spriteId>isla</spriteId>
 			<posicion>
-				<x>400</x>
+				<x>700</x>
 				<y>200</y>
 			</posicion>
 		</elemento>
 		<elemento>
 			<spriteId>piedra</spriteId>
 			<posicion>
-				<x>336</x>
+				<x>236</x>
 				<y>1364</y>
 			</posicion>
 		</elemento>

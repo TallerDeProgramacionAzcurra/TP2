@@ -17,7 +17,7 @@ class SecondaryShip;
 #define EXPLOTION_ANIMATION_TIME 1000
 #define FLIP_ANIMATION_TIME 1500
 #define STARTING_LIVES 3
-#define STARTING_HEALTH 100000
+#define STARTING_HEALTH 100
 
 
 class Player : public MoveableObject

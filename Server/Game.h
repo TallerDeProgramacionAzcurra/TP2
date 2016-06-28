@@ -121,6 +121,7 @@ public:
     //Alto y Ancho de la ventana de juego
     int getGameWidth() const { return m_gameWidth; }
     int getGameHeight() const { return m_gameHeight; }
+    int getCurrentStage() { return m_currentStage; }
     Player* getPlayer(int playerID);
     int getPlayerTeam(int playerID);
     void setReseting(bool state) { m_reseting = state; }

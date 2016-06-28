@@ -16,6 +16,7 @@ using namespace std;
 const int FPS = 100;
 const int DELAY_TIME = 1000.0f / FPS;
 
+
 bool mainLoop() {
     Game::Instance()->createGame(DELAY_TIME);
     

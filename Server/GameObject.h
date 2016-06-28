@@ -31,6 +31,7 @@ public:
                     m_currentFrame(0),
 					m_dirty(true),
 					m_canRecycle(false),
+					m_obsolet(false),
 					m_soundSendId(0),
 					m_soundDirty(false)
 

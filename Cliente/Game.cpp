@@ -117,7 +117,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 //    FontManager::Instance()->init();
 
     createHuds(m_cantHuds);
-    m_lives = new Lives(m_gameWidth, m_gameHeight, 5);
+    m_lives = new Lives(m_gameWidth, m_gameHeight, 3);
 
     m_backgroundTextureID = 10;
 

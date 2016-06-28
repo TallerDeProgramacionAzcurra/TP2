@@ -313,9 +313,9 @@ bool CollitionHandler::areColliding(GameObject* gameObjectOne, GameObject* gameO
 
 	if (SquareDistance <= minimumCollisionDistance)
 	{
-		printf("Calculando: %s %f/%f Vs %s %f/%f \n", gameObjectOne->getTag().c_str(), gameObjectOneCenter.m_x, gameObjectOneCenter.m_y,
+		/*printf("Calculando: %s %f/%f Vs %s %f/%f \n", gameObjectOne->getTag().c_str(), gameObjectOneCenter.m_x, gameObjectOneCenter.m_y,
 				gameObjectTwo->getTag().c_str(), gameObjectTwoCenter.m_x, gameObjectTwoCenter.m_y);
-		printf("Distancia: %d, Distancia Minima de Colision: %d \n", minimumCollisionDistance, SquareDistance);
+		printf("Distancia: %d, Distancia Minima de Colision: %d \n", minimumCollisionDistance, SquareDistance);*/
 		//Hubo colision
 		collision = true;
 	}
