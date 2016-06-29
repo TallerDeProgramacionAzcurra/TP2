@@ -12,6 +12,7 @@
 #include "../Weapons/EnemyWeapons/EnemyBaseGun.h"
 #include "../Player.h"
 #include "Formation.h"
+#include "../PopUps/PointsPopUp.h"
 
 
 FormationPlane::FormationPlane(Formation* parent) :Enemy(),
@@ -99,6 +100,10 @@ bool FormationPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 			int points = retrievePoints();
 			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getPlayerTeam().gameTeamID);
 			damager->incrementEnemiesKilledStats(1);
+
+			PopUp* pointsPopUp = new PointsPopUp(damager->getObjectId(), points);
+			pointsPopUp->load(m_position.m_x + m_width/2, m_position.m_y + m_height/2, 96, 16, 104, 1);
+			Game::Instance()->addPopUp(pointsPopUp);
 		}
 		if (m_formationParent && damager)
 			m_formationParent->updateKillerStats(damager->getObjectId());

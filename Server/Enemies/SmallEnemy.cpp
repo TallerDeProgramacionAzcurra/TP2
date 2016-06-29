@@ -137,7 +137,7 @@ bool SmallEnemy::damage(int damageReceived, bool wasShoot,  Player* damager)
 			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getPlayerTeam().gameTeamID);
 
 			PopUp* pointsPopUp = new PointsPopUp(damager->getObjectId(), points);
-			pointsPopUp->load(m_position.m_x + m_width/2, m_position.m_y + m_height/2, 72, 16, 104, 1);
+			pointsPopUp->load(m_position.m_x + m_width/2, m_position.m_y + m_height/2, 96, 16, 104, 1);
 			Game::Instance()->addPopUp(pointsPopUp);
 
 

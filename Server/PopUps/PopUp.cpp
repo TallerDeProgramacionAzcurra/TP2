@@ -7,6 +7,7 @@
 
 #include "PopUp.h"
 #include "../Singletons/GameTimeHelper.h"
+#include "../Utils/Random.h"
 #include "../Game.h"
 
 PopUp::PopUp():MoveableObject(),
@@ -15,11 +16,13 @@ PopUp::PopUp():MoveableObject(),
 			   m_remainingTime(500),
 			   m_dead(false)
 {
-	m_speed.m_x = 0;
-	m_speed.m_y = 0.1f;
+	float speed = Random::getFloatRange(0.75f, 1.5f);
+	m_speed.m_x = speed;
+	m_speed.m_y = speed;
 
-	m_direction.m_x = 0;
-	m_direction.m_y = DIRECTION_UP;
+	m_direction.m_x = Random::getRange(-1.0f, 1.0f);
+	m_direction.m_y = Random::getRange(-1.0f, 1.0f);
+
 	m_textureID = 104;
 	m_layer = FOREGROUND;
 }
@@ -30,11 +33,12 @@ PopUp::PopUp(int ownerID):MoveableObject(),
 			   m_remainingTime(500),
 			   m_dead(false)
 {
-	m_speed.m_x = 0;
-	m_speed.m_y = 0.1f;
+	float speed = Random::getFloatRange(0.75f, 1.5f);
+	m_speed.m_x = speed;
+	m_speed.m_y = speed;
 
-	m_direction.m_x = 0;
-	m_direction.m_y = DIRECTION_UP;
+	m_direction.m_x = Random::getRange(-1.0f, 1.0f);
+	m_direction.m_y = Random::getRange(-1.0f, 1.0f);
 }
 
 PopUp::~PopUp()

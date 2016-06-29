@@ -13,6 +13,7 @@
 #include "../PowerUps/ExtraPointsPU.h"
 #include "../PowerUps/PowerUp.h"
 #include "../Singletons/CollisionHandler.h"
+#include "../PopUps/PointsPopUp.h"
 
 
 BigPlane::BigPlane() :Enemy(),
@@ -166,6 +167,10 @@ bool BigPlane::damage(int damageReceived, bool wasShoot,  Player* damager)
 			int points = retrievePoints();
 			Game::Instance()->addPointsToScore(points, damager->getObjectId(), damager->getPlayerTeam().gameTeamID);
 			damager->incrementEnemiesKilledStats(1);
+
+			PopUp* pointsPopUp = new PointsPopUp(damager->getObjectId(), points);
+			pointsPopUp->load(m_position.m_x + m_width/2, m_position.m_y + m_height/2, 96, 16, 104, 1);
+			Game::Instance()->addPopUp(pointsPopUp);
 		}
 
 		//Todos los aviones han sido matados
@@ -237,6 +242,10 @@ void BigPlane::calculateRewards()
 			if ((playerKillerID != -1) && (teamKillerID != -1))
 			{
 				Game::Instance()->addPointsToScore(m_pointsOnCombo, playerKillerID, teamKillerID);
+
+				PopUp* pointsPopUp = new PointsPopUp(playerKillerID, m_pointsOnCombo);
+				pointsPopUp->load(m_position.m_x + m_width/2, m_position.m_y + m_height/2, 96, 16, 104, 1);
+				Game::Instance()->addPopUp(pointsPopUp);
 				break;
 			}
 		}

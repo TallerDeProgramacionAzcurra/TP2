@@ -15,6 +15,7 @@
 #include "../Singletons/GameTimeHelper.h"
 #include "../PowerUps/DualWeaponPU.h"
 #include "../PowerUps/PowerUp.h"
+#include "../PopUps/PointsPopUp.h"
 
 
 Formation::Formation(bool goingRight) :Enemy(),
@@ -440,6 +441,9 @@ void Formation::calculateRewards()
 			if ((playerKillerID != -1) && (teamKillerID != -1))
 			{
 				Game::Instance()->addPointsToScore(m_pointsOnCombo, playerKillerID, teamKillerID);
+				PopUp* pointsPopUp = new PointsPopUp(playerKillerID, m_pointsOnCombo);
+				pointsPopUp->load(m_position.m_x + m_width/2, m_position.m_y + m_height/2, 96, 16, 104, 1);
+				Game::Instance()->addPopUp(pointsPopUp);
 			}
 			//dropea loot con un 50% de chance
 			dropLoot(50);

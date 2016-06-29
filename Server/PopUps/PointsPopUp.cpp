@@ -9,7 +9,13 @@
 
 PointsPopUp::PointsPopUp(int ownerID, int points): PopUp(ownerID)
 {
-	m_textureID = pointsToTextureID(points);
+	m_points = points;
+}
+
+void PointsPopUp::load(int x, int y, int width, int height, int textureID, int numFrames)
+{
+	MoveableObject::load(x, y, width, height, textureID, numFrames);
+	m_textureID = pointsToTextureID(m_points);
 }
 
 int PointsPopUp::pointsToTextureID(int points)
@@ -47,8 +53,8 @@ int PointsPopUp::pointsToTextureID(int points)
 	case 10000:
 		textureID = 110;
 		break;
-	default: textureID = 104;
 	}
+	printf("points value = %d, texture id %d\n", points, textureID);
 
 	return textureID;
 }
