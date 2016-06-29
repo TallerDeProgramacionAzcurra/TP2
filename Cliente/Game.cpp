@@ -266,7 +266,7 @@ void Game::addPlayerName(int playerID, std::string playerName)
 
 	m_playerNames[playerID] = playerName;
 
-	if (huds[playerID])
+	if (huds[playerID] and !m_teamMode)
 		huds[playerID]->actualizarTitle(playerName);
 
 	pthread_mutex_unlock(&m_playerNameMutex);
