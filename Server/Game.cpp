@@ -1113,7 +1113,6 @@ void Game::finishStage()
 			//printf("acc %d - points %d, enemyKilled %d", stageStatistics.accuracy, 	stageStatistics.points, stageStatistics.enemiesKilled);
 
 			sendStageStatistics(stageStatistics, it->second->getObjectId());
-
 		}
 	}
 
@@ -1155,7 +1154,6 @@ void Game::startStage()
 }
 
 
-
 void Game::restartLevel()
 {
 	for (std::map<int,Player*>::iterator it=m_listOfPlayer.begin(); it != m_listOfPlayer.end(); ++it)
@@ -1186,10 +1184,13 @@ void Game::restartLevel()
 		 //(*it)->clean();
 		 (*it)->setDead(true);
 	 }
-	 m_currentStage = 1;
 	 m_endingStage = false;
 	 m_gameOver = false;
-	 m_level->resetPositions();
+	m_scrollBackground = true;
+
+	m_level->setScrollSpeed(m_scrollSpeed);
+
+	 m_level->reset();
 	 m_powerUpsSpawner->reset();
 	 m_enemiesSpawner->reset();
      for (unsigned int i = 0; i < m_teamsList.size(); ++i)
@@ -1197,5 +1198,7 @@ void Game::restartLevel()
     	 m_teamsList[i].gameTeamScore = 0;
      }
 
+	 m_currentStage = 1;
 	 loadCurrentStage();
+	 startStage();
 }

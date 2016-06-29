@@ -159,6 +159,35 @@ void Level::addObject(GameObject* gameObject, int x, int y)
 
 }
 
+void Level::reset()
+{
+	 bool secondPlane = false;
+	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end(); ++it)
+	 {
+		 int returnOffset;
+		 if (Game::Instance()->getCurrentStage() > 1)
+			 returnOffset = m_levelHeight - m_virtualPosition - 300;
+		 else
+			 returnOffset = m_levelHeight - m_virtualPosition;
+
+		 if ((*it)->getTag().compare("Portaviones") == 0)
+		 {
+			 if (secondPlane)
+			 {
+				 returnOffset = m_levelHeight - m_virtualPosition;
+			 }
+			 secondPlane = true;
+		 }
+
+
+		 int newPosY =  (*it)->getPosition().getY() - returnOffset;
+		 int newPosX = (*it)->getPosition().getX();
+		 (*it)->setPosition(Vector2D (newPosX, newPosY));
+	 }
+
+	 m_virtualPosition = m_levelHeight;// + Game::Instance()->getGameHeight();
+}
+
 void Level::resetPositions()
 {
 	 for (std::vector<GameObject*>::iterator it = m_levelObjects.begin() ; it != m_levelObjects.end(); ++it)
@@ -166,16 +195,16 @@ void Level::resetPositions()
 		 int returnOffset;
 		 //printf ("current stage %d \n", Game::Instance()->getCurrentStage());
 		 if (Game::Instance()->getCurrentStage() > 2)
-			 returnOffset = m_levelHeight + Game::Instance()->getGameWidth() - 600;
+			 returnOffset = m_levelHeight;
 		 else
-			 returnOffset = m_levelHeight + Game::Instance()->getGameWidth() - (300 * Game::Instance()->getCurrentStage());
+			 returnOffset = m_levelHeight + Game::Instance()->getGameHeight() - (300 * Game::Instance()->getCurrentStage());
 		 if ((*it)->getTag().compare("Portaviones") == 0)
 		 {
 			 //Parche. Portaviones
 			 //printf("%f\n", (*it)->getPosition().getY());
 			 if ((*it)->getPosition().getY() < 1900)
 			 {
-				 returnOffset = m_levelHeight + Game::Instance()->getGameWidth() - 600;// - (300 * (Game::Instance()->getCurrentStage() + 1));
+				 returnOffset = m_levelHeight + Game::Instance()->getGameHeight() - 600;// - (300 * (Game::Instance()->getCurrentStage() + 1));
 			 }
 		 }
 		 int newPosY =  (*it)->getPosition().getY() - returnOffset;

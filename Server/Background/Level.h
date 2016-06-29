@@ -33,6 +33,7 @@ public:
 	void update();
 	void clean();
 
+	void reset();
 	void resetPositions();
 	void loadLevel(int level);
 

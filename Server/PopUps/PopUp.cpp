@@ -64,6 +64,7 @@ void PopUp::animatePopUp()
 	if (m_remainingTime <= 0)
 	{
 		m_dead = true;
+		m_dirty = true;
 	}
 }
 
