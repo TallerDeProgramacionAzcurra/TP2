@@ -34,7 +34,7 @@ SmallEnemy::SmallEnemy() :Enemy(),
 	//luego se le suma un offser debido al giro del sprite
 	m_angle = (atan2f(m_direction.m_y, m_direction.m_x)* 57.295645531f) + 270;
 
-	m_health= 100;
+	m_health = 100;
 	m_pointOnKill = 50;
 	m_enemyWeapon = new EnemyBaseGun();
 	setWeaponStats(4, 250, m_objectId, -1);

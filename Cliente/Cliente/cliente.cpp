@@ -607,7 +607,7 @@ void cliente::procesarMensaje(NetworkMessage networkMessage)
     }
     
     //Stage Beginning
-    if ((networkMessage.msg_Code[0] == 's') && (networkMessage.msg_Code[1] == 't') && (networkMessage.msg_Code[2] == 'm'))
+    if ((networkMessage.msg_Code[0] == 's') && (networkMessage.msg_Code[1] == 'b') && (networkMessage.msg_Code[2] == 'm'))
     {
         StageBeginning stageBeginningInfo = m_alanTuring->decodeStageBeginning(networkMessage);
         Game::Instance()->showStageBeginningMessage(stageBeginningInfo);

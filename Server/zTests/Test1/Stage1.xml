@@ -5,7 +5,7 @@
 <enemigos>
 	<enemigo>
 		<id>AvionPequeño</id>
-		<cantidad>0</cantidad>
+		<cantidad>5</cantidad>
 		<frames>4</frames>
 		<ancho>60</ancho>
 		<alto>66</alto>
@@ -35,28 +35,28 @@
 <powerups>
 	<powerup>
 		<id>ExtraPoints</id>
-		<cantidad>0</cantidad>
+		<cantidad>1</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>
 	</powerup>
 	<powerup>
 		<id>BombPU</id>
-		<cantidad>0</cantidad>
+		<cantidad>1</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>
 	</powerup>
 	<powerup>
 		<id>DualWeaponPU</id>
-		<cantidad>2</cantidad>
+		<cantidad>1</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>
 	</powerup>
 	<powerup>
 		<id>SecondaryPow</id>
-		<cantidad>0</cantidad>
+		<cantidad>1</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>

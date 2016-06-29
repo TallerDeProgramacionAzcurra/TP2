@@ -19,14 +19,14 @@
 	</enemigo>
 	<enemigo>
 		<id>MediumPlane</id>
-		<cantidad>0</cantidad>
+		<cantidad>2</cantidad>
 		<frames>1</frames>
 		<ancho>80</ancho>
 		<alto>80</alto>
 	</enemigo>
 	<enemigo>
 		<id>FormacionRoja</id>
-		<cantidad>0</cantidad>
+		<cantidad>2</cantidad>
 		<frames>5</frames>
 		<ancho>1</ancho>
 		<alto>1</alto>
@@ -35,28 +35,35 @@
 <powerups>
 	<powerup>
 		<id>ExtraPoints</id>
-		<cantidad>0</cantidad>
+		<cantidad>1</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>
 	</powerup>
 	<powerup>
 		<id>BombPU</id>
-		<cantidad>0</cantidad>
+		<cantidad>1</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>
 	</powerup>
 	<powerup>
 		<id>DualWeaponPU</id>
-		<cantidad>2</cantidad>
+		<cantidad>1</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>
 	</powerup>
 	<powerup>
+		<id>*********</id>
+		<cantidad>5</cantidad>
+		<frames>999999</frames>
+		<ancho>999999</ancho>
+		<alto>999999</alto>
+	</powerup>
+	<powerup>
 		<id>SecondaryPow</id>
-		<cantidad>0</cantidad>
+		<cantidad>1</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>

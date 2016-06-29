@@ -26,7 +26,7 @@
 	</enemigo>
 	<enemigo>
 		<id>FormacionRoja</id>
-		<cantidad>1</cantidad>
+		<cantidad>0</cantidad>
 		<frames>5</frames>
 		<ancho>1</ancho>
 		<alto>1</alto>
@@ -35,7 +35,7 @@
 <powerups>
 	<powerup>
 		<id>ExtraPoints</id>
-		<cantidad>0</cantidad>
+		<cantidad>2</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>
@@ -49,14 +49,14 @@
 	</powerup>
 	<powerup>
 		<id>DualWeaponPU</id>
-		<cantidad>1</cantidad>
+		<cantidad>0</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>
 	</powerup>
 	<powerup>
 		<id>SecondaryPow</id>
-		<cantidad>3</cantidad>
+		<cantidad>0</cantidad>
 		<frames>1</frames>
 		<ancho>48</ancho>
 		<alto>48</alto>

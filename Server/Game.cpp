@@ -1148,6 +1148,10 @@ void Game::startStage()
 
 	m_startingStage = true;
 	m_startingWaitTime = 500;
+
+	StageBeginning stageBeginningInfo;
+	stageBeginningInfo.stageNumber = m_currentStage;
+	sendStageBeginning(stageBeginningInfo);
 }
 
 

@@ -455,8 +455,6 @@ bool Game::initializeClient()
 	    int porto = parsersito->getConexionInfo().puerto;
 	    printf("Conectando a %s : %d \n", ip.c_str(), porto);
 
-	    loadSoundAndMusic();
-	    SoundManager::Instance()->playMusic(2,0);
 	    m_client = new cliente(3,ip,porto, m_playerName);
 
 	    if (parsersito)
